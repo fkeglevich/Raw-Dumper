@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Main Scope" pattern="src[app]:com.fkeglevich.rawdumper..*" />
+</component>
