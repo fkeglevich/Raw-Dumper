@@ -8,14 +8,15 @@ android {
         minSdkVersion 18
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
                 arguments "-DANDROID_TOOLCHAIN=gcc"
                 cppFlags "-std=c++11 -fexceptions -fopenmp -DAVOID_TABLES -O3 -fstrict-aliasing -fprefetch-loop-arrays"
-                //-fprefetch-loop-arrays
-                //-std=c++11
+            }
+            ndk {
+                abiFilters 'x86', 'x86_64'
             }
         }
     }

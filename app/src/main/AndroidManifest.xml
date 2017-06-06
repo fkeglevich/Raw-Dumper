@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <uses-library android:name="com.intel.camera.extensions"/>
         <activity android:name=".MainActivity"
                   android:screenOrientation="portrait">
             <intent-filter>

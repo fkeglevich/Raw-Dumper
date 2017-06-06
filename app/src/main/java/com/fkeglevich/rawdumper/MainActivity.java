@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private static final String SAVE_DIR_NAME = "RawDumper";
     private static final String RAW_PATH = "/data/misc/media";
     private static final String PARTIAL_DIR_NAME = ".partial";
+    private static final String BKP_DIR_NAME = ".bkp";
+
+    private static final boolean DEBUG_MODE = false;
 
     private ModesInterface modesInterface;
     private TurboCamera turboCamera;
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     private File saveDir;
     private File partialDir;
+    private File bkpDir;
 
     I3av4ToDngConverter converter = new I3av4ToDngConverter();
 
@@ -122,26 +126,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                         else
                         {
                             showTextToast("Picture taken, converting to DNG...");
-                            String[] files = partialDir.list();
-                            File input, output;
-                            for (String filePath : files)
-                            {
-                                if (filePath.endsWith(".i3av4"))
-                                {
-                                    input = new File(partialDir, filePath);
-                                    output = new File(saveDir, input.getName() + ".dng");
-                                    try
-                                    {
-                                        converter.convert(input.getAbsolutePath(), output.getAbsolutePath());
-                                        input.delete();
-                                    }
-                                    catch (IOException e)
-                                    {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                            showTextToast("DNG file created successfully!");
+                            if (!convertToDng())
+                                showTextToast("DNG file created successfully!");
+                            else
+                                showTextToast("Error creating DNG file!");
                             enableCaptureButton();
                         }
                     }
@@ -353,6 +341,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         partialDir = new File(saveDir, PARTIAL_DIR_NAME);
         partialDir.mkdirs();
 
+        if (DEBUG_MODE)
+        {
+            bkpDir = new File(saveDir, BKP_DIR_NAME);
+            bkpDir.mkdirs();
+        }
+
         try
         {
             byte[] bytes = ByteArrayUtil.getRawResource(this, R.raw.t4k37op3);
@@ -360,6 +354,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         } catch (IOException e)
         {
             e.printStackTrace();
+        }
+
+        if (partialDir.listFiles().length > 0)
+        {
+            showTextToast("Found partial pictures! Converting them to DNG");
+            convertToDng();
         }
     }
 
@@ -370,6 +370,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         turboCamera.setCameraMode(ModeInfo.SINGLE_JPEG);
         turboCamera.setContinuousFocus();
         turboCamera.enableRaw();
+        turboCamera.setFlash(flashIsOn);
         CaptureConfig captureConfig = turboCamera.getCaptureConfig();
         CaptureSize previewSize = new CaptureSize(1280, 960);
         captureConfig.setSelectedPreviewSize(previewSize);
@@ -387,6 +388,35 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             e.printStackTrace();
         }
         turboCamera.startPreview();
+    }
+
+    private boolean convertToDng()
+    {
+        String[] files = partialDir.list();
+        File input, output;
+        boolean error = false;
+        for (String filePath : files)
+        {
+            if (filePath.endsWith(".i3av4"))
+            {
+                input = new File(partialDir, filePath);
+                output = new File(saveDir, input.getName() + ".dng");
+                try
+                {
+                    converter.convert(input.getAbsolutePath(), output.getAbsolutePath());
+                    if (DEBUG_MODE)
+                        input.renameTo(new File(bkpDir, filePath));
+                    else
+                        input.delete();
+                }
+                catch (IOException e)
+                {
+                    error = true;
+                    e.printStackTrace();
+                }
+            }
+        }
+        return error;
     }
 
     private void showNeedsPermissionsAlert()

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw.info;
+package com.fkeglevich.rawdumper.raw.mkn;
 
 import java.util.GregorianCalendar;
 
@@ -25,9 +25,9 @@ import java.util.GregorianCalendar;
 
 public class MakerNoteInfo
 {
-    public int iso;
-    public double exposureTime;
-    public double wbTemperature;
+    public Integer iso;
+    public Double exposureTime;
+    public Double wbTemperature;
     public float[] asShotNeutral;
     public float[] colorMatrix;
     public GregorianCalendar dateTime;

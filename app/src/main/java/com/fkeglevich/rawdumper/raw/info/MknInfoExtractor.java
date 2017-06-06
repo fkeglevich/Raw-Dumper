@@ -58,6 +58,19 @@ public class MknInfoExtractor
         LSCDecreaseRate= 0
         [some bytes]current: 1 1 1 1 (1333/3072)
         first fail: 0 1 1 1 (83/3072)
+
+        first\\s+fail:\\s+\\d+\\s+\\d+\\s+\\d+\\s+\\d+\\s+[(]\\s*\\d+\\s*[/]\\s*\\d+\\s*[)]\\s*[(]\\s*\\d+\\s*[)]\\s+\\d+\\s+[:]\\s+\\d+";
+
+        grass\\s*=\\s*\\d+\\s+
+        sky\\s*=\\s*\\d+\\s+
+        cw\\s*=\\s*\\d+\\s+
+        sat\\s*=\\s*\\d+\\s+
+        sat_dyn\\s*=\\s*\\d+\\s+
+        prefer\\s*=\\s*\\d+\\s+
+        CCM\\s*=\\s*\\d+\\s+
+
+        grass\\s*=\\s*\\d+\\s+sky\\s*=\\s*\\d+\\s+cw\\s*=\\s*\\d+\\s+sat\\s*=\\s*\\d+\\s+sat_dyn\\s*=\\s*\\d+\\s+prefer\\s*=\\s*\\d+\\s+CCM\\s*=\\s*\\d+\\s+
+
          (0) 0 : 0
          */
 

@@ -17,9 +17,8 @@
 package com.fkeglevich.rawdumper.dng2;
 
 import android.hardware.Camera;
-import android.util.Log;
 
-import com.fkeglevich.rawdumper.raw.info.MakerNoteInfo;
+import com.fkeglevich.rawdumper.raw.mkn.MakerNoteInfo;
 import com.fkeglevich.rawdumper.tiff.ExifTag;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;

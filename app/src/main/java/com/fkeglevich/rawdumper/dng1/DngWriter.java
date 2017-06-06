@@ -154,10 +154,12 @@ public class DngWriter
         tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL, new long[]{1023}, true);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVELREPEATDIM, new short[]{2, 2}, false);
 
-        tiffWriter.setField(TiffTag.TIFFTAG_OPCODELIST3, opCode3, true);
+
         if (!sensorInfo.getSensorName().equals("T4K37"))
         {
             options.blackLevel = 16;
+            if (opCode3 != null)
+                tiffWriter.setField(TiffTag.TIFFTAG_OPCODELIST3, opCode3, true);
         }
         else
         {
