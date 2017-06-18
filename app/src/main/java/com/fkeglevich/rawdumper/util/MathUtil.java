@@ -34,4 +34,34 @@ public class MathUtil
         }
         return a;
     }
+
+    public static double log2(double x)
+    {
+        return Math.log(x) / Math.log(2.0);
+    }
+
+    public static double[] multiply3x3MatrixToVector3(double[] m, double[] v)
+    {
+        return new double[]{    v[0]*m[0] + v[1]*m[1] + v[2]*m[2],
+                                v[0]*m[3] + v[1]*m[4] + v[2]*m[5],
+                                v[0]*m[6] + v[1]*m[7] + v[2]*m[8]};
+    }
+
+    public static double[] floatArrayToDouble(float[] array)
+    {
+        double[] result = new double[array.length];
+        for (int i = 0; i < array.length; i++)
+            result[i] = array[i];
+
+        return result;
+    }
+
+    public static float[] doubleArrayToFloat(double[] array)
+    {
+        float[] result = new float[array.length];
+        for (int i = 0; i < array.length; i++)
+            result[i] = (float)array[i];
+
+        return result;
+    }
 }

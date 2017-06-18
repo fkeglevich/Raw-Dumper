@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw.info;
+package com.fkeglevich.rawdumper.raw.data;
 
-import com.fkeglevich.rawdumper.raw.Utils;
+import com.fkeglevich.rawdumper.raw.RawUtil;
 
 /**
  * Represents the size of a raw image.
@@ -47,7 +47,7 @@ public class RawImageSize
 
     public static int calculateRawBufferAlignedWidth(int width, int alignWidth, int horizontalPadding, int bytesPerPixel)
     {
-        return Utils.alignWidth((width + horizontalPadding) * bytesPerPixel, alignWidth);
+        return RawUtil.alignWidth((width + horizontalPadding) * bytesPerPixel, alignWidth);
     }
 
     public static int calculateRawBufferHeight(int height, int verticalPadding)

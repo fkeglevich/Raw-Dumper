@@ -14,15 +14,24 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng2;
+package com.fkeglevich.rawdumper.dng;
+
+import com.fkeglevich.rawdumper.tiff.TiffTag;
 
 /**
+ * Contains some basic default tiff tag values used by DngWriter.
+ *
  * Created by Flávio Keglevich on 16/04/2017.
- * TODO: Add a class header comment!
  */
 
-class ImageDefaults
+class DngDefaults
 {
-    static final float[] CAMERA_CALIBRATION1 = new float[]{1, 0, 0, 0, 1, 0, 0, 0, 1};
-    static final float[] CAMERA_CALIBRATION2 = new float[]{1, 0, 0, 0, 1, 0, 0, 0, 1};
+    // Default header tag values
+    static final int RAW_SUB_FILE_TYPE       = TiffTag.FILETYPE_FULLIMAGE;
+    static final int RAW_PHOTOMETRIC         = TiffTag.PHOTOMETRIC_CFA;
+    static final int RAW_SAMPLES_PER_PIXEL   = 1;
+    static final int RAW_PLANAR_CONFIG       = TiffTag.PLANARCONFIG_CONTIG;
+
+    static final byte[] DNG_VERSION          = new byte[] {1, 4, 0, 0};
+    static final byte[] DNG_BACKWARD_VERSION = new byte[] {1, 3, 0, 0};
 }

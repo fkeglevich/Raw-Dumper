@@ -14,28 +14,17 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng2;
+package com.fkeglevich.rawdumper.raw;
 
 /**
- * Created by Flávio Keglevich on 27/05/2017.
+ * Created by Flávio Keglevich on 25/12/2016.
  * TODO: Add a class header comment!
  */
 
-public enum Flash
+public class RawUtil
 {
-    DID_NOT_FIRE((short)0),
-    FIRED((short)1),
-    UNKNOWN((short)-1);
-
-    private final short exifValue;
-
-    Flash(short exifValue)
+    public static int alignWidth(int value, int width)
     {
-        this.exifValue = exifValue;
-    }
-
-    public short getExifValue()
-    {
-        return exifValue;
+        return (value + (width - 1)) & ~(width - 1);
     }
 }

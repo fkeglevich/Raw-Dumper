@@ -1,0 +1,32 @@
+{
+    "supportedDevices": [
+        {
+            "deviceInfoFile": "z00ad",
+            "deviceModel": "ASUS_Z00AD"
+        },
+        {
+            "deviceInfoFile": "z00ad",
+            "deviceModel": "ASUS_Z00ADA"
+        },
+        {
+            "deviceInfoFile": "z00ad",
+            "deviceModel": "ASUS_Z00ADB"
+        },
+        {
+            "deviceInfoFile": "z00ad",
+            "deviceModel": "ASUS_Z00ADC"
+        },
+        {
+            "deviceInfoFile": "z008d",
+            "deviceModel": "ASUS_Z008D"
+        },
+        {
+            "deviceInfoFile": "z008d",
+            "deviceModel": "ASUS_Z008C"
+        },
+        {
+            "deviceInfoFile": "z008d",
+            "deviceModel": "ASUS_Z008B"
+        }
+    ]
+}

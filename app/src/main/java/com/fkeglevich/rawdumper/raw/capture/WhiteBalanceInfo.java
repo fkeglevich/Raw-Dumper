@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw.mkn;
+package com.fkeglevich.rawdumper.raw.capture;
 
-import java.util.GregorianCalendar;
+import com.fkeglevich.rawdumper.tiff.TiffTag;
+import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 /**
- * Created by Flávio Keglevich on 27/05/2017.
+ * Created by Flávio Keglevich on 14/06/2017.
  * TODO: Add a class header comment!
  */
 
-public class MakerNoteInfo
+public class WhiteBalanceInfo
 {
-    public Integer iso;
-    public Double exposureTime;
-    public Double wbTemperature;
-    public float[] asShotNeutral;
-    public float[] colorMatrix;
-    public GregorianCalendar dateTime;
-    public byte[] originalMakerNote;
+    public float[] asShotNeutral = null;
 
-    public MakerNoteInfo()
+    public WhiteBalanceInfo()
     {   }
+
+    public void writeTiffTags(TiffWriter tiffWriter)
+    {
+        tiffWriter.setField(TiffTag.TIFFTAG_ASSHOTNEUTRAL, asShotNeutral, true);
+    }
 }

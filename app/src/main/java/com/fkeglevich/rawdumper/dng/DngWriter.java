@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng2;
+package com.fkeglevich.rawdumper.dng;
 
-import com.fkeglevich.rawdumper.raw.info.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.SensorInfo;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
+import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
+import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -26,14 +30,6 @@ import java.io.RandomAccessFile;
 
 /**
  * Simple class for generating DNG files.
- * The suggested order for calling the write* methods is:
- *  1 writeBasicHeader
- *  2 writeSensorInfo
- *  3 writeImageInfo
- *  4 writeColorInfo
- *  5 writeImageData
- *  6 writeExifInfo
- *
  * Created by Flávio Keglevich on 16/04/2017.
  */
 
@@ -62,7 +58,44 @@ public class DngWriter
         rawImageSize = null;
     }
 
-    public void writeBasicHeader(RawImageSize rawImageSize)
+    public void writeMetadata(Context context, CaptureInfo captureInfo)
+    {
+        writeBasicHeader(captureInfo.imageSize);
+        captureInfo.camera.getSensor().writeTiffTags(tiffWriter);
+        captureInfo.camera.writeTiffTags(tiffWriter);
+        captureInfo.device.writeTiffTags(tiffWriter);
+        captureInfo.writeTiffTags(tiffWriter);
+
+        tiffWriter.setField(TiffTag.TIFFTAG_SOFTWARE, getSoftwareName(context));
+
+        captureInfo.date.writeTiffTags(tiffWriter);
+        captureInfo.camera.getColor().writeTiffTags(tiffWriter);
+        captureInfo.whiteBalanceInfo.writeTiffTags(tiffWriter);
+
+        if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)
+            captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter, context);
+    }
+
+    private String getSoftwareName(Context context)
+    {
+        String softwareName = context.getApplicationInfo().loadLabel(context.getPackageManager()).toString();
+        PackageInfo packageInfo;
+        try
+        {
+            packageInfo = context.getPackageManager().getPackageInfo(context.getApplicationInfo().packageName, 0);
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            packageInfo = null;
+        }
+
+        if (packageInfo != null)
+            return softwareName + " v" + packageInfo.versionName;
+        else
+            return softwareName;
+    }
+
+    private void writeBasicHeader(RawImageSize rawImageSize)
     {
         this.rawImageSize = rawImageSize;
         tiffWriter.setField(TiffTag.TIFFTAG_SUBFILETYPE,            DngDefaults.RAW_SUB_FILE_TYPE);
@@ -75,29 +108,12 @@ public class DngWriter
         tiffWriter.setField(TiffTag.TIFFTAG_IMAGELENGTH,            rawImageSize.getRawBufferHeight());
     }
 
-    public void writeSensorInfo(SensorInfo sensorInfo)
+    public void writeExifInfo(CaptureInfo captureInfo)
     {
-        tiffWriter.setField(TiffTag.TIFFTAG_BITSPERSAMPLE,          sensorInfo.getNumOfBitsPerPixel());
-        tiffWriter.setField(TiffTag.TIFFTAG_CFAREPEATPATTERNDIM,    DataFormatter.DEFAULT_CFA_REPEAT_PATTERN_DIM, false);
-        tiffWriter.setField(TiffTag.TIFFTAG_CFAPATTERN,             DataFormatter.formatBayerPattern(sensorInfo.getBayerPattern()), false);
-        tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL,             DataFormatter.formatWhiteLevel(sensorInfo.getWhiteLevel()), true);
-        tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVELREPEATDIM,    DataFormatter.DEFAULT_BLACK_LEVEL_REPEAT_DIM, false);
-        tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVEL,             DataFormatter.formatBlackLevel(sensorInfo.getBlackLevel()), true);
-    }
-
-    public void writeImageInfo(ImageInfo imageInfo)
-    {
-        imageInfo.setTiffFields(tiffWriter);
-    }
-
-    public void writeColorInfo(ImageColorInfo colorInfo)
-    {
-        colorInfo.setTiffFields(tiffWriter);
-    }
-
-    public void writeExifInfo(ExifInfo exifInfo)
-    {
-        exifInfo.writeExifTags(tiffWriter);
+        ExifWriter exifWriter = new ExifWriter();
+        exifWriter.createEXIFDirectory(tiffWriter);
+        exifWriter.writeTiffExifTags(tiffWriter, captureInfo);
+        exifWriter.closeEXIFDirectory(tiffWriter);
     }
 
     public void writeImageData(ADngImageWriter writer, byte[] rawdata)

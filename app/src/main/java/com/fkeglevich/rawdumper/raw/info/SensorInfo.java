@@ -16,60 +16,128 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import com.fkeglevich.rawdumper.raw.BayerPattern;
-
-import java.util.List;
+import com.fkeglevich.rawdumper.raw.data.BayerPattern;
+import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+import com.fkeglevich.rawdumper.tiff.TiffTag;
+import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 /**
- * Created by Flávio Keglevich on 26/12/2016.
+ * Created by Flávio Keglevich on 11/06/2017.
  * TODO: Add a class header comment!
  */
 
-public abstract class SensorInfo
+public class SensorInfo
 {
-    abstract public int getHorizontalPadding();
-    abstract public int getVerticalPadding();
+    private static final short[] DEFAULT_CFA_REPEAT_PATTERN_DIM = new short[] {2, 2};
+    private static final short[] DEFAULT_BLACK_LEVEL_REPEAT_DIM = new short[] {2, 2};
 
-    abstract public int getAlignWidth();
+    private int horizontalPadding;
+    private int verticalPadding;
 
-    abstract public int getNumOfBitsPerPixel();
-    abstract public int getRealNumOfBitsPerPixel();
-    public int getNumOfBytesPerPixel()
+    private int alignWidth;
+
+    private int bitsPerPixel;
+    private int storageBitsPerPixel;
+
+    private String name;
+    private String maker;
+
+    private boolean supportsPixelBinning;
+
+    private RawImageSize[] rawImageSizes;
+    private RawImageSize[] binningRawImageSizes;
+
+    private BayerPattern bayerPattern;
+
+    private int whiteLevel;
+    private float[] blackLevel;
+
+    private int baseISO;
+
+    private SensorInfo()
+    {   }
+
+    public RawImageSize[] getRawImageSizes()
     {
-        return getNumOfBitsPerPixel() / 8;
+        return rawImageSizes;
     }
 
-    abstract public String getSensorName();
-    abstract public String getSensorMaker();
-    public String getFullName()
+    public RawImageSize[] getBinningRawImageSizes()
     {
-        return getSensorMaker() + " " + getSensorName();
+        return binningRawImageSizes;
     }
 
-    abstract public double getPixelWidth();
-    abstract public double getPixelHeight();
-
-    abstract public double getSensorSizeNumerator();
-    abstract public double getSensorSizeDenominator();
-
-    abstract public boolean supportsPixelBinning();
-
-    abstract public List<RawImageSize> getRawImageSizes();
-    abstract public List<RawImageSize> getBinningRawImageSizes();
-
-    public boolean containsRawImageSize(RawImageSize size)
+    public void writeTiffTags(TiffWriter tiffWriter)
     {
-        List<RawImageSize> availableSizes = getRawImageSizes();
-
-        for (RawImageSize currSize : availableSizes)
-            if (currSize.compareTo(size)) return true;
-
-        return false;
+        tiffWriter.setField(TiffTag.TIFFTAG_BITSPERSAMPLE,          storageBitsPerPixel);
+        tiffWriter.setField(TiffTag.TIFFTAG_CFAREPEATPATTERNDIM,    DEFAULT_CFA_REPEAT_PATTERN_DIM, false);
+        tiffWriter.setField(TiffTag.TIFFTAG_CFAPATTERN,             bayerPattern.getBytePattern(), false);
+        tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL,             new long[] { whiteLevel }, true);
+        tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVELREPEATDIM,    DEFAULT_BLACK_LEVEL_REPEAT_DIM, false);
+        tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVEL,             blackLevel, true);
     }
 
-    abstract public BayerPattern getBayerPattern();
+    public static SensorInfo createT4K37()
+    {
+        SensorInfo result = new SensorInfo();
+        result.horizontalPadding = 16;
+        result.verticalPadding = 16;
+        result.alignWidth = 256;
+        result.bitsPerPixel = 10;
+        result.storageBitsPerPixel = 16;
+        result.name = "T4K37";
+        result.maker = "Toshiba";
+        result.supportsPixelBinning = true;
+        result.bayerPattern = BayerPattern.GRBG;
+        result.whiteLevel = 1023;
+        result.blackLevel = new float[]{64, 64, 64, 64};
+        result.baseISO = 50;
 
-    abstract public int getWhiteLevel();
+        int[] widths  = {2048, 4096, 4096};
+        int[] heights = {1536, 2304, 3072};
 
-    abstract public int[] getBlackLevel();
+        result.rawImageSizes = getRawImageSizes(widths, heights, result);
+
+        int[] bwidths  = {2048};
+        int[] bheights = {1536};
+
+        result.binningRawImageSizes = getRawImageSizes(bwidths, bheights, result);
+
+        return result;
+    }
+
+    public static SensorInfo createOV5670()
+    {
+        SensorInfo result = new SensorInfo();
+        result.horizontalPadding = 32;
+        result.verticalPadding = 24;
+        result.alignWidth = 256;
+        result.bitsPerPixel = 10;
+        result.storageBitsPerPixel = 16;
+        result.name = "OV5670";
+        result.maker = "OmniVision";
+        result.supportsPixelBinning = false;
+        result.bayerPattern = BayerPattern.BGGR;
+        result.whiteLevel = 1023;
+        result.blackLevel = new float[]{16, 16, 16, 16};
+        result.baseISO = 50;
+
+        int[] widths  = {2560};
+        int[] heights = {1920};
+
+        result.rawImageSizes = getRawImageSizes(widths, heights, result);
+        result.binningRawImageSizes = new RawImageSize[]{};
+
+        return result;
+    }
+
+    private static RawImageSize[] getRawImageSizes(int[] widths, int[] heights, SensorInfo info)
+    {
+        RawImageSize[] result = new RawImageSize[widths.length];
+
+        for (int i = 0; i < result.length; i++)
+            result[i] = new RawImageSize(widths[i], heights[i], info.alignWidth, info.horizontalPadding, info.verticalPadding, info.storageBitsPerPixel / 8);
+
+        return result;
+    }
 }

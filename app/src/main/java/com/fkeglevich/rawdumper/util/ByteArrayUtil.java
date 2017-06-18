@@ -73,6 +73,18 @@ public class ByteArrayUtil
     public static byte[] getRawResource(Context context, int id) throws IOException
     {
         InputStream input = context.getResources().openRawResource(id);
+        return readInputStream(input);
+    }
+
+    public static byte[] getRawResource(Context context, String filename) throws IOException
+    {
+        InputStream input = context.getResources().openRawResource(
+                context.getResources().getIdentifier(filename, "raw", context.getPackageName()));
+        return readInputStream(input);
+    }
+
+    public static byte[] readInputStream(InputStream input) throws IOException
+    {
         byte[] result = new byte[input.available()];
         input.read(result);
         input.close();

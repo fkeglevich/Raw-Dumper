@@ -18,15 +18,12 @@ package com.fkeglevich.rawdumper;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -41,34 +38,33 @@ import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
-import android.view.Display;
-import android.view.Surface;
+import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.camera.CaptureConfig;
 import com.fkeglevich.rawdumper.camera.CaptureSize;
+import com.fkeglevich.rawdumper.camera.IAsyncCamOpenCallback;
 import com.fkeglevich.rawdumper.camera.ModeInfo;
 import com.fkeglevich.rawdumper.camera.TurboCamera;
-import com.fkeglevich.rawdumper.dng1.DngWriter;
-import com.fkeglevich.rawdumper.dng1.I3av4ToDngConverter;
-import com.fkeglevich.rawdumper.raw.info.OV5670;
-import com.fkeglevich.rawdumper.raw.info.T4K37;
+import com.fkeglevich.rawdumper.i3av4.I3av4ToDngConverter;
+import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
+import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;
+import com.fkeglevich.rawdumper.raw.info.SupportedDeviceList;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
-import com.fkeglevich.rawdumper.ui.TextureListener;
 import com.fkeglevich.rawdumper.ui.UiUtils;
-import com.fkeglevich.rawdumper.util.ByteArrayUtil;
+import com.squareup.moshi.Moshi;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -80,7 +76,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private static final String PARTIAL_DIR_NAME = ".partial";
     private static final String BKP_DIR_NAME = ".bkp";
 
-    private static final boolean DEBUG_MODE = false;
+    private static final boolean DEBUG_MODE = true;
+    private static final boolean DEBUG_LOGS = true;
+    private static void log(String message)
+    {
+        if (DEBUG_LOGS)
+            Log.v("RawDumper", message);
+    }
 
     private ModesInterface modesInterface;
     private TurboCamera turboCamera;
@@ -101,12 +103,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private File partialDir;
     private File bkpDir;
 
-    I3av4ToDngConverter converter = new I3av4ToDngConverter();
+    I3av4ToDngConverter converter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        log("Starting app");
         setContentView(R.layout.activity_main);
 
         jpegCallback = new Camera.PictureCallback()
@@ -114,7 +117,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             @Override
             public void onPictureTaken(byte[] data, Camera camera)
             {
+                log("JPEG callback, restarting preview");
                 camera.startPreview();
+                log("JPEG callback, preview started");
                 rootShell.addCommand(new String[] {"mv " + RAW_PATH + "/* " + partialDir.getAbsolutePath()}, 2, new Shell.OnCommandLineListener() {
                     @Override
                     public void onCommandResult(int commandCode, int exitCode) {
@@ -188,22 +193,46 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         });
 
         textureView = (TextureView)findViewById(R.id.textureView);
+        textureView.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (event.getAction() == MotionEvent.ACTION_UP && turboCamera != null)
+                {
+                    turboCamera.touchFocus((int)event.getY(), (int)event.getY(), textureView.getWidth(), textureView.getHeight());
+                }
+                return true;
+            }
+        });
+
         final AppCompatActivity thiz = this;
         textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener()
         {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
             {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-                        ActivityCompat.requestPermissions(thiz, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                    }
-                    else
+                DeviceInfo deviceInfo = new DeviceInfoLoader().loadDeviceInfo(getApplicationContext());
+                if (deviceInfo != null)
+                {
+                    converter = new I3av4ToDngConverter(deviceInfo);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                     {
-                        permissionsGranted();
+                        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                        {
+
+                            ActivityCompat.requestPermissions(thiz, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                        }
+                        else
+                        {
+                            permissionsGranted();
+                        }
                     }
+                }
+                else
+                {
+                    showDeviceIncompatibleAlert();
                 }
             }
 
@@ -347,15 +376,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             bkpDir.mkdirs();
         }
 
-        try
-        {
-            byte[] bytes = ByteArrayUtil.getRawResource(this, R.raw.t4k37op3);
-            DngWriter.opCode3 = bytes;
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
         if (partialDir.listFiles().length > 0)
         {
             showTextToast("Found partial pictures! Converting them to DNG");
@@ -368,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         hide();
         turboCamera = TurboCamera.open(0);
         turboCamera.setCameraMode(ModeInfo.SINGLE_JPEG);
-        turboCamera.setContinuousFocus();
+        turboCamera.setAutoFocus();
         turboCamera.enableRaw();
         turboCamera.setFlash(flashIsOn);
         CaptureConfig captureConfig = turboCamera.getCaptureConfig();
@@ -403,7 +423,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 output = new File(saveDir, input.getName() + ".dng");
                 try
                 {
-                    converter.convert(input.getAbsolutePath(), output.getAbsolutePath());
+                    converter.convert(input.getAbsolutePath(), output.getAbsolutePath(), getApplicationContext());
                     if (DEBUG_MODE)
                         input.renameTo(new File(bkpDir, filePath));
                     else
@@ -443,6 +463,25 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setMessage("The app needs root permission to work.");
+        builder.setCancelable(false);
+
+        builder.setPositiveButton(
+                "Exit",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        System.exit(0);
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void showDeviceIncompatibleAlert()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Your device is currently incompatible with this app.");
         builder.setCancelable(false);
 
         builder.setPositiveButton(
@@ -502,6 +541,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         messageStr += "Copyright (C) 2016 Andrey Kulikov (andkulikov@gmail.com)\n";
         messageStr += "Link: https://github.com/andkulikov/Transitions-Everywhere\n";
         messageStr += "License: https://github.com/andkulikov/Transitions-Everywhere/blob/master/LICENSE\n";
+
+        messageStr += "\n";
+
+        messageStr += "Moshi\n";
+        messageStr += "Copyright 2015 Square, Inc.\n";
+        messageStr += "Link: https://github.com/square/moshi\n";
+        messageStr += "License: https://github.com/square/moshi/blob/master/LICENSE.txt\n";
 
         messageStr += "\n";
 

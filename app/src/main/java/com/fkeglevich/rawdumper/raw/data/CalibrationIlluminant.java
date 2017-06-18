@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng2;
+package com.fkeglevich.rawdumper.raw.data;
 
 /**
  * A simple enum for listing all supported calibration illuminants.

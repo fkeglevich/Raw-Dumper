@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng2;
+package com.fkeglevich.rawdumper.dng;
 
-import com.fkeglevich.rawdumper.raw.info.RawImageSize;
+import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 

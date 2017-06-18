@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw;
+package com.fkeglevich.rawdumper.raw.data;
 
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 

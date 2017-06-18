@@ -14,17 +14,36 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw;
+package com.fkeglevich.rawdumper.raw.data;
 
 /**
+ * A simple enum for listing all supported sensor Bayer patterns.
+ *
  * Created by Flávio Keglevich on 25/12/2016.
- * TODO: Add a class header comment!
  */
 
-public class Utils
+public enum BayerPattern
 {
-    public static int alignWidth(int value, int width)
+    /*
+    The used Bayer Pattern DNG codes:
+        RED = 0
+        GREEN = 1
+        BLUE = 2
+     */
+    BGGR(new byte[] {2, 1, 1, 0}),
+    RGGB(new byte[] {0, 1, 1, 2}),
+    GBRG(new byte[] {1, 2, 0, 1}),
+    GRBG(new byte[] {1, 0, 2, 1});
+
+    private final byte[] bytePattern;
+
+    BayerPattern(byte[] bytePattern)
     {
-        return (value + (width - 1)) & ~(width - 1);
+        this.bytePattern = bytePattern;
+    }
+
+    public byte[] getBytePattern()
+    {
+        return bytePattern.clone();
     }
 }

@@ -14,36 +14,28 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw;
+package com.fkeglevich.rawdumper.raw.data;
 
 /**
- * A simple enum for listing all supported sensor Bayer patterns.
- *
- * Created by Flávio Keglevich on 25/12/2016.
+ * Created by Flávio Keglevich on 27/05/2017.
+ * TODO: Add a class header comment!
  */
 
-public enum BayerPattern
+public enum Flash
 {
-    /*
-    The used Bayer Pattern DNG codes:
-        RED = 0
-        GREEN = 1
-        BLUE = 2
-     */
-    BGGR(new byte[] {2, 1, 1, 0}),
-    RGGB(new byte[] {0, 1, 1, 2}),
-    GBRG(new byte[] {1, 2, 0, 1}),
-    GRBG(new byte[] {1, 0, 2, 1});
+    DID_NOT_FIRE((short)0),
+    FIRED((short)1),
+    UNKNOWN((short)-1);
 
-    private final byte[] bytePattern;
+    private final short exifValue;
 
-    BayerPattern(byte[] bytePattern)
+    Flash(short exifValue)
     {
-        this.bytePattern = bytePattern;
+        this.exifValue = exifValue;
     }
 
-    public byte[] getBytePattern()
+    public short getExifValue()
     {
-        return bytePattern.clone();
+        return exifValue;
     }
 }
