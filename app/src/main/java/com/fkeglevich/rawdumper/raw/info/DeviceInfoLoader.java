@@ -17,8 +17,6 @@
 package com.fkeglevich.rawdumper.raw.info;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.os.Build;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.util.ByteArrayUtil;

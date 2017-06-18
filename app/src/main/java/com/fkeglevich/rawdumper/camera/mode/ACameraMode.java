@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.camera.mode;
 
 import com.fkeglevich.rawdumper.camera.CaptureConfig;
-import com.fkeglevich.rawdumper.camera.CaptureSize;
 import com.fkeglevich.rawdumper.camera.ImageFormat;
 import com.fkeglevich.rawdumper.camera.ModeInfo;
 import com.fkeglevich.rawdumper.camera.pipeline.APicturePipeline;

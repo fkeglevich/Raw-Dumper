@@ -38,17 +38,4 @@ public class SupportedDeviceList
 
         return null;
     }
-
-    public static SupportedDeviceList createSupportedDeviceList()
-    {
-        SupportedDeviceList result = new SupportedDeviceList();
-        result.supportedDevices = new SupportedDevice[] {   new SupportedDevice("ASUS_Z00AD",  "z00ad"),
-                                                            new SupportedDevice("ASUS_Z00ADA", "z00ad"),
-                                                            new SupportedDevice("ASUS_Z00ADB", "z00ad"),
-                                                            new SupportedDevice("ASUS_Z00ADC", "z00ad"),
-                                                            new SupportedDevice("ASUS_Z008D",  "z008d"),
-                                                            new SupportedDevice("ASUS_Z008C",  "z008d"),
-                                                            new SupportedDevice("ASUS_Z008B",  "z008d")};
-        return result;
-    }
 }

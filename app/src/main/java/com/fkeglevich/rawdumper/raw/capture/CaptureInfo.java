@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.raw.capture;
 
 import android.hardware.Camera;
-import android.util.Log;
 
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;

@@ -21,9 +21,7 @@ import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Looper;
 import android.util.Log;
-import android.view.MotionEvent;
 
 import com.fkeglevich.rawdumper.camera.mode.ACameraMode;
 import com.fkeglevich.rawdumper.camera.mode.CameraModeFactory;

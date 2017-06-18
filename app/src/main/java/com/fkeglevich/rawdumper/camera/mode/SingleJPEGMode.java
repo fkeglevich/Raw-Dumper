@@ -21,7 +21,6 @@ import android.hardware.Camera;
 import com.fkeglevich.rawdumper.camera.CaptureConfig;
 import com.fkeglevich.rawdumper.camera.ImageFormat;
 import com.fkeglevich.rawdumper.camera.ModeInfo;
-import com.fkeglevich.rawdumper.camera.ParameterFormatter;
 import com.fkeglevich.rawdumper.camera.pipeline.JPEGPipeline;
 import com.intel.camera.extensions.IntelCamera;
 

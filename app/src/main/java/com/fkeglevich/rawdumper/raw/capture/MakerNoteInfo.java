@@ -20,8 +20,6 @@ import com.fkeglevich.rawdumper.tiff.ExifTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.MathUtil;
 
-import java.util.GregorianCalendar;
-
 /**
  * Created by Flávio Keglevich on 27/05/2017.
  * TODO: Add a class header comment!

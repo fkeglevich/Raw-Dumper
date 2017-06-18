@@ -80,30 +80,8 @@ public class OpcodeListInfo
             result = ByteArrayUtil.getRawResource(context, resourceName);
         }
         catch (IOException ioe)
-        {
-            return null;
-        }
+        {   return null;    }
 
         return result;
-    }
-
-    public static OpcodeListInfo[] getOpcodeInfoT4K37()
-    {
-        OpcodeListInfo result = new OpcodeListInfo();
-        result.temperature = null;
-        result.opcodeList1File = null;
-        result.opcodeList2File = null;
-        result.opcodeList3File = "t4k37op3";
-        return new OpcodeListInfo[] { result };
-    }
-
-    public static OpcodeListInfo[] getOpcodeInfoOV5670()
-    {
-        OpcodeListInfo result = new OpcodeListInfo();
-        result.temperature = null;
-        result.opcodeList1File = null;
-        result.opcodeList2File = null;
-        result.opcodeList3File = "ov5670op3";
-        return new OpcodeListInfo[] { result };
     }
 }

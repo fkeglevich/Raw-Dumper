@@ -16,31 +16,18 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.os.Build;
-
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
-
 /**
- * Created by Flávio Keglevich on 11/06/2017.
+ * Created by Flávio Keglevich on 18/06/2017.
  * TODO: Add a class header comment!
  */
 
-public class DeviceInfo
+public class ExposureInfo
 {
-    private String manufacturer;
-    private CameraInfo[] cameras;
+    private String isoValues[];
+    private String isoParameter;
+    private String isoAutoValue;
 
-    private DeviceInfo()
-    {   }
-
-    public CameraInfo[] getCameras()
-    {
-        return cameras;
-    }
-
-    public void writeTiffTags(TiffWriter tiffWriter)
-    {
-        tiffWriter.setField(TiffTag.TIFFTAG_MAKE, manufacturer);
-    }
+    private String shutterSpeedValues[];
+    private String shutterSpeedParameter;
+    private String shutterSpeedAutoValue;
 }

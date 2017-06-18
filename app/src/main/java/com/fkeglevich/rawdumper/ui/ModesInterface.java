@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.ui;
 
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -25,7 +24,6 @@ import android.widget.RelativeLayout;
 import com.fkeglevich.rawdumper.R;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
-import com.transitionseverywhere.Visibility;
 
 /**
  * Created by Flávio Keglevich on 03/05/2017.

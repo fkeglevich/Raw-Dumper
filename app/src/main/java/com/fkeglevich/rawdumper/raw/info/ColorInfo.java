@@ -74,22 +74,4 @@ public class ColorInfo
         double[] dColorMatrix1 = MathUtil.floatArrayToDouble(colorMatrix1);
         return MathUtil.multiply3x3MatrixToVector3(dColorMatrix1, xyz);
     }
-
-    public static ColorInfo getToshibaColorInfo()
-    {
-        ColorInfo result = new ColorInfo();
-        result.colorMatrix1 = new float[]{1.1741f, -0.2862f, -0.0448f, -0.1778f, 0.9912f, 0.2184f, 0.0223f, 0.2117f, 0.532f};
-        result.calibrationIlluminant1 = CalibrationIlluminant.D55;
-        result.cameraCalibration1 = new float[]{1, 0, 0, 0, 1, 0, 0, 0, 1};
-        return result;
-    }
-
-    public static ColorInfo getOVColorInfo()
-    {
-        ColorInfo result = new ColorInfo();
-        result.colorMatrix1 = new float[]{0.9678f, -0.1981f, -0.0469f, -0.1948f, 0.9686f, 0.2657f, -0.0133f, 0.2255f, 0.6228f};
-        result.calibrationIlluminant1 = CalibrationIlluminant.D55;
-        result.cameraCalibration1 = new float[]{1, 0, 0, 0, 1, 0, 0, 0, 1};
-        return result;
-    }
 }

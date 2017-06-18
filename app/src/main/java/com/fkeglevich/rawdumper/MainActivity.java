@@ -48,23 +48,16 @@ import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.camera.CaptureConfig;
 import com.fkeglevich.rawdumper.camera.CaptureSize;
-import com.fkeglevich.rawdumper.camera.IAsyncCamOpenCallback;
 import com.fkeglevich.rawdumper.camera.ModeInfo;
 import com.fkeglevich.rawdumper.camera.TurboCamera;
 import com.fkeglevich.rawdumper.i3av4.I3av4ToDngConverter;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;
-import com.fkeglevich.rawdumper.raw.info.SupportedDeviceList;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
 import com.fkeglevich.rawdumper.ui.UiUtils;
-import com.squareup.moshi.Moshi;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;

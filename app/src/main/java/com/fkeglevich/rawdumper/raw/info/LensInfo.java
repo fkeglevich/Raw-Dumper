@@ -42,11 +42,4 @@ public class LensInfo
     {
         return 2 * MathUtil.log2(aperture);
     }
-
-    public static LensInfo create2AptertureLens()
-    {
-        LensInfo result = new LensInfo();
-        result.aperture = 2.0;
-        return result;
-    }
 }

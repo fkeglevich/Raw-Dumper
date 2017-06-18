@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.ui;
 
-import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
@@ -25,19 +24,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import com.fkeglevich.rawdumper.MainActivity;
 import com.fkeglevich.rawdumper.R;
 import com.transitionseverywhere.ChangeBounds;
 import com.transitionseverywhere.Fade;
-import com.transitionseverywhere.Slide;
 import com.transitionseverywhere.TransitionManager;
 
 /**

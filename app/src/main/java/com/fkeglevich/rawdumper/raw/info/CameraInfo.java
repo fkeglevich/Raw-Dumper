@@ -37,6 +37,7 @@ public class CameraInfo
     private SensorInfo sensor;
     private LensInfo lens;
     private ColorInfo color;
+    private ExposureInfo exposure;
     private OpcodeListInfo[] opcodes;
 
     private boolean isFrontCamera;
@@ -70,37 +71,5 @@ public class CameraInfo
     public OpcodeListInfo[] getOpcodes()
     {
         return opcodes;
-    }
-
-    public static CameraInfo createT4k37CInfo()
-    {
-        CameraInfo result = new CameraInfo();
-        result.id = 0;
-        result.sensor = SensorInfo.createT4K37();
-        result.lens = LensInfo.create2AptertureLens();
-        result.color = ColorInfo.getToshibaColorInfo();
-        result.opcodes = OpcodeListInfo.getOpcodeInfoT4K37();
-        result.isFrontCamera = false;
-        result.hasKnownMakernote = true;
-        result.retryOnError = false;
-        result.name = "Asus ZenFone 2 ZE551ML (back camera)";
-
-        return result;
-    }
-
-    public static CameraInfo createOV5670CInfo()
-    {
-        CameraInfo result = new CameraInfo();
-        result.id = 1;
-        result.sensor = SensorInfo.createOV5670();
-        result.lens = LensInfo.create2AptertureLens();
-        result.color = ColorInfo.getOVColorInfo();
-        result.opcodes = OpcodeListInfo.getOpcodeInfoOV5670();
-        result.isFrontCamera = true;
-        result.hasKnownMakernote = true;
-        result.retryOnError = true;
-        result.name = "Asus ZenFone 2 ZE551ML (front camera)";
-
-        return result;
     }
 }
