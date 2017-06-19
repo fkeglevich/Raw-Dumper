@@ -159,6 +159,13 @@ public class TurboCamera
         intelCamera.getCameraDevice().setParameters(parameters);
     }
 
+    public void setParameter(String key, String value)
+    {
+        Camera.Parameters parameters = intelCamera.getCameraDevice().getParameters();
+        parameters.set(key, value);
+        intelCamera.getCameraDevice().setParameters(parameters);
+    }
+
     public void takePicture(Camera.PictureCallback jpegCallback)
     {
         intelCamera.getCameraDevice().takePicture(null, null, jpegCallback);

@@ -23,11 +23,41 @@ package com.fkeglevich.rawdumper.raw.info;
 
 public class ExposureInfo
 {
-    private String isoValues[];
+    private String[] isoValues;
     private String isoParameter;
     private String isoAutoValue;
 
-    private String shutterSpeedValues[];
+    private String[] shutterSpeedValues;
     private String shutterSpeedParameter;
     private String shutterSpeedAutoValue;
+
+    public String[] getIsoValues()
+    {
+        return isoValues;
+    }
+
+    public String getIsoParameter()
+    {
+        return isoParameter;
+    }
+
+    public String getIsoAutoValue()
+    {
+        return isoAutoValue;
+    }
+
+    public String[] getShutterSpeedValues()
+    {
+        return shutterSpeedValues;
+    }
+
+    public String getShutterSpeedParameter()
+    {
+        return shutterSpeedParameter;
+    }
+
+    public String getShutterSpeedAutoValue()
+    {
+        return shutterSpeedAutoValue;
+    }
 }

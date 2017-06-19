@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.os.Build;
-
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 

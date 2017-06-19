@@ -72,4 +72,9 @@ public class CameraInfo
     {
         return opcodes;
     }
+
+    public ExposureInfo getExposure()
+    {
+        return exposure;
+    }
 }

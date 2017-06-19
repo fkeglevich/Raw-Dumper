@@ -41,6 +41,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -53,7 +54,9 @@ import com.fkeglevich.rawdumper.camera.TurboCamera;
 import com.fkeglevich.rawdumper.i3av4.I3av4ToDngConverter;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;
+import com.fkeglevich.rawdumper.ui.ISOInterface;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
+import com.fkeglevich.rawdumper.ui.ShutterSpeedInterface;
 import com.fkeglevich.rawdumper.ui.UiUtils;
 
 import java.io.File;
@@ -85,6 +88,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private ImageButton infoBt;
     private ProgressBar progressBar;
     private Toast currentToast;
+    private ISOInterface isoInterface;
+    private ShutterSpeedInterface shutterSpeedInterface;
+    private Button isoBt;
+    private ImageButton shutterSpeedBt;
+    private DeviceInfo deviceInfo;
 
     private boolean flashIsOn = false;
 
@@ -141,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
         currentToast = Toast.makeText(this, "", Toast.LENGTH_LONG);
         modesInterface = new ModesInterface(this);
+        isoInterface = new ISOInterface(this);
+        shutterSpeedInterface = new ShutterSpeedInterface(this);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         captureBt = (ImageButton) findViewById(R.id.captureButton);
         captureBt.setOnClickListener(new View.OnClickListener()
@@ -205,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
             {
-                DeviceInfo deviceInfo = new DeviceInfoLoader().loadDeviceInfo(getApplicationContext());
+                deviceInfo = new DeviceInfoLoader().loadDeviceInfo(getApplicationContext());
                 if (deviceInfo != null)
                 {
                     converter = new I3av4ToDngConverter(deviceInfo);
@@ -258,6 +268,27 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
             }
         });
+
+        isoBt = (Button)findViewById(R.id.isoBt);
+        isoBt.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                shutterSpeedInterface.forceHide();
+                isoInterface.toggleVisibility();
+            }
+        });
+        shutterSpeedBt = (ImageButton)findViewById(R.id.shutterSpeedBt);
+        shutterSpeedBt.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                isoInterface.forceHide();
+                shutterSpeedInterface.toggleVisibility();
+            }
+        });
     }
 
     @Override
@@ -284,6 +315,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     @Override
     public void onPause()
     {
+        isoInterface.clean();
+        shutterSpeedInterface.clean();
         super.onPause();
     }
 
@@ -380,6 +413,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     {
         hide();
         turboCamera = TurboCamera.open(0);
+        isoInterface.updateISOValues(deviceInfo.getCameras()[0].getExposure(), turboCamera);
+        shutterSpeedInterface.updateSSValues(deviceInfo.getCameras()[0].getExposure(), turboCamera);
         turboCamera.setCameraMode(ModeInfo.SINGLE_JPEG);
         turboCamera.setAutoFocus();
         turboCamera.enableRaw();
