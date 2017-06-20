@@ -46,7 +46,19 @@ public class DeviceInfoLoader
         SupportedDeviceList deviceList;
         String deviceInfoFile;
         DeviceInfo result;
+
         try
+        {
+            deviceInfoBytes = ByteArrayUtil.getRawResource(context, "z00ad");
+            result = moshi.adapter(DeviceInfo.class).fromJson(new String(deviceInfoBytes, Charset.defaultCharset()));
+            return result;
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
+
+        /*try
         {
             supportedDevicesBytes = ByteArrayUtil.getRawResource(context, R.raw.supported_devices);
             deviceList = moshi.adapter(SupportedDeviceList.class).fromJson(new String(supportedDevicesBytes, Charset.defaultCharset()));
@@ -58,6 +70,6 @@ public class DeviceInfoLoader
             return result;
         }
         catch (IOException ioe)
-        {   return null;    }
+        {   return null;    }*/
     }
 }

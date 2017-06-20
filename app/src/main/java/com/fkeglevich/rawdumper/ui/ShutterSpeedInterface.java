@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.camera.TurboCamera;
@@ -37,6 +38,7 @@ public class ShutterSpeedInterface
     private HorizontalScrollView shutterSpeedScrollView;
     private LinearLayout shutterSpeedLayout;
     private AppCompatActivity compatActivity;
+    private Toast currentToast;
 
     private Fade fadeTransition = new Fade();
 
@@ -45,6 +47,7 @@ public class ShutterSpeedInterface
         this.shutterSpeedScrollView = (HorizontalScrollView)compatActivity.findViewById(R.id.shutterSpeedScrollView);
         this.shutterSpeedLayout =     (LinearLayout)compatActivity.findViewById(R.id.shutterSpeedLayout);
         this.compatActivity = compatActivity;
+        this.currentToast = Toast.makeText(compatActivity, "", Toast.LENGTH_LONG);
     }
 
     public void updateSSValues(ExposureInfo exposureInfo, TurboCamera camera)
@@ -52,7 +55,7 @@ public class ShutterSpeedInterface
         ValueButton ssButton;
         for (String value : exposureInfo.getShutterSpeedValues())
         {
-            ssButton = new ValueButton(compatActivity, exposureInfo.getShutterSpeedParameter(), value, camera);
+            ssButton = new ValueButton(compatActivity, exposureInfo.getShutterSpeedParameter(), value, camera, currentToast);
             if (value.equals("0"))
                 ssButton.setText("auto");
             else

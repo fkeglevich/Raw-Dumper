@@ -159,11 +159,37 @@ public class TurboCamera
         intelCamera.getCameraDevice().setParameters(parameters);
     }
 
+    public void selectLargestPictureSize()
+    {
+        List<CaptureSize> picSizes = getCaptureConfig().getPictureSizes();
+        CaptureSize largest = picSizes.get(picSizes.size() - 1);
+        getCaptureConfig().setSelectedPictureSize(largest);
+
+        CaptureSize prevSize = null;
+        for (CaptureSize size : getCaptureConfig().getPreviewSizes())
+        {
+            if (size.hasSameAspectRatio(largest))
+            {
+                if (prevSize == null)
+                    prevSize = size;
+                else if (size.compareTo(prevSize) > 0)
+                    prevSize = size;
+            }
+        }
+
+        getCaptureConfig().setSelectedPreviewSize(prevSize);
+    }
+
     public void setParameter(String key, String value)
     {
         Camera.Parameters parameters = intelCamera.getCameraDevice().getParameters();
         parameters.set(key, value);
         intelCamera.getCameraDevice().setParameters(parameters);
+    }
+
+    public String dumpParameters()
+    {
+        return intelCamera.getCameraDevice().getParameters().flatten();
     }
 
     public void takePicture(Camera.PictureCallback jpegCallback)

@@ -72,6 +72,12 @@ public class CaptureSize implements Comparable<CaptureSize>
         return "[CaptureSize " + width + "x" + height + "]";
     }
 
+    public boolean hasSameAspectRatio(CaptureSize another)
+    {
+        return another.getAspectRatioX() == getAspectRatioX() &&
+                another.getAspectRatioY() == getAspectRatioY();
+    }
+
     @Override
     public int compareTo(@NonNull CaptureSize another)
     {

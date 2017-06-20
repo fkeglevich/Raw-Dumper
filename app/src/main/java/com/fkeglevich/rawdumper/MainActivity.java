@@ -52,12 +52,14 @@ import com.fkeglevich.rawdumper.camera.CaptureSize;
 import com.fkeglevich.rawdumper.camera.ModeInfo;
 import com.fkeglevich.rawdumper.camera.TurboCamera;
 import com.fkeglevich.rawdumper.i3av4.I3av4ToDngConverter;
+import com.fkeglevich.rawdumper.log.LogFile;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;
 import com.fkeglevich.rawdumper.ui.ISOInterface;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
 import com.fkeglevich.rawdumper.ui.ShutterSpeedInterface;
 import com.fkeglevich.rawdumper.ui.UiUtils;
+import com.intel.camera.extensions.IntelCamera;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,10 +71,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 {
     private static final String SAVE_DIR_NAME = "RawDumper";
     private static final String RAW_PATH = "/data/misc/media";
+    private static final String RAW_PATH_ALT = "/data";
     private static final String PARTIAL_DIR_NAME = ".partial";
     private static final String BKP_DIR_NAME = ".bkp";
 
-    private static final boolean DEBUG_MODE = true;
+    private static final boolean DEBUG_MODE = false;
     private static final boolean DEBUG_LOGS = true;
     private static void log(String message)
     {
@@ -121,6 +124,31 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 log("JPEG callback, restarting preview");
                 camera.startPreview();
                 log("JPEG callback, preview started");
+
+                rootShell.addCommand(new String[] {"ls " + RAW_PATH}, 2, new Shell.OnCommandLineListener() {
+                    @Override
+                    public void onCommandResult(int commandCode, int exitCode) {
+                        LogFile.writeLine("ls " + RAW_PATH + " command result: " + exitCode);
+                    }
+                    @Override
+                    public void onLine(String line) {
+                        if (line.endsWith(".i3av4"))
+                            LogFile.writeLine("ls " + RAW_PATH + " command line: " + line);
+                    }
+                });
+
+                rootShell.addCommand(new String[] {"ls " + RAW_PATH_ALT}, 2, new Shell.OnCommandLineListener() {
+                    @Override
+                    public void onCommandResult(int commandCode, int exitCode) {
+                        LogFile.writeLine("ls " + RAW_PATH_ALT + " command result: " + exitCode);
+                    }
+                    @Override
+                    public void onLine(String line) {
+                        if (line.endsWith(".i3av4"))
+                            LogFile.writeLine("ls " + RAW_PATH_ALT + " command line: " + line);
+                    }
+                });
+
                 rootShell.addCommand(new String[] {"mv " + RAW_PATH + "/* " + partialDir.getAbsolutePath()}, 2, new Shell.OnCommandLineListener() {
                     @Override
                     public void onCommandResult(int commandCode, int exitCode) {
@@ -393,6 +421,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         requestRoot();
         saveDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), SAVE_DIR_NAME);
         saveDir.mkdirs();
+        LogFile.initLogFile(saveDir);
         partialDir = new File(saveDir, PARTIAL_DIR_NAME);
         partialDir.mkdirs();
 
@@ -419,11 +448,15 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         turboCamera.setAutoFocus();
         turboCamera.enableRaw();
         turboCamera.setFlash(flashIsOn);
-        CaptureConfig captureConfig = turboCamera.getCaptureConfig();
-        CaptureSize previewSize = new CaptureSize(1280, 960);
-        captureConfig.setSelectedPreviewSize(previewSize);
-        captureConfig.setSelectedPictureSize(new CaptureSize(4096, 3072));
+        turboCamera.selectLargestPictureSize();
         Matrix matrix = new Matrix();
+        CaptureSize previewSize = turboCamera.getCaptureConfig().getSelectedPreviewSize();
+
+        LogFile.writeLine("Build.MODEL: " + Build.MODEL);
+        LogFile.writeLine("Build.MANUFACTURER: " + Build.MANUFACTURER);
+        LogFile.writeLine("Has Intel Camera available: " + IntelCamera.isIntelCameraAvailable());
+        LogFile.writeLine("Camera Parameters: " + turboCamera.dumpParameters());
+
         matrix.setScale(1, (float)previewSize.getHeight() / (float)previewSize.getWidth());
         textureView.setTransform(matrix);
         turboCamera.setDisplayOrientation(90);

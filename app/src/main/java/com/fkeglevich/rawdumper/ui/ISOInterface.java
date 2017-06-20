@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.camera.TurboCamera;
@@ -37,6 +38,7 @@ public class ISOInterface
     private HorizontalScrollView isoScrollView;
     private LinearLayout isoLayout;
     private AppCompatActivity compatActivity;
+    private Toast currentToast;
 
     private Fade fadeTransition = new Fade();
 
@@ -45,6 +47,7 @@ public class ISOInterface
         this.isoScrollView = (HorizontalScrollView)compatActivity.findViewById(R.id.isoScrollView);
         this.isoLayout =     (LinearLayout)compatActivity.findViewById(R.id.isoLayout);
         this.compatActivity = compatActivity;
+        this.currentToast = Toast.makeText(compatActivity, "", Toast.LENGTH_LONG);
     }
 
     public void updateISOValues(ExposureInfo exposureInfo, TurboCamera camera)
@@ -52,7 +55,7 @@ public class ISOInterface
         ValueButton isoButton;
         for (String value : exposureInfo.getIsoValues())
         {
-            isoButton = new ValueButton(compatActivity, exposureInfo.getIsoParameter(), value, camera);
+            isoButton = new ValueButton(compatActivity, exposureInfo.getIsoParameter(), value, camera, currentToast);
             isoButton.setText("ISO\n" + value);
             isoLayout.addView(isoButton);
         }

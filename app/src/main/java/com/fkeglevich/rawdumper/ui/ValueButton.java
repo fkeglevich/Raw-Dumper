@@ -20,6 +20,7 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.camera.TurboCamera;
 
@@ -33,14 +34,16 @@ public class ValueButton extends AppCompatButton implements View.OnClickListener
     private String key;
     private String value;
     private TurboCamera camera;
+    private Toast currentToast;
 
-    public ValueButton(Context context, String key, String value, TurboCamera camera)
+    public ValueButton(Context context, String key, String value, TurboCamera camera, Toast currentToast)
     {
         super(context);
         this.key = key;
         this.value = value;
         this.camera = camera;
         this.setBackground(null);
+        this.currentToast = currentToast; //Toast.makeText(context, "", Toast.LENGTH_LONG);
         this.setTextColor(0xFFFFFFFF);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(UiUtils.dpToPixels(70, context),
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -57,5 +60,7 @@ public class ValueButton extends AppCompatButton implements View.OnClickListener
     public void onClick(View v)
     {
         camera.setParameter(key, value);
+        currentToast.setText(this.getText());
+        currentToast.show();
     }
 }
