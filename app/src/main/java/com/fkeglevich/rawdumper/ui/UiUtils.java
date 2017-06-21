@@ -16,9 +16,14 @@
 
 package com.fkeglevich.rawdumper.ui;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Created by Flávio Keglevich on 13/05/2017.
@@ -53,5 +58,13 @@ public class UiUtils
     {
         Context context = view.getContext();
         setDpPadding(context.getResources().getDimension(id), view);
+    }
+
+    public static void showDialogInImmersiveMode(final Dialog dialog, final AppCompatActivity activity)
+    {
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+        dialog.show();
+        dialog.getWindow().getDecorView().setSystemUiVisibility(activity.getWindow().getDecorView().getSystemUiVisibility());
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
     }
 }

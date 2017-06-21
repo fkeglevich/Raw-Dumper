@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.raw.info;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.util.ByteArrayUtil;
@@ -49,12 +50,13 @@ public class DeviceInfoLoader
 
         try
         {
-            deviceInfoBytes = ByteArrayUtil.getRawResource(context, "z00ad");
+            deviceInfoBytes = ByteArrayUtil.getRawResource(context, R.raw.z00ad);
             result = moshi.adapter(DeviceInfo.class).fromJson(new String(deviceInfoBytes, Charset.defaultCharset()));
             return result;
         }
         catch (IOException e)
         {
+            Log.e("DeviceInfoLoader", "Error while loading device info");
             return null;
         }
 

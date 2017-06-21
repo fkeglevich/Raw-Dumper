@@ -41,6 +41,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -374,6 +375,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     {
         boolean everyGranted = true;
 
+        hide();
+
         for (int value : grantResults)
             if (value != PackageManager.PERMISSION_GRANTED)
             {
@@ -394,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         dialog.setMessage("Requesting root privilege...");
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
-        dialog.show();
+        UiUtils.showDialogInImmersiveMode(dialog, this);
 
         rootShell = new Shell.Builder().
                 useSU().
@@ -407,9 +410,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     @Override
                     public void onCommandResult(int commandCode, int exitCode, List<String> output) {
                         dialog.dismiss();
-                        hide();
                         if (exitCode != Shell.OnCommandResultListener.SHELL_RUNNING)
                             showNeedsRootPermissionsAlert();
+                            //openCamera();
                         else
                             openCamera();
                     }
@@ -418,12 +421,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     private void permissionsGranted()
     {
-        requestRoot();
         saveDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), SAVE_DIR_NAME);
         saveDir.mkdirs();
         LogFile.initLogFile(saveDir);
         partialDir = new File(saveDir, PARTIAL_DIR_NAME);
         partialDir.mkdirs();
+        requestRoot();
 
         if (DEBUG_MODE)
         {
@@ -516,11 +519,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 });
 
         AlertDialog alert = builder.create();
-        alert.show();
+        UiUtils.showDialogInImmersiveMode(alert, this);
     }
 
     private void showNeedsRootPermissionsAlert()
     {
+        hide();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setMessage("The app needs root permission to work.");
@@ -535,7 +539,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 });
 
         AlertDialog alert = builder.create();
-        alert.show();
+        UiUtils.showDialogInImmersiveMode(alert, this);
     }
 
     private void showDeviceIncompatibleAlert()
@@ -554,7 +558,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 });
 
         AlertDialog alert = builder.create();
-        alert.show();
+        UiUtils.showDialogInImmersiveMode(alert, this);
     }
 
     private void showAboutScreen()
@@ -643,7 +647,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 });
         builder.setView(messageView);
         AlertDialog alert = builder.create();
-        alert.show();
+        UiUtils.showDialogInImmersiveMode(alert, this);
     }
 
     private void showTextToast(String text)
