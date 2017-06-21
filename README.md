@@ -3,4 +3,4 @@ Raw Dumper is a simple camera app that can take raw pictures on the Zenfone 2 Z0
 
 Screenshot:
 
-<img src="https://s12.postimg.org/py7o7srxp/Screenshot_20170620-232250.jpg"/>
+<img src="https://s24.postimg.org/5i3g0dkqt/Screenshot.jpg"/>
