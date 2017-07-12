@@ -58,9 +58,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="22dp"
+        android:layout_marginEnd="172dp"
         android:layout_marginRight="22dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/round_button"
         android:padding="8dp"
         app:srcCompat="@drawable/ic_cached_black_24dp"/>
