@@ -71,8 +71,6 @@ import eu.chainfire.libsuperuser.Shell;
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback
 {
     private static final String SAVE_DIR_NAME = "RawDumper";
-    private static final String RAW_PATH = "/data/misc/media";
-    private static final String RAW_PATH_ALT = "/data";
     private static final String PARTIAL_DIR_NAME = ".partial";
     private static final String BKP_DIR_NAME = ".bkp";
 
@@ -137,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     lastISO = cameraAccess.getParameter(exposureInfo.getIsoParameter());
                     lastSS = cameraAccess.getParameter(exposureInfo.getShutterSpeedParameter());
 
-                    cameraAccess.takeRawPictureAsync(RAW_PATH, partialDir.getAbsolutePath(),
+                    cameraAccess.takeRawPictureAsync(partialDir.getAbsolutePath(),
                             saveDir.getAbsolutePath(), getApplicationContext(), new IRawCaptureCallback()
                             {
                                 @Override
@@ -455,7 +453,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                             public void onReopen()
                             {
                                 openCamera(true);
-                                access.resaveDngFiles(RAW_PATH, partialDir.getAbsolutePath(),
+                                access.resaveDngFiles(partialDir.getAbsolutePath(),
                                         saveDir.getAbsolutePath(), getApplicationContext(), new IRawCaptureCallback()
                                         {
                                             @Override

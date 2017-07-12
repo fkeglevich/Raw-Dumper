@@ -57,6 +57,7 @@ public class CameraAccess
 
     //Camera thread fields
     private final CameraUICallbacks uiCallbacks;
+    private DeviceInfo threadDeviceInfo;
 
     //Shared fields
     final CameraLock cameraLock;
@@ -111,7 +112,8 @@ public class CameraAccess
                     if (deviceInfoArray != null)
                     {
                         mainDeviceInfo = deviceInfoArray[1];
-                        converter = new I3av4ToDngConverter(deviceInfoArray[0]);
+                        threadDeviceInfo = deviceInfoArray[0];
+                        converter = new I3av4ToDngConverter(threadDeviceInfo);
 
                         errorWhileGettingCamInfo = false;
                         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
@@ -260,7 +262,7 @@ public class CameraAccess
         });
     }
 
-    public void takeRawPictureAsync(final String rawPath, final String partialDirPath,
+    public void takeRawPictureAsync(final String partialDirPath,
                              final String saveDirPath, final Context applicationContext,
                              final IRawCaptureCallback rawCaptureCallback)
     {
@@ -278,7 +280,7 @@ public class CameraAccess
                             public void onPictureTaken(byte[] data, Camera camera)
                             {
                                 camera.startPreview();
-                                saveDngFiles(rawPath, partialDirPath, saveDirPath, applicationContext, rawCaptureCallback);
+                                saveDngFiles(partialDirPath, saveDirPath, applicationContext, rawCaptureCallback);
                             }
                         });
                     else
@@ -288,21 +290,21 @@ public class CameraAccess
         });
     }
 
-    public void resaveDngFiles(final String rawPath, final String partialDirPath,
+    public void resaveDngFiles(final String partialDirPath,
                                final String saveDirPath, final Context applicationContext,
                                final IRawCaptureCallback rawCaptureCallback)
     {
         synchronized (cameraLock)
         {
-            saveDngFiles(rawPath, partialDirPath, saveDirPath, applicationContext, rawCaptureCallback);
+            saveDngFiles(partialDirPath, saveDirPath, applicationContext, rawCaptureCallback);
         }
     }
 
-    private void saveDngFiles(final String rawPath, final String partialDirPath,
+    private void saveDngFiles(final String partialDirPath,
                               final String saveDirPath, final Context applicationContext,
                               final IRawCaptureCallback rawCaptureCallback)
     {
-        ShellManager.getInstance().addSingleCommand("mv " + rawPath + "/* " + partialDirPath, new Shell.OnCommandLineListener() {
+        ShellManager.getInstance().addSingleCommand("mv " + threadDeviceInfo.getDumpDirectoryLocation() + "/* " + partialDirPath, new Shell.OnCommandLineListener() {
             @Override
             public void onCommandResult(int commandCode, int exitCode) {
                 boolean success;
