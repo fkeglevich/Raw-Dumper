@@ -28,11 +28,9 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 public class CameraInfo
 {
-    private static final String FRONT_CAMERA_SUFIX = " (front camera)";
-    private static final String REAR_CAMERA_SUFIX = " (rear camera)";
-
     private int id;
-    private String name;
+    private String model;
+    private String uniqueCameraModel;
 
     private SensorInfo sensor;
     private LensInfo lens;
@@ -49,8 +47,8 @@ public class CameraInfo
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
-        tiffWriter.setField(TiffTag.TIFFTAG_MODEL, Build.MODEL + (isFrontCamera() ? FRONT_CAMERA_SUFIX : REAR_CAMERA_SUFIX));
-        tiffWriter.setField(TiffTag.TIFFTAG_UNIQUECAMERAMODEL, name);
+        tiffWriter.setField(TiffTag.TIFFTAG_MODEL, model);
+        tiffWriter.setField(TiffTag.TIFFTAG_UNIQUECAMERAMODEL, uniqueCameraModel);
     }
 
     public int getId()
