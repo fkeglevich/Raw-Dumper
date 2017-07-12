@@ -19,8 +19,9 @@ package com.fkeglevich.rawdumper.raw.data;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 
 /**
+ * Enumerates the possible image orientations for the DNG files.
+ *
  * Created by Flávio Keglevich on 16/04/2017.
- * TODO: Add a class header comment!
  */
 
 public enum ImageOrientation

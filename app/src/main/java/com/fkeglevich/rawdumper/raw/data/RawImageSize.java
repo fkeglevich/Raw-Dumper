@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.raw.data;
 import com.fkeglevich.rawdumper.raw.RawUtil;
 
 /**
- * Represents the size of a raw image.
+ * Represents the size of a raw image. TODO: better explaining of this class
  *
  * Created by Flávio Keglevich on 26/12/2016.
  */

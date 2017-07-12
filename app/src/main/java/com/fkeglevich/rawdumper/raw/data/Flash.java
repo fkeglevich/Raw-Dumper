@@ -17,8 +17,9 @@
 package com.fkeglevich.rawdumper.raw.data;
 
 /**
+ * Enumerates the implemented values of the Flash Exif tag
+ *
  * Created by Flávio Keglevich on 27/05/2017.
- * TODO: Add a class header comment!
  */
 
 public enum Flash
