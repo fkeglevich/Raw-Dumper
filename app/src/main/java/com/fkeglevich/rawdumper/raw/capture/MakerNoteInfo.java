@@ -36,6 +36,11 @@ public class MakerNoteInfo
     public MakerNoteInfo()
     {   }
 
+    public MakerNoteInfo(byte[] originalMakerNote)
+    {
+        this.originalMakerNote = originalMakerNote.clone();
+    }
+
     public void writeTiffExifTags(TiffWriter tiffWriter)
     {
         if (exposureTime != null)

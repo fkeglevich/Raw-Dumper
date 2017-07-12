@@ -86,8 +86,8 @@ public class I3av4ToDngConverter
         }
         else
         {
-            captureInfo.makerNoteInfo = new MakerNoteInfo();
-            captureInfo.whiteBalanceInfo = new WhiteBalanceInfo();
+            captureInfo.makerNoteInfo = new MakerNoteInfo(mknBytes);
+            captureInfo.whiteBalanceInfo = new WhiteBalanceInfoExtractor().extractFrom(cameraConfig.cameraInfo.getColor());
         }
 
         i3av4RAFile.seek(rawDataStart);

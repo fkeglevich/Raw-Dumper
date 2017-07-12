@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.raw.capture;
 
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
+import com.fkeglevich.rawdumper.util.ColorUtil;
 import com.fkeglevich.rawdumper.util.MathUtil;
 
 /**
@@ -26,15 +27,26 @@ import com.fkeglevich.rawdumper.util.MathUtil;
 
 public class WhiteBalanceInfoExtractor
 {
+    private static final int DAYLIGHT_TEMPERATURE = 5503;
+
     public WhiteBalanceInfoExtractor()
     {   }
 
-    public WhiteBalanceInfo extractFrom(MakerNoteInfo makerNoteInfo, ColorInfo colorInfo)
+    public WhiteBalanceInfo extractFrom(double x, double y, ColorInfo colorInfo)
     {
         WhiteBalanceInfo result = new WhiteBalanceInfo();
-        double x = makerNoteInfo.wbCoordinatesXY[0];
-        double y = makerNoteInfo.wbCoordinatesXY[1];
         result.asShotNeutral = MathUtil.doubleArrayToFloat(colorInfo.calculateSimpleAsShotNeutral(x, y));
         return result;
+    }
+
+    public WhiteBalanceInfo extractFrom(MakerNoteInfo makerNoteInfo, ColorInfo colorInfo)
+    {
+        return extractFrom(makerNoteInfo.wbCoordinatesXY[0], makerNoteInfo.wbCoordinatesXY[1], colorInfo);
+    }
+
+    public WhiteBalanceInfo extractFrom(ColorInfo colorInfo)
+    {
+        float[] xy = ColorUtil.getXYFromCCT(DAYLIGHT_TEMPERATURE);
+        return extractFrom(xy[0], xy[1], colorInfo);
     }
 }
