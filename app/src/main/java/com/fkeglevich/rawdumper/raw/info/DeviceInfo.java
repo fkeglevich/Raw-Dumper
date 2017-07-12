@@ -29,12 +29,19 @@ public class DeviceInfo
     private String manufacturer;
     private CameraInfo[] cameras;
 
+    private String dumpDirectoryLocation;
+
     private DeviceInfo()
     {   }
 
     public CameraInfo[] getCameras()
     {
         return cameras;
+    }
+
+    public String getDumpDirectoryLocation()
+    {
+        return dumpDirectoryLocation;
     }
 
     public void writeTiffTags(TiffWriter tiffWriter)

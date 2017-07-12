@@ -253,5 +253,6 @@
             }
         }
     ],
-    "manufacturer": "asus"
+    "dumpDirectoryLocation": "/data/misc/media",
+    "manufacturer": "Asus"
 }
