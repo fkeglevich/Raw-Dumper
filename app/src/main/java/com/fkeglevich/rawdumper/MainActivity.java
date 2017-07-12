@@ -21,7 +21,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Build;
@@ -41,21 +40,23 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fkeglevich.rawdumper.camera.CaptureConfig;
-import com.fkeglevich.rawdumper.camera.CaptureSize;
-import com.fkeglevich.rawdumper.camera.ModeInfo;
-import com.fkeglevich.rawdumper.camera.TurboCamera;
-import com.fkeglevich.rawdumper.i3av4.I3av4ToDngConverter;
+import com.fkeglevich.rawdumper.camera.async.CameraAccess;
+import com.fkeglevich.rawdumper.camera.async.CameraConfig;
+import com.fkeglevich.rawdumper.camera.async.CameraOpenError;
+import com.fkeglevich.rawdumper.camera.async.CameraThread;
+import com.fkeglevich.rawdumper.camera.async.callbacks.IAutoFocusCallback;
+import com.fkeglevich.rawdumper.camera.async.callbacks.IOpenCameraCallback;
+import com.fkeglevich.rawdumper.camera.async.callbacks.IRawCaptureCallback;
+import com.fkeglevich.rawdumper.camera.async.callbacks.IReopenCameraCallback;
 import com.fkeglevich.rawdumper.log.LogFile;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
-import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;
+import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 import com.fkeglevich.rawdumper.ui.ISOInterface;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
 import com.fkeglevich.rawdumper.ui.ShutterSpeedInterface;
@@ -63,7 +64,6 @@ import com.fkeglevich.rawdumper.ui.UiUtils;
 import com.intel.camera.extensions.IntelCamera;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -85,30 +85,30 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     }
 
     private ModesInterface modesInterface;
-    private TurboCamera turboCamera;
     private TextureView textureView;
     private ImageButton captureBt;
     private ImageButton flashBt;
     private ImageButton infoBt;
+    private ImageButton camSwitchButton;
     private ProgressBar progressBar;
     private Toast currentToast;
     private ISOInterface isoInterface;
     private ShutterSpeedInterface shutterSpeedInterface;
     private Button isoBt;
     private ImageButton shutterSpeedBt;
-    private DeviceInfo deviceInfo;
+    private CameraAccess cameraAccess = null;
 
     private boolean flashIsOn = false;
-
-    private Shell.Interactive rootShell;
-
-    private Camera.PictureCallback jpegCallback;
 
     private File saveDir;
     private File partialDir;
     private File bkpDir;
 
-    I3av4ToDngConverter converter;
+    private int currentCamera = 0;
+    private int numCameras;
+
+    private String lastISO = null;
+    private String lastSS = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -117,64 +117,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         log("Starting app");
         setContentView(R.layout.activity_main);
 
-        jpegCallback = new Camera.PictureCallback()
-        {
-            @Override
-            public void onPictureTaken(byte[] data, Camera camera)
-            {
-                log("JPEG callback, restarting preview");
-                camera.startPreview();
-                log("JPEG callback, preview started");
-
-                rootShell.addCommand(new String[] {"ls " + RAW_PATH}, 2, new Shell.OnCommandLineListener() {
-                    @Override
-                    public void onCommandResult(int commandCode, int exitCode) {
-                        LogFile.writeLine("ls " + RAW_PATH + " command result: " + exitCode);
-                    }
-                    @Override
-                    public void onLine(String line) {
-                        if (line.endsWith(".i3av4"))
-                            LogFile.writeLine("ls " + RAW_PATH + " command line: " + line);
-                    }
-                });
-
-                rootShell.addCommand(new String[] {"ls " + RAW_PATH_ALT}, 2, new Shell.OnCommandLineListener() {
-                    @Override
-                    public void onCommandResult(int commandCode, int exitCode) {
-                        LogFile.writeLine("ls " + RAW_PATH_ALT + " command result: " + exitCode);
-                    }
-                    @Override
-                    public void onLine(String line) {
-                        if (line.endsWith(".i3av4"))
-                            LogFile.writeLine("ls " + RAW_PATH_ALT + " command line: " + line);
-                    }
-                });
-
-                rootShell.addCommand(new String[] {"mv " + RAW_PATH + "/* " + partialDir.getAbsolutePath()}, 2, new Shell.OnCommandLineListener() {
-                    @Override
-                    public void onCommandResult(int commandCode, int exitCode) {
-                        if (exitCode < 0)
-                        {
-                            enableCaptureButton();
-                            showTextToast("Error taking picture!");
-                        }
-                        else
-                        {
-                            showTextToast("Picture taken, converting to DNG...");
-                            if (!convertToDng())
-                                showTextToast("DNG file created successfully!");
-                            else
-                                showTextToast("Error creating DNG file!");
-                            enableCaptureButton();
-                        }
-                    }
-
-                    @Override
-                    public void onLine(String line) {
-                    }
-                });
-            }
-        };
+        numCameras = Camera.getNumberOfCameras();
 
         currentToast = Toast.makeText(this, "", Toast.LENGTH_LONG);
         modesInterface = new ModesInterface(this);
@@ -187,9 +130,28 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             @Override
             public void onClick(View v)
             {
-                if (turboCamera != null)
+                if (cameraAccess != null)
                 {
-                    turboCamera.takePicture(jpegCallback);
+                    ExposureInfo exposureInfo = cameraAccess.getDeviceInfo().getCameras()[currentCamera].getExposure();
+
+                    lastISO = cameraAccess.getParameter(exposureInfo.getIsoParameter());
+                    lastSS = cameraAccess.getParameter(exposureInfo.getShutterSpeedParameter());
+
+                    cameraAccess.takeRawPictureAsync(RAW_PATH, partialDir.getAbsolutePath(),
+                            saveDir.getAbsolutePath(), getApplicationContext(), new IRawCaptureCallback()
+                            {
+                                @Override
+                                public void onPictureTaken(boolean success)
+                                {
+                                    enableCaptureButton();
+
+                                    if (!success)
+                                        showTextToast("Error taking picture!");
+                                    else
+                                        showTextToast("DNG file created successfully!");
+                                }
+                            });
+
                     disableCaptureButton();
                 }
             }
@@ -201,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             @Override
             public void onClick(View v)
             {
-                if (turboCamera != null)
+                if (cameraAccess != null)
                 {
                     if (!flashIsOn)
                         flashBt.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_flash_on_black_24dp));
@@ -209,7 +171,25 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                         flashBt.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_flash_off_black_24dp));
 
                     flashIsOn = !flashIsOn;
-                    turboCamera.setFlash(flashIsOn);
+                    cameraAccess.getCameraFlash().setFlashValue(flashIsOn);
+                }
+            }
+        });
+
+        camSwitchButton = (ImageButton) findViewById(R.id.camSwitchButton);
+        camSwitchButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (cameraAccess != null)
+                {
+                    currentCamera++;
+                    if (currentCamera >= numCameras)
+                        currentCamera = 0;
+
+                    CameraThread.getInstance().closeCamera();
+                    openCamera();
                 }
             }
         });
@@ -230,9 +210,17 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             @Override
             public boolean onTouch(View v, MotionEvent event)
             {
-                if (event.getAction() == MotionEvent.ACTION_UP && turboCamera != null)
+                if (event.getAction() == MotionEvent.ACTION_UP && cameraAccess != null)
                 {
-                    turboCamera.touchFocus((int)event.getY(), (int)event.getY(), textureView.getWidth(), textureView.getHeight());
+                    cameraAccess.getCameraFocus().touchFocusAsync((int) event.getY(),
+                            (int) event.getY(), textureView.getWidth(), textureView.getHeight(), new IAutoFocusCallback()
+                            {
+                                @Override
+                                public void onAutoFocus(boolean success)
+                                {
+                                    //no-op
+                                }
+                            });
                 }
                 return true;
             }
@@ -244,28 +232,28 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
             {
-                deviceInfo = new DeviceInfoLoader().loadDeviceInfo(getApplicationContext());
-                if (deviceInfo != null)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 {
-                    converter = new I3av4ToDngConverter(deviceInfo);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                     {
-                        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-                                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                        {
 
-                            ActivityCompat.requestPermissions(thiz, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                        }
-                        else
-                        {
-                            permissionsGranted();
-                        }
+                        ActivityCompat.requestPermissions(thiz, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    }
+                    else
+                    {
+                        permissionsGranted();
                     }
                 }
                 else
                 {
-                    showDeviceIncompatibleAlert();
+                    permissionsGranted();
                 }
+
+                /*else
+                {
+                    showDeviceIncompatibleAlert();
+                }*/
             }
 
             @Override
@@ -277,17 +265,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             @Override
             public boolean onSurfaceTextureDestroyed(SurfaceTexture surface)
             {
-                if (turboCamera != null)
-                {
-                    try
-                    {
-                        turboCamera.stopPreview();
-                    }
-                    finally
-                    {
-                        turboCamera.close();
-                    }
-                }
+                CameraThread.getInstance().closeCamera();
                 return true;
             }
 
@@ -318,6 +296,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 shutterSpeedInterface.toggleVisibility();
             }
         });
+
+
     }
 
     @Override
@@ -339,14 +319,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     public void onResume() {
         super.onResume();
         hide();
-    }
-
-    @Override
-    public void onPause()
-    {
-        isoInterface.clean();
-        shutterSpeedInterface.clean();
-        super.onPause();
     }
 
     /**
@@ -392,31 +364,33 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     private void requestRoot()
     {
-        final ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setTitle("Please wait");
-        dialog.setMessage("Requesting root privilege...");
-        dialog.setIndeterminate(true);
-        dialog.setCancelable(false);
-        UiUtils.showDialogInImmersiveMode(dialog, this);
+        //if (ShellManager.getInstance().isRunning())
+        if (CameraThread.getInstance().isShellRunning())
+        {
+            openCamera();
+        }
+        else
+        {
+            final ProgressDialog dialog = new ProgressDialog(this);
+            dialog.setTitle("Please wait");
+            dialog.setMessage("Requesting root privilege...");
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            UiUtils.showDialogInImmersiveMode(dialog, this);
 
-        rootShell = new Shell.Builder().
-                useSU().
-                setWantSTDERR(true).
-                setWatchdogTimeout(5).
-                setMinimalLogging(true).
-                open(new Shell.OnCommandResultListener() {
-
-                    // Callback to report whether the shell was successfully started up
-                    @Override
-                    public void onCommandResult(int commandCode, int exitCode, List<String> output) {
-                        dialog.dismiss();
-                        if (exitCode != Shell.OnCommandResultListener.SHELL_RUNNING)
-                            showNeedsRootPermissionsAlert();
-                            //openCamera();
-                        else
-                            openCamera();
-                    }
-                });
+            CameraThread.getInstance().openShell(new Shell.OnCommandResultListener()
+            {
+                @Override
+                public void onCommandResult(int commandCode, int exitCode, List<String> output)
+                {
+                    dialog.dismiss();
+                    if (exitCode != Shell.OnCommandResultListener.SHELL_RUNNING)
+                        showNeedsRootPermissionsAlert();
+                    else
+                        openCamera();
+                }
+            });
+        }
     }
 
     private void permissionsGranted()
@@ -434,73 +408,96 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             bkpDir.mkdirs();
         }
 
-        if (partialDir.listFiles().length > 0)
+        /*if (partialDir.listFiles().length > 0)
         {
             showTextToast("Found partial pictures! Converting them to DNG");
             convertToDng();
-        }
+        }*/
     }
 
     private void openCamera()
     {
-        hide();
-        turboCamera = TurboCamera.open(0);
-        isoInterface.updateISOValues(deviceInfo.getCameras()[0].getExposure(), turboCamera);
-        shutterSpeedInterface.updateSSValues(deviceInfo.getCameras()[0].getExposure(), turboCamera);
-        turboCamera.setCameraMode(ModeInfo.SINGLE_JPEG);
-        turboCamera.setAutoFocus();
-        turboCamera.enableRaw();
-        turboCamera.setFlash(flashIsOn);
-        turboCamera.selectLargestPictureSize();
-        Matrix matrix = new Matrix();
-        CaptureSize previewSize = turboCamera.getCaptureConfig().getSelectedPreviewSize();
-
-        LogFile.writeLine("Build.MODEL: " + Build.MODEL);
-        LogFile.writeLine("Build.MANUFACTURER: " + Build.MANUFACTURER);
-        LogFile.writeLine("Has Intel Camera available: " + IntelCamera.isIntelCameraAvailable());
-        LogFile.writeLine("Camera Parameters: " + turboCamera.dumpParameters());
-
-        matrix.setScale(1, (float)previewSize.getHeight() / (float)previewSize.getWidth());
-        textureView.setTransform(matrix);
-        turboCamera.setDisplayOrientation(90);
-        try
-        {
-            turboCamera.setPreviewTexture(textureView.getSurfaceTexture());
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        turboCamera.startPreview();
+        openCamera(false);
     }
 
-    private boolean convertToDng()
+    private void openCamera(final boolean reopen)
     {
-        String[] files = partialDir.list();
-        File input, output;
-        boolean error = false;
-        for (String filePath : files)
+        hide();
+
+        CameraThread.getInstance().openCamera(currentCamera, getApplicationContext(), new IOpenCameraCallback()
         {
-            if (filePath.endsWith(".i3av4"))
+            @Override
+            public void cameraOpened(final CameraAccess access, CameraOpenError openError)
             {
-                input = new File(partialDir, filePath);
-                output = new File(saveDir, input.getName() + ".dng");
-                try
+                if (access != null && openError.equals(CameraOpenError.NONE))
                 {
-                    converter.convert(input.getAbsolutePath(), output.getAbsolutePath(), getApplicationContext());
-                    if (DEBUG_MODE)
-                        input.renameTo(new File(bkpDir, filePath));
-                    else
-                        input.delete();
+                    cameraAccess = access;
+                    CameraConfig cameraConfig = access.getCameraConfig();
+
+                    cameraConfig.setupCamera();
+                    cameraConfig.setupPreviewTexture(textureView);
+
+                    if (reopen)
+                    {
+                        ExposureInfo exposureInfo = cameraAccess.getDeviceInfo().getCameras()[currentCamera].getExposure();
+                        if (lastISO != null)
+                            cameraAccess.setParameter(exposureInfo.getIsoParameter(), lastISO);
+
+                        if (lastSS != null)
+                            cameraAccess.setParameter(exposureInfo.getShutterSpeedParameter(), lastSS);
+                    }
+
+                    if (currentCamera == 1)
+                    {
+                        access.setReopenCallback(new IReopenCameraCallback()
+                        {
+                            @Override
+                            public void onReopen()
+                            {
+                                openCamera(true);
+                                access.resaveDngFiles(RAW_PATH, partialDir.getAbsolutePath(),
+                                        saveDir.getAbsolutePath(), getApplicationContext(), new IRawCaptureCallback()
+                                        {
+                                            @Override
+                                            public void onPictureTaken(boolean success)
+                                            {
+                                                enableCaptureButton();
+
+                                                if (!success)
+                                                    showTextToast("Error taking picture!");
+                                                else
+                                                    showTextToast("DNG file created successfully!");
+                                            }
+                                        });
+                            }
+                        });
+                    }
+                    LogFile.writeLine("Build.MODEL: " + Build.MODEL);
+                    LogFile.writeLine("Build.MANUFACTURER: " + Build.MANUFACTURER);
+                    LogFile.writeLine("Has Intel Camera available: " + IntelCamera.isIntelCameraAvailable());
+                    LogFile.writeLine("Camera Parameters: " + cameraConfig.dumpParameters());
+
+                    DeviceInfo deviceInfo = access.getDeviceInfo();
+                    isoInterface.updateISOValues(deviceInfo.getCameras()[currentCamera].getExposure(), access);
+                    shutterSpeedInterface.updateSSValues(deviceInfo.getCameras()[currentCamera].getExposure(), access);
+                    flashBt.setVisibility(access.hasFlash() ? View.VISIBLE : View.INVISIBLE);
+
+                    access.startPreview();
+                    /*access.startPreviewAsync(new IStartPreviewCallback()
+                    {
+                        @Override
+                        public void previewStarted()
+                        {
+                            //no-op
+                        }
+                    });*/
                 }
-                catch (IOException e)
+                else
                 {
-                    error = true;
-                    e.printStackTrace();
+                    throw new RuntimeException("Error opening camera!");
                 }
             }
-        }
-        return error;
+        });
     }
 
     private void showNeedsPermissionsAlert()
@@ -660,6 +657,22 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     {
         captureBt.setClickable(false);
         captureBt.setEnabled(false);
+
+        flashBt.setClickable(false);
+        flashBt.setEnabled(false);
+
+        camSwitchButton.setClickable(false);
+        camSwitchButton.setEnabled(false);
+
+        isoInterface.forceHide();
+        shutterSpeedInterface.forceHide();
+
+        isoBt.setClickable(false);
+        isoBt.setEnabled(false);
+
+        shutterSpeedBt.setClickable(false);
+        shutterSpeedBt.setEnabled(false);
+
         captureBt.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -668,6 +681,19 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     {
         captureBt.setClickable(true);
         captureBt.setEnabled(true);
+
+        flashBt.setClickable(true);
+        flashBt.setEnabled(true);
+
+        camSwitchButton.setClickable(true);
+        camSwitchButton.setEnabled(true);
+
+        isoBt.setClickable(true);
+        isoBt.setEnabled(true);
+
+        shutterSpeedBt.setClickable(true);
+        shutterSpeedBt.setEnabled(true);
+
         captureBt.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
     }

@@ -22,7 +22,9 @@ import com.fkeglevich.rawdumper.dng.DngImageWriter;
 import com.fkeglevich.rawdumper.dng.DngWriter;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.DateExtractor;
+import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
+import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfo;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfoExtractor;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
@@ -76,8 +78,17 @@ public class I3av4ToDngConverter
         captureInfo.orientation = ImageOrientation.TOPLEFT;
         captureInfo.camera = cameraConfig.cameraInfo;
         captureInfo.imageSize = cameraConfig.rawImageSize;
-        captureInfo.makerNoteInfo = makerNoteInfoExtractor.extractFrom(mknBytes);
-        captureInfo.whiteBalanceInfo = new WhiteBalanceInfoExtractor().extractFrom(captureInfo.makerNoteInfo, cameraConfig.cameraInfo.getColor());
+
+        if (cameraConfig.cameraInfo.isHasKnownMakernote())
+        {
+            captureInfo.makerNoteInfo = makerNoteInfoExtractor.extractFrom(mknBytes);
+            captureInfo.whiteBalanceInfo = new WhiteBalanceInfoExtractor().extractFrom(captureInfo.makerNoteInfo, cameraConfig.cameraInfo.getColor());
+        }
+        else
+        {
+            captureInfo.makerNoteInfo = new MakerNoteInfo();
+            captureInfo.whiteBalanceInfo = new WhiteBalanceInfo();
+        }
 
         i3av4RAFile.seek(rawDataStart);
         DngWriter writer = DngWriter.open(dngPath);

@@ -18,8 +18,6 @@ package com.fkeglevich.rawdumper.ui;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;

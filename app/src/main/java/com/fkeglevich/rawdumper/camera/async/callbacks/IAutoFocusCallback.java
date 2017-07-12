@@ -14,29 +14,14 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera;
-
-import com.fkeglevich.rawdumper.camera.mode.ACameraMode;
-import com.fkeglevich.rawdumper.camera.mode.SingleJPEGMode;
+package com.fkeglevich.rawdumper.camera.async.callbacks;
 
 /**
- * Created by Flávio Keglevich on 24/04/2017.
+ * Created by Flávio Keglevich on 08/07/2017.
  * TODO: Add a class header comment!
  */
 
-public enum ModeInfo
+public interface IAutoFocusCallback
 {
-    SINGLE_JPEG(SingleJPEGMode.class);
-
-    private Class<? extends ACameraMode> modeClass;
-
-    ModeInfo(Class<? extends ACameraMode> modeClass)
-    {
-        this.modeClass = modeClass;
-    }
-
-    public Class<? extends ACameraMode> getModeClass()
-    {
-        return modeClass;
-    }
+    void onAutoFocus(boolean success);
 }

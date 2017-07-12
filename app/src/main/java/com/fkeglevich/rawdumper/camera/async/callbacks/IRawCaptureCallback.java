@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera;
+package com.fkeglevich.rawdumper.camera.async.callbacks;
 
 /**
- * Created by Flávio Keglevich on 27/05/2017.
+ * Created by Flávio Keglevich on 11/07/2017.
  * TODO: Add a class header comment!
  */
 
-public interface IAsyncCamOpenCallback
+public interface IRawCaptureCallback
 {
-    void cameraOpened(TurboCamera camera);
+    void onPictureTaken(boolean success);
 }

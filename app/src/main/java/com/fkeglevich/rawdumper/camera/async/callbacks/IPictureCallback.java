@@ -14,25 +14,14 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw.capture;
-
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
+package com.fkeglevich.rawdumper.camera.async.callbacks;
 
 /**
- * Created by Flávio Keglevich on 14/06/2017.
+ * Created by Flávio Keglevich on 11/07/2017.
  * TODO: Add a class header comment!
  */
 
-public class WhiteBalanceInfo
+public interface IPictureCallback
 {
-    public float[] asShotNeutral = new float[] {1f, 1f, 1f};
-
-    public WhiteBalanceInfo()
-    {   }
-
-    public void writeTiffTags(TiffWriter tiffWriter)
-    {
-        tiffWriter.setField(TiffTag.TIFFTAG_ASSHOTNEUTRAL, asShotNeutral, true);
-    }
+    void onPictureTaken(byte[] data);
 }

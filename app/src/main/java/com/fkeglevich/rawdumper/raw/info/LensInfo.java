@@ -16,9 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import com.fkeglevich.rawdumper.tiff.ExifTag;
+import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
-import com.fkeglevich.rawdumper.util.MathUtil;
 
 /**
  * Created by Flávio Keglevich on 11/06/2017.
@@ -27,19 +26,16 @@ import com.fkeglevich.rawdumper.util.MathUtil;
 
 public class LensInfo
 {
-    private double aperture;
+    private Double aperture = null;
 
     private LensInfo()
     {   }
 
     public void writeTiffExifTags(TiffWriter tiffWriter)
     {
-        tiffWriter.setField(ExifTag.EXIFTAG_FNUMBER, aperture);
-        tiffWriter.setField(ExifTag.EXIFTAG_APERTUREVALUE, apexApertureValue());
+        if (aperture != null)
+            ExifTagWriter.writeApertureTags(tiffWriter, aperture);
     }
 
-    private double apexApertureValue()
-    {
-        return 2 * MathUtil.log2(aperture);
-    }
+
 }

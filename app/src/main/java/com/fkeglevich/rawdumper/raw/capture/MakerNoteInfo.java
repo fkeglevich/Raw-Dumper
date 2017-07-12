@@ -16,9 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
-import com.fkeglevich.rawdumper.tiff.ExifTag;
+import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
-import com.fkeglevich.rawdumper.util.MathUtil;
 
 /**
  * Created by Flávio Keglevich on 27/05/2017.
@@ -40,20 +39,12 @@ public class MakerNoteInfo
     public void writeTiffExifTags(TiffWriter tiffWriter)
     {
         if (exposureTime != null)
-        {
-            tiffWriter.setField(ExifTag.EXIFTAG_EXPOSURETIME, exposureTime);
-            tiffWriter.setField(ExifTag.EXIFTAG_SHUTTERSPEEDVALUE, apexShutterSpeedValue());
-        }
+            ExifTagWriter.writeExposureTimeTags(tiffWriter, exposureTime);
 
         if (iso != null)
-            tiffWriter.setField(ExifTag.EXIFTAG_ISOSPEEDRATINGS, new short[]{iso.shortValue()}, true);
+            ExifTagWriter.writeISOTag(tiffWriter, iso.shortValue());
 
         if (originalMakerNote != null)
-            tiffWriter.setField(ExifTag.EXIFTAG_MAKERNOTE, originalMakerNote, true);
-    }
-
-    private double apexShutterSpeedValue()
-    {
-        return -1.0 * MathUtil.log2(exposureTime);
+            ExifTagWriter.writeMakerNoteTag(tiffWriter, originalMakerNote);
     }
 }

@@ -14,35 +14,35 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.pipeline;
+package com.fkeglevich.rawdumper.camera.async.pipeline;
 
 import android.hardware.Camera;
 
-import com.intel.camera.extensions.IntelCamera;
+import com.fkeglevich.rawdumper.camera.async.callbacks.IIOResultCallback;
+import com.fkeglevich.rawdumper.camera.async.io.IOAccess;
 
 /**
- * Created by Flávio Keglevich on 22/04/2017.
+ * Created by Flávio Keglevich on 25/06/2017.
  * TODO: Add a class header comment!
  */
 
-public abstract class APicturePipeline
+public class ContinuousPipeline extends BasicPipeline
 {
-    protected IntelCamera camera;
-
-    Camera.ShutterCallback shutterCallback = null;
-    Camera.PictureCallback rawCallback = null;
-    Camera.PictureCallback postviewCallback = null;
-    Camera.PictureCallback pictureCallback = null;
-
-    protected APicturePipeline(IntelCamera camera)
+    public ContinuousPipeline(IIOResultCallback ioCallback)
     {
-        this.camera = camera;
+        super(ioCallback);
     }
 
-    abstract void initCallbacks();
-
-    public void takePicture()
+    @Override
+    void initCallbacks()
     {
-        camera.getCameraDevice().takePicture(shutterCallback, rawCallback, postviewCallback, pictureCallback);
+        pictureCallback = new Camera.PictureCallback()
+        {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera)
+            {
+                IOAccess.writeBytesToFile(data, "aa//sd", ioCallback);
+            }
+        };
     }
 }

@@ -49,8 +49,13 @@ public class CameraInfo
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
-        tiffWriter.setField(TiffTag.TIFFTAG_MODEL, Build.MODEL + (isFrontCamera ? FRONT_CAMERA_SUFIX : REAR_CAMERA_SUFIX));
+        tiffWriter.setField(TiffTag.TIFFTAG_MODEL, Build.MODEL + (isFrontCamera() ? FRONT_CAMERA_SUFIX : REAR_CAMERA_SUFIX));
         tiffWriter.setField(TiffTag.TIFFTAG_UNIQUECAMERAMODEL, name);
+    }
+
+    public int getId()
+    {
+        return id;
     }
 
     public SensorInfo getSensor()
@@ -68,13 +73,23 @@ public class CameraInfo
         return color;
     }
 
+    public ExposureInfo getExposure()
+    {
+        return exposure;
+    }
+
     public OpcodeListInfo[] getOpcodes()
     {
         return opcodes;
     }
 
-    public ExposureInfo getExposure()
+    public boolean isFrontCamera()
     {
-        return exposure;
+        return isFrontCamera;
+    }
+
+    public boolean isHasKnownMakernote()
+    {
+        return hasKnownMakernote;
     }
 }

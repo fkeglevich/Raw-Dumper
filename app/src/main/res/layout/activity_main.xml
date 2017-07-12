@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
+    android:background="@null"
     tools:context="com.fkeglevich.rawdumper.MainActivity">
 
     <TextureView
@@ -49,6 +50,20 @@
         android:background="@drawable/round_button"
         android:padding="8dp"
         app:srcCompat="@drawable/ic_flash_off_black_24dp"/>
+
+    <ImageButton
+        android:id="@+id/camSwitchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/round_button"
+        android:padding="8dp"
+        app:srcCompat="@drawable/ic_cached_black_24dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

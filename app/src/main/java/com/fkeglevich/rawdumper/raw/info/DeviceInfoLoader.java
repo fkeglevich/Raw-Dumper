@@ -21,6 +21,7 @@ import android.util.Log;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.util.ByteArrayUtil;
+import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 import java.io.IOException;
@@ -40,6 +41,32 @@ public class DeviceInfoLoader
         moshi = new Moshi.Builder().build();
     }
 
+    public DeviceInfo[] loadCopiesOfDeviceInfo(Context applicationContext, int count, int id)
+    {
+        DeviceInfo[] result = new DeviceInfo[count];
+        JsonAdapter<DeviceInfo> adapter = moshi.adapter(DeviceInfo.class);
+        int i;
+        try
+        {
+            String deviceInfoJson = getDeviceInfoJson(applicationContext, id);
+            for (i = 0; i < count; i++)
+                result[i] = adapter.fromJson(deviceInfoJson);
+        }
+        catch (IOException ioe)
+        {
+            Log.e("DeviceInfoLoader", "Error while loading device info");
+            System.exit(-1);
+            return null;
+        }
+        return result;
+    }
+
+    private String getDeviceInfoJson(Context applicationContext, int id) throws IOException
+    {
+        return new String(ByteArrayUtil.getRawResource(applicationContext, id), Charset.defaultCharset());
+    }
+
+
     public DeviceInfo loadDeviceInfo(Context context)
     {
         byte[] supportedDevicesBytes;
@@ -51,12 +78,14 @@ public class DeviceInfoLoader
         try
         {
             deviceInfoBytes = ByteArrayUtil.getRawResource(context, R.raw.z00ad);
+            //deviceInfoBytes = ByteArrayUtil.getRawResource(context, R.raw.xt890);
             result = moshi.adapter(DeviceInfo.class).fromJson(new String(deviceInfoBytes, Charset.defaultCharset()));
             return result;
         }
         catch (IOException e)
         {
             Log.e("DeviceInfoLoader", "Error while loading device info");
+            System.exit(-1);
             return null;
         }
 

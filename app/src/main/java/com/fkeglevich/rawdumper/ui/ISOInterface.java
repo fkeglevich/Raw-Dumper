@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.R;
-import com.fkeglevich.rawdumper.camera.TurboCamera;
+import com.fkeglevich.rawdumper.camera.async.CameraAccess;
 import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
@@ -50,12 +50,13 @@ public class ISOInterface
         this.currentToast = Toast.makeText(compatActivity, "", Toast.LENGTH_LONG);
     }
 
-    public void updateISOValues(ExposureInfo exposureInfo, TurboCamera camera)
+    public void updateISOValues(ExposureInfo exposureInfo, CameraAccess cameraAccess)
     {
+        isoLayout.removeAllViews();
         ValueButton isoButton;
         for (String value : exposureInfo.getIsoValues())
         {
-            isoButton = new ValueButton(compatActivity, exposureInfo.getIsoParameter(), value, camera, currentToast);
+            isoButton = new ValueButton(compatActivity, exposureInfo.getIsoParameter(), value, cameraAccess, currentToast);
             isoButton.setText("ISO\n" + value);
             isoLayout.addView(isoButton);
         }
@@ -78,10 +79,5 @@ public class ISOInterface
     {
         TransitionManager.beginDelayedTransition(isoScrollView, fadeTransition);
         isoScrollView.setVisibility(View.INVISIBLE);
-    }
-
-    public void clean()
-    {
-        isoLayout.removeAllViews();
     }
 }

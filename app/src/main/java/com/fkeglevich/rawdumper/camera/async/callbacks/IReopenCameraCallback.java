@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.pipeline;
+package com.fkeglevich.rawdumper.camera.async.callbacks;
 
 /**
- * Created by Flávio Keglevich on 22/04/2017.
+ * Created by Flávio Keglevich on 11/07/2017.
  * TODO: Add a class header comment!
  */
 
-public interface IShutterCallback
+public interface IReopenCameraCallback
 {
-    void onShutter();
+    void onReopen();
 }

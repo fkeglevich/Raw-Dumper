@@ -16,14 +16,10 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
-import android.annotation.SuppressLint;
-
-import com.fkeglevich.rawdumper.tiff.ExifTag;
+import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -33,17 +29,6 @@ import java.util.GregorianCalendar;
 
 public class DateInfo
 {
-    // DateTime formatting
-    private static final String DATE_PATTERN = "yyyy:MM:dd HH:mm:ss";
-
-    @SuppressLint("SimpleDateFormat")
-    static String formatCalendar(Calendar calendar)
-    {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
-        dateFormat.setCalendar(calendar);
-        return dateFormat.format(calendar.getTime());
-    }
-
     public GregorianCalendar captureDate = null;
 
     public DateInfo()
@@ -52,15 +37,12 @@ public class DateInfo
     public void writeTiffExifTags(TiffWriter tiffWriter)
     {
         if (captureDate != null)
-        {
-            tiffWriter.setField(ExifTag.EXIFTAG_DATETIMEORIGINAL, formatCalendar(captureDate));
-            tiffWriter.setField(ExifTag.EXIFTAG_SUBSECTIMEORIGINAL, "" + captureDate.get(Calendar.MILLISECOND));
-        }
+            ExifTagWriter.writeDateTimeOriginalTags(tiffWriter, captureDate);
     }
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         if (captureDate != null)
-            tiffWriter.setField(TiffTag.TIFFTAG_DATETIME, formatCalendar(captureDate));
+            tiffWriter.setField(TiffTag.TIFFTAG_DATETIME, ExifTagWriter.formatCalendarTag(captureDate));
     }
 }

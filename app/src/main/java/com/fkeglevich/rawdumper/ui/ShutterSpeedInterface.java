@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.R;
-import com.fkeglevich.rawdumper.camera.TurboCamera;
+import com.fkeglevich.rawdumper.camera.async.CameraAccess;
 import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
@@ -50,12 +50,13 @@ public class ShutterSpeedInterface
         this.currentToast = Toast.makeText(compatActivity, "", Toast.LENGTH_LONG);
     }
 
-    public void updateSSValues(ExposureInfo exposureInfo, TurboCamera camera)
+    public void updateSSValues(ExposureInfo exposureInfo, CameraAccess cameraAccess)
     {
+        shutterSpeedLayout.removeAllViews();
         ValueButton ssButton;
         for (String value : exposureInfo.getShutterSpeedValues())
         {
-            ssButton = new ValueButton(compatActivity, exposureInfo.getShutterSpeedParameter(), value, camera, currentToast);
+            ssButton = new ValueButton(compatActivity, exposureInfo.getShutterSpeedParameter(), value, cameraAccess, currentToast);
             if (value.equals("0"))
                 ssButton.setText("auto");
             else
@@ -81,10 +82,5 @@ public class ShutterSpeedInterface
     {
         TransitionManager.beginDelayedTransition(shutterSpeedScrollView, fadeTransition);
         shutterSpeedScrollView.setVisibility(View.INVISIBLE);
-    }
-
-    public void clean()
-    {
-        shutterSpeedLayout.removeAllViews();
     }
 }

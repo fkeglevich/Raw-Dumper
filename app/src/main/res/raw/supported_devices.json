@@ -27,6 +27,10 @@
         {
             "deviceInfoFile": "z008d",
             "deviceModel": "ASUS_Z008B"
+        },
+		{
+            "deviceInfoFile": "xt890",
+            "deviceModel": "XT890"
         }
     ]
 }

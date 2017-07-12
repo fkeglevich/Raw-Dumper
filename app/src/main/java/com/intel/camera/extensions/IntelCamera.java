@@ -375,6 +375,9 @@ public class IntelCamera {
     }
 
     private void init() {
+        if (mCameraDevice == null)
+            throw new RuntimeException();
+
         if (intelCameraAvailable)
         {
             native_setup(new WeakReference<IntelCamera>(this), mCameraDevice);

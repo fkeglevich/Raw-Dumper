@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.ui.dialogs;
+package com.fkeglevich.rawdumper.camera.async.callbacks;
 
 /**
- * Created by Flávio Keglevich on 21/06/2017.
+ * Created by Flávio Keglevich on 08/07/2017.
  * TODO: Add a class header comment!
  */
 
-public class RootPermissionAlert
+public interface IStartPreviewCallback
 {
+    void previewStarted();
 }

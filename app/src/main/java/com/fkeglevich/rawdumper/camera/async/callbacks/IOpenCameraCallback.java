@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera;
+package com.fkeglevich.rawdumper.camera.async.callbacks;
+
+import com.fkeglevich.rawdumper.camera.async.CameraAccess;
+import com.fkeglevich.rawdumper.camera.async.CameraOpenError;
 
 /**
- * Created by Flávio Keglevich on 28/05/2017.
+ * Created by Flávio Keglevich on 25/06/2017.
  * TODO: Add a class header comment!
  */
 
-public interface ICaptureConfigCallback
+public interface IOpenCameraCallback
 {
-
+    void cameraOpened(CameraAccess access, CameraOpenError openError);
 }

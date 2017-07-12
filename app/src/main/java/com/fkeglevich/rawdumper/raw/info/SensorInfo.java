@@ -16,10 +16,14 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
+import android.util.Log;
+
 import com.fkeglevich.rawdumper.raw.data.BayerPattern;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
+
+import java.util.Arrays;
 
 /**
  * Created by Flávio Keglevich on 11/06/2017.
@@ -75,5 +79,7 @@ public class SensorInfo
         tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL,             new long[] { whiteLevel }, true);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVELREPEATDIM,    DEFAULT_BLACK_LEVEL_REPEAT_DIM, false);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVEL,             blackLevel, true);
+
+        Log.i("BLACKLEVEL", Arrays.toString(blackLevel));
     }
 }

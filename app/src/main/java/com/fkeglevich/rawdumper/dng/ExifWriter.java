@@ -20,7 +20,7 @@ import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.Flash;
-import com.fkeglevich.rawdumper.tiff.ExifTag;
+import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -43,7 +43,7 @@ public class ExifWriter
 
     void writeTiffExifTags(TiffWriter tiffWriter, CaptureInfo captureInfo)
     {
-        tiffWriter.setField(ExifTag.EXIFTAG_EXIFVERSION, exifVersion, false);
+        ExifTagWriter.writeExifVersionTag(tiffWriter, exifVersion);
         captureInfo.makerNoteInfo.writeTiffExifTags(tiffWriter);
         captureInfo.date.writeTiffExifTags(tiffWriter);
         captureInfo.camera.getLens().writeTiffExifTags(tiffWriter);
@@ -54,16 +54,16 @@ public class ExifWriter
         {
             double exposureCompensation = parameters.getExposureCompensationStep() *
                     parameters.getExposureCompensation();
-            tiffWriter.setField(ExifTag.EXIFTAG_EXPOSUREBIASVALUE, exposureCompensation);
+            ExifTagWriter.writeExposureBiasTag(tiffWriter, exposureCompensation);
 
             //TODO: Better handling of flash
             if (!Camera.Parameters.FLASH_MODE_AUTO.equals(parameters.getFlashMode()))
             {
                 Flash flash = Camera.Parameters.FLASH_MODE_OFF.equals(parameters.getFlashMode()) ? Flash.DID_NOT_FIRE : Flash.FIRED;
-                tiffWriter.setField(ExifTag.EXIFTAG_FLASH, flash.getExifValue());
+                ExifTagWriter.writeFlashTag(tiffWriter, flash);
             }
 
-            tiffWriter.setField(ExifTag.EXIFTAG_FOCALLENGTH, parameters.getFocalLength());
+            ExifTagWriter.writeFocalLengthTag(tiffWriter, parameters.getFocalLength());
         }
     }
 

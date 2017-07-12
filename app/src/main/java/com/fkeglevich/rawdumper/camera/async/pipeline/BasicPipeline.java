@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.pipeline;
+package com.fkeglevich.rawdumper.camera.async.pipeline;
 
 import android.hardware.Camera;
 
-import com.intel.camera.extensions.IntelCamera;
+import com.fkeglevich.rawdumper.camera.async.callbacks.IIOResultCallback;
+import com.fkeglevich.rawdumper.camera.async.io.IOAccess;
 
 /**
- * Created by Flávio Keglevich on 22/04/2017.
+ * Created by Flávio Keglevich on 25/06/2017.
  * TODO: Add a class header comment!
  */
 
-public class JPEGPipeline extends APicturePipeline
+public class BasicPipeline extends APicturePipeline
 {
-    public JPEGPipeline(IntelCamera camera)
+    protected IIOResultCallback ioCallback;
+
+    public BasicPipeline(IIOResultCallback ioCallback)
     {
-        super(camera);
+        this.ioCallback = ioCallback;
     }
 
     @Override
@@ -40,9 +43,8 @@ public class JPEGPipeline extends APicturePipeline
             @Override
             public void onPictureTaken(byte[] data, Camera camera)
             {
-                //dealWithData
                 camera.startPreview();
-                //depends on IntelCamera display state!!!
+                IOAccess.writeBytesToFile(data, "aa//sd", ioCallback);
             }
         };
     }

@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera;
+package com.fkeglevich.rawdumper.camera.async;
 
 /**
- * Created by Flávio Keglevich on 22/04/2017.
+ * Created by Flávio Keglevich on 29/06/2017.
  * TODO: Add a class header comment!
  */
 
-public enum ImageFormat
+public enum CameraOpenError
 {
-    JPEG,
-    YUV,
-    RAW;
+    NONE,
+    INCOMPATIBLE_DEVICE,
+    UNKNOWN_ERROR;
 }

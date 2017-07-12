@@ -14,29 +14,26 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode;
+package com.fkeglevich.rawdumper.camera.async.pipeline;
 
-import com.fkeglevich.rawdumper.camera.ModeInfo;
+import android.hardware.Camera;
 
 /**
- * Created by Flávio Keglevich on 24/04/2017.
+ * Created by Flávio Keglevich on 25/06/2017.
  * TODO: Add a class header comment!
  */
 
-public class CameraModeFactory
+public abstract class APicturePipeline
 {
-    public static ACameraMode createMode(ModeInfo modeInfo)
+    protected Camera.ShutterCallback shutterCallback    = null;
+    protected Camera.PictureCallback rawCallback        = null;
+    protected Camera.PictureCallback postviewCallback   = null;
+    protected Camera.PictureCallback pictureCallback    = null;
+
+    abstract void initCallbacks();
+
+    public void takePicture(Camera camera)
     {
-        Class<? extends ACameraMode> modeClass = modeInfo.getModeClass();
-        ACameraMode cameraMode = null;
-        try
-        {
-            cameraMode = (ACameraMode)modeClass.getConstructors()[0].newInstance();
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException("Exception occurred during CameraMode creation! Exception: " + e.getMessage());
-        }
-        return cameraMode;
+        camera.takePicture(shutterCallback, rawCallback, postviewCallback, pictureCallback);
     }
 }
