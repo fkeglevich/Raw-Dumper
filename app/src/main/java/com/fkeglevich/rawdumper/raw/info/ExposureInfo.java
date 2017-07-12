@@ -17,8 +17,10 @@
 package com.fkeglevich.rawdumper.raw.info;
 
 /**
+ * Contains all implementation-specific information
+ * related to manual exposure available on the device.
+ *
  * Created by Flávio Keglevich on 18/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class ExposureInfo

@@ -26,8 +26,10 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import java.util.Arrays;
 
 /**
+ * Stores specific information and implementation details
+ * about the camera sensor.
+ *
  * Created by Flávio Keglevich on 11/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class SensorInfo
@@ -79,7 +81,5 @@ public class SensorInfo
         tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL,             new long[] { whiteLevel }, true);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVELREPEATDIM,    DEFAULT_BLACK_LEVEL_REPEAT_DIM, false);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVEL,             blackLevel, true);
-
-        Log.i("BLACKLEVEL", Arrays.toString(blackLevel));
     }
 }

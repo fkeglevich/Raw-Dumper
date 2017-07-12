@@ -20,8 +20,9 @@ import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 /**
+ * Contains device-specific information used to create DNG files.
+ *
  * Created by Flávio Keglevich on 11/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class DeviceInfo

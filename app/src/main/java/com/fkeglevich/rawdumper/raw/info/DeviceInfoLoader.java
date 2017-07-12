@@ -28,8 +28,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 /**
+ * This class is used for loading and creating DeviceInfo objects.
+ *
  * Created by Flávio Keglevich on 15/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class DeviceInfoLoader

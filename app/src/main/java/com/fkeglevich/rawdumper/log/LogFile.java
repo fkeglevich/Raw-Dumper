@@ -21,8 +21,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
+ * Simple class for store a simple file log.
+ *
  * Created by Flávio Keglevich on 20/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class LogFile

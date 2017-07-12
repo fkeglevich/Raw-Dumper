@@ -25,8 +25,9 @@ import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 /**
+ * This class is used for writing Exif data on the DNG files.
+ *
  * Created by Flávio Keglevich on 14/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class ExifWriter

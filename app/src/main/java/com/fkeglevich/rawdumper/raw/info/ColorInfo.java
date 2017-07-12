@@ -22,8 +22,10 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.MathUtil;
 
 /**
+ * Represents a collection of color matrices and calibration
+ * illuminants that composes the color profile of the DNG files.
+ *
  * Created by Flávio Keglevich on 11/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class ColorInfo

@@ -16,14 +16,14 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.os.Build;
-
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 /**
+ * Simple immutable class that stores specific information about
+ * a single camera of the device.
+ *
  * Created by Flávio Keglevich on 11/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class CameraInfo

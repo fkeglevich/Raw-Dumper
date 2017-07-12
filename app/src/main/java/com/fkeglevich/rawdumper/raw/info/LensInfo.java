@@ -20,8 +20,9 @@ import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 /**
+ * Contains all lens-related information about a camera.
+ *
  * Created by Flávio Keglevich on 11/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class LensInfo

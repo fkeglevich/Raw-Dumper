@@ -19,8 +19,9 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.os.Build;
 
 /**
+ * Represents the list of known devices.
+ *
  * Created by Flávio Keglevich on 15/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class SupportedDeviceList

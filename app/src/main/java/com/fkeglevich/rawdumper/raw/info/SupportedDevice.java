@@ -17,8 +17,9 @@
 package com.fkeglevich.rawdumper.raw.info;
 
 /**
+ * Represents a well-known device.
+ *
  * Created by Flávio Keglevich on 15/06/2017.
- * TODO: Add a class header comment!
  */
 
 class SupportedDevice

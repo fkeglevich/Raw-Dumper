@@ -25,8 +25,10 @@ import com.fkeglevich.rawdumper.util.ByteArrayUtil;
 import java.io.IOException;
 
 /**
+ * Represents a set of opcode lists used to apply basic operations
+ * on the raw images (like basic lens correction, for example).
+ *
  * Created by Flávio Keglevich on 14/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class OpcodeListInfo
