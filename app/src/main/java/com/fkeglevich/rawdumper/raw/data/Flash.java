@@ -30,6 +30,16 @@ public enum Flash
 
     private final short exifValue;
 
+    public static Flash getFlashFromValue(short exifValue)
+    {
+        switch (exifValue)
+        {
+            case 0: return DID_NOT_FIRE;
+            case 1: return FIRED;
+            default: return UNKNOWN;
+        }
+    }
+
     Flash(short exifValue)
     {
         this.exifValue = exifValue;
