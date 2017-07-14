@@ -34,12 +34,6 @@ public class DateInfo
     public DateInfo()
     {   }
 
-    public void writeTiffExifTags(TiffWriter tiffWriter)
-    {
-        if (captureDate != null)
-            ExifTagWriter.writeDateTimeOriginalTags(tiffWriter, captureDate);
-    }
-
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         if (captureDate != null)

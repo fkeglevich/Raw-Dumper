@@ -20,7 +20,6 @@ import android.content.Context;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.camera.async.callbacks.IAutoFocusCallback;
@@ -280,7 +279,7 @@ public class CameraAccess
                             public void onPictureTaken(byte[] data, Camera camera)
                             {
                                 camera.startPreview();
-                                saveDngFiles(partialDirPath, saveDirPath, applicationContext, rawCaptureCallback);
+                                saveDngFiles(partialDirPath, saveDirPath, applicationContext, rawCaptureCallback, data);
                             }
                         });
                     else
@@ -296,13 +295,13 @@ public class CameraAccess
     {
         synchronized (cameraLock)
         {
-            saveDngFiles(partialDirPath, saveDirPath, applicationContext, rawCaptureCallback);
+            saveDngFiles(partialDirPath, saveDirPath, applicationContext, rawCaptureCallback, null);
         }
     }
 
     private void saveDngFiles(final String partialDirPath,
                               final String saveDirPath, final Context applicationContext,
-                              final IRawCaptureCallback rawCaptureCallback)
+                              final IRawCaptureCallback rawCaptureCallback, final byte[] jpgData)
     {
         ShellManager.getInstance().addSingleCommand("mv " + threadDeviceInfo.getDumpDirectoryLocation() + "/* " + partialDirPath, new Shell.OnCommandLineListener() {
             @Override
@@ -317,7 +316,7 @@ public class CameraAccess
                 }
                 else
                 {
-                    success = !convertToDng(partialDirPath, saveDirPath, applicationContext);
+                    success = !convertToDng(partialDirPath, saveDirPath, applicationContext, jpgData);
                                             /*
                                             showTextToast("Picture taken, converting to DNG...");
                                             if (!convertToDng(partialDirPath, saveDirPath, applicationContext))
@@ -420,7 +419,7 @@ public class CameraAccess
 
     private I3av4ToDngConverter converter;
 
-    private boolean convertToDng(String partialDirPath, String saveDirPath, Context applicationContext)
+    private boolean convertToDng(String partialDirPath, String saveDirPath, Context applicationContext, byte[] jpgData)
     {
         File partialDir = new File(partialDirPath);
         File saveDir = new File(saveDirPath);
@@ -428,24 +427,41 @@ public class CameraAccess
         String[] files = partialDir.list();
         File input, output;
         boolean error = false;
-        for (String filePath : files)
-        {
-            if (filePath.endsWith(".i3av4"))
+            for (String filePath : files)
             {
-                input = new File(partialDir, filePath);
-                output = new File(saveDir, input.getName() + ".dng");
-                try
+                if (filePath.endsWith(".i3av4"))
                 {
-                    converter.convert(input.getAbsolutePath(), output.getAbsolutePath(), applicationContext);
-                    input.delete();
-                }
-                catch (IOException e)
-                {
-                    error = true;
-                    e.printStackTrace();
+                    input = new File(partialDir, filePath);
+                    output = new File(saveDir, input.getName() + ".dng");
+                    try
+                    {
+                        converter.convert(input.getAbsolutePath(), output.getAbsolutePath(), applicationContext);
+                        input.delete();
+                    }
+                    catch (IOException e)
+                    {
+                        error = true;
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
+        /*else if (files.length == 1)
+        {
+            synchronized (cameraLock)
+            {
+                Camera.Parameters parameters = cameraLock.getCamera().getCameraDevice().getParameters();
+            }
+            try
+            {
+                converter.convert(input.getAbsolutePath(), output.getAbsolutePath(), applicationContext);
+                input.delete();
+            }
+            catch (IOException e)
+            {
+                error = true;
+                e.printStackTrace();
+            }
+        }*/
         return error;
     }
 }

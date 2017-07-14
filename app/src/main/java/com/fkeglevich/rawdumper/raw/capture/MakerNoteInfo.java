@@ -16,9 +16,6 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
-import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
-
 /**
  * Created by Flávio Keglevich on 27/05/2017.
  * TODO: Add a class header comment!
@@ -33,23 +30,8 @@ public class MakerNoteInfo
     public float[] colorMatrix          = null;
     public byte[] originalMakerNote     = null;
 
-    public MakerNoteInfo()
-    {   }
-
     public MakerNoteInfo(byte[] originalMakerNote)
     {
         this.originalMakerNote = originalMakerNote.clone();
-    }
-
-    public void writeTiffExifTags(TiffWriter tiffWriter)
-    {
-        if (exposureTime != null)
-            ExifTagWriter.writeExposureTimeTags(tiffWriter, exposureTime);
-
-        if (iso != null)
-            ExifTagWriter.writeISOTag(tiffWriter, iso.shortValue());
-
-        if (originalMakerNote != null)
-            ExifTagWriter.writeMakerNoteTag(tiffWriter, originalMakerNote);
     }
 }

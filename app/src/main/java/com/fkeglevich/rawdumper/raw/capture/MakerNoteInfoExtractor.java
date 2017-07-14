@@ -90,8 +90,7 @@ public class MakerNoteInfoExtractor
 
     public MakerNoteInfo extractFrom(byte[] mknBytes)
     {
-        MakerNoteInfo result = new MakerNoteInfo();
-        result.originalMakerNote = mknBytes.clone();
+        MakerNoteInfo result = new MakerNoteInfo(mknBytes);
         String mknStringBytes;
         try
         {

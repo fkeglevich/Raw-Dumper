@@ -1,0 +1,158 @@
+/*
+ * Copyright 2017, Flávio Keglevich
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.fkeglevich.rawdumper.raw.capture;
+
+import android.hardware.Camera;
+
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Directory;
+import com.fkeglevich.rawdumper.raw.data.Flash;
+import com.fkeglevich.rawdumper.raw.info.LensInfo;
+import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
+import com.fkeglevich.rawdumper.tiff.TiffWriter;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.GregorianCalendar;
+
+/**
+ * Created by Flávio Keglevich on 13/07/2017.
+ * TODO: Add a class header comment!
+ */
+
+public class ExifInfo
+{
+    public GregorianCalendar dateTimeOriginal   = null;
+    public Integer iso                          = null;
+    public Double exposureTime                  = null;
+    public Double aperture                      = null;
+    public byte[] originalMakerNote             = null;
+    public Double exposureBias                  = null;
+    public Flash flash                          = null;
+    public Float focalLength                    = null;
+
+    public ExifInfo()
+    {   }
+
+    public void getSomeDataFrom(DateInfo dateInfo)
+    {
+        dateTimeOriginal = dateInfo.captureDate;
+    }
+
+    public void getSomeDataFrom(MakerNoteInfo makerNoteInfo)
+    {
+        originalMakerNote = makerNoteInfo.originalMakerNote;
+        iso = makerNoteInfo.iso;
+        exposureTime = makerNoteInfo.exposureTime;
+    }
+
+    public void getSomeDataFrom(LensInfo lensInfo)
+    {
+        aperture = lensInfo.getAperture();
+    }
+
+    public void getSomeDataFrom(Camera.Parameters parameters)
+    {
+        exposureBias = (double)(parameters.getExposureCompensationStep() * parameters.getExposureCompensation());
+        focalLength = parameters.getFocalLength();
+
+        //TODO: Better handling of flash
+        if (!Camera.Parameters.FLASH_MODE_AUTO.equals(parameters.getFlashMode()))
+            flash = Camera.Parameters.FLASH_MODE_OFF.equals(parameters.getFlashMode()) ? Flash.DID_NOT_FIRE : Flash.FIRED;
+    }
+
+    public boolean getSomeDataFrom(byte[] extraJpegBytes, boolean extractMakerNotes)
+    {
+        BufferedInputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(extraJpegBytes));
+        boolean success = true;
+        try
+        {
+            Metadata metadata = ImageMetadataReader.readMetadata(inputStream, extraJpegBytes.length);
+            for(Directory directory : metadata.getDirectories())
+            {
+                if (directory.containsTag(ExifIFD0Directory.TAG_DATETIME_ORIGINAL))
+                {
+                    dateTimeOriginal = new GregorianCalendar();
+                    dateTimeOriginal.setTime(directory.getDate(ExifIFD0Directory.TAG_DATETIME_ORIGINAL));
+                }
+
+                if (directory.containsTag(ExifIFD0Directory.TAG_ISO_EQUIVALENT))
+                    iso = directory.getInt(ExifIFD0Directory.TAG_ISO_EQUIVALENT);
+
+                if (directory.containsTag(ExifIFD0Directory.TAG_EXPOSURE_TIME))
+                    exposureTime = directory.getDouble(ExifIFD0Directory.TAG_EXPOSURE_TIME);
+
+                if (directory.containsTag(ExifIFD0Directory.TAG_FNUMBER))
+                    aperture = directory.getDouble(ExifIFD0Directory.TAG_FNUMBER);
+
+                if (extractMakerNotes && directory.containsTag(ExifIFD0Directory.TAG_MAKERNOTE))
+                    originalMakerNote = directory.getByteArray(ExifIFD0Directory.TAG_MAKERNOTE);
+
+                if (directory.containsTag(ExifIFD0Directory.TAG_EXPOSURE_BIAS))
+                    exposureBias = directory.getDouble(ExifIFD0Directory.TAG_EXPOSURE_BIAS);
+
+                if (directory.containsTag(ExifIFD0Directory.TAG_FLASH))
+                    flash = Flash.getFlashFromValue((short)directory.getInt(ExifIFD0Directory.TAG_FLASH));
+
+                if (directory.containsTag(ExifIFD0Directory.TAG_FOCAL_LENGTH))
+                    focalLength = directory.getFloat(ExifIFD0Directory.TAG_FOCAL_LENGTH);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            success = false;
+        }
+
+        try
+        {   inputStream.close();    }
+        catch (IOException ignored)
+        {   }
+
+        return success;
+    }
+
+    public void writeTiffExifTags(TiffWriter tiffWriter)
+    {
+        if (dateTimeOriginal != null)
+            ExifTagWriter.writeDateTimeOriginalTags(tiffWriter, dateTimeOriginal);
+
+        if (iso != null)
+            ExifTagWriter.writeISOTag(tiffWriter, iso.shortValue());
+
+        if (exposureTime != null)
+            ExifTagWriter.writeExposureTimeTags(tiffWriter, exposureTime);
+
+        if (aperture != null)
+            ExifTagWriter.writeApertureTags(tiffWriter, aperture);
+
+        if (originalMakerNote != null)
+            ExifTagWriter.writeMakerNoteTag(tiffWriter, originalMakerNote);
+
+        if (exposureBias != null)
+            ExifTagWriter.writeExposureBiasTag(tiffWriter, exposureBias);
+
+        if (flash != null && flash != Flash.UNKNOWN)
+            ExifTagWriter.writeFlashTag(tiffWriter, flash);
+
+        if (focalLength != null)
+            ExifTagWriter.writeFocalLengthTag(tiffWriter, focalLength);
+    }
+}

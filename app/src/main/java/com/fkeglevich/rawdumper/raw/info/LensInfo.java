@@ -16,9 +16,6 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
-
 /**
  * Contains all lens-related information about a camera.
  *
@@ -32,11 +29,8 @@ public class LensInfo
     private LensInfo()
     {   }
 
-    public void writeTiffExifTags(TiffWriter tiffWriter)
+    public Double getAperture()
     {
-        if (aperture != null)
-            ExifTagWriter.writeApertureTags(tiffWriter, aperture);
+        return aperture;
     }
-
-
 }

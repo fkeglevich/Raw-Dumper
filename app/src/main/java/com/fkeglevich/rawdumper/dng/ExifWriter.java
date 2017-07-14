@@ -16,10 +16,8 @@
 
 package com.fkeglevich.rawdumper.dng;
 
-import android.hardware.Camera;
-
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
-import com.fkeglevich.rawdumper.raw.data.Flash;
+import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
@@ -45,27 +43,24 @@ public class ExifWriter
     void writeTiffExifTags(TiffWriter tiffWriter, CaptureInfo captureInfo)
     {
         ExifTagWriter.writeExifVersionTag(tiffWriter, exifVersion);
-        captureInfo.makerNoteInfo.writeTiffExifTags(tiffWriter);
-        captureInfo.date.writeTiffExifTags(tiffWriter);
-        captureInfo.camera.getLens().writeTiffExifTags(tiffWriter);
+        ExifInfo exifInfo = new ExifInfo();
 
-        Camera.Parameters parameters = captureInfo.captureParameters;
-
-        if (parameters != null)
+        if (captureInfo.extraJpegBytes != null)
+            exifInfo.getSomeDataFrom(captureInfo.extraJpegBytes, captureInfo.makerNoteInfo == null);
+        else
         {
-            double exposureCompensation = parameters.getExposureCompensationStep() *
-                    parameters.getExposureCompensation();
-            ExifTagWriter.writeExposureBiasTag(tiffWriter, exposureCompensation);
+            exifInfo.getSomeDataFrom(captureInfo.date);
+            if (captureInfo.camera.getLens() != null)
+                exifInfo.getSomeDataFrom(captureInfo.camera.getLens());
 
-            //TODO: Better handling of flash
-            if (!Camera.Parameters.FLASH_MODE_AUTO.equals(parameters.getFlashMode()))
-            {
-                Flash flash = Camera.Parameters.FLASH_MODE_OFF.equals(parameters.getFlashMode()) ? Flash.DID_NOT_FIRE : Flash.FIRED;
-                ExifTagWriter.writeFlashTag(tiffWriter, flash);
-            }
-
-            ExifTagWriter.writeFocalLengthTag(tiffWriter, parameters.getFocalLength());
+            if (captureInfo.captureParameters != null)
+                exifInfo.getSomeDataFrom(captureInfo.captureParameters);
         }
+
+        if (captureInfo.makerNoteInfo != null)
+            exifInfo.getSomeDataFrom(captureInfo.makerNoteInfo);
+
+        exifInfo.writeTiffExifTags(tiffWriter);
     }
 
     void closeEXIFDirectory(TiffWriter tiffWriter)

@@ -41,6 +41,7 @@ public class CaptureInfo
     public WhiteBalanceInfo whiteBalanceInfo;
     public RawImageSize imageSize;
     public Camera.Parameters captureParameters;
+    public byte[] extraJpegBytes;
 
     public String originalRawFilename;
     public ImageOrientation orientation;
