@@ -58,6 +58,9 @@ public class CameraConfig
                 parameters.set("raw-data-format", "bayer");
                 parameters.set("mode", "PRO");
 
+                //Simple fix for the green postview
+                parameters.set("burst-start-index", "-1");
+
                 //Flash mode setup
                 //This check should be unnecessary since every camera should support the OFF flash mode
                 List<String> flashModes = parameters.getSupportedFlashModes();
