@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.su;
 
-import java.util.List;
-
 import eu.chainfire.libsuperuser.Shell;
 
 /**

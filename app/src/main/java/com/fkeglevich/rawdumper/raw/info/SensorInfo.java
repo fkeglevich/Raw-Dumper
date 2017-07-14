@@ -16,14 +16,10 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.util.Log;
-
 import com.fkeglevich.rawdumper.raw.data.BayerPattern;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
-
-import java.util.Arrays;
 
 /**
  * Stores specific information and implementation details
