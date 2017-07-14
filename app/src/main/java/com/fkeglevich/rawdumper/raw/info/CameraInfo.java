@@ -86,7 +86,7 @@ public class CameraInfo
         return isFrontCamera;
     }
 
-    public boolean isHasKnownMakernote()
+    public boolean hasKnownMakernote()
     {
         return hasKnownMakernote;
     }
