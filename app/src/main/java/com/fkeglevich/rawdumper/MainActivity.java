@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
                     lastISO = cameraAccess.getParameter(exposureInfo.getIsoParameter());
                     lastSS = cameraAccess.getParameter(exposureInfo.getShutterSpeedParameter());
-
                     cameraAccess.takeRawPictureAsync(partialDir.getAbsolutePath(),
                             saveDir.getAbsolutePath(), getApplicationContext(), new IRawCaptureCallback()
                             {
@@ -608,6 +607,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         messageStr += "Copyright 2015 Square, Inc.\n";
         messageStr += "Link: https://github.com/square/moshi\n";
         messageStr += "License: https://github.com/square/moshi/blob/master/LICENSE.txt\n";
+
+        messageStr += "\n";
+
+        messageStr += "Metadata Extractor\n";
+        messageStr += "Copyright 2002-2017 Drew Noakes\n";
+        messageStr += "Link: https://github.com/drewnoakes/metadata-extractor\n";
+        messageStr += "License: https://github.com/drewnoakes/metadata-extractor/blob/master/LICENSE-2.0.txt\n";
 
         messageStr += "\n";
 
