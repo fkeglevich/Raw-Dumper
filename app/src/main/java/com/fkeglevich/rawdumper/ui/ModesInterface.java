@@ -22,12 +22,14 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.fkeglevich.rawdumper.R;
+import com.fkeglevich.rawdumper.ui.dialog.AboutDialog;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
 
 /**
+ * Represents the interface for camera mode selection
+ *
  * Created by Flávio Keglevich on 03/05/2017.
- * TODO: Add a class header comment!
  */
 
 public class ModesInterface
@@ -36,17 +38,23 @@ public class ModesInterface
 
     private ImageButton modesButton = null;
     private ImageButton backButton = null;
+    private ImageButton infoButton = null;
+
     private RelativeLayout modesLayout = null;
 
     private Fade fadeTransition = new Fade();
 
-    public ModesInterface(AppCompatActivity compatActivity)
+    private AboutDialog aboutDialog;
+
+    public ModesInterface(final AppCompatActivity compatActivity)
     {
         this.compatActivity = compatActivity;
 
         modesLayout = (RelativeLayout)compatActivity.findViewById(R.id.modesLayout);
         modesButton = (ImageButton)compatActivity.findViewById(R.id.modesButton);
         backButton = (ImageButton)compatActivity.findViewById(R.id.backButton);
+        infoButton = (ImageButton)compatActivity.findViewById(R.id.infoButton);
+        aboutDialog = new AboutDialog(compatActivity);
 
         fadeTransition.setDuration(150L);
 
@@ -64,6 +72,13 @@ public class ModesInterface
             public void onClick(View v)
             {
                 setIsVisible(false);
+            }
+        });
+        infoButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {aboutDialog.showDialog(compatActivity);
             }
         });
     }

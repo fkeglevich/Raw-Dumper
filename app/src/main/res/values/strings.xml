@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">Raw Dumper</string>
+
+    <string name="about_title">About</string>
+    <string name="about_dismiss_button">OK</string>
+    <string name="about_message">Copyright © 2017, Flávio Keglevich
+        \n
+        \nThis app and its launcher icon are licensed under Apache License 2.0. The license can be found here:
+        \nhttps://www.apache.org/licenses/LICENSE-2.0
+        \n
+        \nThe following open source libraries are used:
+        \n
+        \nLibTIFF
+        \nCopyright © 1988-1997 Sam Leffler
+        \nCopyright © 1991-1997 Silicon Graphics, Inc.
+        \nLicense: http://www.simplesystems.org/libtiff/misc.html
+        \n
+        \nLibsuperuser
+        \nCopyright © 2012-2015 Jorrit "Chainfire" Jongma
+        \nLink: https://github.com/Chainfire/libsuperuser
+        \nLicense: https://github.com/Chainfire/libsuperuser/blob/master/LICENSE
+        \n
+        \nTransitions Everywhere
+        \nCopyright © 2016 Andrey Kulikov (andkulikov@gmail.com)
+        \nLink: https://github.com/andkulikov/Transitions-Everywhere
+        \nLicense: https://github.com/andkulikov/Transitions-Everywhere/blob/master/LICENSE
+        \n
+        \nMoshi
+        \nCopyright © 2015 Square, Inc.
+        \nLink: https://github.com/square/moshi
+        \nLicense: https://github.com/square/moshi/blob/master/LICENSE.txt
+        \n
+        \nMetadata Extractor
+        \nCopyright © 2002-2017 Drew Noakes
+        \nLink: https://github.com/drewnoakes/metadata-extractor
+        \nLicense: https://github.com/drewnoakes/metadata-extractor/blob/master/LICENSE-2.0.txt
+        \n
+        \nThe following icon sets are used:
+        \n
+        \nMaterial design icons
+        \nCopyright © 2017 Google
+        \nLink: https://material.io/icons
+        \nLicense: https://github.com/google/material-design-icons/blob/master/LICENSE
+    </string>
 </resources>

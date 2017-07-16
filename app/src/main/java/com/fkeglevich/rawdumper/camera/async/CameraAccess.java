@@ -128,12 +128,9 @@ public class CameraAccess
                         if (!errorWhileGettingCamInfo)
                         {
                             try
-                            {
-                                intelCamera = new IntelCamera(cameraId);
-                            } catch (RuntimeException re)
-                            {
-                                intelCamera = null;
-                            }
+                            {   intelCamera = new IntelCamera(cameraId);    }
+                            catch (RuntimeException re)
+                            {   intelCamera = null; }
                         }
                         else
                         {

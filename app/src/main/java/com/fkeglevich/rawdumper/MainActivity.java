@@ -61,6 +61,7 @@ import com.fkeglevich.rawdumper.ui.ISOInterface;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
 import com.fkeglevich.rawdumper.ui.ShutterSpeedInterface;
 import com.fkeglevich.rawdumper.ui.UiUtils;
+import com.fkeglevich.rawdumper.ui.dialog.AboutDialog;
 import com.intel.camera.extensions.IntelCamera;
 
 import java.io.File;
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private TextureView textureView;
     private ImageButton captureBt;
     private ImageButton flashBt;
-    private ImageButton infoBt;
     private ImageButton camSwitchButton;
     private ProgressBar progressBar;
     private Toast currentToast;
@@ -188,16 +188,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     CameraThread.getInstance().closeCamera();
                     openCamera();
                 }
-            }
-        });
-
-        infoBt = (ImageButton) findViewById(R.id.infoButton);
-        infoBt.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                showAboutScreen();
             }
         });
 
@@ -551,102 +541,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     }
                 });
 
-        AlertDialog alert = builder.create();
-        UiUtils.showDialogInImmersiveMode(alert, this);
-    }
-
-    private void showAboutScreen()
-    {
-        //TODO: UNHARDCODE THIS METHOD!
-
-        PackageInfo packageInfo = null;
-
-        try
-        {
-            packageInfo = getPackageManager().getPackageInfo(getApplicationInfo().packageName, 0);
-        } catch (PackageManager.NameNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
-        String messageStr = "Raw Dumper";
-        if (packageInfo != null)
-        {
-            messageStr += " v" + packageInfo.versionName + "\n\n";
-        }
-
-        messageStr += "Copyright © 2017, Flávio Keglevich\n\n";
-
-        messageStr += "This app and its launcher icon are licensed under Apache License 2.0. The license can be found here:\n";
-        messageStr += "https://www.apache.org/licenses/LICENSE-2.0\n\n";
-
-        messageStr += "The following open source libraries are used:\n\n";
-
-        messageStr += "LibTIFF\n";
-        messageStr += "Copyright (c) 1988-1997 Sam Leffler\n" + "Copyright (c) 1991-1997 Silicon Graphics, Inc.\n";
-        messageStr += "Link: http://www.simplesystems.org/libtiff\n";
-        messageStr += "License: http://www.simplesystems.org/libtiff/misc.html\n";
-
-        messageStr += "\n";
-
-        messageStr += "Libsuperuser\n";
-        messageStr += "Copyright (C) 2012-2015 Jorrit \"Chainfire\" Jongma\n";
-        messageStr += "Link: https://github.com/Chainfire/libsuperuser\n";
-        messageStr += "License: https://github.com/Chainfire/libsuperuser/blob/master/LICENSE\n";
-
-        messageStr += "\n";
-
-        messageStr += "Transitions Everywhere\n";
-        messageStr += "Copyright (C) 2016 Andrey Kulikov (andkulikov@gmail.com)\n";
-        messageStr += "Link: https://github.com/andkulikov/Transitions-Everywhere\n";
-        messageStr += "License: https://github.com/andkulikov/Transitions-Everywhere/blob/master/LICENSE\n";
-
-        messageStr += "\n";
-
-        messageStr += "Moshi\n";
-        messageStr += "Copyright 2015 Square, Inc.\n";
-        messageStr += "Link: https://github.com/square/moshi\n";
-        messageStr += "License: https://github.com/square/moshi/blob/master/LICENSE.txt\n";
-
-        messageStr += "\n";
-
-        messageStr += "Metadata Extractor\n";
-        messageStr += "Copyright 2002-2017 Drew Noakes\n";
-        messageStr += "Link: https://github.com/drewnoakes/metadata-extractor\n";
-        messageStr += "License: https://github.com/drewnoakes/metadata-extractor/blob/master/LICENSE-2.0.txt\n";
-
-        messageStr += "\n";
-
-        messageStr += "The following icon sets are used:\n\n";
-
-        messageStr += "Material design icons\n";
-        messageStr += "Copyright (C) 2017 Google\n";
-        messageStr += "Link: https://material.io/icons\n";
-        messageStr += "License: https://github.com/google/material-design-icons/blob/master/LICENSE\n";
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final TextView messageView = new TextView(this);
-        int paddingValue = UiUtils.dpToPixels(8, this);
-        messageView.setPadding(paddingValue, paddingValue, paddingValue, paddingValue);
-        final SpannableString spannableStr = new SpannableString(messageStr);
-        Linkify.addLinks(spannableStr, Linkify.WEB_URLS);
-        messageView.setMaxLines(40);
-        messageView.setVerticalScrollBarEnabled(true);
-        messageView.setMovementMethod(new ScrollingMovementMethod());
-        messageView.setText(spannableStr);
-        messageView.setMovementMethod(LinkMovementMethod.getInstance());
-        builder.setCancelable(false);
-        builder.setTitle("About");
-
-        builder.setPositiveButton(
-                "Ok",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                        hide();
-                    }
-                });
-        builder.setView(messageView);
         AlertDialog alert = builder.create();
         UiUtils.showDialogInImmersiveMode(alert, this);
     }
