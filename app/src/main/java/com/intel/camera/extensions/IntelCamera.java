@@ -311,7 +311,7 @@ public class IntelCamera {
         This is useful because we don't want our app to break when running
         on devices that don't have these features.
         */
-        intelCameraAvailable = true;
+        /*intelCameraAvailable = true;
         try
         {
             System.loadLibrary("intelcamera_jni");
@@ -319,7 +319,10 @@ public class IntelCamera {
         catch (UnsatisfiedLinkError error)
         {
             intelCameraAvailable = false;
-        }
+        }*/
+
+        //Currently, we are not using the library
+        intelCameraAvailable = false;
     }
 
     /**
