@@ -23,6 +23,7 @@ import com.fkeglevich.rawdumper.util.MathUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by Flávio Keglevich on 28/06/2017.
@@ -101,10 +102,9 @@ public class ExifTagWriter
         return 2 * MathUtil.log2(aperture);
     }
 
-    @SuppressLint("SimpleDateFormat")
     public static String formatCalendarTag(Calendar calendar)
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.US);
         dateFormat.setCalendar(calendar);
         return dateFormat.format(calendar.getTime());
     }
