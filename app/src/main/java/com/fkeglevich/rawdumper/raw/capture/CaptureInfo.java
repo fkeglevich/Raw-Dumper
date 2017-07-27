@@ -25,6 +25,7 @@ import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
+import java.io.File;
 import java.nio.charset.Charset;
 
 /**
@@ -34,20 +35,35 @@ import java.nio.charset.Charset;
 
 public class CaptureInfo
 {
-    public DeviceInfo device;
-    public CameraInfo camera;
-    public DateInfo date;
-    public MakerNoteInfo makerNoteInfo;
-    public WhiteBalanceInfo whiteBalanceInfo;
-    public RawImageSize imageSize;
-    public Camera.Parameters captureParameters;
-    public byte[] extraJpegBytes;
+    //Required fields
+    public DeviceInfo device                    = null;
+    public CameraInfo camera                    = null;
+    public DateInfo date                        = null;
+    public WhiteBalanceInfo whiteBalanceInfo    = null;
+    public RawImageSize imageSize               = null;
+    public String originalRawFilename           = null;
+    public String destinationRawFilename        = null;
+    public ImageOrientation orientation         = null;
 
-    public String originalRawFilename;
-    public ImageOrientation orientation;
+    //Optional fields
+    public MakerNoteInfo makerNoteInfo          = null;
+    public Camera.Parameters captureParameters  = null;
+    public byte[] extraJpegBytes                = null;
+    public File relatedI3av4File                = null;
 
     public CaptureInfo()
     {   }
+
+    public boolean isValid()
+    {
+        return  device              != null &&
+                camera              != null &&
+                date                != null &&
+                whiteBalanceInfo    != null &&
+                imageSize           != null &&
+                originalRawFilename != null &&
+                orientation         != null;
+    }
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {

@@ -39,36 +39,66 @@ import java.util.GregorianCalendar;
 
 public class ExifInfo
 {
-    public GregorianCalendar dateTimeOriginal   = null;
-    public Integer iso                          = null;
-    public Double exposureTime                  = null;
-    public Double aperture                      = null;
-    public byte[] originalMakerNote             = null;
-    public Double exposureBias                  = null;
-    public Flash flash                          = null;
-    public Float focalLength                    = null;
+    private GregorianCalendar dateTimeOriginal   = null;
+    private Integer iso                          = null;
+    private Double exposureTime                  = null;
+    private Double aperture                      = null;
+    private byte[] originalMakerNote             = null;
+    private Double exposureBias                  = null;
+    private Flash flash                          = null;
+    private Float focalLength                    = null;
 
     public ExifInfo()
     {   }
 
-    public void getSomeDataFrom(DateInfo dateInfo)
+    public void getExifDataFromCapture(CaptureInfo captureInfo)
+    {
+        if (captureInfo.extraJpegBytes != null)
+        {
+            if (captureInfo.makerNoteInfo == null || captureInfo.makerNoteInfo.originalMakerNote == null)
+                getSomeDataFrom(captureInfo.extraJpegBytes, true);
+            else
+            {
+                getSomeDataFrom(captureInfo.makerNoteInfo);
+                getSomeDataFrom(captureInfo.extraJpegBytes, false);
+            }
+        }
+        else
+        {
+            if (captureInfo.date != null)
+                getSomeDataFrom(captureInfo.date);
+            else
+                getSomeDataFrom(new DateExtractor().extractFromCurrentTime());
+
+            if (captureInfo.camera != null && captureInfo.camera.getLens() != null)
+                getSomeDataFrom(captureInfo.camera.getLens());
+
+            if (captureInfo.captureParameters != null)
+                getSomeDataFrom(captureInfo.captureParameters);
+
+            if (captureInfo.makerNoteInfo != null)
+                getSomeDataFrom(captureInfo.makerNoteInfo);
+        }
+    }
+
+    private void getSomeDataFrom(DateInfo dateInfo)
     {
         dateTimeOriginal = dateInfo.captureDate;
     }
 
-    public void getSomeDataFrom(MakerNoteInfo makerNoteInfo)
+    private void getSomeDataFrom(MakerNoteInfo makerNoteInfo)
     {
         originalMakerNote = makerNoteInfo.originalMakerNote;
         iso = makerNoteInfo.iso;
         exposureTime = makerNoteInfo.exposureTime;
     }
 
-    public void getSomeDataFrom(LensInfo lensInfo)
+    private void getSomeDataFrom(LensInfo lensInfo)
     {
         aperture = lensInfo.getAperture();
     }
 
-    public void getSomeDataFrom(Camera.Parameters parameters)
+    private void getSomeDataFrom(Camera.Parameters parameters)
     {
         exposureBias = (double)(parameters.getExposureCompensationStep() * parameters.getExposureCompensation());
         focalLength = parameters.getFocalLength();
@@ -78,7 +108,7 @@ public class ExifInfo
             flash = Camera.Parameters.FLASH_MODE_OFF.equals(parameters.getFlashMode()) ? Flash.DID_NOT_FIRE : Flash.FIRED;
     }
 
-    public boolean getSomeDataFrom(byte[] extraJpegBytes, boolean extractMakerNotes)
+    private boolean getSomeDataFrom(byte[] extraJpegBytes, boolean extractMakerNotes)
     {
         BufferedInputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(extraJpegBytes));
         boolean success = true;

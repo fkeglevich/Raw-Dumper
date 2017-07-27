@@ -44,22 +44,7 @@ public class ExifWriter
     {
         ExifTagWriter.writeExifVersionTag(tiffWriter, exifVersion);
         ExifInfo exifInfo = new ExifInfo();
-
-        if (captureInfo.extraJpegBytes != null)
-            exifInfo.getSomeDataFrom(captureInfo.extraJpegBytes, captureInfo.makerNoteInfo == null);
-        else
-        {
-            exifInfo.getSomeDataFrom(captureInfo.date);
-            if (captureInfo.camera.getLens() != null)
-                exifInfo.getSomeDataFrom(captureInfo.camera.getLens());
-
-            if (captureInfo.captureParameters != null)
-                exifInfo.getSomeDataFrom(captureInfo.captureParameters);
-        }
-
-        if (captureInfo.makerNoteInfo != null)
-            exifInfo.getSomeDataFrom(captureInfo.makerNoteInfo);
-
+        exifInfo.getExifDataFromCapture(captureInfo);
         exifInfo.writeTiffExifTags(tiffWriter);
     }
 
