@@ -162,7 +162,10 @@ public class ExifInfo
     public void writeTiffExifTags(TiffWriter tiffWriter)
     {
         if (dateTimeOriginal != null)
+        {
             ExifTagWriter.writeDateTimeOriginalTags(tiffWriter, dateTimeOriginal);
+            ExifTagWriter.writeDateTimeDigitizedTags(tiffWriter, dateTimeOriginal);
+        }
 
         if (iso != null)
             ExifTagWriter.writeISOTag(tiffWriter, iso.shortValue());

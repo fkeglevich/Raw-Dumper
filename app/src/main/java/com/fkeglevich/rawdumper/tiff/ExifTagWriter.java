@@ -63,6 +63,15 @@ public class ExifTagWriter
         return result;
     }
 
+    public static int writeDateTimeDigitizedTags(TiffWriter tiffWriter, Calendar dateTimeOriginal)
+    {
+        int result;
+        result = tiffWriter.setField(ExifTag.EXIFTAG_DATETIMEDIGITIZED, formatCalendarTag(dateTimeOriginal));
+        if (result == 0) return result;
+        result = tiffWriter.setField(ExifTag.EXIFTAG_SUBSECTIMEDIGITIZED, "" + dateTimeOriginal.get(Calendar.MILLISECOND));
+        return result;
+    }
+
     public static int writeApertureTags(TiffWriter tiffWriter, double aperture)
     {
         int result;
