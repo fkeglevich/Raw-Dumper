@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.async;
 
 import android.hardware.Camera;
 
+import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.intel.camera.extensions.IntelCamera;
 
 /**
@@ -33,33 +34,27 @@ class CameraLock
     CameraLock()
     {   }
 
-    private void checkThreadAccess()
-    {
-        if (!Thread.holdsLock(this))
-            throw new RuntimeException("This method should be called inside a proper synchronized block!");
-    }
-
     IntelCamera getCamera()
     {
-        checkThreadAccess();
+        ThreadUtil.checkIfSynchronized(this);
         return intelCamera;
     }
 
     void setCamera(IntelCamera intelCamera)
     {
-        checkThreadAccess();
+        ThreadUtil.checkIfSynchronized(this);
         this.intelCamera = intelCamera;
     }
 
     Camera.CameraInfo getCameraInfo()
     {
-        checkThreadAccess();
+        ThreadUtil.checkIfSynchronized(this);
         return cameraInfo;
     }
 
     void setCameraInfo(Camera.CameraInfo cameraInfo)
     {
-        checkThreadAccess();
+        ThreadUtil.checkIfSynchronized(this);
         this.cameraInfo = cameraInfo;
     }
 }
