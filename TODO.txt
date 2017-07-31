@@ -6,19 +6,19 @@ TODO list:
    - Automatic discovery of raw bayer pattern
    
  - Better handling of known devices
-   - Change I3av4ToDngConverter so it takes into account the current camera configs (important!)
+   - (IN PROGRESS) Change I3av4ToDngConverter so it takes into account the current camera configs (important!)
    - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
       - Trying to use the red and blue gains
    - Use the Noise Profile DNG tag
    - (DONE!) Use a better default white balance (based on 5504K) for devices with known color matrices
 
- - (IMPORTANT) Make the app work on ROMs using LL camera blobs (at least for the front camera)
- - (IMPORTANT) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
+ - (IMPORTANT - IN PROGRESS) Make the app work on ROMs using LL camera blobs (at least for the front camera)
+ - (IMPORTANT - IN PROGRESS) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
     raw pictures among different devices with different workarounds.
    
  - Save DNGs using tiles
  - Improve compatibility of generated DNG files for desktop apps like Darktable
- - Improve detecting and handling of Intel Camera features
+ - (ALMOST DONE) Improve detecting and handling of Intel Camera features
    (Only use the Intel Camera features when 100% sure they can be used; because of the differences in 32 or 64 bits pointers)
  - Clean up the mess called MainActivity.java
  - Make the app finally work on the Razr I (needs DeviceInfoLoader working first)
