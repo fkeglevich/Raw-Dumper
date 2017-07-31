@@ -19,8 +19,9 @@ package com.fkeglevich.rawdumper.extension;
 import android.hardware.Camera;
 
 /**
+ * Provides a simple interface for accessing Intel Camera Extension features.
+ *
  * Created by Flávio Keglevich on 30/07/2017.
- * TODO: Add a class header comment!
  */
 
 public interface ICameraExtension

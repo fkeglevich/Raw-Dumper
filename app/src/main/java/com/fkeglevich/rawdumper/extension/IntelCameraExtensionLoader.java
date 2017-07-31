@@ -25,8 +25,16 @@ import dalvik.system.DexClassLoader;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
+ * This class tries to load the Intel Camera Extension Library, if available in the system,
+ * and returns a dummy, but functional camera extension proxy when the actual library is not present.
+ *
+ * The class tries to locate the .jar library in the system and loads it from there. The biggest
+ * advantage in this method is that the app can still use the library despite minor modifications
+ * in its actual implementation. For example: the camera library can use 32 bits pointers in ABC
+ * devices and 64 bits pointers in XYZ devices; using IntelCameraExtensionLoader permits handling
+ * both cases gracefully.
+ *
  * Created by Flávio Keglevich on 30/07/2017.
- * TODO: Add a class header comment!
  */
 
 public class IntelCameraExtensionLoader

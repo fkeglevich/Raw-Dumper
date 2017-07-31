@@ -19,11 +19,13 @@ package com.fkeglevich.rawdumper.extension;
 import android.hardware.Camera;
 
 /**
+ * Represents a "fake" Intel Camera Extensions library interface to be used when the actual
+ * library implementation is absent from the system, while the core methods still works.
+ *
  * Created by Flávio Keglevich on 30/07/2017.
- * TODO: Add a class header comment!
  */
 
-public class DummyCameraProxy implements ICameraExtension
+class DummyCameraProxy implements ICameraExtension
 {
     private Camera camera;
 
