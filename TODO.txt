@@ -18,7 +18,7 @@ TODO list:
    
  - Save DNGs using tiles
  - Improve compatibility of generated DNG files for desktop apps like Darktable
- - (ALMOST DONE) Improve detecting and handling of Intel Camera features
+ - (DONE!) Improve detecting and handling of Intel Camera features
    (Only use the Intel Camera features when 100% sure they can be used; because of the differences in 32 or 64 bits pointers)
  - Clean up the mess called MainActivity.java
  - Make the app finally work on the Razr I (needs DeviceInfoLoader working first)
