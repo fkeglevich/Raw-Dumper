@@ -26,38 +26,40 @@ import com.fkeglevich.rawdumper.async.operation.AsyncOperationPoster;
  * TODO: Add a class header comment!
  */
 
-public class AsyncFunctionContext
+public class ThrowingAsyncFunctionContext extends AsyncFunctionContext
 {
-    protected final AsyncOperationPoster taskPoster;
-    protected final AsyncOperationPoster callbackPoster;
+    private final AsyncOperationPoster exceptionPoster;
 
-    public AsyncFunctionContext(Looper taskLooper, Looper callbackLooper)
+    public ThrowingAsyncFunctionContext(Looper taskLooper, Looper callbackLooper, Looper exceptionLooper)
     {
-        this.taskPoster     = new AsyncOperationPoster(taskLooper);
-        this.callbackPoster = new AsyncOperationPoster(callbackLooper);
+        super(taskLooper, callbackLooper);
+        this.exceptionPoster = new AsyncOperationPoster(exceptionLooper);
     }
 
-    public <I, O> void call(final AsyncFunction<I, O> function, I argument, final AsyncOperation<O> callback)
+    @SuppressWarnings("unchecked")
+    public <I, O, E extends Exception> void call(final ThrowingAsyncFunction<I, O, E> function, I argument, final AsyncOperation<O> callback, final AsyncOperation<E> exception)
     {
         AsyncOperation<I> task = new AsyncOperation<I>()
         {
             @Override
             protected void execute(I argument)
             {
-                callbackPoster.enqueueOperation(callback, function.call(argument));
+                try {   callbackPoster.enqueueOperation(callback, function.call(argument));  }
+                catch (Exception e) {   exceptionPoster.enqueueOperation(exception, (E) e); }
             }
         };
         taskPoster.enqueueOperation(task, argument);
     }
 
-    public <I, O> O synchronizedCall(final AsyncFunction<I, O> function, I argument)
+    public <I, O, E extends Exception> O synchronizedCall(final ThrowingAsyncFunction<I, O, E> function, I argument) throws E
     {
         return function.call(argument);
     }
 
+    @Override
     public void ignoreAllPendingCalls()
     {
-        taskPoster.removeAllPendingOperations();
-        callbackPoster.removeAllPendingOperations();
+        super.ignoreAllPendingCalls();
+        exceptionPoster.removeAllPendingOperations();
     }
 }
