@@ -27,7 +27,7 @@ public class ShellManager
 {
     private static ShellManager instance = null;
 
-    public static ShellManager getInstance()
+    public synchronized static ShellManager getInstance()
     {
         if (instance == null)
             instance = new ShellManager();
@@ -40,7 +40,7 @@ public class ShellManager
     private ShellManager()
     {   }
 
-    public void open(Shell.OnCommandResultListener onCommandResultListener)
+    public synchronized void open(Shell.OnCommandResultListener onCommandResultListener)
     {
         if (isRunning())
             throw new RuntimeException("The shell is already running!");
@@ -53,12 +53,12 @@ public class ShellManager
                 open(onCommandResultListener);
     }
 
-    public boolean isRunning()
+    public synchronized boolean isRunning()
     {
         return shell != null && shell.isRunning();
     }
 
-    public void addCommand(String[] commands, int exitCode, Shell.OnCommandLineListener onCommandLineListener)
+    public synchronized void addCommand(String[] commands, int exitCode, Shell.OnCommandLineListener onCommandLineListener)
     {
         if (!isRunning())
             throw new RuntimeException("The shell is not running!");
@@ -66,7 +66,7 @@ public class ShellManager
         shell.addCommand(commands, exitCode, onCommandLineListener);
     }
 
-    public void addSingleCommand(String command, Shell.OnCommandLineListener onCommandLineListener)
+    public synchronized void addSingleCommand(String command, Shell.OnCommandLineListener onCommandLineListener)
     {
         addCommand(new String[] {command}, 2, onCommandLineListener);
     }
