@@ -21,6 +21,8 @@ import android.hardware.Camera;
 /**
  * Provides a simple interface for accessing Intel Camera Extension features.
  *
+ * The functions here are analogous to the function in the IntelCamera class.
+ *
  * Created by Flávio Keglevich on 30/07/2017.
  */
 
