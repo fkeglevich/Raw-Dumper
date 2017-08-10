@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.tiff;
 
-import android.annotation.SuppressLint;
-
 import com.fkeglevich.rawdumper.raw.data.Flash;
 import com.fkeglevich.rawdumper.util.MathUtil;
 
