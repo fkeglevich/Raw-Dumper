@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Raw Dumper</string>
 
+    <string name="error_opening_camera">The camera couldn\'t be opened. Try restarting your device.</string>
+    <string name="error_loading_device_info">Your device appears to be incompatible with this app.</string>
+
+    <string name="permission_error">This app needs every required permission to work.</string>
+
     <string name="about_title">About</string>
     <string name="about_dismiss_button">OK</string>
     <string name="about_message">Copyright © 2017, Flávio Keglevich
