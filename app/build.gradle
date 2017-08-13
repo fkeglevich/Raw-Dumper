@@ -38,6 +38,12 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -49,4 +55,7 @@ dependencies {
     compile "com.andkulikov:transitionseverywhere:1.7.2"
     compile 'com.drewnoakes:metadata-extractor:2.9.1'
     compile 'com.squareup.moshi:moshi:1.5.0'
+    compile ('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
+        transitive = true;
+    }
 }
