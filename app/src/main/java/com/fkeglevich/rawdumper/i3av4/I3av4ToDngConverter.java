@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.i3av4;
 
 import android.content.Context;
-import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.dng.DngImageWriter;
 import com.fkeglevich.rawdumper.dng.DngWriter;
