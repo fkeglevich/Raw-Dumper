@@ -116,6 +116,7 @@ public class DngWriter
         exifWriter.closeEXIFDirectory(tiffWriter);
     }
 
+    //These should be removed!
     public void writeImageData(ADngImageWriter writer, byte[] rawdata)
     {
         writer.writeImageData(tiffWriter, rawImageSize, rawdata);

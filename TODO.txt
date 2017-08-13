@@ -16,11 +16,14 @@ TODO list:
  - (IMPORTANT - IN PROGRESS) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
     raw pictures among different devices with different workarounds.
    
+ - (IMPORTANT - IN PROGRESS) Make the app translatable to different languages
+ - (IMPORTANT - IN PROGRESS) Make the app work on Android Nougat
+   
  - Save DNGs using tiles
  - Improve compatibility of generated DNG files for desktop apps like Darktable
  - (DONE!) Improve detecting and handling of Intel Camera features
    (Only use the Intel Camera features when 100% sure they can be used; because of the differences in 32 or 64 bits pointers)
- - Clean up the mess called MainActivity.java
+ - (IMPORTANT - IN PROGRESS) Clean up the mess called MainActivity.java
  - Make the app finally work on the Razr I (needs DeviceInfoLoader working first)
  - Make the app start getting to work on the Zenfone 5 (needs DeviceInfoLoader working first)
  - Better handling of SU shell commands
