@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw;
+package com.fkeglevich.rawdumper.util;
 
 /**
  * Created by Flávio Keglevich on 25/12/2016.

@@ -16,11 +16,6 @@
 
 package com.fkeglevich.rawdumper.util;
 
-import android.content.Context;
-
-import java.io.IOException;
-import java.io.InputStream;
-
 /**
  * Created by Flávio Keglevich on 16/01/2017.
  * TODO: Add a class header comment!
@@ -70,24 +65,4 @@ public class ByteArrayUtil
         return indexOf(array, value, 0);
     }
 
-    public static byte[] getRawResource(Context context, int id) throws IOException
-    {
-        InputStream input = context.getResources().openRawResource(id);
-        return readInputStream(input);
-    }
-
-    public static byte[] getRawResource(Context context, String filename) throws IOException
-    {
-        InputStream input = context.getResources().openRawResource(
-                context.getResources().getIdentifier(filename, "raw", context.getPackageName()));
-        return readInputStream(input);
-    }
-
-    public static byte[] readInputStream(InputStream input) throws IOException
-    {
-        byte[] result = new byte[input.available()];
-        input.read(result);
-        input.close();
-        return result;
-    }
 }

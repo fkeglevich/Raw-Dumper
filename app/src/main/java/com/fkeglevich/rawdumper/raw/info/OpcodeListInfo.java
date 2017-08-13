@@ -20,7 +20,7 @@ import android.content.Context;
 
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
-import com.fkeglevich.rawdumper.util.ByteArrayUtil;
+import com.fkeglevich.rawdumper.util.ResourceUtil;
 
 import java.io.IOException;
 
@@ -79,7 +79,7 @@ public class OpcodeListInfo
         byte[] result;
         try
         {
-            result = ByteArrayUtil.getRawResource(context, resourceName);
+            result = ResourceUtil.getRawResource(context, resourceName);
         }
         catch (IOException ioe)
         {   return null;    }
