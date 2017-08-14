@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.fkeglevich.rawdumper"
         minSdkVersion 18
@@ -21,8 +21,14 @@ android {
         }
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -38,24 +44,19 @@ android {
     }
 }
 
-repositories {
-    maven {
-        url "https://jitpack.io"
-    }
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:support-annotations:25.3.1'
     testCompile 'junit:junit:4.12'
     compile 'eu.chainfire:libsuperuser:1.0.0.+'
     compile "com.andkulikov:transitionseverywhere:1.7.2"
     compile 'com.drewnoakes:metadata-extractor:2.9.1'
     compile 'com.squareup.moshi:moshi:1.5.0'
-    compile ('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
+    compile ('com.github.ozodrukh:CircularReveal:1.1.1@aar') {
         transitive = true;
     }
 }
