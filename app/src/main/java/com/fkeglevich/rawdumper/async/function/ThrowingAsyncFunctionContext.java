@@ -36,6 +36,11 @@ public class ThrowingAsyncFunctionContext extends AsyncFunctionContext
         this.exceptionPoster = new AsyncOperationPoster(exceptionLooper);
     }
 
+    public ThrowingAsyncFunctionContext(Looper taskLooper, Looper callbackLooper)
+    {
+        this(taskLooper, callbackLooper, callbackLooper);
+    }
+
     @SuppressWarnings("unchecked")
     public <I, O, E extends Exception> void call(final ThrowingAsyncFunction<I, O, E> function, I argument, final AsyncOperation<O> callback, final AsyncOperation<E> exception)
     {

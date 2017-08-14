@@ -69,4 +69,16 @@ public class Locked<T>
         ThreadUtil.checkIfSynchronized(lock);
         this.object = object;
     }
+
+    /**
+     * Gets whether the locked object is null.
+     * Throws an unchecked exception if getting outside a proper synchronized block.
+     *
+     * @return  A boolean value
+     */
+    public boolean isNull()
+    {
+        ThreadUtil.checkIfSynchronized(lock);
+        return object == null;
+    }
 }
