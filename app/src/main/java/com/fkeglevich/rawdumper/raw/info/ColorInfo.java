@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
+import android.support.annotation.Keep;
+
 import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
@@ -28,6 +30,8 @@ import com.fkeglevich.rawdumper.util.MathUtil;
  * Created by Flávio Keglevich on 11/06/2017.
  */
 
+@Keep
+@SuppressWarnings("unused")
 public class ColorInfo
 {
     private float[] colorMatrix1;

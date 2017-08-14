@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
+import android.support.annotation.Keep;
+
 /**
  * Contains all implementation-specific information
  * related to manual exposure available on the device.
@@ -23,6 +25,8 @@ package com.fkeglevich.rawdumper.raw.info;
  * Created by Flávio Keglevich on 18/06/2017.
  */
 
+@Keep
+@SuppressWarnings("unused")
 public class ExposureInfo
 {
     private String[] isoValues;

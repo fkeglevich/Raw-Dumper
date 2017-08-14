@@ -16,12 +16,16 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
+import android.support.annotation.Keep;
+
 /**
  * Contains all lens-related information about a camera.
  *
  * Created by Flávio Keglevich on 11/06/2017.
  */
 
+@Keep
+@SuppressWarnings("unused")
 public class LensInfo
 {
     private Double aperture = null;
