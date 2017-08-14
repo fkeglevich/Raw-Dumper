@@ -10,10 +10,17 @@
     android:background="@null"
     tools:context="com.fkeglevich.rawdumper.MainActivity">
 
-    <TextureView
-        android:id="@+id/textureView"
+    <io.codetail.widget.RevealFrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <TextureView
+            android:id="@+id/textureView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </io.codetail.widget.RevealFrameLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
