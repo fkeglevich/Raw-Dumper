@@ -2,6 +2,10 @@
     "supportedDevices": [
         {
             "deviceInfoFile": "z00ad",
+            "deviceModel": "ASUS_Z00A"
+        },
+        {
+            "deviceInfoFile": "z00ad",
             "deviceModel": "ASUS_Z00AD"
         },
         {
@@ -15,6 +19,10 @@
         {
             "deviceInfoFile": "z00ad",
             "deviceModel": "ASUS_Z00ADC"
+        },
+        {
+            "deviceInfoFile": "z008d",
+            "deviceModel": "ASUS_Z008"
         },
         {
             "deviceInfoFile": "z008d",
