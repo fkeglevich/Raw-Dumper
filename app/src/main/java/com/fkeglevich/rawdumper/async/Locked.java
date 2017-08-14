@@ -47,6 +47,17 @@ public class Locked<T>
     }
 
     /**
+     * Creates a new Locked object without using a specific lock object.
+     *
+     * @param object    The object to be locked.
+     */
+    public Locked(T object)
+    {
+        this.object = object;
+        this.lock = this;
+    }
+
+    /**
      * Gets the locked object.
      * Throws an unchecked exception if getting outside a proper synchronized block.
      *
@@ -54,7 +65,7 @@ public class Locked<T>
      */
     public T get()
     {
-        ThreadUtil.checkIfSynchronized(lock);
+        ThreadUtil.checkIfSynchronized(getLock());
         return object;
     }
 
@@ -66,7 +77,7 @@ public class Locked<T>
      */
     public void set(T object)
     {
-        ThreadUtil.checkIfSynchronized(lock);
+        ThreadUtil.checkIfSynchronized(getLock());
         this.object = object;
     }
 
@@ -78,7 +89,17 @@ public class Locked<T>
      */
     public boolean isNull()
     {
-        ThreadUtil.checkIfSynchronized(lock);
+        ThreadUtil.checkIfSynchronized(getLock());
         return object == null;
+    }
+
+    /**
+     * Gets the object used as synchronization lock.
+     *
+     * @return  An object
+     */
+    public Object getLock()
+    {
+        return lock;
     }
 }
