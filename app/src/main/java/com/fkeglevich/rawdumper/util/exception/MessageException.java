@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.util.exception;
 
+import android.content.Context;
+
 /**
  * Created by Flávio Keglevich on 13/08/2017.
  * TODO: Add a class header comment!
@@ -23,5 +25,5 @@ package com.fkeglevich.rawdumper.util.exception;
 
 public abstract class MessageException extends Exception
 {
-    public abstract int getMessageResourceId();
+    public abstract String getMessageResource(Context context);
 }
