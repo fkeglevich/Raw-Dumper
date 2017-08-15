@@ -7,13 +7,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
-    android:background="@null"
     tools:context="com.fkeglevich.rawdumper.MainActivity">
 
     <io.codetail.widget.RevealFrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/extra_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            app:srcCompat="@drawable/extra_background"/>
 
         <TextureView
             android:id="@+id/textureView"
