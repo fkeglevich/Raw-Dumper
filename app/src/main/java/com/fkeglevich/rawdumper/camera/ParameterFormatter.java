@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.camera;
 import android.hardware.Camera;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,9 +26,9 @@ import java.util.List;
  * TODO: Add a class header comment!
  */
 
-public class ParameterFormatter
+class ParameterFormatter
 {
-    public static List<CaptureSize> convertSizeList(List<Camera.Size> list)
+    static List<CaptureSize> convertSizeList(List<Camera.Size> list)
     {
         List<CaptureSize> result = new ArrayList<CaptureSize>();
         for (Camera.Size size : list)
@@ -37,18 +36,8 @@ public class ParameterFormatter
         return result;
     }
 
-    public static CaptureSize toCaptureSize(Camera.Size size)
+    private static CaptureSize toCaptureSize(Camera.Size size)
     {
         return new CaptureSize(size.width, size.height);
-    }
-
-    public static Camera.Size toCameraSize(Camera camera, CaptureSize size)
-    {
-        return camera.new Size(size.getWidth(), size.getHeight());
-    }
-
-    public static List<CaptureSize> unmodfConvertSizeList(List<Camera.Size> list)
-    {
-        return Collections.unmodifiableList(convertSizeList(list));
     }
 }
