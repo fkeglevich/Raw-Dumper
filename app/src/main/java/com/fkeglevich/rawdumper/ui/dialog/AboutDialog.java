@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.ui.UiUtils;
+import com.fkeglevich.rawdumper.util.exception.NameNotFoundFromItselfException;
 
 /**
  * Represents the About this app dialog
@@ -56,14 +57,9 @@ public class AboutDialog
             packageInfo = context.getPackageManager().getPackageInfo(context.getApplicationInfo().packageName, 0);
         }
         catch (PackageManager.NameNotFoundException e)
-        {   Log.w(TAG, "Exception when the app tried to get the PackageInfo from itself. This should NOT happen!");   }
+        {   throw new NameNotFoundFromItselfException();   }
 
-        String messageStr = context.getResources().getString(R.string.app_name);
-
-        if (packageInfo != null)
-            messageStr += " v" + packageInfo.versionName + "\n\n";
-
-        messageStr += context.getResources().getString(R.string.about_message);
+        String messageStr = context.getResources().getString(R.string.about_message, packageInfo.versionName);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final TextView messageView = new TextView(context);

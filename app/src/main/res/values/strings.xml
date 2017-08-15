@@ -1,17 +1,25 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Raw Dumper</string>
 
-    <string name="error_opening_camera">The camera couldn\'t be opened. Try restarting your device.</string>
-    <string name="error_loading_device_info">Your device appears to be incompatible with this app.</string>
+    <string name="error_opening_camera">The camera couldn\'t be started. Restart your device and try again.</string>
 
-    <string name="permission_error">This app needs every required permission to work.</string>
-    <string name="root_access_error">This app needs root access.</string>
+    <string name="error_loading_device_info">
+        The app is currently not compatible with your device. Send the model name of your device to the developer, so it can be added to the compatibility list.
+        \n
+        \nModel name: <xliff:g id="model_name">%s</xliff:g>
+    </string>
+
+    <string name="permission_error">This app needs all requested permissions!</string>
+    <string name="root_access_error">This app only works with root access!</string>
 
     <string name="terminating_dialog_button">Exit</string>
 
     <string name="about_title">About</string>
     <string name="about_dismiss_button">OK</string>
-    <string name="about_message">Copyright © 2017, Flávio Keglevich
+    <string name="about_message">
+        Raw Dumper v<xliff:g id="app_version">%s</xliff:g>
+        \n
+        \nCopyright © 2017, Flávio Keglevich
         \n
         \nThis app and its launcher icon are licensed under Apache License 2.0. The license can be found here:
         \nhttps://www.apache.org/licenses/LICENSE-2.0
