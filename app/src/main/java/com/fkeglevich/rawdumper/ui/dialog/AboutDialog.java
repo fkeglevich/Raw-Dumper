@@ -50,8 +50,7 @@ public class AboutDialog
 
     public AboutDialog(Context context)
     {
-        PackageInfo packageInfo = null;
-
+        PackageInfo packageInfo;
         try
         {
             packageInfo = context.getPackageManager().getPackageInfo(context.getApplicationInfo().packageName, 0);
