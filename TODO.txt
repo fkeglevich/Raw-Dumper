@@ -37,3 +37,4 @@ And maaaany other things...
 
 Known bugs:
  - (MINOR) When displaying some dialog alerts, the app can get out from fullscreen state if the user switches to another app
+ - (MINOR) The animation probably won't work correctly if the user has a slow Animator speed that is slower than the opening camera speed 
