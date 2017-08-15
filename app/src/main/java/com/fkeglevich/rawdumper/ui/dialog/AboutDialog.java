@@ -26,7 +26,6 @@ import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
