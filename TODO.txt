@@ -18,15 +18,18 @@ TODO list:
    
  - (IMPORTANT - IN PROGRESS) Make the app translatable to different languages
  - (IMPORTANT - IN PROGRESS) Make the app work on Android Nougat
- - (IMPORTANT - IN PROGRESS) Show the Build.MODEl when complaining for a unknown device!
+ - (DONE!) Show the Build.MODEl when complaining for a unknown device!
+   
+ - (IN PROGRESS) Reduce overdraw
    
  - Save DNGs using tiles
  - Improve compatibility of generated DNG files for desktop apps like Darktable
  - (DONE!) Improve detecting and handling of Intel Camera features
    (Only use the Intel Camera features when 100% sure they can be used; because of the differences in 32 or 64 bits pointers)
  - (IMPORTANT - IN PROGRESS) Clean up the mess called MainActivity.java
- - Make the app finally work on the Razr I (needs DeviceInfoLoader working first)
- - Make the app start getting to work on the Zenfone 5 (needs DeviceInfoLoader working first)
+ - Make the app finally work on the Razr I
+ - Make the app start getting to work on the Zenfone 5
+ - (DONE!) DeviceInfoLoader working!
  - Better handling of SU shell commands
  - Create a better separation layer between the UI and Camera threads
  - Create a better camera "reopening" for the MM Z00A front camera case 
