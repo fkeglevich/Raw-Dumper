@@ -29,12 +29,12 @@ import com.fkeglevich.rawdumper.ui.UiUtils;
  * TODO: Add a class header comment!
  */
 
-public class PermissionProblemDialogs
+public class FatalErrorDialogs
 {
     private final AlertDialog needsPermissionDialog;
     private final AlertDialog needsRootAccessDialog;
 
-    public PermissionProblemDialogs(Context context)
+    public FatalErrorDialogs(Context context)
     {
         needsPermissionDialog = buildTerminatingDialog(context, context.getResources().getString(R.string.permission_error));
         needsRootAccessDialog = buildTerminatingDialog(context, context.getResources().getString(R.string.root_access_error));
@@ -48,6 +48,12 @@ public class PermissionProblemDialogs
     public void showNeedsRootAccessDialog(AppCompatActivity activity)
     {
         UiUtils.showDialogInImmersiveMode(needsRootAccessDialog, activity);
+    }
+
+    public void showGenericFatalErrorDialog(AppCompatActivity activity, String message)
+    {
+        AlertDialog fatalErrorDialog = buildTerminatingDialog(activity, message);
+        UiUtils.showDialogInImmersiveMode(fatalErrorDialog, activity);
     }
 
     private AlertDialog buildTerminatingDialog(Context context, String message)
