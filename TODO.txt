@@ -18,6 +18,7 @@ TODO list:
    
  - (IMPORTANT - IN PROGRESS) Make the app translatable to different languages
  - (IMPORTANT - IN PROGRESS) Make the app work on Android Nougat
+ - (IMPORTANT - IN PROGRESS) Show the Build.MODEl when complaining for a unknown device!
    
  - Save DNGs using tiles
  - Improve compatibility of generated DNG files for desktop apps like Darktable
@@ -33,3 +34,6 @@ TODO list:
  - (DONE!) Better compatible Exif extraction
  
 And maaaany other things...
+
+Known bugs:
+ - (MINOR) When displaying some dialog alerts, the app can get out from fullscreen state if the user switches to another app
