@@ -1,0 +1,226 @@
+{
+  "cameras": [
+    {
+      "color": {
+        "calibrationIlluminant1": "D55",
+        "cameraCalibration1": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "colorMatrix1": [
+          1.1741,
+          -0.2862,
+          -0.0448,
+          -0.1778,
+          0.9912,
+          0.2184,
+          0.0223,
+          0.2117,
+          0.532
+        ]
+      },
+      "exposure": {
+        "isoParameter": "iso",
+        "isoAutoValue": "auto",
+        "isoValues": [
+          "auto",
+          "50",
+          "100",
+          "200",
+          "300",
+          "400",
+          "600",
+          "800",
+          "1000",
+          "1200",
+          "1400",
+          "1600"
+        ],
+        "shutterSpeedParameter": "shutter",
+        "shutterSpeedAutoValue": "0",
+        "shutterSpeedValues": [
+          "1s",
+          "0",
+          "2",
+          "4",
+          "8",
+          "15",
+          "30",
+          "60",
+          "125",
+          "250",
+          "500",
+          "1000",
+          "2000",
+          "5000",
+          "10000"
+        ]
+      },
+      "hasKnownMakernote": false,
+      "id": 0,
+      "isFrontCamera": false,
+      "lens": {
+        "aperture": 2.0
+      },
+      "model": "T00J (back camera)",
+      "uniqueCameraModel": "Asus ZenFone 5 T00J (back camera)",
+      "opcodes": [],
+      "retryOnError": false,
+      "sensor": {
+        "alignWidth": 256,
+        "baseISO": 50,
+        "bayerPattern": "GRBG",
+        "binningRawImageSizes": [
+          {
+            "height": 1200,
+            "rawBufferAlignedWidth": 3328,
+            "rawBufferHeight": 1200,
+            "rawBufferLength": 3993600,
+            "rawBufferWidth": 1600,
+            "rawBufferWidthBytes": 3200,
+            "width": 1600
+          }
+        ],
+        "bitsPerPixel": 10,
+        "blackLevel": [
+          64.0,
+          64.0,
+          64.0,
+          64.0
+        ],
+        "horizontalPadding": 0,
+        "maker": "Toshiba",
+        "name": "T4K35",
+        "rawImageSizes": [
+          {
+            "height": 2448,
+            "rawBufferAlignedWidth": 6656,
+            "rawBufferHeight": 2448,
+            "rawBufferLength": 16293888,
+            "rawBufferWidth": 3264,
+            "rawBufferWidthBytes": 6528,
+            "width": 3264
+          }
+        ],
+        "storageBitsPerPixel": 16,
+        "supportsPixelBinning": true,
+        "verticalPadding": 0,
+        "whiteLevel": 1023
+      }
+    },
+    {
+      "color": {
+        "calibrationIlluminant1": "D55",
+        "cameraCalibration1": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "colorMatrix1": [
+          0.9678,
+          -0.1981,
+          -0.0469,
+          -0.1948,
+          0.9686,
+          0.2657,
+          -0.0133,
+          0.2255,
+          0.6228
+        ]
+      },
+      "exposure": {
+        "isoParameter": "iso",
+        "isoAutoValue": "auto",
+        "isoValues": [
+          "auto",
+          "50",
+          "100",
+          "200",
+          "300",
+          "400",
+          "600",
+          "800",
+          "1000",
+          "1200",
+          "1400",
+          "1600"
+        ],
+        "shutterSpeedParameter": "shutter",
+        "shutterSpeedAutoValue": "0",
+        "shutterSpeedValues": [
+          "1s",
+          "0",
+          "2",
+          "4",
+          "8",
+          "15",
+          "30",
+          "60",
+          "125",
+          "250",
+          "500",
+          "1000",
+          "2000",
+          "5000",
+          "10000"
+        ]
+      },
+      "hasKnownMakernote": false,
+      "id": 1,
+      "isFrontCamera": true,
+      "lens": {
+        "aperture": 2.8
+      },
+      "model": "T00J (front camera)",
+      "uniqueCameraModel": "Asus ZenFone 5 T00J (front camera)",
+      "opcodes": [],
+      "retryOnError": false,
+      "sensor": {
+        "alignWidth": 256,
+        "baseISO": 50,
+        "bayerPattern": "BGGR",
+        "binningRawImageSizes": [],
+        "bitsPerPixel": 10,
+        "blackLevel": [
+          16.0,
+          16.0,
+          16.0,
+          16.0
+        ],
+        "horizontalPadding": 0,
+        "maker": "Unknown",
+        "name": "Unknown Sensor",
+        "rawImageSizes": [
+          {
+            "height": 1200,
+            "rawBufferAlignedWidth": 3328,
+            "rawBufferHeight": 1200,
+            "rawBufferLength": 3993600,
+            "rawBufferWidth": 1600,
+            "rawBufferWidthBytes": 3200,
+            "width": 1600
+          }
+        ],
+        "storageBitsPerPixel": 16,
+        "supportsPixelBinning": false,
+        "verticalPadding": 0,
+        "whiteLevel": 1023
+      }
+    }
+  ],
+  "dumpDirectoryLocation": "/data",
+  "manufacturer": "Asus"
+}
