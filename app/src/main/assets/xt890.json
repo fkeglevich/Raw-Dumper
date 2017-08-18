@@ -1,0 +1,110 @@
+{
+    "cameras": [
+        {
+            "color": {
+                "calibrationIlluminant1": "D55",
+                "cameraCalibration1": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "colorMatrix1": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            },
+			"exposure": {
+				"isoParameter": "iso",
+				"isoAutoValue": "auto",
+				"isoValues": [
+					"auto",
+					"100",
+					"200",
+					"300",
+					"400",
+					"600",
+					"800",
+					"1000",
+					"1200",
+					"1400",
+					"1600"
+				],
+				"shutterSpeedParameter": "shutter",
+				"shutterSpeedAutoValue": "0",
+				"shutterSpeedValues": [
+					"1",
+					"0",
+					"2",
+					"4",
+					"8",
+					"15",
+					"30",
+					"60",
+					"125",
+					"250",
+					"500",
+					"1000",
+					"2000",
+					"5000",
+					"10000"
+				]
+			},
+            "hasKnownMakernote": false,
+            "id": 0,
+            "isFrontCamera": false,
+            "lens": {
+                "aperture": 2.6
+            },
+            "model": "XT890 (back camera)",
+            "uniqueCameraModel": "Motorola Razr I XT890 (back camera)",
+            "opcodes": [],
+            "retryOnError": false,
+            "sensor": {
+                "alignWidth": 128,
+                "baseISO": 100,
+                "bayerPattern": "GRBG",
+                "binningRawImageSizes": [],
+                "bitsPerPixel": 10,
+                "blackLevel": [
+                    64.0,
+                    64.0,
+                    64.0,
+                    64.0
+                ],
+                "horizontalPadding": 0,
+                "maker": "Unknown",
+                "name": "Unknown Sensor",
+                "rawImageSizes": [
+                    {
+                        "height": 2448,
+                        "rawBufferAlignedWidth": 6528,
+                        "rawBufferHeight": 2448,
+                        "rawBufferLength": 15982592,
+                        "rawBufferWidth": 3264,
+                        "rawBufferWidthBytes": 6528,
+                        "width": 3264
+                    }
+                ],
+                "storageBitsPerPixel": 16,
+                "supportsPixelBinning": false,
+                "verticalPadding": 0,
+                "whiteLevel": 1023
+            }
+        }
+    ],
+    "dumpDirectoryLocation": "/data",
+    "manufacturer": "Motorola"
+}
