@@ -30,7 +30,7 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 @Keep
 @SuppressWarnings("unused")
-public class CameraInfo
+public class ExtraCameraInfo
 {
     private int id;
     private String model;
@@ -45,7 +45,7 @@ public class CameraInfo
     private boolean hasKnownMakernote;
     private boolean retryOnError;
 
-    private CameraInfo()
+    private ExtraCameraInfo()
     {   }
 
     public void writeTiffTags(TiffWriter tiffWriter)

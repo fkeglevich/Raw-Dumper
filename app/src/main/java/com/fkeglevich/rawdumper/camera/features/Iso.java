@@ -36,7 +36,7 @@ public class Iso extends AFeature
         super(sharedCameraGetter);
         synchronized (sharedCamera.getLock())
         {
-            isoKey = sharedCamera.get().getRawCameraInfo().getExposure().getIsoParameter();
+            isoKey = sharedCamera.get().getExtraCameraInfo().getExposure().getIsoParameter();
         }
     }
 
@@ -61,7 +61,7 @@ public class Iso extends AFeature
     {
         synchronized (sharedCamera.getLock())
         {
-            return Arrays.asList(sharedCamera.get().getRawCameraInfo().getExposure().getIsoValues().clone());
+            return Arrays.asList(sharedCamera.get().getExtraCameraInfo().getExposure().getIsoValues().clone());
         }
     }
 

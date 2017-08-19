@@ -32,14 +32,14 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 public class DeviceInfo
 {
     private String manufacturer;
-    private CameraInfo[] cameras;
+    private ExtraCameraInfo[] cameras;
 
     private String dumpDirectoryLocation;
 
     private DeviceInfo()
     {   }
 
-    public CameraInfo[] getCameras()
+    public ExtraCameraInfo[] getCameras()
     {
         return cameras;
     }

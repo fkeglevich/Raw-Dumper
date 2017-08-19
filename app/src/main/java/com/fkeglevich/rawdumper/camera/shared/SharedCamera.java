@@ -20,7 +20,7 @@ import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.raw.RawImageCallbackAccess;
-import com.fkeglevich.rawdumper.raw.info.CameraInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 /**
  * Created by Flávio Keglevich on 09/08/2017.
@@ -32,16 +32,16 @@ public class SharedCamera
     private final ICameraExtension          cameraExtension;
     private final Camera.CameraInfo         cameraInfo;
     private final int                       cameraId;
-    private final CameraInfo                rawCameraInfo;
+    private final ExtraCameraInfo extraCameraInfo;
     private final RawImageCallbackAccess    rawImageCallbackAccess;
     private final SharedParameters          parameters;
 
-    SharedCamera(ICameraExtension cameraExtension, Camera.CameraInfo cameraInfo, int cameraId, CameraInfo rawCameraInfo)
+    SharedCamera(ICameraExtension cameraExtension, Camera.CameraInfo cameraInfo, int cameraId, ExtraCameraInfo extraCameraInfo)
     {
         this.cameraExtension = cameraExtension;
         this.cameraInfo = cameraInfo;
         this.cameraId = cameraId;
-        this.rawCameraInfo = rawCameraInfo;
+        this.extraCameraInfo = extraCameraInfo;
         this.rawImageCallbackAccess = new RawImageCallbackAccess(getCamera());
         this.parameters = new SharedParameters(getCameraExtension().getCameraDevice());
 
@@ -75,9 +75,9 @@ public class SharedCamera
         return cameraId;
     }
 
-    public CameraInfo getRawCameraInfo()
+    public ExtraCameraInfo getExtraCameraInfo()
     {
-        return rawCameraInfo;
+        return extraCameraInfo;
     }
 
     public RawImageCallbackAccess getRawImageCallbackAccess()

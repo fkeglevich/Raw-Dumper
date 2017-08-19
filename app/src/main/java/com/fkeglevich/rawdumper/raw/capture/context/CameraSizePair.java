@@ -17,10 +17,10 @@
 package com.fkeglevich.rawdumper.raw.capture.context;
 
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.CameraInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 /**
- * A simple immutable pair made of a CameraInfo and RawImageSize.
+ * A simple immutable pair made of a ExtraCameraInfo and RawImageSize.
  *
  * Created by Flávio Keglevich on 26/07/2017.
  */
@@ -28,18 +28,18 @@ import com.fkeglevich.rawdumper.raw.info.CameraInfo;
 class CameraSizePair
 {
     private final RawImageSize rawImageSize;
-    private final CameraInfo cameraInfo;
+    private final ExtraCameraInfo extraCameraInfo;
 
     /**
      * Creates a new CameraSizePair object
      *
      * @param rawImageSize  The raw image size
-     * @param cameraInfo    The camera info
+     * @param extraCameraInfo    The camera info
      */
-    CameraSizePair(RawImageSize rawImageSize, CameraInfo cameraInfo)
+    CameraSizePair(RawImageSize rawImageSize, ExtraCameraInfo extraCameraInfo)
     {
         this.rawImageSize = rawImageSize;
-        this.cameraInfo = cameraInfo;
+        this.extraCameraInfo = extraCameraInfo;
     }
 
     RawImageSize getRawImageSize()
@@ -47,8 +47,8 @@ class CameraSizePair
         return rawImageSize;
     }
 
-    CameraInfo getCameraInfo()
+    ExtraCameraInfo getExtraCameraInfo()
     {
-        return cameraInfo;
+        return extraCameraInfo;
     }
 }

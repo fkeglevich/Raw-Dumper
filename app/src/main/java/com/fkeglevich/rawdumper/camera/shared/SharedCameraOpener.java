@@ -21,7 +21,7 @@ import android.hardware.Camera;
 import com.fkeglevich.rawdumper.camera.exception.CameraOpenException;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.IntelCameraExtensionLoader;
-import com.fkeglevich.rawdumper.raw.info.CameraInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 /**
  * Created by Flávio Keglevich on 09/08/2017.
@@ -45,8 +45,8 @@ public class SharedCameraOpener
         {
             ICameraExtension cameraExtension    = getCameraExtension();
             Camera.CameraInfo cameraInfo        = getCameraInfo();
-            CameraInfo rawCameraInfo            = getRawCameraInfo();
-            return new SharedCamera(cameraExtension, cameraInfo, cameraId, rawCameraInfo);
+            ExtraCameraInfo extraCameraInfo = getRawCameraInfo();
+            return new SharedCamera(cameraExtension, cameraInfo, cameraId, extraCameraInfo);
         }
         catch (RuntimeException re)
         {
@@ -66,7 +66,7 @@ public class SharedCameraOpener
         return cameraInfo;
     }
 
-    private CameraInfo getRawCameraInfo()
+    private ExtraCameraInfo getRawCameraInfo()
     {
         return sharedData.getDeviceInfo().getCameras()[cameraId];
     }

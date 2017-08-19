@@ -27,7 +27,7 @@ import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfoExtractor;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.CameraInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 import java.io.File;
@@ -53,9 +53,9 @@ public class I3av4ToDngConverter
         this.deviceInfo = deviceInfo;
         this.makerNoteInfoExtractor = new MakerNoteInfoExtractor();
 
-        for (CameraInfo cameraInfo : deviceInfo.getCameras())
-            for (RawImageSize imageSize : cameraInfo.getSensor().getRawImageSizes())
-                cameraConfigList.add(new CameraConfig(imageSize, cameraInfo));
+        for (ExtraCameraInfo extraCameraInfo : deviceInfo.getCameras())
+            for (RawImageSize imageSize : extraCameraInfo.getSensor().getRawImageSizes())
+                cameraConfigList.add(new CameraConfig(imageSize, extraCameraInfo));
     }
 
     public void convert(String i3av4Path, String dngPath, Context context) throws IOException
@@ -75,19 +75,19 @@ public class I3av4ToDngConverter
         captureInfo.captureParameters = null;
         captureInfo.originalRawFilename = i3av4File.getName();
         captureInfo.orientation = ImageOrientation.TOPLEFT;
-        captureInfo.camera = cameraConfig.cameraInfo;
+        captureInfo.camera = cameraConfig.extraCameraInfo;
         captureInfo.imageSize = cameraConfig.rawImageSize;
         captureInfo.extraJpegBytes = null;
 
-        if (cameraConfig.cameraInfo.hasKnownMakernote())
+        if (cameraConfig.extraCameraInfo.hasKnownMakernote())
         {
             captureInfo.makerNoteInfo = makerNoteInfoExtractor.extractFrom(mknBytes);
-            captureInfo.whiteBalanceInfo = new WhiteBalanceInfoExtractor().extractFrom(captureInfo.makerNoteInfo, cameraConfig.cameraInfo.getColor());
+            captureInfo.whiteBalanceInfo = new WhiteBalanceInfoExtractor().extractFrom(captureInfo.makerNoteInfo, cameraConfig.extraCameraInfo.getColor());
         }
         else
         {
             captureInfo.makerNoteInfo = new MakerNoteInfo(mknBytes);
-            captureInfo.whiteBalanceInfo = new WhiteBalanceInfoExtractor().extractFrom(cameraConfig.cameraInfo.getColor());
+            captureInfo.whiteBalanceInfo = new WhiteBalanceInfoExtractor().extractFrom(cameraConfig.extraCameraInfo.getColor());
         }
 
         i3av4RAFile.seek(rawDataStart);
@@ -112,12 +112,12 @@ public class I3av4ToDngConverter
     private class CameraConfig
     {
         RawImageSize rawImageSize;
-        CameraInfo cameraInfo;
+        ExtraCameraInfo extraCameraInfo;
 
-        CameraConfig(RawImageSize rawImageSize, CameraInfo cameraInfo)
+        CameraConfig(RawImageSize rawImageSize, ExtraCameraInfo extraCameraInfo)
         {
             this.rawImageSize = rawImageSize;
-            this.cameraInfo = cameraInfo;
+            this.extraCameraInfo = extraCameraInfo;
         }
     }
 

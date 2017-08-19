@@ -20,7 +20,7 @@ import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.CameraInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
@@ -37,7 +37,7 @@ public class CaptureInfo
 {
     //Required fields
     public DeviceInfo device                    = null;
-    public CameraInfo camera                    = null;
+    public ExtraCameraInfo camera                    = null;
     public DateInfo date                        = null;
     public WhiteBalanceInfo whiteBalanceInfo    = null;
     public RawImageSize imageSize               = null;

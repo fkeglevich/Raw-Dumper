@@ -24,7 +24,7 @@ import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfo;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfoExtractor;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.CameraInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 import java.io.File;
@@ -69,19 +69,19 @@ public class I3av4FileOnly implements ICaptureContext
         WhiteBalanceInfo whiteBalanceInfo;
         byte[] mknBytes = readMknFromFile(captureInfo.relatedI3av4File, pair.getRawImageSize());
 
-        if (pair.getCameraInfo().hasKnownMakernote())
+        if (pair.getExtraCameraInfo().hasKnownMakernote())
         {
             makerNoteInfo = makerNoteInfoExtractor.extractFrom(mknBytes);
-            whiteBalanceInfo = whiteBalanceExtractor.extractFrom(captureInfo.makerNoteInfo, pair.getCameraInfo().getColor());
+            whiteBalanceInfo = whiteBalanceExtractor.extractFrom(captureInfo.makerNoteInfo, pair.getExtraCameraInfo().getColor());
         }
         else
         {
             makerNoteInfo = new MakerNoteInfo(mknBytes);
-            whiteBalanceInfo = whiteBalanceExtractor.extractFrom(pair.getCameraInfo().getColor());
+            whiteBalanceInfo = whiteBalanceExtractor.extractFrom(pair.getExtraCameraInfo().getColor());
         }
 
         //Filling missing required fields
-        captureInfo.camera = pair.getCameraInfo();
+        captureInfo.camera = pair.getExtraCameraInfo();
         captureInfo.date = dateExtractor.extractFromFilename(captureInfo.relatedI3av4File.getName());
         captureInfo.whiteBalanceInfo = whiteBalanceInfo;
         captureInfo.imageSize = pair.getRawImageSize();
@@ -135,9 +135,9 @@ public class I3av4FileOnly implements ICaptureContext
     private List<CameraSizePair> initializePairList(DeviceInfo device)
     {
         List<CameraSizePair> pairList = new ArrayList<>();
-        for (CameraInfo cameraInfo : device.getCameras())
-            for (RawImageSize imageSize : cameraInfo.getSensor().getRawImageSizes())
-                pairList.add(new CameraSizePair(imageSize, cameraInfo));
+        for (ExtraCameraInfo extraCameraInfo : device.getCameras())
+            for (RawImageSize imageSize : extraCameraInfo.getSensor().getRawImageSizes())
+                pairList.add(new CameraSizePair(imageSize, extraCameraInfo));
 
         return pairList;
     }
