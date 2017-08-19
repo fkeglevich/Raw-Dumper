@@ -15,6 +15,10 @@ TODO list:
  - (IMPORTANT - IN PROGRESS) Make the app work on ROMs using LL camera blobs (at least for the front camera)
  - (IMPORTANT - IN PROGRESS) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
     raw pictures among different devices with different workarounds.
+	
+ - (IMPORTANT) Create the concept of "applied workarounds" for differents devices. This is specially useful for devices like
+	the Zen2 that differ A LOT between camera blob's versions.
+ - (IMPORTANT) Make the Build.MODEL to be dynamic and appear in the dng model tag
    
  - (IMPORTANT - IN PROGRESS) Make the app translatable to different languages
  - (IMPORTANT - IN PROGRESS) Make the app work on Android Nougat
@@ -27,11 +31,17 @@ TODO list:
  - (DONE!) Improve detecting and handling of Intel Camera features
    (Only use the Intel Camera features when 100% sure they can be used; because of the differences in 32 or 64 bits pointers)
  - (IMPORTANT - IN PROGRESS) Clean up the mess called MainActivity.java
- - Make the app finally work on the Razr I
- - Make the app start getting to work on the Zenfone 5
+ 
+ - (IMPORTANT - IN PROGRESS) Make the app work on more devices:
+	- Razr I
+	- Zenfone 5
+	- Zenfone 2 with LL blobs
+ 
+ - (IMPORTANT - IN PROGRESS) FIX THE GLUE CODE TO MAKE THE APP WORK IN THE NEXT RELEASE!
+ 
  - (DONE!) DeviceInfoLoader working!
  - Better handling of SU shell commands
- - Create a better separation layer between the UI and Camera threads
+ - (IMPORTANT - IN PROGRESS) Create a better separation layer between the UI and Camera threads
  - Create a better camera "reopening" for the MM Z00A front camera case 
    (and other cases where the camera crashes)
  - (DONE!) Better compatible Exif extraction
