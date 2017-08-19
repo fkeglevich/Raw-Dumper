@@ -38,6 +38,7 @@ TODO list:
 	- Zenfone 2 with LL blobs
  
  - (IMPORTANT - IN PROGRESS) FIX THE GLUE CODE TO MAKE THE APP WORK IN THE NEXT RELEASE!
+ - (IMPORTANT) Move the alignWidth from the sensor to the device json!
  
  - (DONE!) DeviceInfoLoader working!
  - Better handling of SU shell commands
