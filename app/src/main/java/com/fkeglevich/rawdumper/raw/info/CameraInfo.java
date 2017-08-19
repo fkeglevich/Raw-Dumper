@@ -42,7 +42,6 @@ public class CameraInfo
     private ExposureInfo exposure;
     private OpcodeListInfo[] opcodes;
 
-    private boolean isFrontCamera;
     private boolean hasKnownMakernote;
     private boolean retryOnError;
 
@@ -83,11 +82,6 @@ public class CameraInfo
     public OpcodeListInfo[] getOpcodes()
     {
         return opcodes;
-    }
-
-    public boolean isFrontCamera()
-    {
-        return isFrontCamera;
     }
 
     public boolean hasKnownMakernote()

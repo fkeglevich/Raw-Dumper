@@ -43,29 +43,12 @@
           "1400",
           "1600"
         ],
-        "shutterSpeedParameter": "shutter",
-        "shutterSpeedAutoValue": "0",
-        "shutterSpeedValues": [
-          "1s",
-          "0",
-          "2",
-          "4",
-          "8",
-          "15",
-          "30",
-          "60",
-          "125",
-          "250",
-          "500",
-          "1000",
-          "2000",
-          "5000",
-          "10000"
-        ]
+        "shutterSpeedParameter": null,
+        "shutterSpeedAutoValue": null,
+        "shutterSpeedValues": []
       },
       "hasKnownMakernote": false,
       "id": 0,
-      "isFrontCamera": false,
       "lens": {
         "aperture": 2.0
       },
@@ -165,29 +148,12 @@
           "1400",
           "1600"
         ],
-        "shutterSpeedParameter": "shutter",
-        "shutterSpeedAutoValue": "0",
-        "shutterSpeedValues": [
-          "1s",
-          "0",
-          "2",
-          "4",
-          "8",
-          "15",
-          "30",
-          "60",
-          "125",
-          "250",
-          "500",
-          "1000",
-          "2000",
-          "5000",
-          "10000"
-        ]
+        "shutterSpeedParameter": null,
+        "shutterSpeedAutoValue": null,
+        "shutterSpeedValues": []
       },
       "hasKnownMakernote": false,
       "id": 1,
-      "isFrontCamera": true,
       "lens": {
         "aperture": 2.8
       },
