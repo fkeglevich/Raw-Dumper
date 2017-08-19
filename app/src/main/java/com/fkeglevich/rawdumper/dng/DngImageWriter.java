@@ -40,16 +40,16 @@ public class DngImageWriter extends ADngImageWriter
     protected void init(TiffWriter tiffWriter, RawImageSize rawImageSize)
     {
         tiffWriter.setField(TiffTag.TIFFTAG_COMPRESSION, TiffTag.COMPRESSION_NONE);
-        buffer = new byte[rawImageSize.getRawBufferWidthBytes()];
+        buffer = new byte[rawImageSize.getPaddedWidthBytes()];
     }
 
     @Override
     void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, byte[] rawdata)
     {
         init(tiffWriter, rawImageSize);
-        for (int row = 0; row < rawImageSize.getRawBufferHeight(); row++)
+        for (int row = 0; row < rawImageSize.getPaddedHeight(); row++)
         {
-            System.arraycopy(rawdata, rawImageSize.getRawBufferAlignedWidth() * row, buffer, 0, rawImageSize.getRawBufferWidthBytes());
+            System.arraycopy(rawdata, rawImageSize.getBytesPerLine() * row, buffer, 0, rawImageSize.getPaddedWidthBytes());
             tiffWriter.writeScanline(buffer, row);
         }
         tiffWriter.writeDirectory();
@@ -61,9 +61,9 @@ public class DngImageWriter extends ADngImageWriter
         init(tiffWriter, rawImageSize);
 
         long current = file.getFilePointer();
-        for (int row = 0; row < rawImageSize.getRawBufferHeight(); row++)
+        for (int row = 0; row < rawImageSize.getPaddedHeight(); row++)
         {
-            file.seek(current + rawImageSize.getRawBufferAlignedWidth() * row);
+            file.seek(current + rawImageSize.getBytesPerLine() * row);
             file.read(buffer);
             tiffWriter.writeScanline(buffer, row);
         }

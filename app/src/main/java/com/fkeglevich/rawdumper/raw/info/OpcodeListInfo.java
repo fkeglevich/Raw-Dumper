@@ -21,7 +21,7 @@ import android.support.annotation.Keep;
 
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
-import com.fkeglevich.rawdumper.util.ResourceUtil;
+import com.fkeglevich.rawdumper.util.AssetUtil;
 
 import java.io.IOException;
 
@@ -82,7 +82,8 @@ public class OpcodeListInfo
         byte[] result;
         try
         {
-            result = ResourceUtil.getRawResource(context, resourceName);
+            //result = ResourceUtil.getRawResource(context, resourceName);
+            result = AssetUtil.getAssetBytes(context, resourceName + ".bin");
         }
         catch (IOException ioe)
         {   return null;    }

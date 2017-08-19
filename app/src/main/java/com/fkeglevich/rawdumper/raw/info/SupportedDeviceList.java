@@ -17,6 +17,9 @@
 package com.fkeglevich.rawdumper.raw.info;
 
 import android.os.Build;
+import android.support.annotation.Keep;
+
+import java.io.IOException;
 
 /**
  * Represents the list of known devices.
@@ -24,19 +27,23 @@ import android.os.Build;
  * Created by Flávio Keglevich on 15/06/2017.
  */
 
-public class SupportedDeviceList
+@Keep
+@SuppressWarnings("unused")
+class SupportedDeviceList
 {
+    private static final String DEVICE_FILE_EXTENSION = ".json";
+
     private SupportedDevice[] supportedDevices;
 
     private SupportedDeviceList()
     {   }
 
-    public String findDeviceInfoFile()
+    String findDeviceInfoFile() throws IOException
     {
         for (SupportedDevice sd : supportedDevices)
             if (sd.deviceModel.equals(Build.MODEL))
-                return sd.deviceInfoFile;
+                return sd.deviceInfoFile + DEVICE_FILE_EXTENSION;
 
-        return null;
+        throw new IOException("Couldn't find the device info file! Build.MODEL: " + Build.MODEL);
     }
 }

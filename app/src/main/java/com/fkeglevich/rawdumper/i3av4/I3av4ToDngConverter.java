@@ -63,7 +63,7 @@ public class I3av4ToDngConverter
         File i3av4File = new File(i3av4Path);
         RandomAccessFile i3av4RAFile = new RandomAccessFile(i3av4Path, "r");
         CameraConfig cameraConfig = getBestCameraConfig(i3av4RAFile.length());
-        long rawDataStart = i3av4RAFile.length() - cameraConfig.rawImageSize.getRawBufferLength();
+        long rawDataStart = i3av4RAFile.length() - cameraConfig.rawImageSize.getBufferLength();
 
         byte[] mknBytes = new byte[(int)rawDataStart];
         i3av4RAFile.seek(0);
@@ -129,7 +129,7 @@ public class I3av4ToDngConverter
         CameraConfig finalConfig = null;
         for (CameraConfig config : cameraConfigList)
         {
-            currentLength = config.rawImageSize.getRawBufferLength();
+            currentLength = config.rawImageSize.getBufferLength();
             currentDiff = i3av4Size - currentLength;
             if (i3av4Size > currentLength && currentDiff < diff)
             {

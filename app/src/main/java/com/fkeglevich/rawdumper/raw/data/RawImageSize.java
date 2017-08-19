@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.data;
 
-import com.fkeglevich.rawdumper.util.RawUtil;
+import android.support.annotation.Keep;
 
 /**
  * Represents the size of a raw image. TODO: better explaining of this class
@@ -24,48 +24,21 @@ import com.fkeglevich.rawdumper.util.RawUtil;
  * Created by Flávio Keglevich on 26/12/2016.
  */
 
+@Keep
+@SuppressWarnings("unused")
 public class RawImageSize
 {
-    private final int width;
-    private final int height;
+    private int width;
+    private int height;
 
-    private final int rawBufferWidth;
-    private final int rawBufferWidthBytes;
-    private final int rawBufferAlignedWidth;
-    private final int rawBufferHeight;
-    private final int rawBufferLength;
+    private int paddedWidth;
+    private int paddedWidthBytes;
+    private int bytesPerLine;
+    private int paddedHeight;
+    private int bufferLength;
 
-    public static int calculateRawBufferWidth(int width, int horizontalPadding)
-    {
-        return width + horizontalPadding;
-    }
-
-    public static int calculateRawBufferWidthBytes(int width, int horizontalPadding, int bytesPerPixel)
-    {
-        return (width + horizontalPadding) * bytesPerPixel;
-    }
-
-    public static int calculateRawBufferAlignedWidth(int width, int alignWidth, int horizontalPadding, int bytesPerPixel)
-    {
-        return RawUtil.alignWidth((width + horizontalPadding) * bytesPerPixel, alignWidth);
-    }
-
-    public static int calculateRawBufferHeight(int height, int verticalPadding)
-    {
-        return height + verticalPadding;
-    }
-
-    public RawImageSize(int width, int height, int alignWidth, int horizontalPadding, int verticalPadding, int bytesPerPixel)
-    {
-        this.width = width;
-        this.height = height;
-
-        this.rawBufferWidth = calculateRawBufferWidth(width, horizontalPadding);
-        this.rawBufferWidthBytes = calculateRawBufferWidthBytes(width, horizontalPadding, bytesPerPixel);
-        this.rawBufferAlignedWidth = calculateRawBufferAlignedWidth(width, alignWidth, horizontalPadding, bytesPerPixel);
-        this.rawBufferHeight = calculateRawBufferHeight(height, verticalPadding);
-        this.rawBufferLength = rawBufferAlignedWidth * rawBufferHeight;
-    }
+    private RawImageSize()
+    {   }
 
     public int getWidth()
     {
@@ -77,51 +50,51 @@ public class RawImageSize
         return height;
     }
 
-    public int getRawBufferWidth()
+    public int getPaddedWidth()
     {
-        return rawBufferWidth;
+        return paddedWidth;
     }
 
-    public int getRawBufferWidthBytes()
+    public int getPaddedWidthBytes()
     {
-        return rawBufferWidthBytes;
+        return paddedWidthBytes;
     }
 
-    public int getRawBufferAlignedWidth()
+    public int getBytesPerLine()
     {
-        return rawBufferAlignedWidth;
+        return bytesPerLine;
     }
 
-    public int getRawBufferHeight()
+    public int getPaddedHeight()
     {
-        return rawBufferHeight;
+        return paddedHeight;
     }
 
-    public int getRawBufferLength()
+    public int getBufferLength()
     {
-        return rawBufferLength;
+        return bufferLength;
     }
 
     public String toString()
     {
         return "[width: " + width +
                 ", height: " + height +
-                ", rawBufferWidth: " + rawBufferWidth +
-                ", rawBufferWidthBytes: " + rawBufferWidthBytes +
-                ", rawBufferAlignedWidth: " + rawBufferAlignedWidth +
-                ", rawBufferHeight: " + rawBufferHeight +
-                ", rawBufferLength: " + rawBufferLength + "]";
+                ", paddedWidth: " + paddedWidth +
+                ", paddedWidthBytes: " + paddedWidthBytes +
+                ", bytesPerLine: " + bytesPerLine +
+                ", paddedHeight: " + paddedHeight +
+                ", bufferLength: " + bufferLength + "]";
     }
 
     public boolean compareTo(RawImageSize another)
     {
         return  this == another ||
-               (width                   == another.width                    &&
-                height                  == another.height                   &&
-                rawBufferWidth          == another.rawBufferWidth           &&
-                rawBufferWidthBytes     == another.rawBufferWidthBytes      &&
-                rawBufferAlignedWidth   == another.rawBufferAlignedWidth    &&
-                rawBufferHeight         == another.rawBufferHeight          &&
-                rawBufferLength         == another.rawBufferLength);
+               (width               == another.width            &&
+                height              == another.height           &&
+                paddedWidth         == another.paddedWidth      &&
+                paddedWidthBytes    == another.paddedWidthBytes &&
+                bytesPerLine        == another.bytesPerLine     &&
+                paddedHeight        == another.paddedHeight     &&
+                bufferLength        == another.bufferLength);
     }
 }

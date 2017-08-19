@@ -17,15 +17,12 @@
 package com.fkeglevich.rawdumper.raw.info;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.fkeglevich.rawdumper.R;
-import com.fkeglevich.rawdumper.util.ByteArrayUtil;
+import com.fkeglevich.rawdumper.util.AssetUtil;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 /**
  * This class is used for loading and creating DeviceInfo objects.
@@ -35,6 +32,8 @@ import java.nio.charset.Charset;
 
 public class DeviceInfoLoader
 {
+    private static final String SUPPORTED_DEVICES_FILENAME = "supported_devices.json";
+
     private Moshi moshi;
 
     public DeviceInfoLoader()
@@ -42,66 +41,21 @@ public class DeviceInfoLoader
         moshi = new Moshi.Builder().build();
     }
 
-    public DeviceInfo[] loadCopiesOfDeviceInfo(Context applicationContext, int count, int id)
+    public String loadDeviceInfoJson(Context applicationContext) throws IOException
     {
-        DeviceInfo[] result = new DeviceInfo[count];
-        JsonAdapter<DeviceInfo> adapter = moshi.adapter(DeviceInfo.class);
-        int i;
-        try
-        {
-            String deviceInfoJson = getDeviceInfoJson(applicationContext, id);
-            for (i = 0; i < count; i++)
-                result[i] = adapter.fromJson(deviceInfoJson);
-        }
-        catch (IOException ioe)
-        {
-            Log.e("DeviceInfoLoader", "Error while loading device info");
-            System.exit(-1);
-            return null;
-        }
-        return result;
+        SupportedDeviceList deviceList = loadDeviceList(applicationContext);
+        return AssetUtil.getAssetAsString(applicationContext, deviceList.findDeviceInfoFile());
     }
 
-    private String getDeviceInfoJson(Context applicationContext, int id) throws IOException
+    public DeviceInfo loadDeviceInfo(String deviceInfoJson) throws IOException
     {
-        return new String(ByteArrayUtil.getRawResource(applicationContext, id), Charset.defaultCharset());
+        return moshi.adapter(DeviceInfo.class).fromJson(deviceInfoJson);
     }
 
-
-    public DeviceInfo loadDeviceInfo(Context context)
+    private SupportedDeviceList loadDeviceList(Context applicationContext) throws IOException
     {
-        byte[] supportedDevicesBytes;
-        byte[] deviceInfoBytes;
-        SupportedDeviceList deviceList;
-        String deviceInfoFile;
-        DeviceInfo result;
-
-        try
-        {
-            deviceInfoBytes = ByteArrayUtil.getRawResource(context, R.raw.z00ad);
-            //deviceInfoBytes = ByteArrayUtil.getRawResource(context, R.raw.xt890);
-            result = moshi.adapter(DeviceInfo.class).fromJson(new String(deviceInfoBytes, Charset.defaultCharset()));
-            return result;
-        }
-        catch (IOException e)
-        {
-            Log.e("DeviceInfoLoader", "Error while loading device info");
-            System.exit(-1);
-            return null;
-        }
-
-        /*try
-        {
-            supportedDevicesBytes = ByteArrayUtil.getRawResource(context, R.raw.supported_devices);
-            deviceList = moshi.adapter(SupportedDeviceList.class).fromJson(new String(supportedDevicesBytes, Charset.defaultCharset()));
-            deviceInfoFile = deviceList.findDeviceInfoFile();
-            if (deviceInfoFile == null)
-                return null;
-            deviceInfoBytes = ByteArrayUtil.getRawResource(context, deviceInfoFile);
-            result = moshi.adapter(DeviceInfo.class).fromJson(new String(deviceInfoBytes, Charset.defaultCharset()));
-            return result;
-        }
-        catch (IOException ioe)
-        {   return null;    }*/
+        String deviceListJson = AssetUtil.getAssetAsString(applicationContext, SUPPORTED_DEVICES_FILENAME);
+        JsonAdapter<SupportedDeviceList> adapter = moshi.adapter(SupportedDeviceList.class);
+        return adapter.fromJson(deviceListJson);
     }
 }

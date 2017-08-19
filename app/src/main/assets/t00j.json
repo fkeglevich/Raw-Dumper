@@ -80,11 +80,11 @@
         "binningRawImageSizes": [
           {
             "height": 1200,
-            "rawBufferAlignedWidth": 3328,
-            "rawBufferHeight": 1200,
-            "rawBufferLength": 3993600,
-            "rawBufferWidth": 1600,
-            "rawBufferWidthBytes": 3200,
+            "bytesPerLine": 3328,
+            "paddedHeight": 1200,
+            "bufferLength": 3993600,
+            "paddedWidth": 1600,
+            "paddedWidthBytes": 3200,
             "width": 1600
           }
         ],
@@ -95,17 +95,25 @@
           64.0,
           64.0
         ],
-        "horizontalPadding": 0,
         "maker": "Toshiba",
         "name": "T4K35",
         "rawImageSizes": [
           {
+            "height": 1200,
+            "bytesPerLine": 3328,
+            "paddedHeight": 1200,
+            "bufferLength": 3993600,
+            "paddedWidth": 1600,
+            "paddedWidthBytes": 3200,
+            "width": 1600
+          },
+          {
             "height": 2448,
-            "rawBufferAlignedWidth": 6656,
-            "rawBufferHeight": 2448,
-            "rawBufferLength": 16293888,
-            "rawBufferWidth": 3264,
-            "rawBufferWidthBytes": 6528,
+            "bytesPerLine": 6656,
+            "paddedHeight": 2448,
+            "bufferLength": 16293888,
+            "paddedWidth": 3264,
+            "paddedWidthBytes": 6528,
             "width": 3264
           }
         ],
@@ -200,17 +208,16 @@
           16.0,
           16.0
         ],
-        "horizontalPadding": 0,
         "maker": "Unknown",
         "name": "Unknown Sensor",
         "rawImageSizes": [
           {
             "height": 1200,
-            "rawBufferAlignedWidth": 3328,
-            "rawBufferHeight": 1200,
-            "rawBufferLength": 3993600,
-            "rawBufferWidth": 1600,
-            "rawBufferWidthBytes": 3200,
+            "bytesPerLine": 3328,
+            "paddedHeight": 1200,
+            "bufferLength": 3993600,
+            "paddedWidth": 1600,
+            "paddedWidthBytes": 3200,
             "width": 1600
           }
         ],

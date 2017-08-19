@@ -84,17 +84,16 @@
                     64.0,
                     64.0
                 ],
-                "horizontalPadding": 0,
                 "maker": "Unknown",
                 "name": "Unknown Sensor",
                 "rawImageSizes": [
                     {
                         "height": 2448,
-                        "rawBufferAlignedWidth": 6528,
-                        "rawBufferHeight": 2448,
-                        "rawBufferLength": 15982592,
-                        "rawBufferWidth": 3264,
-                        "rawBufferWidthBytes": 6528,
+                        "bytesPerLine": 6528,
+                        "paddedHeight": 2448,
+                        "bufferLength": 15982592,
+                        "paddedWidth": 3264,
+                        "paddedWidthBytes": 6528,
                         "width": 3264
                     }
                 ],

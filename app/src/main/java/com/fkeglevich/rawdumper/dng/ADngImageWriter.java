@@ -40,7 +40,7 @@ public abstract class ADngImageWriter
     void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, String filePath) throws IOException
     {
         RandomAccessFile file = new RandomAccessFile(filePath, "r");
-        file.seek(file.length() - rawImageSize.getRawBufferLength());
+        file.seek(file.length() - rawImageSize.getBufferLength());
         writeImageData(tiffWriter, rawImageSize, file);
         file.close();
     }

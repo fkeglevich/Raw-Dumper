@@ -104,8 +104,8 @@ public class DngWriter
         tiffWriter.setField(TiffTag.TIFFTAG_PLANARCONFIG,           DngDefaults.RAW_PLANAR_CONFIG);
         tiffWriter.setField(TiffTag.TIFFTAG_DNGVERSION,             DngDefaults.DNG_VERSION, false);
         tiffWriter.setField(TiffTag.TIFFTAG_DNGBACKWARDVERSION,     DngDefaults.DNG_BACKWARD_VERSION, false);
-        tiffWriter.setField(TiffTag.TIFFTAG_IMAGEWIDTH,             rawImageSize.getRawBufferWidth());
-        tiffWriter.setField(TiffTag.TIFFTAG_IMAGELENGTH,            rawImageSize.getRawBufferHeight());
+        tiffWriter.setField(TiffTag.TIFFTAG_IMAGEWIDTH,             rawImageSize.getPaddedWidth());
+        tiffWriter.setField(TiffTag.TIFFTAG_IMAGELENGTH,            rawImageSize.getPaddedHeight());
     }
 
     public void writeExifInfo(CaptureInfo captureInfo)

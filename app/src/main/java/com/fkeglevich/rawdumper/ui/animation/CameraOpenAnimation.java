@@ -31,7 +31,7 @@ import io.codetail.animation.ViewAnimationUtils;
 
 public class CameraOpenAnimation
 {
-    private static final int ANIMATION_DURATION = 250;
+    private static final int ANIMATION_DURATION = 350;
 
     public static void animateTextureView(TextureView textureView)
     {

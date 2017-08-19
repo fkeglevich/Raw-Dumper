@@ -18,13 +18,15 @@ package com.fkeglevich.rawdumper.camera.async;
 
 import android.content.Context;
 import android.os.HandlerThread;
+import android.os.Looper;
 
-import com.fkeglevich.rawdumper.camera.async.callbacks.IOpenCameraCallback;
-
-import eu.chainfire.libsuperuser.Shell;
+import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunctionContext;
+import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
+import com.fkeglevich.rawdumper.camera.async.function.CameraOpenArgument;
+import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
- * Created by Flávio Keglevich on 25/06/2017.
+ * Created by Flávio Keglevich on 09/08/2017.
  * TODO: Add a class header comment!
  */
 
@@ -40,33 +42,22 @@ public class CameraThread
         return instance;
     }
 
-    private HandlerThread thread;
     private CameraAccess cameraAccess;
 
     private CameraThread()
     {
-        thread = new HandlerThread(THREAD_NAME);
+        HandlerThread thread = new HandlerThread(THREAD_NAME);
         thread.start();
-        cameraAccess = new CameraAccess(thread.getLooper());
+        cameraAccess = new CameraAccess(new ThrowingAsyncFunctionContext(thread.getLooper(), Looper.getMainLooper()));
     }
 
-    public void openCamera(int cameraId, Context applicationContext, IOpenCameraCallback callback)
+    public void openCamera(int cameraId, Context applicationContext, AsyncOperation<CameraAccess> callback, AsyncOperation<MessageException> exception)
     {
-        cameraAccess.openCameraAsync(cameraId, applicationContext, callback);
+        cameraAccess.openCameraAsync(new CameraOpenArgument(cameraId, applicationContext), callback, exception);
     }
 
     public void closeCamera()
     {
         cameraAccess.close();
-    }
-
-    public void openShell(final Shell.OnCommandResultListener callback)
-    {
-        cameraAccess.openShell(callback);
-    }
-
-    public boolean isShellRunning()
-    {
-        return cameraAccess.isShellRunning();
     }
 }

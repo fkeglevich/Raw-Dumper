@@ -91,11 +91,11 @@
                 "binningRawImageSizes": [
                     {
                         "height": 1536,
-                        "rawBufferAlignedWidth": 4352,
-                        "rawBufferHeight": 1552,
-                        "rawBufferLength": 6754304,
-                        "rawBufferWidth": 2064,
-                        "rawBufferWidthBytes": 4128,
+                        "bytesPerLine": 4352,
+                        "paddedHeight": 1552,
+                        "bufferLength": 6754304,
+                        "paddedWidth": 2064,
+                        "paddedWidthBytes": 4128,
                         "width": 2048
                     }
                 ],
@@ -106,35 +106,34 @@
                     64.0,
                     64.0
                 ],
-                "horizontalPadding": 16,
                 "maker": "Toshiba",
                 "name": "T4K37",
                 "rawImageSizes": [
                     {
                         "height": 1536,
-                        "rawBufferAlignedWidth": 4352,
-                        "rawBufferHeight": 1552,
-                        "rawBufferLength": 6754304,
-                        "rawBufferWidth": 2064,
-                        "rawBufferWidthBytes": 4128,
+                        "bytesPerLine": 4352,
+                        "paddedHeight": 1552,
+                        "bufferLength": 6754304,
+                        "paddedWidth": 2064,
+                        "paddedWidthBytes": 4128,
                         "width": 2048
                     },
                     {
                         "height": 2304,
-                        "rawBufferAlignedWidth": 8448,
-                        "rawBufferHeight": 2320,
-                        "rawBufferLength": 19599360,
-                        "rawBufferWidth": 4112,
-                        "rawBufferWidthBytes": 8224,
+                        "bytesPerLine": 8448,
+                        "paddedHeight": 2320,
+                        "bufferLength": 19599360,
+                        "paddedWidth": 4112,
+                        "paddedWidthBytes": 8224,
                         "width": 4096
                     },
                     {
                         "height": 3072,
-                        "rawBufferAlignedWidth": 8448,
-                        "rawBufferHeight": 3088,
-                        "rawBufferLength": 26087424,
-                        "rawBufferWidth": 4112,
-                        "rawBufferWidthBytes": 8224,
+                        "bytesPerLine": 8448,
+                        "paddedHeight": 3088,
+                        "bufferLength": 26087424,
+                        "paddedWidth": 4112,
+                        "paddedWidthBytes": 8224,
                         "width": 4096
                     }
                 ],
@@ -234,17 +233,16 @@
                     16.0,
                     16.0
                 ],
-                "horizontalPadding": 32,
                 "maker": "OmniVision",
                 "name": "OV5670",
                 "rawImageSizes": [
                     {
                         "height": 1920,
-                        "rawBufferAlignedWidth": 5376,
-                        "rawBufferHeight": 1944,
-                        "rawBufferLength": 10450944,
-                        "rawBufferWidth": 2592,
-                        "rawBufferWidthBytes": 5184,
+                        "bytesPerLine": 5376,
+                        "paddedHeight": 1944,
+                        "bufferLength": 10450944,
+                        "paddedWidth": 2592,
+                        "paddedWidthBytes": 5184,
                         "width": 2560
                     }
                 ],
