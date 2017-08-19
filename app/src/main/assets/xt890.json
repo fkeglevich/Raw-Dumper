@@ -98,7 +98,6 @@
                     }
                 ],
                 "storageBitsPerPixel": 16,
-                "supportsPixelBinning": false,
                 "verticalPadding": 0,
                 "whiteLevel": 1023
             }

@@ -45,8 +45,6 @@ public class SensorInfo
     private String name;
     private String maker;
 
-    private boolean supportsPixelBinning;
-
     private RawImageSize[] rawImageSizes;
     private RawImageSize[] binningRawImageSizes;
 
