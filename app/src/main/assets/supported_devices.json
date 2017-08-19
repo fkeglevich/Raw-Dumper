@@ -1,51 +1,47 @@
 {
     "supportedDevices": [
         {
-            "deviceInfoFile": "z00ad",
-            "deviceModel": "Android SDK built for x86"
-        },
-        {
-            "deviceInfoFile": "z00ad",
+            "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z00A"
         },
         {
-            "deviceInfoFile": "z00ad",
+            "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z00AD"
         },
         {
-            "deviceInfoFile": "z00ad",
+            "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z00ADA"
         },
         {
-            "deviceInfoFile": "z00ad",
+            "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z00ADB"
         },
         {
-            "deviceInfoFile": "z00ad",
+            "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z00ADC"
         },
         {
-            "deviceInfoFile": "z008d",
+            "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z008"
         },
         {
-            "deviceInfoFile": "z008d",
+            "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z008D"
         },
         {
-            "deviceInfoFile": "z008d",
+            "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z008C"
         },
         {
-            "deviceInfoFile": "z008d",
+            "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z008B"
         },
         {
-            "deviceInfoFile": "t00j",
+            "deviceInfoFile": "t00x",
             "deviceModel": "ASUS_T00J"
         },
         {
-            "deviceInfoFile": "t00j",
+            "deviceInfoFile": "t00x",
             "deviceModel": "ASUS_T00F"
         },
 		{
