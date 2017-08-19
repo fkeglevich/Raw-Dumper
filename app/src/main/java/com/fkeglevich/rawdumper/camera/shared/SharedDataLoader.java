@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.camera.shared;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.exception.DeviceLoadException;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;

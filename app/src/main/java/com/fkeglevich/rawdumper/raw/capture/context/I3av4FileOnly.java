@@ -24,8 +24,8 @@ import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfo;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfoExtractor;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 import java.io.File;
 import java.io.IOException;
