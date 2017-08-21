@@ -102,19 +102,6 @@ public class CameraAccess
         }
     }
 
-    //TODO: REMOVE
-    public void takePic()
-    {
-        functionContext.call(new TakePicFunction(), sharedCamera, new AsyncOperation<Void>()
-        {
-            @Override
-            protected void execute(Void argument)
-            {
-                Log.i("RAW", "Operation done!");
-            }
-        });
-    }
-
     public void setParameter(String key, String value)
     {
         synchronized (sharedCamera.getLock())

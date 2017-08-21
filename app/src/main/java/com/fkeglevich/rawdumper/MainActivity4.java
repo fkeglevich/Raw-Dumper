@@ -49,7 +49,7 @@ public class MainActivity4 extends FullscreenPreviewActivity
                                          @Override
                                          public void onClick(View v)
                                          {
-                                            getCameraAccess().takePic();
+                                            //getCameraAccess().takePic();
                                          }
                                      });
 

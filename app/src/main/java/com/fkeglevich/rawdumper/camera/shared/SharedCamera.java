@@ -44,15 +44,6 @@ public class SharedCamera
         this.extraCameraInfo = extraCameraInfo;
         this.rawImageCallbackAccess = new RawImageCallbackAccess(getCamera());
         this.parameters = new SharedParameters(getCameraExtension().getCameraDevice());
-
-        //TODO: REMOVE
-        //byte[] buffer = new byte[26087424];
-
-        //Zenfone5 front 3993600
-        //Zenfone5 back 16293888
-
-        byte[] buffer = new byte[3993600];
-        getRawImageCallbackAccess().addRawImageCallbackBuffer(buffer);
     }
 
     public ICameraExtension getCameraExtension()
