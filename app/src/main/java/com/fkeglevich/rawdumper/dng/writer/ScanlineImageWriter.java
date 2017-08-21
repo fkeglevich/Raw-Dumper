@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng;
+package com.fkeglevich.rawdumper.dng.writer;
 
+import com.fkeglevich.rawdumper.dng.ADngImageWriter;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
@@ -24,16 +25,16 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- * Writes an uncompressed image to a DNG file.
+ * Writes an uncompressed image to a DNG file in scanline mode.
  *
  * Created by Flávio Keglevich on 17/04/2017.
  */
 
-public class DngImageWriter extends ADngImageWriter
+public class ScanlineImageWriter extends ADngImageWriter
 {
     private byte[] buffer;
 
-    public DngImageWriter()
+    public ScanlineImageWriter()
     {   }
 
     @Override
@@ -44,7 +45,7 @@ public class DngImageWriter extends ADngImageWriter
     }
 
     @Override
-    void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, byte[] rawdata)
+    protected void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, byte[] rawdata)
     {
         init(tiffWriter, rawImageSize);
         for (int row = 0; row < rawImageSize.getPaddedHeight(); row++)
@@ -56,7 +57,7 @@ public class DngImageWriter extends ADngImageWriter
     }
 
     @Override
-    void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, RandomAccessFile file) throws IOException
+    protected void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, RandomAccessFile file) throws IOException
     {
         init(tiffWriter, rawImageSize);
 

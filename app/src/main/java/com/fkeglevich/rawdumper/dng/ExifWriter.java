@@ -28,7 +28,7 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
  * Created by Flávio Keglevich on 14/06/2017.
  */
 
-public class ExifWriter
+class ExifWriter
 {
     private static final byte[] exifVersion = new byte[]{48, 50, 50, 48};
 

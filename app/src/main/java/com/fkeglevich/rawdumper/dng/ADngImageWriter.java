@@ -33,9 +33,9 @@ public abstract class ADngImageWriter
 {
     protected abstract void init(TiffWriter tiffWriter, RawImageSize rawImageSize);
 
-    abstract void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, byte[] rawdata);
+    protected abstract void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, byte[] rawdata);
 
-    abstract void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, RandomAccessFile file) throws IOException;
+    protected abstract void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, RandomAccessFile file) throws IOException;
 
     void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, String filePath) throws IOException
     {

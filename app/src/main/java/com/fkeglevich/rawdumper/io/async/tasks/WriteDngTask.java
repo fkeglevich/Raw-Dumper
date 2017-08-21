@@ -37,7 +37,7 @@ public class WriteDngTask implements Runnable
         if (writer != null)
         {
             writer.writeMetadata(ioLock.getApplicationContext(), captureInfo);
-            writer.writeImageData(new DngImageWriter(), i3av4RAFile);
+            writer.writeImageData(new ScanlineImageWriter(), i3av4RAFile);
             writer.writeExifInfo(captureInfo);
             writer.close();
             resultCallback.onResult(true);
