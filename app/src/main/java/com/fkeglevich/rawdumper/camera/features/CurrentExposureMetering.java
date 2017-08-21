@@ -39,6 +39,7 @@ public class CurrentExposureMetering extends AFeature
     {
         synchronized (sharedCamera.getLock())
         {
+            checkFeatureAvailability();
             return sharedCamera.get().getParameters().getInt(AsusParameters.ASUS_XENON_ISO);
         }
     }
@@ -47,6 +48,7 @@ public class CurrentExposureMetering extends AFeature
     {
         synchronized (sharedCamera.getLock())
         {
+            checkFeatureAvailability();
             int value = sharedCamera.get().getParameters().getInt(AsusParameters.ASUS_XENON_EXPOSURE_TIME);
             return ExposureHelper.decodeIntegerExposureTime(value);
         }

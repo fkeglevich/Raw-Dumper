@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.features;
 
 import com.fkeglevich.rawdumper.async.Locked;
 import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
+import com.fkeglevich.rawdumper.camera.exception.UnavailableFeatureException;
 import com.fkeglevich.rawdumper.camera.shared.SharedCamera;
 
 /**
@@ -32,6 +33,11 @@ abstract class AFeature
     AFeature(SharedCameraGetter sharedCameraGetter)
     {
         sharedCamera = sharedCameraGetter.getSharedCamera();
+    }
+
+    final void checkFeatureAvailability()
+    {
+        if (!isAvailable()) throw new UnavailableFeatureException();
     }
 
     public abstract boolean isAvailable();

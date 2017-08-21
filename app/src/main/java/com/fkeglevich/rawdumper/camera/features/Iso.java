@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.camera.features;
 
 import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
-import com.fkeglevich.rawdumper.camera.exception.UnavailableFeatureException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,15 +43,16 @@ public class Iso extends AFeature
     {
         synchronized (sharedCamera.getLock())
         {
+            checkFeatureAvailability();
             return sharedCamera.get().getParameters().get(isoKey);
         }
     }
 
     public void setValue(String value)
     {
-        if (!isAvailable()) throw new UnavailableFeatureException();
         synchronized (sharedCamera.getLock())
         {
+            checkFeatureAvailability();
             sharedCamera.get().getParameters().setAndUpdate(isoKey, value);
         }
     }
@@ -61,6 +61,7 @@ public class Iso extends AFeature
     {
         synchronized (sharedCamera.getLock())
         {
+            checkFeatureAvailability();
             return Arrays.asList(sharedCamera.get().getExtraCameraInfo().getExposure().getIsoValues().clone());
         }
     }

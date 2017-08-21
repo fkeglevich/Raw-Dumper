@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.camera.features;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
-import com.fkeglevich.rawdumper.camera.exception.UnavailableFeatureException;
 import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
 
 /**
@@ -38,7 +37,6 @@ public class RawCapture extends AFeature
 
     public void enable()
     {
-        if (!isAvailable()) throw new UnavailableFeatureException();
         setValue(true);
     }
 
@@ -87,6 +85,7 @@ public class RawCapture extends AFeature
     {
         synchronized (sharedCamera.getLock())
         {
+            checkFeatureAvailability();
             Camera.Parameters parameters = sharedCamera.get().getCamera().getParameters();
             String strValue = value ? IntelParameters.RAW_DATA_FORMAT_BAYER : IntelParameters.RAW_DATA_FORMAT_NONE;
             parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, strValue);
