@@ -57,7 +57,6 @@
       "opcodes": [],
       "retryOnError": false,
       "sensor": {
-        "alignWidth": 256,
         "baseISO": 50,
         "bayerPattern": "GRBG",
         "binningRawImageSizes": [
@@ -162,7 +161,6 @@
       "opcodes": [],
       "retryOnError": false,
       "sensor": {
-        "alignWidth": 256,
         "baseISO": 50,
         "bayerPattern": "BGGR",
         "binningRawImageSizes": [],
@@ -192,6 +190,7 @@
       }
     }
   ],
+  "alignWidth": 256,
   "dumpDirectoryLocation": "/data",
   "manufacturer": "Asus"
 }

@@ -72,7 +72,6 @@
             "opcodes": [],
             "retryOnError": false,
             "sensor": {
-                "alignWidth": 128,
                 "baseISO": 100,
                 "bayerPattern": "GRBG",
                 "binningRawImageSizes": [],
@@ -102,6 +101,7 @@
             }
         }
     ],
+    "alignWidth": 128,
     "dumpDirectoryLocation": "/data",
     "manufacturer": "Motorola"
 }

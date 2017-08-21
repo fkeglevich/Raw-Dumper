@@ -37,8 +37,6 @@ public class SensorInfo
     private static final short[] DEFAULT_CFA_REPEAT_PATTERN_DIM = new short[] {2, 2};
     private static final short[] DEFAULT_BLACK_LEVEL_REPEAT_DIM = new short[] {2, 2};
 
-    private int alignWidth;
-
     private int bitsPerPixel;
     private int storageBitsPerPixel;
 

@@ -33,8 +33,8 @@ public class DeviceInfo
 {
     private String manufacturer;
     private ExtraCameraInfo[] cameras;
-
     private String dumpDirectoryLocation;
+    private int alignWidth;
 
     private DeviceInfo()
     {   }
