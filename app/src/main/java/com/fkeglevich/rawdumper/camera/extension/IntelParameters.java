@@ -21,6 +21,8 @@ package com.fkeglevich.rawdumper.camera.extension;
  *
  * Created by Flávio Keglevich on 31/07/2017.
  */
+
+@SuppressWarnings("unused")
 public class IntelParameters
 {
     public static final String SUPPORTED_VALUES_SUFFIX = "-values";
@@ -89,7 +91,7 @@ public class IntelParameters
 
     // burst capture
     public static final String KEY_BURST_LENGTH = "burst-length";
-    public static final String KEY_BURST_FPS = "burst-fps"; // TODO: old API, remove it in the future
+    public static final String KEY_BURST_FPS = "burst-fps";
     public static final String KEY_BURST_SPEED = "burst-speed";
     public static final String KEY_BURST_START_INDEX = "burst-start-index";
     public static final String KEY_MAX_BURST_LENGTH_WITH_NEGATIVE_START_INDEX = "burst-max-length-negative";
@@ -170,26 +172,22 @@ public class IntelParameters
     public static final String FOCUS_MODE_MANUAL = "manual";
     public static final String FOCUS_MODE_TOUCH = "touch";
 
-
     public static final String SLOW_MOTION_RATE_1x = "1x";
     public static final String SLOW_MOTION_RATE_2x = "2x";
     public static final String SLOW_MOTION_RATE_3x = "3x";
     public static final String SLOW_MOTION_RATE_4x = "4x";
 
     // value of contrast mode
-
     public static final String CONTRAST_MODE_NORMAL = "normal";
     public static final String CONTRAST_MODE_SOFT = "soft";
     public static final String CONTRAST_MODE_HARD = "hard";
 
     // value of saturation mode
-
     public static final String SATURATION_MODE_NORMAL = "normal";
     public static final String SATURATION_MODE_LOW = "low";
     public static final String SATURATION_MODE_HIGH = "high";
 
     // value of sharpness mode
-
     public static final String SHARPNESS_MODE_NORMAL = "normal";
     public static final String SHARPNESS_MODE_SOFT = "soft";
     public static final String SHARPNESS_MODE_HARD = "hard";
