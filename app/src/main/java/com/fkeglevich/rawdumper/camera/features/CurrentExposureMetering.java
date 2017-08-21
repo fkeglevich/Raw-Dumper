@@ -28,9 +28,9 @@ import com.fkeglevich.rawdumper.camera.helper.ExposureHelper;
  * Created by Flávio Keglevich on 21/08/2017.
  */
 
-public class ExposureMetering extends AFeature
+public class CurrentExposureMetering extends AFeature
 {
-    ExposureMetering(SharedCameraGetter sharedCameraGetter)
+    CurrentExposureMetering(SharedCameraGetter sharedCameraGetter)
     {
         super(sharedCameraGetter);
     }
