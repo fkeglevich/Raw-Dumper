@@ -66,11 +66,6 @@ public class Iso extends AFeature
         }
     }
 
-    public String displayValue(String value)
-    {
-        return value.toUpperCase();
-    }
-
     @Override
     public boolean isAvailable()
     {
