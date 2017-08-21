@@ -32,7 +32,7 @@ public class SharedCamera
     private final ICameraExtension          cameraExtension;
     private final Camera.CameraInfo         cameraInfo;
     private final int                       cameraId;
-    private final ExtraCameraInfo extraCameraInfo;
+    private final ExtraCameraInfo           extraCameraInfo;
     private final RawImageCallbackAccess    rawImageCallbackAccess;
     private final SharedParameters          parameters;
 
