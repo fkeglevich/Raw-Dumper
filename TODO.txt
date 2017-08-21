@@ -1,16 +1,13 @@
 TODO list:
 
  - A better handling of unknown devices
-   - (DONE!) The i3av4 header should always be saved in the DNG Exif MakerNote tag
    - Automatic discovery of raw image sizes
    - Automatic discovery of raw bayer pattern
    
  - Better handling of known devices
-   - (IN PROGRESS) Change I3av4ToDngConverter so it takes into account the current camera configs (important!)
    - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
       - Trying to use the red and blue gains
    - Use the Noise Profile DNG tag
-   - (DONE!) Use a better default white balance (based on 5504K) for devices with known color matrices
 
  - (IMPORTANT - IN PROGRESS) Make the app work on ROMs using LL camera blobs (at least for the front camera)
  - (IMPORTANT - IN PROGRESS) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
@@ -22,14 +19,11 @@ TODO list:
    
  - (IMPORTANT - IN PROGRESS) Make the app translatable to different languages
  - (IMPORTANT - IN PROGRESS) Make the app work on Android Nougat
- - (DONE!) Show the Build.MODEl when complaining for a unknown device!
    
  - (IN PROGRESS) Reduce overdraw
    
  - Save DNGs using tiles
  - Improve compatibility of generated DNG files for desktop apps like Darktable
- - (DONE!) Improve detecting and handling of Intel Camera features
-   (Only use the Intel Camera features when 100% sure they can be used; because of the differences in 32 or 64 bits pointers)
  - (IMPORTANT - IN PROGRESS) Clean up the mess called MainActivity.java
  
  - (IMPORTANT - IN PROGRESS) Make the app work on more devices:
@@ -38,17 +32,24 @@ TODO list:
 	- Zenfone 2 with LL blobs
  
  - (IMPORTANT - IN PROGRESS) FIX THE GLUE CODE TO MAKE THE APP WORK IN THE NEXT RELEASE!
- - (IMPORTANT) Move the alignWidth from the sensor to the device json!
  
- - (DONE!) DeviceInfoLoader working!
  - Better handling of SU shell commands
  - (IMPORTANT - IN PROGRESS) Create a better separation layer between the UI and Camera threads
  - Create a better camera "reopening" for the MM Z00A front camera case 
    (and other cases where the camera crashes)
- - (DONE!) Better compatible Exif extraction
- 
-And maaaany other things...
 
 Known bugs:
  - (MINOR) When displaying some dialog alerts, the app can get out from fullscreen state if the user switches to another app
  - (MINOR) When switching the app too fast, in some rare occasions, the camera is opened twice or the preview is frozen on Android Nougat
+ 
+Done:
+
+ - DeviceInfoLoader working!
+ - Better compatible Exif extraction
+ - Move the alignWidth from the sensor to the device json!
+ - Improve detecting and handling of Intel Camera features
+   (Only use the Intel Camera features when 100% sure they can be used; because of the differences in 32 or 64 bits pointers)
+ - Show the Build.MODEl when complaining for a unknown device!
+ - The i3av4 header should always be saved in the DNG Exif MakerNote tag
+ - Use a better default white balance (based on 5504K) for devices with known color matrices
+ 
