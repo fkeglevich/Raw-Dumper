@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.async;
 
-import android.util.Log;
 import android.view.TextureView;
 
 import com.fkeglevich.rawdumper.async.Locked;
@@ -25,7 +24,6 @@ import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.async.function.CameraOpenArgument;
 import com.fkeglevich.rawdumper.camera.async.function.CameraOpenFunction;
 import com.fkeglevich.rawdumper.camera.async.function.StartPreviewFunction;
-import com.fkeglevich.rawdumper.camera.async.function.TakePicFunction;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.camera.shared.SharedCamera;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
