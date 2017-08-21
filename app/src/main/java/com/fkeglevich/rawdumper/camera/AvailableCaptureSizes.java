@@ -18,6 +18,8 @@ package com.fkeglevich.rawdumper.camera;
 
 import android.hardware.Camera;
 
+import com.fkeglevich.rawdumper.camera.helper.ParameterHelper;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class AvailableCaptureSizes
 
     private List<CaptureSize> generateCaptureSizeList(List<Camera.Size> sizeList)
     {
-        List<CaptureSize> result = ParameterFormatter.convertSizeList(sizeList);
+        List<CaptureSize> result = ParameterHelper.convertSizeList(sizeList);
         if (result.size() < 1)
             throw new RuntimeException("The capture size list should have at least one element!");
         Collections.sort(result);

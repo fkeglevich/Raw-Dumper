@@ -16,6 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.helper;
 
+import android.hardware.Camera;
+
+import com.fkeglevich.rawdumper.camera.CaptureSize;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -54,6 +58,19 @@ public class ParameterHelper
     public static List<Integer> splitIntValues(String value)
     {
         return performActualSplit(value, INT_SPLIT_PARSER);
+    }
+
+    public static List<CaptureSize> convertSizeList(List<Camera.Size> list)
+    {
+        List<CaptureSize> result = new ArrayList<CaptureSize>();
+        for (Camera.Size size : list)
+            result.add(toCaptureSize(size));
+        return result;
+    }
+
+    private static CaptureSize toCaptureSize(Camera.Size size)
+    {
+        return new CaptureSize(size.width, size.height);
     }
 
     private static <T> List<T> performActualSplit(String value, ValueParser<T> parser)
