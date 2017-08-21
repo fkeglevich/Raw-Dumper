@@ -42,7 +42,6 @@ import java.util.List;
 
 public class I3av4FileOnly implements ICaptureContext
 {
-    private MakerNoteInfoExtractor makerNoteInfoExtractor;
     private WhiteBalanceInfoExtractor whiteBalanceExtractor;
     private DateExtractor dateExtractor;
 
@@ -51,7 +50,6 @@ public class I3av4FileOnly implements ICaptureContext
      */
     public I3av4FileOnly()
     {
-        this.makerNoteInfoExtractor = new MakerNoteInfoExtractor();
         this.whiteBalanceExtractor = new WhiteBalanceInfoExtractor();
         this.dateExtractor = new DateExtractor();
     }
@@ -71,7 +69,7 @@ public class I3av4FileOnly implements ICaptureContext
 
         if (pair.getExtraCameraInfo().hasKnownMakernote())
         {
-            makerNoteInfo = makerNoteInfoExtractor.extractFrom(mknBytes);
+            makerNoteInfo = new MakerNoteInfoExtractor(pair.getExtraCameraInfo().getSensor().getBaseISO()).extractFrom(mknBytes);
             whiteBalanceInfo = whiteBalanceExtractor.extractFrom(captureInfo.makerNoteInfo, pair.getExtraCameraInfo().getColor());
         }
         else

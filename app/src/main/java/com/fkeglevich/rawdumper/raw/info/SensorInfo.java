@@ -66,6 +66,11 @@ public class SensorInfo
         return binningRawImageSizes;
     }
 
+    public int getBaseISO()
+    {
+        return baseISO;
+    }
+
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         tiffWriter.setField(TiffTag.TIFFTAG_BITSPERSAMPLE,          storageBitsPerPixel);

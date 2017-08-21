@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.capture;
 
 import android.util.Log;
 
+import com.fkeglevich.rawdumper.camera.helper.ExposureHelper;
 import com.fkeglevich.rawdumper.util.ColorUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -43,8 +44,6 @@ public class MakerNoteInfoExtractor
     //Regex pattern to match exposure time and ISO
     private static final int LAST_EXPOSUREITEM_DELTA = 48;  //Last exposure item position relative to the end
     private static final int EXPOSURELIST_ITEM_SIZE = 16;   //Size (in bytes) of each item on the list
-    private static double decodeExposureTime(int encoded) { return encoded / 1000000.0; }
-    private static int decodeISO(float encoded) { return (int)Math.round(50.0 * encoded); }
 
     /***** Color matrix and white balance related constants and functions: *****/
     private static final String FLOAT_PATTERN = "(\\-)?\\d+(\\.\\d+)?"; //Regex pattern for matching floating point numbers
@@ -81,11 +80,13 @@ public class MakerNoteInfoExtractor
 
     private Pattern colorMatrixWBPattern;
     private Pattern colorMatrixWBCheckerPattern;
+    private final int baseISO;
 
-    public MakerNoteInfoExtractor()
+    public MakerNoteInfoExtractor(int baseISO)
     {
         colorMatrixWBPattern = Pattern.compile(COLOR_MATRIX_WB_PATTERN);
         colorMatrixWBCheckerPattern = Pattern.compile(COLOR_MATRIX_WB_CHECKER_PATTERN);
+        this.baseISO = baseISO;
     }
 
     public MakerNoteInfo extractFrom(byte[] mknBytes)
@@ -115,9 +116,9 @@ public class MakerNoteInfoExtractor
 
         ByteBuffer wrapped = ByteBuffer.wrap(mknBytes, mknBytes.length - LAST_EXPOSUREITEM_DELTA, EXPOSURELIST_ITEM_SIZE);
         wrapped.order(makerNoteByteOrder);
-        info.exposureTime = decodeExposureTime(wrapped.getInt());
+        info.exposureTime = ExposureHelper.decodeIntegerExposureTime(wrapped.getInt());
         wrapped.getInt();
-        info.iso = decodeISO(wrapped.getFloat());
+        info.iso = ExposureHelper.decodeFloatIso(wrapped.getFloat(), baseISO);
         return true;
     }
 
