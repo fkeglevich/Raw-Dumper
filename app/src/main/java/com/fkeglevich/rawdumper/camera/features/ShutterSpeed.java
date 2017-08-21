@@ -22,18 +22,18 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Flávio Keglevich on 16/08/2017.
+ * Created by Flávio Keglevich on 21/08/2017.
  * TODO: Add a class header comment!
  */
 
-public class Iso extends AValueOptionsFeature
+public class ShutterSpeed extends AValueOptionsFeature
 {
-    Iso(SharedCameraGetter sharedCameraGetter)
+    ShutterSpeed(SharedCameraGetter sharedCameraGetter)
     {
         super(sharedCameraGetter);
         synchronized (sharedCamera.getLock())
         {
-            initializeFeatureParamKey(sharedCamera.get().getExtraCameraInfo().getExposure().getIsoParameter());
+            initializeFeatureParamKey(sharedCamera.get().getExtraCameraInfo().getExposure().getShutterSpeedParameter());
         }
     }
 
@@ -42,7 +42,7 @@ public class Iso extends AValueOptionsFeature
     {
         synchronized (sharedCamera.getLock())
         {
-            return Arrays.asList(sharedCamera.get().getExtraCameraInfo().getExposure().getIsoValues().clone());
+            return Arrays.asList(sharedCamera.get().getExtraCameraInfo().getExposure().getShutterSpeedValues().clone());
         }
     }
 }

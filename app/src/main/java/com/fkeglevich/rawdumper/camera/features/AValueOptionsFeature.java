@@ -18,31 +18,53 @@ package com.fkeglevich.rawdumper.camera.features;
 
 import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Flávio Keglevich on 16/08/2017.
+ * Created by Flávio Keglevich on 21/08/2017.
  * TODO: Add a class header comment!
  */
 
-public class Iso extends AValueOptionsFeature
+abstract class AValueOptionsFeature extends AFeature
 {
-    Iso(SharedCameraGetter sharedCameraGetter)
+    private String featureParamKey;
+
+    AValueOptionsFeature(SharedCameraGetter sharedCameraGetter)
     {
         super(sharedCameraGetter);
+    }
+
+    void initializeFeatureParamKey(String featureParamKey)
+    {
+        this.featureParamKey = featureParamKey;
+    }
+
+    public String getValue()
+    {
         synchronized (sharedCamera.getLock())
         {
-            initializeFeatureParamKey(sharedCamera.get().getExtraCameraInfo().getExposure().getIsoParameter());
+            checkFeatureAvailability();
+            return sharedCamera.get().getParameters().get(featureParamKey);
+        }
+    }
+
+    public void setValue(String value)
+    {
+        synchronized (sharedCamera.getLock())
+        {
+            checkFeatureAvailability();
+            sharedCamera.get().getParameters().setAndUpdate(featureParamKey, value);
         }
     }
 
     @Override
-    public List<String> getValidValues()
+    public boolean isAvailable()
     {
         synchronized (sharedCamera.getLock())
         {
-            return Arrays.asList(sharedCamera.get().getExtraCameraInfo().getExposure().getIsoValues().clone());
+            return featureParamKey != null;
         }
     }
+
+    public abstract List<String> getValidValues();
 }
