@@ -35,6 +35,7 @@ class RequirementCollection<T extends Enum<T>> implements IRequirementReader<T>
         requirements[id.ordinal()] = requirement;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public <O> O getRequirement(T id)
     {
