@@ -70,10 +70,10 @@ public class CameraAccess
     {
         synchronized (sharedCamera.getLock())
         {
+            functionContext.ignoreAllPendingCalls();
             try {   sharedCamera.get().getCamera().stopPreview();    }
             finally
             {
-                functionContext.ignoreAllPendingCalls();
                 sharedCamera.get().getCameraExtension().release();
                 setCameraSafely(null);
             }
@@ -91,19 +91,19 @@ public class CameraAccess
         PreviewHelper.setupPreviewTexture(textureView, sharedCamera);
     }
 
-    private void setCameraSafely(SharedCamera camera)
-    {
-        synchronized (sharedCamera.getLock())
-        {
-            sharedCamera.set(camera);
-        }
-    }
-
     public void setParameter(String key, String value)
     {
         synchronized (sharedCamera.getLock())
         {
             sharedCamera.get().getParameters().setAndUpdate(key, value);
+        }
+    }
+
+    private void setCameraSafely(SharedCamera camera)
+    {
+        synchronized (sharedCamera.getLock())
+        {
+            sharedCamera.set(camera);
         }
     }
 }
