@@ -22,7 +22,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.fkeglevich.rawdumper.R;
-import com.fkeglevich.rawdumper.ui.UiUtils;
+import com.fkeglevich.rawdumper.ui.UiUtil;
 
 /**
  * Created by Flávio Keglevich on 13/08/2017.
@@ -42,18 +42,18 @@ public class FatalErrorDialogs
 
     public void showNeedsPermissionDialog(AppCompatActivity activity)
     {
-        UiUtils.showDialogInImmersiveMode(needsPermissionDialog, activity);
+        UiUtil.showDialogInImmersiveMode(needsPermissionDialog, activity);
     }
 
     public void showNeedsRootAccessDialog(AppCompatActivity activity)
     {
-        UiUtils.showDialogInImmersiveMode(needsRootAccessDialog, activity);
+        UiUtil.showDialogInImmersiveMode(needsRootAccessDialog, activity);
     }
 
     public void showGenericFatalErrorDialog(AppCompatActivity activity, String message)
     {
         AlertDialog fatalErrorDialog = buildTerminatingDialog(activity, message);
-        UiUtils.showDialogInImmersiveMode(fatalErrorDialog, activity);
+        UiUtil.showDialogInImmersiveMode(fatalErrorDialog, activity);
     }
 
     private AlertDialog buildTerminatingDialog(Context context, String message)

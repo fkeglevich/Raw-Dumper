@@ -28,7 +28,7 @@ import android.view.WindowManager;
  * TODO: Add a class header comment!
  */
 
-public class UiUtils
+public class UiUtil
 {
     public static float dpToPixels(float dp, Context context)
     {

@@ -29,7 +29,7 @@ import android.text.util.Linkify;
 import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
-import com.fkeglevich.rawdumper.ui.UiUtils;
+import com.fkeglevich.rawdumper.ui.UiUtil;
 import com.fkeglevich.rawdumper.util.exception.NameNotFoundFromItselfException;
 
 /**
@@ -61,7 +61,7 @@ public class AboutDialog
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final TextView messageView = new TextView(context);
-        int paddingValue = UiUtils.dpToPixels(TEXT_VIEW_PADDING, context);
+        int paddingValue = UiUtil.dpToPixels(TEXT_VIEW_PADDING, context);
         messageView.setPadding(paddingValue, paddingValue, paddingValue, paddingValue);
         final SpannableString spannableStr = new SpannableString(messageStr);
         Linkify.addLinks(spannableStr, Linkify.WEB_URLS);
@@ -87,6 +87,6 @@ public class AboutDialog
 
     public void showDialog(AppCompatActivity activity)
     {
-        UiUtils.showDialogInImmersiveMode(alertDialog, activity);
+        UiUtil.showDialogInImmersiveMode(alertDialog, activity);
     }
 }

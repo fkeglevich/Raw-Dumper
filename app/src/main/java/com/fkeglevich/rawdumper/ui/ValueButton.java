@@ -45,7 +45,7 @@ public class ValueButton extends AppCompatButton implements View.OnClickListener
         this.setBackground(null);
         this.currentToast = currentToast; //Toast.makeText(context, "", Toast.LENGTH_LONG);
         this.setTextColor(0xFFFFFFFF);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(UiUtils.dpToPixels(70, context),
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(UiUtil.dpToPixels(70, context),
                 LinearLayout.LayoutParams.MATCH_PARENT);
         this.setLayoutParams(layoutParams);
         this.setOnClickListener(this);
