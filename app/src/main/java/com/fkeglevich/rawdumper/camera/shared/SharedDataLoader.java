@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.shared;
 
-import android.content.Context;
-
 import com.fkeglevich.rawdumper.camera.exception.DeviceLoadException;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;
@@ -31,22 +29,20 @@ import java.io.IOException;
 
 public class SharedDataLoader
 {
-    private final Context applicationContext;
     private final DeviceInfoLoader deviceInfoLoader;
 
-    public SharedDataLoader(Context applicationContext)
+    public SharedDataLoader()
     {
-        this.applicationContext = applicationContext;
-        this.deviceInfoLoader   = new DeviceInfoLoader();
+        this.deviceInfoLoader = new DeviceInfoLoader();
     }
 
     public SharedData load() throws DeviceLoadException
     {
         try
         {
-            String deviceInfoJson = deviceInfoLoader.loadDeviceInfoJson(applicationContext);
+            String deviceInfoJson = deviceInfoLoader.loadDeviceInfoJson();
             DeviceInfo deviceInfo = deviceInfoLoader.loadDeviceInfo(deviceInfoJson);
-            return new SharedData(applicationContext, deviceInfo);
+            return new SharedData(deviceInfo);
         }
         catch (IOException ioe)
         {

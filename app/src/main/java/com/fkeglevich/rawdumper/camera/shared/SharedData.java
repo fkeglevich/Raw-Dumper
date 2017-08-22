@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.shared;
 
-import android.content.Context;
-
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 /**
@@ -27,18 +25,11 @@ import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 public class SharedData
 {
-    private final Context       applicationContext;
     private final DeviceInfo    deviceInfo;
 
-    SharedData(Context applicationContext, DeviceInfo deviceInfo)
+    SharedData(DeviceInfo deviceInfo)
     {
-        this.applicationContext = applicationContext;
         this.deviceInfo         = deviceInfo;
-    }
-
-    public Context getApplicationContext()
-    {
-        return applicationContext;
     }
 
     public DeviceInfo getDeviceInfo()

@@ -19,6 +19,8 @@ package com.fkeglevich.rawdumper.util;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import com.fkeglevich.rawdumper.controller.context.ContextManager;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -30,14 +32,18 @@ import java.nio.charset.Charset;
 
 public class AssetUtil
 {
-    public static byte[] getAssetBytes(Context context, String fileName) throws IOException
+    public static byte[] getAssetBytes(String fileName) throws IOException
     {
-        return readInputStream(context.getAssets().open(fileName, AssetManager.ACCESS_BUFFER));
+        synchronized (ContextManager.getApplicationContext().getLock())
+        {
+            Context context = ContextManager.getApplicationContext().get();
+            return readInputStream(context.getAssets().open(fileName, AssetManager.ACCESS_BUFFER));
+        }
     }
 
-    public static String getAssetAsString(Context context, String fileName) throws IOException
+    public static String getAssetAsString(String fileName) throws IOException
     {
-        return new String(getAssetBytes(context, fileName), Charset.defaultCharset());
+        return new String(getAssetBytes(fileName), Charset.defaultCharset());
     }
 
     private static byte[] readInputStream(InputStream input) throws IOException

@@ -44,7 +44,7 @@ public class CameraOpenFunction extends ThrowingAsyncFunction<CameraOpenArgument
     @Override
     protected CameraAccess call(CameraOpenArgument argument) throws MessageException
     {
-        SharedDataLoader dataLoader = new SharedDataLoader(argument.getApplicationContext());
+        SharedDataLoader dataLoader = new SharedDataLoader();
         SharedData sharedData = dataLoader.load();
 
         SharedCameraOpener cameraOpener = new SharedCameraOpener(argument.getCameraId(), sharedData);

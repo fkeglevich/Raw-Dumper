@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.content.Context;
 import android.support.annotation.Keep;
 
 import com.fkeglevich.rawdumper.tiff.TiffTag;
@@ -49,11 +48,11 @@ public class OpcodeListInfo
     private OpcodeListInfo()
     {   }
 
-    public void writeTiffTags(TiffWriter tiffWriter, Context context)
+    public void writeTiffTags(TiffWriter tiffWriter)
     {
-        opcodeList1Cache = updateOpcodeListCache(opcodeList1Cache, context, opcodeList1File);
-        opcodeList2Cache = updateOpcodeListCache(opcodeList2Cache, context, opcodeList2File);
-        opcodeList3Cache = updateOpcodeListCache(opcodeList3Cache, context, opcodeList3File);
+        opcodeList1Cache = updateOpcodeListCache(opcodeList1Cache, opcodeList1File);
+        opcodeList2Cache = updateOpcodeListCache(opcodeList2Cache, opcodeList2File);
+        opcodeList3Cache = updateOpcodeListCache(opcodeList3Cache, opcodeList3File);
 
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST1, opcodeList1Cache, true);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST2, opcodeList2Cache, true);
@@ -66,15 +65,15 @@ public class OpcodeListInfo
             writer.setField(tag, data, writeLength);
     }
 
-    private byte[] updateOpcodeListCache(byte[] cache, Context context, String resourceNam)
+    private byte[] updateOpcodeListCache(byte[] cache, String resourceNam)
     {
         if (cache != null)
             return cache;
         else
-            return loadOpcodeListFromRawResource(context, resourceNam);
+            return loadOpcodeListFromRawResource(resourceNam);
     }
 
-    private byte[] loadOpcodeListFromRawResource(Context context, String resourceName)
+    private byte[] loadOpcodeListFromRawResource(String resourceName)
     {
         if (resourceName == null)
             return null;
@@ -82,8 +81,7 @@ public class OpcodeListInfo
         byte[] result;
         try
         {
-            //result = ResourceUtil.getRawResource(context, resourceName);
-            result = AssetUtil.getAssetBytes(context, resourceName + ".bin");
+            result = AssetUtil.getAssetBytes(resourceName + ".bin");
         }
         catch (IOException ioe)
         {   return null;    }

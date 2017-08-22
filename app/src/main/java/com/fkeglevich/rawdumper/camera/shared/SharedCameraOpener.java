@@ -56,7 +56,7 @@ public class SharedCameraOpener
 
     private ICameraExtension getCameraExtension()
     {
-        return IntelCameraExtensionLoader.extendedOpenCamera(sharedData.getApplicationContext(), cameraId);
+        return IntelCameraExtensionLoader.extendedOpenCamera(cameraId);
     }
 
     private Camera.CameraInfo getCameraInfo()

@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.extension;
 
-import android.content.Context;
+import com.fkeglevich.rawdumper.controller.context.ContextManager;
 
 import java.io.File;
 
@@ -46,7 +46,7 @@ public class IntelCameraExtensionLoader
     private static Class<Object> intelCameraClassCache = null;
 
     @SuppressWarnings("unchecked")
-    public static ICameraExtension extendedOpenCamera(Context applicationContext, int cameraId)
+    public static ICameraExtension extendedOpenCamera(int cameraId)
     {
         if (intelCameraClassCache != null)
             return IntelCameraProxy.createNew(intelCameraClassCache, cameraId);
@@ -57,7 +57,7 @@ public class IntelCameraExtensionLoader
 
         try
         {
-            File dexOutputDir = applicationContext.getDir(DEX_CACHE_DIR_NAME, MODE_PRIVATE);
+            File dexOutputDir = getDexCacheDir();
             DexClassLoader classloader = new DexClassLoader(intelCameraJar.getAbsolutePath(), dexOutputDir.getAbsolutePath(), null, IntelCameraExtensionLoader.class.getClassLoader());
             intelCameraClassCache = (Class<Object>) classloader.loadClass(INTEL_CAMERA_CLASS_NAME);
             return IntelCameraProxy.createNew(intelCameraClassCache, cameraId);
@@ -65,6 +65,14 @@ public class IntelCameraExtensionLoader
         catch (Exception e)
         {
             return DummyCameraProxy.createNew(cameraId);
+        }
+    }
+
+    private static File getDexCacheDir()
+    {
+        synchronized (ContextManager.getApplicationContext().getLock())
+        {
+            return ContextManager.getApplicationContext().get().getDir(DEX_CACHE_DIR_NAME, MODE_PRIVATE);
         }
     }
 }

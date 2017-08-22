@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.content.Context;
-
 import com.fkeglevich.rawdumper.util.AssetUtil;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -41,10 +39,10 @@ public class DeviceInfoLoader
         moshi = new Moshi.Builder().build();
     }
 
-    public String loadDeviceInfoJson(Context applicationContext) throws IOException
+    public String loadDeviceInfoJson() throws IOException
     {
-        SupportedDeviceList deviceList = loadDeviceList(applicationContext);
-        return AssetUtil.getAssetAsString(applicationContext, deviceList.findDeviceInfoFile());
+        SupportedDeviceList deviceList = loadDeviceList();
+        return AssetUtil.getAssetAsString(deviceList.findDeviceInfoFile());
     }
 
     public DeviceInfo loadDeviceInfo(String deviceInfoJson) throws IOException
@@ -52,9 +50,9 @@ public class DeviceInfoLoader
         return moshi.adapter(DeviceInfo.class).fromJson(deviceInfoJson);
     }
 
-    private SupportedDeviceList loadDeviceList(Context applicationContext) throws IOException
+    private SupportedDeviceList loadDeviceList() throws IOException
     {
-        String deviceListJson = AssetUtil.getAssetAsString(applicationContext, SUPPORTED_DEVICES_FILENAME);
+        String deviceListJson = AssetUtil.getAssetAsString(SUPPORTED_DEVICES_FILENAME);
         JsonAdapter<SupportedDeviceList> adapter = moshi.adapter(SupportedDeviceList.class);
         return adapter.fromJson(deviceListJson);
     }

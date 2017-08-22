@@ -16,14 +16,11 @@
 
 package com.fkeglevich.rawdumper.dng;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
+import com.fkeglevich.rawdumper.util.PackageUtil;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -58,7 +55,7 @@ public class DngWriter
         rawImageSize = null;
     }
 
-    public void writeMetadata(Context context, CaptureInfo captureInfo)
+    public void writeMetadata(CaptureInfo captureInfo)
     {
         writeBasicHeader(captureInfo.imageSize);
         captureInfo.camera.getSensor().writeTiffTags(tiffWriter);
@@ -66,33 +63,14 @@ public class DngWriter
         captureInfo.device.writeTiffTags(tiffWriter);
         captureInfo.writeTiffTags(tiffWriter);
 
-        tiffWriter.setField(TiffTag.TIFFTAG_SOFTWARE, getSoftwareName(context));
+        tiffWriter.setField(TiffTag.TIFFTAG_SOFTWARE, PackageUtil.getAppNameWithVersion());
 
         captureInfo.date.writeTiffTags(tiffWriter);
         captureInfo.camera.getColor().writeTiffTags(tiffWriter);
         captureInfo.whiteBalanceInfo.writeTiffTags(tiffWriter);
 
         if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)
-            captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter, context);
-    }
-
-    private String getSoftwareName(Context context)
-    {
-        String softwareName = context.getApplicationInfo().loadLabel(context.getPackageManager()).toString();
-        PackageInfo packageInfo;
-        try
-        {
-            packageInfo = context.getPackageManager().getPackageInfo(context.getApplicationInfo().packageName, 0);
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {
-            packageInfo = null;
-        }
-
-        if (packageInfo != null)
-            return softwareName + " v" + packageInfo.versionName;
-        else
-            return softwareName;
+            captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter);
     }
 
     private void writeBasicHeader(RawImageSize rawImageSize)
