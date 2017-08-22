@@ -45,7 +45,7 @@ public class SharedCameraOpener
         {
             ICameraExtension cameraExtension    = getCameraExtension();
             Camera.CameraInfo cameraInfo        = getCameraInfo();
-            ExtraCameraInfo extraCameraInfo = getRawCameraInfo();
+            ExtraCameraInfo extraCameraInfo = getExtraCameraInfo();
             return new SharedCamera(cameraExtension, cameraInfo, cameraId, extraCameraInfo);
         }
         catch (RuntimeException re)
@@ -66,7 +66,7 @@ public class SharedCameraOpener
         return cameraInfo;
     }
 
-    private ExtraCameraInfo getRawCameraInfo()
+    private ExtraCameraInfo getExtraCameraInfo()
     {
         return sharedData.getDeviceInfo().getCameras()[cameraId];
     }
