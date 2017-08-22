@@ -16,13 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.async;
 
-import android.content.Context;
 import android.os.HandlerThread;
 import android.os.Looper;
 
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunctionContext;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
-import com.fkeglevich.rawdumper.camera.async.function.CameraOpenArgument;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
@@ -51,9 +49,9 @@ public class CameraThread
         cameraAccess = new CameraAccess(new ThrowingAsyncFunctionContext(thread.getLooper(), Looper.getMainLooper()));
     }
 
-    public void openCamera(int cameraId, Context applicationContext, AsyncOperation<CameraAccess> callback, AsyncOperation<MessageException> exception)
+    public void openCamera(int cameraId, AsyncOperation<CameraAccess> callback, AsyncOperation<MessageException> exception)
     {
-        cameraAccess.openCameraAsync(new CameraOpenArgument(cameraId, applicationContext), callback, exception);
+        cameraAccess.openCameraAsync(cameraId, callback, exception);
     }
 
     public void closeCamera()

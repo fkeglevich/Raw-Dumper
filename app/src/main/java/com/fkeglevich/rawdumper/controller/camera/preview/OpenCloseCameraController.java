@@ -59,7 +59,7 @@ class OpenCloseCameraController implements IPermissionResultListener
     @Override
     public void onAllPermissionsGranted(final boolean hadDialogPrompt)
     {
-        CameraThread.getInstance().openCamera(1, activity.getApplicationContext(), new AsyncOperation<CameraAccess>()
+        CameraThread.getInstance().openCamera(1, new AsyncOperation<CameraAccess>()
                 {
                     @Override
                     protected void execute(CameraAccess argument)

@@ -21,7 +21,6 @@ import android.view.TextureView;
 import com.fkeglevich.rawdumper.async.Locked;
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunctionContext;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
-import com.fkeglevich.rawdumper.camera.async.function.CameraOpenArgument;
 import com.fkeglevich.rawdumper.camera.async.function.CameraOpenFunction;
 import com.fkeglevich.rawdumper.camera.async.function.StartPreviewFunction;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
@@ -62,9 +61,9 @@ public class CameraAccess
         };
     }
 
-    void openCameraAsync(CameraOpenArgument argument, AsyncOperation<CameraAccess> callback, AsyncOperation<MessageException> exception)
+    void openCameraAsync(int cameraId, AsyncOperation<CameraAccess> callback, AsyncOperation<MessageException> exception)
     {
-        functionContext.call(new CameraOpenFunction(sharedCameraSetter, this), argument, callback, exception);
+        functionContext.call(new CameraOpenFunction(sharedCameraSetter, this), cameraId, callback, exception);
     }
 
     void close()

@@ -30,7 +30,7 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
  * TODO: Add a class header comment!
  */
 
-public class CameraOpenFunction extends ThrowingAsyncFunction<CameraOpenArgument, CameraAccess, MessageException>
+public class CameraOpenFunction extends ThrowingAsyncFunction<Integer, CameraAccess, MessageException>
 {
     private final SharedCameraSetter setter;
     private final CameraAccess cameraAccess;
@@ -42,12 +42,12 @@ public class CameraOpenFunction extends ThrowingAsyncFunction<CameraOpenArgument
     }
 
     @Override
-    protected CameraAccess call(CameraOpenArgument argument) throws MessageException
+    protected CameraAccess call(Integer argument) throws MessageException
     {
         SharedDataLoader dataLoader = new SharedDataLoader();
         SharedData sharedData = dataLoader.load();
 
-        SharedCameraOpener cameraOpener = new SharedCameraOpener(argument.getCameraId(), sharedData);
+        SharedCameraOpener cameraOpener = new SharedCameraOpener(argument, sharedData);
         SharedCamera sharedCamera = cameraOpener.open();
 
         setter.setSharedCamera(sharedCamera);
