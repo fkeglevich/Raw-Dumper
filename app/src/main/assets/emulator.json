@@ -1,0 +1,177 @@
+{
+  "cameras": [
+    {
+      "color": {
+        "calibrationIlluminant1": "D55",
+        "cameraCalibration1": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "colorMatrix1": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "exposure": {
+        "isoParameter": "iso",
+        "isoAutoValue": "auto",
+        "isoValues": [
+          "auto",
+          "50",
+          "100",
+          "200",
+          "300",
+          "400",
+          "600",
+          "800",
+          "1000",
+          "1200",
+          "1400",
+          "1600"
+        ],
+        "shutterSpeedParameter": null,
+        "shutterSpeedAutoValue": null,
+        "shutterSpeedValues": []
+      },
+      "hasKnownMakernote": false,
+      "id": 0,
+      "lens": {
+        "aperture": 2.0
+      },
+      "model": "%s (back camera)",
+      "uniqueCameraModel": "%s (back camera)",
+      "opcodes": [],
+      "retryOnError": false,
+      "sensor": {
+        "baseISO": 50,
+        "bayerPattern": "GRBG",
+        "binningRawImageSizes": [],
+        "bitsPerPixel": 10,
+        "blackLevel": [
+          64.0,
+          64.0,
+          64.0,
+          64.0
+        ],
+        "maker": "Unknown",
+        "name": "Unknown Sensor",
+        "rawImageSizes": [
+          {
+            "height": 3072,
+            "bytesPerLine": 8448,
+            "paddedHeight": 3088,
+            "bufferLength": 26087424,
+            "paddedWidth": 4112,
+            "paddedWidthBytes": 8224,
+            "width": 4096
+          }
+        ],
+        "storageBitsPerPixel": 16,
+        "verticalPadding": 16,
+        "whiteLevel": 1023
+      }
+    },
+    {
+      "color": {
+        "calibrationIlluminant1": "D55",
+        "cameraCalibration1": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "colorMatrix1": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "exposure": {
+        "isoParameter": "iso",
+        "isoAutoValue": "auto",
+        "isoValues": [
+          "auto",
+          "50",
+          "100",
+          "200",
+          "300",
+          "400",
+          "600",
+          "800",
+          "1000",
+          "1200",
+          "1400",
+          "1600"
+        ],
+        "shutterSpeedParameter": null,
+        "shutterSpeedAutoValue": null,
+        "shutterSpeedValues": []
+      },
+      "hasKnownMakernote": false,
+      "id": 1,
+      "lens": {
+        "aperture": 2.0
+      },
+      "model": "%s (front camera)",
+      "uniqueCameraModel": "%s (front camera)",
+      "opcodes": [],
+      "retryOnError": false,
+      "sensor": {
+        "baseISO": 50,
+        "bayerPattern": "BGGR",
+        "binningRawImageSizes": [],
+        "bitsPerPixel": 10,
+        "blackLevel": [
+          16.0,
+          16.0,
+          16.0,
+          16.0
+        ],
+        "maker": "Unknown",
+        "name": "Unknown Sensor",
+        "rawImageSizes": [
+          {
+            "height": 1920,
+            "bytesPerLine": 5376,
+            "paddedHeight": 1944,
+            "bufferLength": 10450944,
+            "paddedWidth": 2592,
+            "paddedWidthBytes": 5184,
+            "width": 2560
+          }
+        ],
+        "storageBitsPerPixel": 16,
+        "verticalPadding": 24,
+        "whiteLevel": 1023
+      }
+    }
+  ],
+  "alignWidth": 256,
+  "dumpDirectoryLocation": "/data",
+  "manufacturer": "Unknown"
+}

@@ -1,6 +1,10 @@
 {
     "supportedDevices": [
         {
+            "deviceInfoFile": "emulator",
+            "deviceModel": "Android SDK built for x86"
+        },
+        {
             "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z00A"
         },
