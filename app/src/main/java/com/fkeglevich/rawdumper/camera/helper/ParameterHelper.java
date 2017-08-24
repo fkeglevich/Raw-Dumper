@@ -62,6 +62,8 @@ public class ParameterHelper
 
     public static List<CaptureSize> convertSizeList(List<Camera.Size> list)
     {
+        if (list == null) return new ArrayList<>();
+
         List<CaptureSize> result = new ArrayList<CaptureSize>();
         for (Camera.Size size : list)
             result.add(toCaptureSize(size));

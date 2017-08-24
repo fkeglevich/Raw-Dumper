@@ -51,8 +51,6 @@ public class AvailableCaptureSizes
     private List<CaptureSize> generateCaptureSizeList(List<Camera.Size> sizeList)
     {
         List<CaptureSize> result = ParameterHelper.convertSizeList(sizeList);
-        if (result.size() < 1)
-            throw new RuntimeException("The capture size list should have at least one element!");
         Collections.sort(result);
         return Collections.unmodifiableList(result);
     }
@@ -74,11 +72,13 @@ public class AvailableCaptureSizes
 
     public CaptureSize getLargestPictureSize()
     {
+        if (pictureSizes.isEmpty()) return null;
         return pictureSizes.get(pictureSizes.size() - 1);
     }
 
     public CaptureSize getSmallestPictureSize()
     {
+        if (pictureSizes.isEmpty()) return null;
         return pictureSizes.get(0);
     }
 
