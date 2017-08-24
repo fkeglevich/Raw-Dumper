@@ -21,7 +21,7 @@
             android:layout_gravity="bottom"
             app:srcCompat="@drawable/extra_background"/>
 
-        <TextureView
+        <com.fkeglevich.rawdumper.ui.PausingTextureView
             android:id="@+id/textureView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
