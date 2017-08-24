@@ -16,7 +16,6 @@ TODO list:
  - (IMPORTANT) Create the concept of "applied workarounds" for differents devices. This is specially useful for devices like
 	the Zen2 that differ A LOT between camera blob's versions.
    
- - (IMPORTANT - IN PROGRESS) Make the app translatable to different languages
  - (IMPORTANT - IN PROGRESS) Make the app work on Android Nougat
    
  - (IN PROGRESS) Reduce overdraw
@@ -29,6 +28,10 @@ TODO list:
 	- Razr I
 	- Zenfone 5
 	- Zenfone 2 with LL blobs
+	
+	- Possible problems:
+	  - Avaliability of the Shutter Speed feature
+	  - Mismatched number of cameras in the json
  
  - (IMPORTANT - IN PROGRESS) FIX THE GLUE CODE TO MAKE THE APP WORK IN THE NEXT RELEASE!
  
@@ -52,4 +55,6 @@ Done:
  - The i3av4 header should always be saved in the DNG Exif MakerNote tag
  - Use a better default white balance (based on 5504K) for devices with known color matrices
  - Make the Build.MODEL to be dynamic and appear in the dng model tag
+ - Make the app translatable to different languages
+ - Add the brazillian portuguese language
  

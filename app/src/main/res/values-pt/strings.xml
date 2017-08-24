@@ -17,68 +17,59 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Raw Dumper</string>
-    <string name="app_name_with_version">Raw Dumper v<xliff:g id="app_version">%s</xliff:g></string>
-
-    <string name="error_opening_camera">The camera couldn\'t be started. Restart your device and try again.</string>
-
-    <string name="error_loading_device_info">
-        The app is currently not compatible with your device. Send the model name of your device to the developer, so it can be added to the compatibility list.
-        \n
-        \nModel name: <xliff:g id="model_name">%s</xliff:g>
-    </string>
-
-    <string name="permission_error">This app needs all requested permissions.</string>
-    <string name="root_access_error">This app only works with root access.</string>
-
-    <string name="terminating_dialog_button">Exit</string>
-
-    <string name="about_title">About</string>
     <string name="about_dismiss_button">OK</string>
+    <string name="about_title">Sobre</string>
+    <string name="app_name_with_version">Raw Dumper v<xliff:g id="app_version">%s</xliff:g></string>
+    <string name="error_opening_camera">A câmera não pode ser iniciada. Reinicie seu dispositivo e tente novamente.</string>
+    <string name="permission_error">Este aplicativo necessita de todas as permissões para funcionar.</string>
+    <string name="root_access_error">Este aplicativo somente funciona em dispositivos com root.</string>
+    <string name="terminating_dialog_button">Sair</string>
+    <string name="error_loading_device_info">Este aplicativo não é compatível com o seu dispositivo. Envie o nome do modelo abaixo para o desenvolvedor, para que ele possa ser adicionado à lista de dispositivos compatíveis.</string>
     <string name="about_message">
         Raw Dumper v<xliff:g id="app_version">%s</xliff:g>
         \n
         \nCopyright © 2017, Flávio Keglevich
         \n
-        \nThis app and its launcher icon are licensed under Apache License 2.0. The license can be found here:
+        \nEste aplicativo e seu ícone estão licenciados sobre a licença Apache 2.0. O texto completo pode ser encontrado aqui:
         \nhttps://www.apache.org/licenses/LICENSE-2.0
         \n
-        \nThe following open source libraries are used:
+        \nAs seguintes bibliotecas Open Source estão sendo utilizadas:
         \n
         \nLibTIFF
         \nCopyright © 1988-1997 Sam Leffler
         \nCopyright © 1991-1997 Silicon Graphics, Inc.
-        \nLicense: http://www.simplesystems.org/libtiff/misc.html
+        \nLicença: http://www.simplesystems.org/libtiff/misc.html
         \n
         \nLibsuperuser
         \nCopyright © 2012-2015 Jorrit "Chainfire" Jongma
         \nLink: https://github.com/Chainfire/libsuperuser
-        \nLicense: https://github.com/Chainfire/libsuperuser/blob/master/LICENSE
+        \nLicença: https://github.com/Chainfire/libsuperuser/blob/master/LICENSE
         \n
         \nTransitions Everywhere
         \nCopyright © 2016 Andrey Kulikov (andkulikov@gmail.com)
         \nLink: https://github.com/andkulikov/Transitions-Everywhere
-        \nLicense: https://github.com/andkulikov/Transitions-Everywhere/blob/master/LICENSE
+        \nLicença: https://github.com/andkulikov/Transitions-Everywhere/blob/master/LICENSE
         \n
         \nMoshi
         \nCopyright © 2015 Square, Inc.
         \nLink: https://github.com/square/moshi
-        \nLicense: https://github.com/square/moshi/blob/master/LICENSE.txt
+        \nLicença: https://github.com/square/moshi/blob/master/LICENSE.txt
         \n
         \nMetadata Extractor
         \nCopyright © 2002-2017 Drew Noakes
         \nLink: https://github.com/drewnoakes/metadata-extractor
-        \nLicense: https://github.com/drewnoakes/metadata-extractor/blob/master/LICENSE-2.0.txt
+        \nLicença: https://github.com/drewnoakes/metadata-extractor/blob/master/LICENSE-2.0.txt
         \n
         \nCircularReveal
         \nCopyright © 2016 Abdullaev Ozodrukh
         \nLink: https://github.com/ozodrukh/CircularReveal
-        \nLicense: https://github.com/ozodrukh/CircularReveal/blob/master/LICENSE
+        \nLicença: https://github.com/ozodrukh/CircularReveal/blob/master/LICENSE
         \n
-        \nThe following icon sets are used:
+        \nOs seguintes conjuntos de ícones são utilizados:
         \n
         \nMaterial design icons
         \nCopyright © 2017 Google
         \nLink: https://material.io/icons
-        \nLicense: https://github.com/google/material-design-icons/blob/master/LICENSE
+        \nLicença: https://github.com/google/material-design-icons/blob/master/LICENSE
     </string>
 </resources>
