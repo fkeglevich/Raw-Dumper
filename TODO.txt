@@ -9,14 +9,11 @@ TODO list:
       - Trying to use the red and blue gains
    - Use the Noise Profile DNG tag
 
- - (IMPORTANT - IN PROGRESS) Make the app work on ROMs using LL camera blobs (at least for the front camera)
  - (IMPORTANT - IN PROGRESS) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
     raw pictures among different devices with different workarounds.
 	
  - (IMPORTANT) Create the concept of "applied workarounds" for differents devices. This is specially useful for devices like
 	the Zen2 that differ A LOT between camera blob's versions.
-   
- - (IMPORTANT - IN PROGRESS) Make the app work on Android Nougat
    
  - (IN PROGRESS) Reduce overdraw
    
@@ -54,6 +51,7 @@ Done:
  - Show the Build.MODEl when complaining for a unknown device!
  - The i3av4 header should always be saved in the DNG Exif MakerNote tag
  - Use a better default white balance (based on 5504K) for devices with known color matrices
+ - Make the app work on Android Nougat
  - Make the Build.MODEL to be dynamic and appear in the dng model tag
  - Make the app translatable to different languages
  - Add the brazillian portuguese language
