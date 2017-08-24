@@ -41,13 +41,6 @@ public class AvailableCaptureSizes
         this.videoSizes = generateCaptureSizeList(parameters.getSupportedVideoSizes());
     }
 
-    public AvailableCaptureSizes(List<Camera.Size> pictureSizes, List<Camera.Size> previewSizes, List<Camera.Size> videoSizes)
-    {
-        this.pictureSizes = generateCaptureSizeList(pictureSizes);
-        this.previewSizes = generateCaptureSizeList(previewSizes);
-        this.videoSizes = generateCaptureSizeList(videoSizes);
-    }
-
     private List<CaptureSize> generateCaptureSizeList(List<Camera.Size> sizeList)
     {
         List<CaptureSize> result = ParameterHelper.convertSizeList(sizeList);
@@ -74,12 +67,6 @@ public class AvailableCaptureSizes
     {
         if (pictureSizes.isEmpty()) return null;
         return pictureSizes.get(pictureSizes.size() - 1);
-    }
-
-    public CaptureSize getSmallestPictureSize()
-    {
-        if (pictureSizes.isEmpty()) return null;
-        return pictureSizes.get(0);
     }
 
     public CaptureSize getLargestCompatiblePreviewSize(CaptureSize pictureSize)
