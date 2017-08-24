@@ -16,10 +16,13 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
+import android.os.Build;
 import android.support.annotation.Keep;
 
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
+
+import java.util.Locale;
 
 /**
  * Simple immutable class that stores specific information about
@@ -50,8 +53,8 @@ public class ExtraCameraInfo
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
-        tiffWriter.setField(TiffTag.TIFFTAG_MODEL, model);
-        tiffWriter.setField(TiffTag.TIFFTAG_UNIQUECAMERAMODEL, uniqueCameraModel);
+        tiffWriter.setField(TiffTag.TIFFTAG_MODEL, String.format(Locale.US, model, Build.MODEL));
+        tiffWriter.setField(TiffTag.TIFFTAG_UNIQUECAMERAMODEL, String.format(Locale.US, uniqueCameraModel, Build.MODEL));
     }
 
     public int getId()

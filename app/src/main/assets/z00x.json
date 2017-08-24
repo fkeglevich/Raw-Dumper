@@ -75,8 +75,8 @@
             "lens": {
                 "aperture": 2.0
             },
-            "model": "Z00AD (back camera)",
-            "uniqueCameraModel": "Asus ZenFone 2 ZE551ML (back camera)",
+            "model": "%s (back camera)",
+            "uniqueCameraModel": "Asus ZenFone 2 %s (back camera)",
             "opcodes": [
                 {
                     "opcodeList3File": "t4k37op3"
@@ -209,8 +209,8 @@
             "lens": {
                 "aperture": 2.0
             },
-            "model": "Z00AD (front camera)",
-            "uniqueCameraModel": "Asus ZenFone 2 ZE551ML (front camera)",
+            "model": "%s (front camera)",
+            "uniqueCameraModel": "Asus ZenFone 2 %s (front camera)",
             "opcodes": [
                 {
                     "opcodeList3File": "ov5670op3"

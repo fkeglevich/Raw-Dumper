@@ -52,8 +52,8 @@
       "lens": {
         "aperture": 2.0
       },
-      "model": "T00J (back camera)",
-      "uniqueCameraModel": "Asus ZenFone 5 T00J (back camera)",
+      "model": "%s (back camera)",
+      "uniqueCameraModel": "Asus ZenFone 5 %s (back camera)",
       "opcodes": [],
       "retryOnError": false,
       "sensor": {
@@ -156,8 +156,8 @@
       "lens": {
         "aperture": 2.8
       },
-      "model": "T00J (front camera)",
-      "uniqueCameraModel": "Asus ZenFone 5 T00J (front camera)",
+      "model": "%s (front camera)",
+      "uniqueCameraModel": "Asus ZenFone 5 %s (front camera)",
       "opcodes": [],
       "retryOnError": false,
       "sensor": {

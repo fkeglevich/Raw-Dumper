@@ -15,7 +15,6 @@ TODO list:
 	
  - (IMPORTANT) Create the concept of "applied workarounds" for differents devices. This is specially useful for devices like
 	the Zen2 that differ A LOT between camera blob's versions.
- - (IMPORTANT) Make the Build.MODEL to be dynamic and appear in the dng model tag
    
  - (IMPORTANT - IN PROGRESS) Make the app translatable to different languages
  - (IMPORTANT - IN PROGRESS) Make the app work on Android Nougat
@@ -52,4 +51,5 @@ Done:
  - Show the Build.MODEl when complaining for a unknown device!
  - The i3av4 header should always be saved in the DNG Exif MakerNote tag
  - Use a better default white balance (based on 5504K) for devices with known color matrices
+ - Make the Build.MODEL to be dynamic and appear in the dng model tag
  

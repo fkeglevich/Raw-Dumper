@@ -67,8 +67,8 @@
             "lens": {
                 "aperture": 2.6
             },
-            "model": "XT890 (back camera)",
-            "uniqueCameraModel": "Motorola Razr I XT890 (back camera)",
+            "model": "%s (back camera)",
+            "uniqueCameraModel": "Motorola Razr I %s (back camera)",
             "opcodes": [],
             "retryOnError": false,
             "sensor": {
