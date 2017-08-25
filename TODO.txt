@@ -15,6 +15,8 @@ TODO list:
  - (IMPORTANT) Create the concept of "applied workarounds" for differents devices. This is specially useful for devices like
 	the Zen2 that differ A LOT between camera blob's versions.
    
+ - (IMPORTANT) Create the pipeline that generates DNG files depending on the capture context
+   
  - (IN PROGRESS) Reduce overdraw
    
  - Save DNGs using tiles
