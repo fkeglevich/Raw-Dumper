@@ -19,9 +19,9 @@ package com.fkeglevich.rawdumper.raw.capture.builder;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.raw.capture.DateExtractor;
-import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
+import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfoExtractor;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;

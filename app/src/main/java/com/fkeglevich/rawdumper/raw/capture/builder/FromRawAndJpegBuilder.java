@@ -28,8 +28,6 @@ import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
-import java.io.File;
-
 /**
  * Created by Flávio Keglevich on 25/08/2017.
  * TODO: Add a class header comment!

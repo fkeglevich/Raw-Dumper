@@ -20,8 +20,6 @@ import android.content.Context;
 import android.media.MediaScannerConnection;
 
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
-import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
-import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

@@ -20,7 +20,6 @@ import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
-import com.fkeglevich.rawdumper.util.PackageUtil;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
