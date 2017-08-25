@@ -19,8 +19,7 @@ package com.fkeglevich.rawdumper.raw.capture.builder;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.raw.capture.DateExtractor;
-import com.fkeglevich.rawdumper.raw.capture.FilenameExtractor;
-import com.fkeglevich.rawdumper.raw.capture.I3av4FileUtil;
+import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfoExtractor;
@@ -70,7 +69,7 @@ public class FromI3av4FileBuilder extends BaseDateBuilder
 
     private void initMakerNoteInfo()
     {
-        byte[] mknBytes = I3av4FileUtil.readMknFromFile(relatedI3av4File, pair.getRawImageSize());
+        byte[] mknBytes = MakerNoteUtil.readFromI3av4File(relatedI3av4File, pair.getRawImageSize());
 
         if (pair.getExtraCameraInfo().hasKnownMakernote())
             makerNoteInfo = new MakerNoteInfoExtractor(pair.getExtraCameraInfo().getSensor().getBaseISO()).extractFrom(mknBytes);

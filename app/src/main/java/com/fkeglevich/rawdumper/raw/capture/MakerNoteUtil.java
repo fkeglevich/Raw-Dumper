@@ -16,19 +16,25 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Directory;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- * Contain useful methods when dealing with i3av4 files.
+ * Contain useful methods when dealing with maker notes.
  *
  * Created by Flávio Keglevich on 25/08/2017.
  */
 
-public class I3av4FileUtil
+public class MakerNoteUtil
 {
     /**
      * Reads the maker notes (header) from the i3av4 file.
@@ -37,7 +43,7 @@ public class I3av4FileUtil
      * @param imageSize The raw size of the image contained in the file
      * @return  A byte array containing the maker notes (or null if the file couldn't be read)
      */
-    public static byte[] readMknFromFile(File i3av4File, RawImageSize imageSize)
+    public static byte[] readFromI3av4File(File i3av4File, RawImageSize imageSize)
     {
         byte[] mknBytes;
         try
@@ -52,6 +58,33 @@ public class I3av4FileUtil
         {
             mknBytes = null;
         }
+        return mknBytes;
+    }
+
+    /**
+     * Reads the maker notes from a jpeg file.
+     *
+     * @param jpegBytes The bytes containing jpeg data
+     * @return  A byte array containing the maker notes (or null if there was a problem)
+     */
+    public static byte[] readFromJpegBytes(byte[] jpegBytes)
+    {
+        BufferedInputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(jpegBytes));
+        byte[] mknBytes = null;
+        try
+        {
+            Metadata metadata = ImageMetadataReader.readMetadata(inputStream, jpegBytes.length);
+            for(Directory directory : metadata.getDirectories())
+                if (directory.containsTag(ExifIFD0Directory.TAG_MAKERNOTE))
+                    mknBytes = directory.getByteArray(ExifIFD0Directory.TAG_MAKERNOTE);
+        }
+        catch (Exception ignored)
+        {   }
+
+        try { inputStream.close(); }
+        catch (IOException ignored)
+        {   }
+
         return mknBytes;
     }
 }
