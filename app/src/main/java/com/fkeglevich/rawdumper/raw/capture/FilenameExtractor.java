@@ -17,17 +17,20 @@
 package com.fkeglevich.rawdumper.raw.capture;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 /**
+ * Class for generating dng filenames
+ *
  * Created by Flávio Keglevich on 27/07/2017.
- * TODO: Add a class header comment!
  */
 
 public class FilenameExtractor
 {
-    private static final String NAME_SUFIX      = "IMG";
+    private static final String NAME_SUFFIX = "IMG";
     private static final String NAME_SEPARATOR  = "_";
+    private static final String NAME_EXTENSION = ".dng";
 
     private static final String DATE_PATTERN = "yyyyMMdd" + NAME_SEPARATOR + "HHmmss";
 
@@ -37,21 +40,11 @@ public class FilenameExtractor
     {
         dateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.US);
     }
-
-    /*public String extractFromDate(DateInfo dateInfo)
+    
+    public String extractFromDateInfo(DateInfo dateInfo)
     {
-        GregorianCalendar date = dateInfo.captureDate;
-        dateFormat.format()
-        return NAME_SUFIX + NAME_SEPARATOR + date.
-    }*/
-
-    /*
-    @SuppressLint("SimpleDateFormat")
-    public static String formatCalendarTag(Calendar calendar)
-    {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+        Calendar calendar = dateInfo.captureDate;
         dateFormat.setCalendar(calendar);
-        return dateFormat.format(calendar.getTime());
+        return NAME_SUFFIX + NAME_SEPARATOR + dateFormat.format(calendar.getTime()) + NAME_EXTENSION;
     }
-     */
 }
