@@ -37,7 +37,7 @@ public class DngWriter
 
     public static DngWriter open(String dngFile)
     {
-        TiffWriter tiffWriter =  TiffWriter.open(dngFile);
+        TiffWriter tiffWriter = TiffWriter.open(dngFile);
         if (tiffWriter == null) return null;
 
         return new DngWriter(tiffWriter);
@@ -62,8 +62,6 @@ public class DngWriter
         captureInfo.camera.writeTiffTags(tiffWriter);
         captureInfo.device.writeTiffTags(tiffWriter);
         captureInfo.writeTiffTags(tiffWriter);
-
-        tiffWriter.setField(TiffTag.TIFFTAG_SOFTWARE, PackageUtil.getAppNameWithVersion());
 
         captureInfo.date.writeTiffTags(tiffWriter);
         captureInfo.camera.getColor().writeTiffTags(tiffWriter);
