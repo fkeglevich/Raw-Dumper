@@ -32,15 +32,12 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
 class OpenCloseCameraController implements IPermissionResultListener
 {
     private final PreviewControllerActivity activity;
-    private final CameraOpenedListener cameraOpenedListener;
     private final RequirementList<PreviewRequirements> previewRequirements;
 
     OpenCloseCameraController(PreviewControllerActivity activity,
-                              CameraOpenedListener cameraOpenedListener,
                               RequirementList<PreviewRequirements> previewRequirements)
     {
         this.activity = activity;
-        this.cameraOpenedListener = cameraOpenedListener;
         this.previewRequirements = previewRequirements;
     }
 
@@ -65,7 +62,7 @@ class OpenCloseCameraController implements IPermissionResultListener
                     protected void execute(CameraAccess argument)
                     {
                         previewRequirements.setRequirement(PreviewRequirements.CAMERA_OPENED, argument);
-                        cameraOpenedListener.cameraOpened(hadDialogPrompt);
+                        activity.updateState(hadDialogPrompt);
                     }
                 },
                 new AsyncOperation<MessageException>()

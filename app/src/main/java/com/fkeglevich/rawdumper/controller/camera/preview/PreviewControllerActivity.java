@@ -35,15 +35,7 @@ import com.fkeglevich.rawdumper.controller.requirement.RequirementList;
 
 public abstract class PreviewControllerActivity extends MandatoryPermissionAwareActivity
 {
-    private enum State
-    {
-        INITIAL,                    //Initial, basic state when permissions can be requested
-        REQUESTING_PERMISSIONS,     //State when the permissions are being requested by the user
-        HAD_DIALOG_PROMPT           /*  State when some dialog prompt had appeared after requesting permissions
-                                        and the OnResume will be called twice*/
-    }
-
-    private State currentState = State.INITIAL;
+    private PermissionsState currentState = PermissionsState.INITIAL;
     private TextureView textureView;
     private OpenCloseCameraController openCloseCameraController;
     private CameraAccess cameraAccess;
@@ -53,18 +45,8 @@ public abstract class PreviewControllerActivity extends MandatoryPermissionAware
         this.textureView = textureView;
         RequirementList<PreviewRequirements> previewRequirements = new RequirementList<>(PreviewRequirements.class, new TextureAndCameraOpenedListener(this));
         textureView.setSurfaceTextureListener(new TextureListener(previewRequirements));
-        openCloseCameraController = new OpenCloseCameraController(this, getCameraOpenedListener(), previewRequirements);
+        openCloseCameraController = new OpenCloseCameraController(this, previewRequirements);
         initializePermissionManager(openCloseCameraController);
-    }
-
-    private CameraOpenedListener getCameraOpenedListener()
-    {
-        return new CameraOpenedListener()
-        {
-            @Override
-            public void cameraOpened(boolean hadDialogPrompt)
-            {currentState = hadDialogPrompt ? State.HAD_DIALOG_PROMPT : State.INITIAL;}
-        };
     }
 
     TextureView getTextureView()
@@ -76,6 +58,11 @@ public abstract class PreviewControllerActivity extends MandatoryPermissionAware
     {
         this.cameraAccess = cameraAccess;
         onCameraPreviewStarted(textureView);
+    }
+
+    void updateState(boolean hadDialogPrompt)
+    {
+        currentState = hadDialogPrompt ? PermissionsState.HAD_DIALOG_PROMPT : PermissionsState.INITIAL;
     }
 
     protected CameraAccess getCameraAccess()
@@ -90,12 +77,12 @@ public abstract class PreviewControllerActivity extends MandatoryPermissionAware
         switch (currentState)
         {
             case INITIAL:
-                currentState = State.REQUESTING_PERMISSIONS;
+                currentState = PermissionsState.REQUESTING_PERMISSIONS;
                 requestAllPermissions();
                 break;
 
             case HAD_DIALOG_PROMPT:
-                currentState = State.INITIAL;
+                currentState = PermissionsState.INITIAL;
                 break;
         }
     }
@@ -107,7 +94,7 @@ public abstract class PreviewControllerActivity extends MandatoryPermissionAware
         switch (currentState)
         {
             case HAD_DIALOG_PROMPT:
-                currentState = State.INITIAL;
+                currentState = PermissionsState.INITIAL;
             case INITIAL:
                 openCloseCameraController.closeCamera();
                 break;
