@@ -14,29 +14,27 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.io.async;
+package com.fkeglevich.rawdumper.io.async.function;
 
-import android.content.Context;
-
-import com.fkeglevich.rawdumper.util.ThreadUtil;
+import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
+import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
- * Created by Flávio Keglevich on 29/07/2017.
+ * Created by Flávio Keglevich on 24/08/2017.
  * TODO: Add a class header comment!
  */
 
-public class IOLock
+public abstract class FileFunction<I> extends ThrowingAsyncFunction<I, Void, MessageException>
 {
-    private final Context applicationContext;
+    private final String destinationFilePath;
 
-    public IOLock(Context applicationContext)
+    public FileFunction(String destinationFilePath)
     {
-        this.applicationContext = applicationContext;
+        this.destinationFilePath = destinationFilePath;
     }
 
-    public Context getApplicationContext()
+    public String getDestinationFilePath()
     {
-        ThreadUtil.checkIfSynchronized(this);
-        return applicationContext;
+        return destinationFilePath;
     }
 }

@@ -16,60 +16,28 @@
 
 package com.fkeglevich.rawdumper.io.async;
 
-import android.content.Context;
-import android.media.MediaScannerConnection;
-import android.os.Handler;
-import android.os.Looper;
-
-import com.fkeglevich.rawdumper.io.async.callbacks.IIOResultCallback;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.fkeglevich.rawdumper.async.Locked;
+import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunctionContext;
+import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
+import com.fkeglevich.rawdumper.io.async.function.SaveFileFunction;
+import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
- * Created by Flávio Keglevich on 25/06/2017.
+ * Created by Flávio Keglevich on 24/08/2017.
  * TODO: Add a class header comment!
  */
 
 public class IOAccess
 {
-    //Main thread fields
-    private final IOLock ioLock;
-    private Handler handler;
+    private final ThrowingAsyncFunctionContext functionContext;
 
-    IOAccess(Context applicationContext, Looper looper)
+    IOAccess(ThrowingAsyncFunctionContext functionContext)
     {
-        this.ioLock = new IOLock(applicationContext);
-        this.handler = new Handler(looper);
+        this.functionContext = functionContext;
     }
 
-    public synchronized void writeBytesToFile(final byte[] data, final String filepath, final IIOResultCallback callback)
+    public void saveFileAsync(Locked<byte[]> data, String filePath, AsyncOperation<Void> callback, AsyncOperation<MessageException> exception)
     {
-        handler.post(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                BufferedOutputStream bos;
-                try
-                {
-                    bos = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
-                    bos.write(data);
-                    bos.flush();
-                    bos.close();
-                    synchronized(ioLock)
-                    {
-                        MediaScannerConnection.scanFile(ioLock.getApplicationContext(), new String[]{filepath}, null, null);
-                    }
-                    callback.onResult(true);
-                }
-                catch (IOException ioe)
-                {
-                    callback.onResult(false);
-                }
-            }
-        });
+        functionContext.call(new SaveFileFunction(filePath), data, callback, exception);
     }
 }

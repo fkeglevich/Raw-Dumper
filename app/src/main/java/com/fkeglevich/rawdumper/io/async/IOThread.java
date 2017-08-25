@@ -16,13 +16,13 @@
 
 package com.fkeglevich.rawdumper.io.async;
 
-import android.content.Context;
 import android.os.HandlerThread;
+import android.os.Looper;
 
-import com.fkeglevich.rawdumper.util.ThreadUtil;
+import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunctionContext;
 
 /**
- * Created by Flávio Keglevich on 25/06/2017.
+ * Created by Flávio Keglevich on 24/08/2017.
  * TODO: Add a class header comment!
  */
 
@@ -31,35 +31,24 @@ public class IOThread
     private static final String THREAD_NAME = "IOThread";
 
     private static IOThread instance = null;
-    private static volatile boolean initialized = false;
 
-    public static void initialize(Context applicationContext)
+    public static IOThread getInstance()
     {
-        if (initialized)
-            throw new RuntimeException("The IOThread can only be initialized once!");
-
-        if (!ThreadUtil.currentThreadIsMainThread())
-            throw new RuntimeException("The IOThread can only be initialized from the Main Thread!");
-
-        instance = new IOThread(applicationContext);
-        initialized = true;
+        if (instance == null) instance = new IOThread();
+        return instance;
     }
 
-    static synchronized IOAccess getAccess()
+    public static IOAccess getIOAccess()
     {
-        if (instance == null)
-            return null;
-
-        return instance.ioAccess;
+        return getInstance().ioAccess;
     }
 
-    private HandlerThread thread;
     private IOAccess ioAccess;
 
-    private IOThread(Context applicationContext)
+    private IOThread()
     {
-        thread = new HandlerThread(THREAD_NAME);
+        HandlerThread thread = new HandlerThread(THREAD_NAME);
         thread.start();
-        ioAccess = new IOAccess(applicationContext, thread.getLooper());
+        ioAccess = new IOAccess(new ThrowingAsyncFunctionContext(thread.getLooper(), Looper.getMainLooper()));
     }
 }

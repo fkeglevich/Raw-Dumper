@@ -14,14 +14,25 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.io.async.callbacks;
+package com.fkeglevich.rawdumper.io.async.exception;
+
+import android.content.Context;
+
+import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
- * Created by Flávio Keglevich on 26/06/2017.
+ * Created by Flávio Keglevich on 24/08/2017.
  * TODO: Add a class header comment!
  */
 
-public interface IIOResultCallback
+public class SaveFileException extends MessageException
 {
-    void onResult(boolean success);
+    public SaveFileException()
+    {   }
+
+    @Override
+    public String getMessageResource(Context context)
+    {
+        return null;
+    }
 }
