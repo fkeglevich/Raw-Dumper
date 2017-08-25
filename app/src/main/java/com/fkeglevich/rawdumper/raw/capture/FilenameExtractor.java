@@ -40,7 +40,7 @@ public class FilenameExtractor
     {
         dateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.US);
     }
-    
+
     public String extractFromDateInfo(DateInfo dateInfo)
     {
         Calendar calendar = dateInfo.captureDate;
