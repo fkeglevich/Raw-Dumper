@@ -50,6 +50,7 @@ public class CaptureInfo
     public MakerNoteInfo makerNoteInfo          = null;
     public Camera.Parameters captureParameters  = null;
     public byte[] extraJpegBytes                = null;
+    public byte[] rawDataBytes                  = null;
     public File relatedI3av4File                = null;
 
     public CaptureInfo()
@@ -57,13 +58,14 @@ public class CaptureInfo
 
     public boolean isValid()
     {
-        return  device              != null &&
-                camera              != null &&
-                date                != null &&
-                whiteBalanceInfo    != null &&
-                imageSize           != null &&
-                originalRawFilename != null &&
-                orientation         != null;
+        return  device                  != null &&
+                camera                  != null &&
+                date                    != null &&
+                whiteBalanceInfo        != null &&
+                imageSize               != null &&
+                originalRawFilename     != null &&
+                destinationRawFilename  != null &&
+                orientation             != null;
     }
 
     public void writeTiffTags(TiffWriter tiffWriter)
