@@ -21,8 +21,11 @@ import android.hardware.Camera;
 import com.fkeglevich.rawdumper.raw.capture.DateExtractor;
 import com.fkeglevich.rawdumper.raw.capture.FilenameExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
+import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
+import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfoExtractor;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
+import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 import java.io.File;
@@ -38,18 +41,35 @@ public class FromRawAndJpegBuilder extends BaseDateBuilder
     private final CameraSizePair pair;
     private final Camera.Parameters parameters;
     private final ImageOrientation orientation;
+    private final byte[] rawDataBytes;
+    private final byte[] extraJpegBytes;
     private final WhiteBalanceInfoExtractor whiteBalanceExtractor;
 
     private MakerNoteInfo makerNoteInfo;
 
-    public FromRawAndJpegBuilder(DeviceInfo device, CameraSizePair cameraSizePair, Camera.Parameters parameters, ImageOrientation orientation)
+    public FromRawAndJpegBuilder(DeviceInfo device, CameraSizePair cameraSizePair,
+                                 Camera.Parameters parameters, ImageOrientation orientation,
+                                 byte[] rawDataBytes, byte[] extraJpegBytes)
     {
         super();
         this.device = device;
         this.pair = cameraSizePair;
         this.parameters = parameters;
         this.orientation = orientation;
+        this.rawDataBytes = rawDataBytes;
+        this.extraJpegBytes = extraJpegBytes;
         this.whiteBalanceExtractor = new WhiteBalanceInfoExtractor();
+        initMakerNoteInfo();
+    }
+
+    private void initMakerNoteInfo()
+    {
+        byte[] mknBytes = MakerNoteUtil.readFromJpegBytes(extraJpegBytes);
+
+        if (pair.getExtraCameraInfo().hasKnownMakernote())
+            makerNoteInfo = new MakerNoteInfoExtractor(pair.getExtraCameraInfo().getSensor().getBaseISO()).extractFrom(mknBytes);
+        else
+            makerNoteInfo = new MakerNoteInfo(mknBytes);
     }
 
     @Override
@@ -73,7 +93,12 @@ public class FromRawAndJpegBuilder extends BaseDateBuilder
     @Override
     public void buildWhiteBalanceInfo()
     {
+        ColorInfo colorInfo = pair.getExtraCameraInfo().getColor();
 
+        if (pair.getExtraCameraInfo().hasKnownMakernote())
+            captureInfo.whiteBalanceInfo = whiteBalanceExtractor.extractFrom(makerNoteInfo, colorInfo);
+        else
+            captureInfo.whiteBalanceInfo = whiteBalanceExtractor.extractFrom(colorInfo);
     }
 
     @Override
@@ -97,7 +122,7 @@ public class FromRawAndJpegBuilder extends BaseDateBuilder
     @Override
     public void buildMakerNoteInfo()
     {
-
+        captureInfo.makerNoteInfo = makerNoteInfo;
     }
 
     @Override
@@ -109,7 +134,13 @@ public class FromRawAndJpegBuilder extends BaseDateBuilder
     @Override
     public void buildExtraJpegBytes()
     {
+        captureInfo.extraJpegBytes = extraJpegBytes;
+    }
 
+    @Override
+    public void buildRawDataBytes()
+    {
+        captureInfo.rawDataBytes = rawDataBytes;
     }
 
     @Override
