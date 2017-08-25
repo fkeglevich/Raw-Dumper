@@ -35,7 +35,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.fkeglevich.rawdumper.log.LogFile;
 import com.fkeglevich.rawdumper.ui.ISOInterface;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
 import com.fkeglevich.rawdumper.ui.ShutterSpeedInterface;
@@ -273,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     {
         saveDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), SAVE_DIR_NAME);
         saveDir.mkdirs();
-        LogFile.initLogFile(saveDir);
+        //LogFile.initLogFile(saveDir);
         partialDir = new File(saveDir, PARTIAL_DIR_NAME);
         partialDir.mkdirs();
         //requestRoot();
