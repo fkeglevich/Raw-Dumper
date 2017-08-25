@@ -100,7 +100,6 @@
           }
         ],
         "storageBitsPerPixel": 16,
-        "verticalPadding": 0,
         "whiteLevel": 1023
       }
     },
@@ -119,15 +118,15 @@
           1.0
         ],
         "colorMatrix1": [
-          0.9678,
-          -0.1981,
-          -0.0469,
-          -0.1948,
-          0.9686,
-          0.2657,
-          -0.0133,
-          0.2255,
-          0.6228
+          1.0893,
+          -0.4017,
+          0.0816,
+          -0.3483,
+          1.0252,
+          0.3764,
+          -0.0268,
+          0.1327,
+          0.7788
         ]
       },
       "exposure": {
@@ -162,14 +161,14 @@
       "retryOnError": false,
       "sensor": {
         "baseISO": 50,
-        "bayerPattern": "BGGR",
+        "bayerPattern": "GRBG",
         "binningRawImageSizes": [],
         "bitsPerPixel": 10,
         "blackLevel": [
-          16.0,
-          16.0,
-          16.0,
-          16.0
+          0.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "maker": "Unknown",
         "name": "Unknown Sensor",
@@ -185,7 +184,6 @@
           }
         ],
         "storageBitsPerPixel": 16,
-        "verticalPadding": 0,
         "whiteLevel": 1023
       }
     }

@@ -81,7 +81,6 @@
           }
         ],
         "storageBitsPerPixel": 16,
-        "verticalPadding": 16,
         "whiteLevel": 1023
       }
     },
@@ -166,7 +165,6 @@
           }
         ],
         "storageBitsPerPixel": 16,
-        "verticalPadding": 24,
         "whiteLevel": 1023
       }
     }

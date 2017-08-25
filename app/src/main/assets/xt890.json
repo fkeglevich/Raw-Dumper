@@ -96,7 +96,6 @@
                     }
                 ],
                 "storageBitsPerPixel": 16,
-                "verticalPadding": 0,
                 "whiteLevel": 1023
             }
         }
