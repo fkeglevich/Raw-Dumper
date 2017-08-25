@@ -46,6 +46,7 @@ public abstract class ACaptureInfoBuilder
     public abstract void buildMakerNoteInfo();
     public abstract void buildCaptureParameters();
     public abstract void buildExtraJpegBytes();
+    public abstract void buildRawDataBytes();
     public abstract void buildRelatedI3av4File();
 
     public CaptureInfo build()
@@ -61,6 +62,7 @@ public abstract class ACaptureInfoBuilder
         buildMakerNoteInfo();
         buildCaptureParameters();
         buildExtraJpegBytes();
+        buildRawDataBytes();
         buildRelatedI3av4File();
         return captureInfo;
     }

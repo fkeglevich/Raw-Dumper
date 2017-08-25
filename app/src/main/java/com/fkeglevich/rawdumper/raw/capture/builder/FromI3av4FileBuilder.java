@@ -144,6 +144,12 @@ public class FromI3av4FileBuilder extends BaseDateBuilder
     }
 
     @Override
+    public void buildRawDataBytes()
+    {
+        captureInfo.rawDataBytes = null;
+    }
+
+    @Override
     public void buildRelatedI3av4File()
     {
         captureInfo.relatedI3av4File = relatedI3av4File;
