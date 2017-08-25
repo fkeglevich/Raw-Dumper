@@ -81,4 +81,5 @@
         \nLink: https://material.io/icons
         \nLicense: https://github.com/google/material-design-icons/blob/master/LICENSE
     </string>
+    <string name="error_saving_file">Error saving file</string>
 </resources>

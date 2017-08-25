@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.io.async.exception;
 
 import android.content.Context;
 
+import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
@@ -33,6 +34,6 @@ public class SaveFileException extends MessageException
     @Override
     public String getMessageResource(Context context)
     {
-        return null;
+        return context.getString(R.string.error_saving_file);
     }
 }
