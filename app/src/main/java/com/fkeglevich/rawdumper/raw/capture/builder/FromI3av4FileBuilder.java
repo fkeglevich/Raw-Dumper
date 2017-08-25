@@ -1,0 +1,151 @@
+/*
+ * Copyright 2017, Flávio Keglevich
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.fkeglevich.rawdumper.raw.capture.builder;
+
+import android.hardware.Camera;
+
+import com.fkeglevich.rawdumper.raw.capture.DateExtractor;
+import com.fkeglevich.rawdumper.raw.capture.FilenameExtractor;
+import com.fkeglevich.rawdumper.raw.capture.I3av4FileUtil;
+import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
+import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
+import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfoExtractor;
+import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
+import com.fkeglevich.rawdumper.raw.info.ColorInfo;
+import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
+
+import java.io.File;
+
+/**
+ * Builds a CaptureInfo object when the main sources of information are a DeviceInfo object and
+ * a .i3av4 raw file.
+ *
+ * Created by Flávio Keglevich on 25/08/2017.
+ */
+
+public class FromI3av4FileBuilder extends BaseDateBuilder
+{
+    private final DeviceInfo device;
+    private final File relatedI3av4File;
+    private final CameraSizePair pair;
+    private final Camera.Parameters parameters;
+    private final WhiteBalanceInfoExtractor whiteBalanceExtractor;
+
+    private MakerNoteInfo makerNoteInfo;
+
+    public FromI3av4FileBuilder(DeviceInfo device, CameraSizePair cameraSizePair, File relatedI3av4File, Camera.Parameters parameters)
+    {
+        super();
+        this.device = device;
+        this.pair = cameraSizePair;
+        this.relatedI3av4File = relatedI3av4File;
+        this.parameters = parameters;
+        this.whiteBalanceExtractor = new WhiteBalanceInfoExtractor();
+        initMakerNoteInfo();
+    }
+
+    public FromI3av4FileBuilder(DeviceInfo device, File relatedI3av4File, Camera.Parameters parameters)
+    {
+        this(device, new CameraSizePairList(device).getBestPair(relatedI3av4File.length()), relatedI3av4File, parameters);
+    }
+
+    public FromI3av4FileBuilder(DeviceInfo device, File relatedI3av4File)
+    {
+        this(device, relatedI3av4File, null);
+    }
+
+    private void initMakerNoteInfo()
+    {
+        byte[] mknBytes = I3av4FileUtil.readMknFromFile(relatedI3av4File, pair.getRawImageSize());
+
+        if (pair.getExtraCameraInfo().hasKnownMakernote())
+            makerNoteInfo = new MakerNoteInfoExtractor(pair.getExtraCameraInfo().getSensor().getBaseISO()).extractFrom(mknBytes);
+        else
+            makerNoteInfo = new MakerNoteInfo(mknBytes);
+    }
+
+    @Override
+    void initDateInfo()
+    {
+        dateInfo = new DateExtractor().extractFromFilename(relatedI3av4File.getName());
+    }
+
+    @Override
+    public void buildDevice()
+    {
+        captureInfo.device = device;
+    }
+
+    @Override
+    public void buildCamera()
+    {
+        captureInfo.camera = pair.getExtraCameraInfo();
+    }
+
+    @Override
+    public void buildWhiteBalanceInfo()
+    {
+        ColorInfo colorInfo = pair.getExtraCameraInfo().getColor();
+
+        if (pair.getExtraCameraInfo().hasKnownMakernote())
+            captureInfo.whiteBalanceInfo = whiteBalanceExtractor.extractFrom(makerNoteInfo, colorInfo);
+        else
+            captureInfo.whiteBalanceInfo = whiteBalanceExtractor.extractFrom(colorInfo);
+    }
+
+    @Override
+    public void buildImageSize()
+    {
+        captureInfo.imageSize = pair.getRawImageSize();
+    }
+
+    @Override
+    public void buildOriginalRawFilename()
+    {
+        captureInfo.originalRawFilename = relatedI3av4File.getName();
+    }
+
+    @Override
+    public void buildOrientation()
+    {
+        captureInfo.orientation = ImageOrientation.TOPLEFT;
+    }
+
+    @Override
+    public void buildMakerNoteInfo()
+    {
+        captureInfo.makerNoteInfo = makerNoteInfo;
+    }
+
+    @Override
+    public void buildCaptureParameters()
+    {
+        captureInfo.captureParameters = parameters;
+    }
+
+    @Override
+    public void buildExtraJpegBytes()
+    {
+        captureInfo.extraJpegBytes = null;
+    }
+
+    @Override
+    public void buildRelatedI3av4File()
+    {
+        captureInfo.relatedI3av4File = relatedI3av4File;
+    }
+}

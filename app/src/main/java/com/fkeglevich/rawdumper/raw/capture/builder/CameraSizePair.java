@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw.capture.context;
+package com.fkeglevich.rawdumper.raw.capture.builder;
+
+import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
@@ -29,6 +31,13 @@ class CameraSizePair
 {
     private final RawImageSize rawImageSize;
     private final ExtraCameraInfo extraCameraInfo;
+
+    public static CameraSizePair createFromParameters(Camera.Parameters parameters, ExtraCameraInfo extraCameraInfo)
+    {
+        Camera.Size size = parameters.getPictureSize();
+        RawImageSize rawImageSize = extraCameraInfo.getSensor().getRawImageSizeFromSize(size);
+        return new CameraSizePair(rawImageSize, extraCameraInfo);
+    }
 
     /**
      * Creates a new CameraSizePair object
