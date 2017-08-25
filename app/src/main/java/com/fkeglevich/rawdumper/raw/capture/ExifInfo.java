@@ -147,7 +147,6 @@ public class ExifInfo
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             success = false;
         }
 
