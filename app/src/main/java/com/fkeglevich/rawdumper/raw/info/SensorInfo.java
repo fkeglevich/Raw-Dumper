@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
+import android.hardware.Camera;
 import android.support.annotation.Keep;
 
 import com.fkeglevich.rawdumper.raw.data.BayerPattern;
@@ -79,5 +80,14 @@ public class SensorInfo
         tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL,             new long[] { whiteLevel }, true);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVELREPEATDIM,    DEFAULT_BLACK_LEVEL_REPEAT_DIM, false);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVEL,             blackLevel, true);
+    }
+
+    public RawImageSize getRawImageSizeFromSize(Camera.Size size)
+    {
+        for (RawImageSize rawImageSize : getRawImageSizes())
+            if (rawImageSize.getWidth() == size.width && rawImageSize.getHeight() == size.height)
+                return rawImageSize;
+
+        return null;
     }
 }
