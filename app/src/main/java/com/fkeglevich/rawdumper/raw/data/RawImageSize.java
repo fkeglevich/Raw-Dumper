@@ -75,6 +75,11 @@ public class RawImageSize
         return bufferLength;
     }
 
+    public byte[] buildValidRowBuffer()
+    {
+        return new byte[getPaddedWidthBytes()];
+    }
+
     public String toString()
     {
         return "[width: " + width +
