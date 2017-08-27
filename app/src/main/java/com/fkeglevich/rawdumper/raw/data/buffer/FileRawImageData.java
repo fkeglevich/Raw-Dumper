@@ -50,7 +50,7 @@ public class FileRawImageData extends RawImageData
     public void copyValidRowToBuffer(int row, byte[] buffer, int start) throws IOException
     {
         getFile().seek(calculatePositionFromRow(row));
-        getFile().read(buffer);
+        getFile().read(buffer, start, getSize().getPaddedWidthBytes());
     }
 
     @Override
