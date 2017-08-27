@@ -21,6 +21,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 
 import com.fkeglevich.rawdumper.util.exception.NameNotFoundFromItselfException;
@@ -50,7 +52,7 @@ class MandatoryPermissionManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             requestAllPermissionsMarshmallow(activity);
         else
-            allPermissionsWereGranted(false);
+            postAllPermissionsWereGrantedAsync();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -65,7 +67,7 @@ class MandatoryPermissionManager
         if (!deniedPermissions.isEmpty())
             ActivityCompat.requestPermissions(activity, deniedPermissions.toArray(EMPTY_STRING_ARRAY), REQUEST_CODE);
         else
-            allPermissionsWereGranted(false);
+            postAllPermissionsWereGrantedAsync();
     }
 
     protected void allPermissionsWereGranted(boolean hadDialogPrompt)
@@ -93,6 +95,18 @@ class MandatoryPermissionManager
 
             allPermissionsWereGranted(true);
         }
+    }
+
+    private void postAllPermissionsWereGrantedAsync()
+    {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {allPermissionsWereGranted(false);
+            }
+        });
     }
 
     private String[] getPermissionsInManifest(Context context)
