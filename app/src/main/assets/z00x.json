@@ -76,6 +76,16 @@
                 "aperture": 2.0
             },
             "model": "%s (back camera)",
+            "noise": {
+                "noiseProfile": [
+                    0.000697878348,
+                    0,
+                    0.000697878348,
+                    0,
+                    0.000697878348,
+                    0
+                ]
+            },
             "uniqueCameraModel": "Asus ZenFone 2 %s (back camera)",
             "opcodes": [
                 {
@@ -209,6 +219,16 @@
                 "aperture": 2.0
             },
             "model": "%s (front camera)",
+            "noise": {
+                "noiseProfile": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
             "uniqueCameraModel": "Asus ZenFone 2 %s (front camera)",
             "opcodes": [
                 {

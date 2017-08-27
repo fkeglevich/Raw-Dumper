@@ -68,6 +68,16 @@
                 "aperture": 2.6
             },
             "model": "%s (back camera)",
+            "noise": {
+                "noiseProfile": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
             "uniqueCameraModel": "Motorola Razr I %s (back camera)",
             "opcodes": [],
             "retryOnError": false,

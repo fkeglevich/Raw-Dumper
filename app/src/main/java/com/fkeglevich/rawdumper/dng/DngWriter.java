@@ -76,6 +76,7 @@ public class DngWriter
 
         captureInfo.date.writeTiffTags(tiffWriter);
         captureInfo.camera.getColor().writeTiffTags(tiffWriter);
+        captureInfo.camera.getNoise().writeTiffTags(tiffWriter);
         captureInfo.whiteBalanceInfo.writeTiffTags(tiffWriter);
 
         if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)

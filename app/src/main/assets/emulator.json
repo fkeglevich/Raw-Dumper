@@ -53,6 +53,16 @@
         "aperture": 2.0
       },
       "model": "%s (back camera)",
+      "noise": {
+        "noiseProfile": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "uniqueCameraModel": "%s (back camera)",
       "opcodes": [],
       "retryOnError": false,
@@ -137,6 +147,16 @@
         "aperture": 2.0
       },
       "model": "%s (front camera)",
+      "noise": {
+        "noiseProfile": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
       "uniqueCameraModel": "%s (front camera)",
       "opcodes": [],
       "retryOnError": false,

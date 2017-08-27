@@ -44,6 +44,7 @@ public class ExtraCameraInfo
     private ColorInfo color;
     private ExposureInfo exposure;
     private OpcodeListInfo[] opcodes;
+    private NoiseInfo noise;
 
     private boolean hasKnownMakernote;
     private boolean retryOnError;
@@ -85,6 +86,11 @@ public class ExtraCameraInfo
     public OpcodeListInfo[] getOpcodes()
     {
         return opcodes;
+    }
+
+    public NoiseInfo getNoise()
+    {
+        return noise;
     }
 
     public boolean hasKnownMakernote()
