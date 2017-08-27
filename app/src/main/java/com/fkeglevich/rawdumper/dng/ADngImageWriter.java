@@ -17,6 +17,8 @@
 package com.fkeglevich.rawdumper.dng;
 
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+import com.fkeglevich.rawdumper.raw.data.buffer.FileRawImageData;
+import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import java.io.IOException;
@@ -33,15 +35,21 @@ public abstract class ADngImageWriter
 {
     protected abstract void init(TiffWriter tiffWriter, RawImageSize rawImageSize);
 
-    protected abstract void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, byte[] rawdata);
-
-    protected abstract void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, RandomAccessFile file) throws IOException;
+    protected abstract void writeImageData(TiffWriter tiffWriter, RawImageData imageData) throws IOException;
 
     void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, String filePath) throws IOException
     {
-        RandomAccessFile file = new RandomAccessFile(filePath, "r");
-        file.seek(file.length() - rawImageSize.getBufferLength());
-        writeImageData(tiffWriter, rawImageSize, file);
-        file.close();
+        RandomAccessFile file = null;
+        try
+        {
+            file = new RandomAccessFile(filePath, "r");
+            file.seek(file.length() - rawImageSize.getBufferLength());
+            writeImageData(tiffWriter, new FileRawImageData(rawImageSize, file));
+        }
+        finally
+        {
+            if (file != null)
+                file.close();
+        }
     }
 }

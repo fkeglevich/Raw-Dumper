@@ -19,8 +19,9 @@ package com.fkeglevich.rawdumper.raw.data.buffer;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 
 /**
+ * Represents the data of a raw picture that originated from a byte array.
+ *
  * Created by Flávio Keglevich on 26/08/2017.
- * TODO: Add a class header comment!
  */
 
 public class ArrayRawImageData extends RawImageData

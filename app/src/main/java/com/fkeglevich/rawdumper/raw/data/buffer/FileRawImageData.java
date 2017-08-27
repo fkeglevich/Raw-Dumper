@@ -22,8 +22,9 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
+ * Represents the data of a raw picture that originated from a file.
+ *
  * Created by Flávio Keglevich on 26/08/2017.
- * TODO: Add a class header comment!
  */
 
 public class FileRawImageData extends RawImageData
@@ -37,17 +38,30 @@ public class FileRawImageData extends RawImageData
         setOffset((int)file.getFilePointer());
     }
 
+    public FileRawImageData(RawImageSize size, String filepath) throws IOException
+    {
+        super(size);
+        this.file = new RandomAccessFile(filepath, "r");
+        getFile().seek(getFile().length() - size.getBufferLength());
+        setOffset((int) getFile().getFilePointer());
+    }
+
     @Override
     public void copyValidRowToBuffer(int row, byte[] buffer, int start) throws IOException
     {
-        file.seek(calculatePositionFromRow(row));
-        file.read(buffer);
+        getFile().seek(calculatePositionFromRow(row));
+        getFile().read(buffer);
     }
 
     @Override
     public void copyAllImageDataToBuffer(byte[] buffer, int start) throws IOException
     {
-        file.seek(getOffset());
-        file.read(buffer, start, getSize().getBufferLength());
+        getFile().seek(getOffset());
+        getFile().read(buffer, start, getSize().getBufferLength());
+    }
+
+    public RandomAccessFile getFile()
+    {
+        return file;
     }
 }

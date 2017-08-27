@@ -21,8 +21,9 @@ import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import java.io.IOException;
 
 /**
+ * Represents the data of a raw picture, abstracting the origin of the actual data
+ *
  * Created by Flávio Keglevich on 26/08/2017.
- * TODO: Add a class header comment!
  */
 
 public abstract class RawImageData

@@ -18,11 +18,11 @@ package com.fkeglevich.rawdumper.dng;
 
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 /**
  * Simple class for generating DNG files.
@@ -32,7 +32,6 @@ import java.io.RandomAccessFile;
 public class DngWriter
 {
     private TiffWriter tiffWriter;
-    private RawImageSize rawImageSize;
 
     public static DngWriter open(String dngFile)
     {
@@ -47,14 +46,27 @@ public class DngWriter
         this.tiffWriter = tiffWriter;
     }
 
-    public void close()
+    public void write(CaptureInfo captureInfo, ADngImageWriter writer, RawImageData imageData) throws IOException
+    {
+        try
+        {
+            writeMetadata(captureInfo);
+            writer.writeImageData(tiffWriter, imageData);
+            writeExifInfo(captureInfo);
+        }
+        finally
+        {
+            close();
+        }
+    }
+
+    private void close()
     {
         tiffWriter.close();
         tiffWriter = null;
-        rawImageSize = null;
     }
 
-    public void writeMetadata(CaptureInfo captureInfo)
+    private void writeMetadata(CaptureInfo captureInfo)
     {
         writeBasicHeader(captureInfo.imageSize);
         captureInfo.camera.getSensor().writeTiffTags(tiffWriter);
@@ -72,7 +84,6 @@ public class DngWriter
 
     private void writeBasicHeader(RawImageSize rawImageSize)
     {
-        this.rawImageSize = rawImageSize;
         tiffWriter.setField(TiffTag.TIFFTAG_SUBFILETYPE,            DngDefaults.RAW_SUB_FILE_TYPE);
         tiffWriter.setField(TiffTag.TIFFTAG_PHOTOMETRIC,            DngDefaults.RAW_PHOTOMETRIC);
         tiffWriter.setField(TiffTag.TIFFTAG_SAMPLESPERPIXEL,        DngDefaults.RAW_SAMPLES_PER_PIXEL);
@@ -83,26 +94,11 @@ public class DngWriter
         tiffWriter.setField(TiffTag.TIFFTAG_IMAGELENGTH,            rawImageSize.getPaddedHeight());
     }
 
-    public void writeExifInfo(CaptureInfo captureInfo)
+    private void writeExifInfo(CaptureInfo captureInfo)
     {
         ExifWriter exifWriter = new ExifWriter();
         exifWriter.createEXIFDirectory(tiffWriter);
         exifWriter.writeTiffExifTags(tiffWriter, captureInfo);
         exifWriter.closeEXIFDirectory(tiffWriter);
-    }
-
-    public void writeImageData(ADngImageWriter writer, byte[] rawdata)
-    {
-        writer.writeImageData(tiffWriter, rawImageSize, rawdata);
-    }
-
-    public void writeImageData(ADngImageWriter writer, RandomAccessFile file) throws IOException
-    {
-        writer.writeImageData(tiffWriter, rawImageSize, file);
-    }
-
-    public void writeImageData(ADngImageWriter writer, String filePath) throws IOException
-    {
-        writer.writeImageData(tiffWriter, rawImageSize, filePath);
     }
 }

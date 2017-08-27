@@ -18,11 +18,11 @@ package com.fkeglevich.rawdumper.dng.writer;
 
 import com.fkeglevich.rawdumper.dng.ADngImageWriter;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 /**
  * Writes an uncompressed image to a DNG file in scanline mode.
@@ -41,31 +41,17 @@ public class ScanlineImageWriter extends ADngImageWriter
     protected void init(TiffWriter tiffWriter, RawImageSize rawImageSize)
     {
         tiffWriter.setField(TiffTag.TIFFTAG_COMPRESSION, TiffTag.COMPRESSION_NONE);
-        buffer = new byte[rawImageSize.getPaddedWidthBytes()];
+        buffer = rawImageSize.buildValidRowBuffer();
     }
 
     @Override
-    protected void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, byte[] rawdata)
+    protected void writeImageData(TiffWriter tiffWriter, RawImageData imageData) throws IOException
     {
-        init(tiffWriter, rawImageSize);
-        for (int row = 0; row < rawImageSize.getPaddedHeight(); row++)
+        init(tiffWriter, imageData.getSize());
+        int paddedHeight = imageData.getSize().getPaddedHeight();
+        for (int row = 0; row < paddedHeight; row++)
         {
-            System.arraycopy(rawdata, rawImageSize.getBytesPerLine() * row, buffer, 0, rawImageSize.getPaddedWidthBytes());
-            tiffWriter.writeScanline(buffer, row);
-        }
-        tiffWriter.writeDirectory();
-    }
-
-    @Override
-    protected void writeImageData(TiffWriter tiffWriter, RawImageSize rawImageSize, RandomAccessFile file) throws IOException
-    {
-        init(tiffWriter, rawImageSize);
-
-        long current = file.getFilePointer();
-        for (int row = 0; row < rawImageSize.getPaddedHeight(); row++)
-        {
-            file.seek(current + rawImageSize.getBytesPerLine() * row);
-            file.read(buffer);
+            imageData.copyValidRowToBuffer(row, buffer);
             tiffWriter.writeScanline(buffer, row);
         }
         tiffWriter.writeDirectory();
