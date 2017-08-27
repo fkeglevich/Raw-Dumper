@@ -19,8 +19,6 @@ TODO list:
    
  - (IN PROGRESS) Reduce overdraw
    
- - Save DNGs using tiles
- - Improve compatibility of generated DNG files for desktop apps like Darktable
  - (IMPORTANT - IN PROGRESS) Clean up the mess called MainActivity.java
  
  - (IMPORTANT - IN PROGRESS) Make the app work on more devices:
@@ -57,4 +55,6 @@ Done:
  - Make the Build.MODEL to be dynamic and appear in the dng model tag
  - Make the app translatable to different languages
  - Add the brazillian portuguese language
+ - Save DNGs using tiles
+ - Improve compatibility of generated DNG files for desktop apps like Darktable
  
