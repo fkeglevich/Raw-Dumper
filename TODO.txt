@@ -18,7 +18,8 @@ TODO list:
    
  - (IN PROGRESS) Reduce overdraw
  
- - Autorotate the pictures taken using the phone orientation
+ - (IN PROGRESS) Autorotate the pictures taken using the phone orientation
+   - Create OrientationActivity class or similar
    
  - (IMPORTANT - IN PROGRESS) Clean up the mess called MainActivity.java
  
