@@ -41,7 +41,7 @@ public class PackageUtil
         }
     }
 
-    private static String getAppVersion()
+    public static String getAppVersion()
     {
         synchronized (ContextManager.getApplicationContext().getLock())
         {
