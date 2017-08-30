@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.dng.writer;
 
-import android.util.Log;
-
 import com.fkeglevich.rawdumper.dng.ADngImageWriter;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
@@ -25,7 +23,6 @@ import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Created by Flávio Keglevich on 27/08/2017.
