@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.ui.UiUtil;
+import com.fkeglevich.rawdumper.util.PackageUtil;
 import com.fkeglevich.rawdumper.util.exception.NameNotFoundFromItselfException;
 
 /**
@@ -49,15 +50,7 @@ public class AboutDialog
 
     public AboutDialog(Context context)
     {
-        PackageInfo packageInfo;
-        try
-        {
-            packageInfo = context.getPackageManager().getPackageInfo(context.getApplicationInfo().packageName, 0);
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {   throw new NameNotFoundFromItselfException();   }
-
-        String messageStr = context.getResources().getString(R.string.about_message, packageInfo.versionName);
+        String messageStr = context.getResources().getString(R.string.about_message, PackageUtil.getAppNameWithVersion());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final TextView messageView = new TextView(context);
