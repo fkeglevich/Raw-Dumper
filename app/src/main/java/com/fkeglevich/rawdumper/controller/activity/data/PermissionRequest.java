@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.controller.activity.data;
 
+import android.content.pm.PackageManager;
+
 /**
  * Created by Flávio Keglevich on 30/08/2017.
  * TODO: Add a class header comment!
@@ -34,18 +36,17 @@ public class PermissionRequest
         this.grantResults = grantResults;
     }
 
-    public int getRequestCode()
+    public boolean isTheRightRequest(int requestCode)
     {
-        return requestCode;
+        return this.requestCode == requestCode;
     }
 
-    public String[] getPermissions()
+    public boolean allPermissionsWereGranted()
     {
-        return permissions;
-    }
+        for (int value : grantResults)
+            if (value != PackageManager.PERMISSION_GRANTED)
+                return false;
 
-    public int[] getGrantResults()
-    {
-        return grantResults;
+        return true;
     }
 }
