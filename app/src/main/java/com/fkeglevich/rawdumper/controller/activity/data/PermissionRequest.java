@@ -14,32 +14,38 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.controller.activity.event;
-
-import com.fkeglevich.rawdumper.controller.activity.data.PermissionRequest;
-import com.fkeglevich.rawdumper.controller.activity.data.SuperCallable;
+package com.fkeglevich.rawdumper.controller.activity.data;
 
 /**
- * Created by Flávio Keglevich on 29/08/2017.
+ * Created by Flávio Keglevich on 30/08/2017.
  * TODO: Add a class header comment!
  */
 
-public enum InteractiveEvent implements IEvent
+public class PermissionRequest
 {
-    ON_WINDOWS_FOCUS_CHANGED(Boolean.class),
-    ON_BACK_PRESSED(SuperCallable.class),
-    ON_REQUEST_PERMISSION_RESULT(PermissionRequest.class);
+    private final int requestCode;
+    private final String[] permissions;
+    private final int[] grantResults;
 
-    private final Class<?> eventDataClass;
-
-    InteractiveEvent(Class<?> eventDataClass)
+    public PermissionRequest(int requestCode, String[] permissions, int[] grantResults)
     {
-        this.eventDataClass = eventDataClass;
+        this.requestCode = requestCode;
+        this.permissions = permissions;
+        this.grantResults = grantResults;
     }
 
-    @Override
-    public Class<?> getEventDataClass()
+    public int getRequestCode()
     {
-        return eventDataClass;
+        return requestCode;
+    }
+
+    public String[] getPermissions()
+    {
+        return permissions;
+    }
+
+    public int[] getGrantResults()
+    {
+        return grantResults;
     }
 }

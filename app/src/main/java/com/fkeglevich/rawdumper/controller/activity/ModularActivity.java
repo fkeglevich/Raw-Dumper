@@ -17,8 +17,11 @@
 package com.fkeglevich.rawdumper.controller.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.fkeglevich.rawdumper.controller.activity.data.PermissionRequest;
 import com.fkeglevich.rawdumper.controller.activity.data.SuperCallable;
 import com.fkeglevich.rawdumper.controller.activity.event.InteractiveEvent;
 import com.fkeglevich.rawdumper.controller.activity.event.LifetimeEvent;
@@ -28,7 +31,7 @@ import com.fkeglevich.rawdumper.controller.activity.event.LifetimeEvent;
  * TODO: Add a class header comment!
  */
 
-public class ModularActivity extends AppCompatActivity
+public class ModularActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback
 {
     private EventDispatcher<LifetimeEvent> lifetimeEvents = new EventDispatcher<>(LifetimeEvent.class);
     private EventDispatcher<InteractiveEvent> interactiveEvents = new EventDispatcher<>(InteractiveEvent.class);
@@ -91,5 +94,12 @@ public class ModularActivity extends AppCompatActivity
         getInteractiveEventDispatcher().dispatchEvent(InteractiveEvent.ON_BACK_PRESSED, superCallable);
         if (superCallable.superShouldBeCalled())
             super.onBackPressed();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        PermissionRequest request = new PermissionRequest(requestCode, permissions, grantResults);
+        getInteractiveEventDispatcher().dispatchEvent(InteractiveEvent.ON_REQUEST_PERMISSION_RESULT, request);
     }
 }
