@@ -13,15 +13,14 @@ TODO list:
 	
  - (IMPORTANT) Create the concept of "applied workarounds" for differents devices. This is specially useful for devices like
 	the Zen2 that differ A LOT between camera blob's versions.
-   
- - (IMPORTANT) Create the pipeline that generates DNG files depending on the capture context
-   
+
+ - Improve compatibility of generated DNG files for desktop apps like Darktable
+   - Compatibility still needs to improve, because Darktable only recognize uncompressed files with stripes
+ 
  - (IN PROGRESS) Reduce overdraw
  
  - (IN PROGRESS) Autorotate the pictures taken using the phone orientation
    - Create OrientationActivity class or similar
-   
- - (IMPORTANT - IN PROGRESS) Clean up the mess called MainActivity.java
  
  - (IMPORTANT - IN PROGRESS) Make the app work on more devices:
 	- Razr I
@@ -42,6 +41,7 @@ TODO list:
 Known bugs:
  - (MINOR) When displaying some dialog alerts, the app can get out from fullscreen state if the user switches to another app
  - (MINOR) When switching the app too fast, in some rare occasions, the camera is opened twice or the preview is frozen on Android Nougat
+    - Some changes were made to address this bug, should test again to see if it still happens
  
 Done:
 
@@ -58,6 +58,5 @@ Done:
  - Make the app translatable to different languages
  - Add the brazillian portuguese language
  - Save DNGs using tiles
- - Improve compatibility of generated DNG files for desktop apps like Darktable
  - Use the Noise Profile DNG tag
  
