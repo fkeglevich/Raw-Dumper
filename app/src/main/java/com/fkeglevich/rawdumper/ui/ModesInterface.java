@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.fkeglevich.rawdumper.R;
+import com.fkeglevich.rawdumper.controller.activity.module.ActivityReferenceModule;
 import com.fkeglevich.rawdumper.ui.dialog.AboutDialog;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
@@ -32,55 +33,21 @@ import com.transitionseverywhere.TransitionManager;
  * Created by Flávio Keglevich on 03/05/2017.
  */
 
-public class ModesInterface
+public class ModesInterface extends ActivityReferenceModule
 {
-    private AppCompatActivity compatActivity;
-
-    private ImageButton modesButton = null;
-    private ImageButton backButton = null;
-    private ImageButton infoButton = null;
-
-    private RelativeLayout modesLayout = null;
+    private RelativeLayout modesLayout;
 
     private Fade fadeTransition = new Fade();
 
     private AboutDialog aboutDialog;
 
-    public ModesInterface(final AppCompatActivity compatActivity)
+    public ModesInterface(AppCompatActivity compatActivity)
     {
-        this.compatActivity = compatActivity;
-
+        super(compatActivity);
+        setupButtons(compatActivity);
         modesLayout = (RelativeLayout)compatActivity.findViewById(R.id.modesLayout);
-        modesButton = (ImageButton)compatActivity.findViewById(R.id.modesButton);
-        backButton = (ImageButton)compatActivity.findViewById(R.id.backButton);
-        infoButton = (ImageButton)compatActivity.findViewById(R.id.infoButton);
         aboutDialog = new AboutDialog(compatActivity);
-
         fadeTransition.setDuration(150L);
-
-        modesButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                setIsVisible(true);
-            }
-        });
-        backButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                setIsVisible(false);
-            }
-        });
-        infoButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {aboutDialog.showDialog(compatActivity);
-            }
-        });
     }
 
     public boolean isVisible()
@@ -92,5 +59,37 @@ public class ModesInterface
     {
         TransitionManager.beginDelayedTransition(modesLayout, fadeTransition);
         modesLayout.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    private void setupButtons(AppCompatActivity compatActivity)
+    {
+        ImageButton modesButton = (ImageButton)compatActivity.findViewById(R.id.modesButton);
+        modesButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                setIsVisible(true);
+            }
+        });
+
+        ImageButton backButton = (ImageButton)compatActivity.findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                setIsVisible(false);
+            }
+        });
+
+        ImageButton infoButton = (ImageButton)compatActivity.findViewById(R.id.infoButton);
+        infoButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {aboutDialog.showDialog(getActivityWeakRef());
+            }
+        });
     }
 }
