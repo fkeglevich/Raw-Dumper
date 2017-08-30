@@ -42,6 +42,8 @@ Known bugs:
  - (MINOR) When displaying some dialog alerts, the app can get out from fullscreen state if the user switches to another app
  - (MINOR) When switching the app too fast, in some rare occasions, the camera is opened twice or the preview is frozen on Android Nougat
     - Some changes were made to address this bug, should test again to see if it still happens
+ - The ActivityReferenceModule is going to break if the activity is recreated 
+   (this probably won't happen on most executions of Raw Dumper, however, is considered extremely bad practice)
  
 Done:
 
