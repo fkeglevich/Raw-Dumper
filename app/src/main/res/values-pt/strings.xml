@@ -24,7 +24,10 @@
     <string name="permission_error">Este aplicativo necessita de todas as permissões para funcionar.</string>
     <string name="root_access_error">Este aplicativo somente funciona em dispositivos com root.</string>
     <string name="terminating_dialog_button">Sair</string>
-    <string name="error_loading_device_info">Este aplicativo não é compatível com o seu dispositivo. Envie o nome do modelo abaixo para o desenvolvedor, para que ele possa ser adicionado à lista de dispositivos compatíveis.</string>
+    <string name="error_loading_device_info">Infelizmente este aplicativo ainda não é compatível com o seu dispositivo.
+        \n
+        \nModelo do dispositivo: <xliff:g id="model_name">%s</xliff:g>
+    </string>
     <string name="about_message">
         Raw Dumper v<xliff:g id="app_version">%s</xliff:g>
         \n

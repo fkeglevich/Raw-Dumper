@@ -22,9 +22,9 @@
     <string name="error_opening_camera">The camera couldn\'t be started. Restart your device and try again.</string>
 
     <string name="error_loading_device_info">
-        The app is currently not compatible with your device. Send the model name of your device to the developer, so it can be added to the compatibility list.
+        Unfortunately this app is currently not compatible with your device.
         \n
-        \nModel name: <xliff:g id="model_name">%s</xliff:g>
+        \nDevice model: <xliff:g id="model_name">%s</xliff:g>
     </string>
 
     <string name="permission_error">This app needs all requested permissions.</string>
