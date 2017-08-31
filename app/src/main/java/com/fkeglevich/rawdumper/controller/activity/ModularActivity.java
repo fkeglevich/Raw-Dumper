@@ -33,65 +33,60 @@ import com.fkeglevich.rawdumper.controller.activity.event.LifetimeEvent;
 
 public class ModularActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback
 {
-    private EventDispatcher<LifetimeEvent> lifetimeEvents = new EventDispatcher<>(LifetimeEvent.class);
-    private EventDispatcher<InteractiveEvent> interactiveEvents = new EventDispatcher<>(InteractiveEvent.class);
+    private final ActivityReference reference = new ActivityReference();
 
-    protected EventDispatcher<LifetimeEvent> getLifetimeEventDispatcher()
+    public ActivityReference getReference()
     {
-        return lifetimeEvents;
-    }
-
-    protected EventDispatcher<InteractiveEvent> getInteractiveEventDispatcher()
-    {
-        return interactiveEvents;
+        return reference;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getLifetimeEventDispatcher().dispatchEvent(LifetimeEvent.ON_CREATE);
+        reference.updateReference(this);
+        reference.getLifetimeEvents().dispatchEvent(LifetimeEvent.ON_CREATE);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
     {
         super.onPostCreate(savedInstanceState);
-        getLifetimeEventDispatcher().dispatchEvent(LifetimeEvent.ON_POST_CREATE);
+        reference.getLifetimeEvents().dispatchEvent(LifetimeEvent.ON_POST_CREATE);
     }
 
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
-        getLifetimeEventDispatcher().dispatchEvent(LifetimeEvent.ON_DESTROY);
+        reference.getLifetimeEvents().dispatchEvent(LifetimeEvent.ON_DESTROY);
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
-        getLifetimeEventDispatcher().dispatchEvent(LifetimeEvent.ON_RESUME);
+        reference.getLifetimeEvents().dispatchEvent(LifetimeEvent.ON_RESUME);
     }
 
     @Override
     public void onPause()
     {
         super.onPause();
-        getLifetimeEventDispatcher().dispatchEvent(LifetimeEvent.ON_PAUSE);
+        reference.getLifetimeEvents().dispatchEvent(LifetimeEvent.ON_PAUSE);
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus)
     {
-        getInteractiveEventDispatcher().dispatchEvent(InteractiveEvent.ON_WINDOWS_FOCUS_CHANGED, hasFocus);
+        reference.getInteractiveEvents().dispatchEvent(InteractiveEvent.ON_WINDOWS_FOCUS_CHANGED, hasFocus);
     }
 
     @Override
     public void onBackPressed()
     {
         SuperCallable superCallable = new SuperCallable();
-        getInteractiveEventDispatcher().dispatchEvent(InteractiveEvent.ON_BACK_PRESSED, superCallable);
+        reference.getInteractiveEvents().dispatchEvent(InteractiveEvent.ON_BACK_PRESSED, superCallable);
         if (superCallable.superShouldBeCalled())
             super.onBackPressed();
     }
@@ -100,6 +95,6 @@ public class ModularActivity extends AppCompatActivity implements ActivityCompat
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
         PermissionRequest request = new PermissionRequest(requestCode, permissions, grantResults);
-        getInteractiveEventDispatcher().dispatchEvent(InteractiveEvent.ON_REQUEST_PERMISSION_RESULT, request);
+        reference.getInteractiveEvents().dispatchEvent(InteractiveEvent.ON_REQUEST_PERMISSION_RESULT, request);
     }
 }

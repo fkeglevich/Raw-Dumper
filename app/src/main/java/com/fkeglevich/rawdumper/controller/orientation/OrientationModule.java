@@ -16,26 +16,25 @@
 
 package com.fkeglevich.rawdumper.controller.orientation;
 
-import android.support.v7.app.AppCompatActivity;
-
+import com.fkeglevich.rawdumper.controller.activity.ActivityReference;
 import com.fkeglevich.rawdumper.controller.activity.EventDispatcher;
 import com.fkeglevich.rawdumper.controller.activity.EventListener;
 import com.fkeglevich.rawdumper.controller.activity.event.LifetimeEvent;
-import com.fkeglevich.rawdumper.controller.activity.module.ActivityReferenceModule;
+import com.fkeglevich.rawdumper.controller.activity.module.ActivityModule;
 
 /**
  * Created by Flávio Keglevich on 30/08/2017.
  * TODO: Add a class header comment!
  */
 
-public class OrientationModule extends ActivityReferenceModule
+public class OrientationModule extends ActivityModule
 {
-    public OrientationModule(EventDispatcher<LifetimeEvent> eventDispatcher, AppCompatActivity compatActivity)
+    public OrientationModule(ActivityReference reference)
     {
-        super(compatActivity);
-        setupOnCreateEvent(eventDispatcher);
-        setupOnResumeEvent(eventDispatcher);
-        setupOnPauseEvent(eventDispatcher);
+        super(reference);
+        setupOnCreateEvent(reference.getLifetimeEvents());
+        setupOnResumeEvent(reference.getLifetimeEvents());
+        setupOnPauseEvent(reference.getLifetimeEvents());
     }
 
     private void setupOnCreateEvent(EventDispatcher<LifetimeEvent> eventDispatcher)
@@ -45,7 +44,7 @@ public class OrientationModule extends ActivityReferenceModule
             @Override
             protected void onEvent(Object optionalData)
             {
-                OrientationManager.getInstance().setup(getActivityWeakRef());
+                OrientationManager.getInstance().setup(getActivityReference().weaklyGet());
             }
         };
     }

@@ -21,22 +21,22 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.fkeglevich.rawdumper.controller.activity.EventDispatcher;
+import com.fkeglevich.rawdumper.controller.activity.ActivityReference;
 import com.fkeglevich.rawdumper.controller.activity.EventListener;
 import com.fkeglevich.rawdumper.controller.activity.event.InteractiveEvent;
-import com.fkeglevich.rawdumper.controller.activity.module.ActivityReferenceModule;
+import com.fkeglevich.rawdumper.controller.activity.module.ActivityModule;
 
 /**
  * Created by Flávio Keglevich on 29/08/2017.
  * TODO: Add a class header comment!
  */
 
-public class FullscreenModule extends ActivityReferenceModule
+public class FullscreenModule extends ActivityModule
 {
-    public FullscreenModule(EventDispatcher<InteractiveEvent> eventDispatcher, AppCompatActivity compatActivity)
+    public FullscreenModule(ActivityReference activityReference)
     {
-        super(compatActivity);
-        new EventListener<InteractiveEvent>(InteractiveEvent.ON_WINDOWS_FOCUS_CHANGED, eventDispatcher)
+        super(activityReference);
+        new EventListener<InteractiveEvent>(InteractiveEvent.ON_WINDOWS_FOCUS_CHANGED, activityReference.getInteractiveEvents())
         {
             @Override
             protected void onEvent(Object optionalData)
@@ -53,7 +53,7 @@ public class FullscreenModule extends ActivityReferenceModule
      */
     private void goToFullscreenMode()
     {
-        AppCompatActivity activityLocal = getActivityWeakRef();
+        AppCompatActivity activityLocal = getActivityReference().weaklyGet();
         if (activityLocal != null)
         {
             // Hide UI first

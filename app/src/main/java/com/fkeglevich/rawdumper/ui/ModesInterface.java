@@ -22,7 +22,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.fkeglevich.rawdumper.R;
-import com.fkeglevich.rawdumper.controller.activity.module.ActivityReferenceModule;
+import com.fkeglevich.rawdumper.controller.activity.ActivityReference;
+import com.fkeglevich.rawdumper.controller.activity.module.ActivityModule;
 import com.fkeglevich.rawdumper.ui.dialog.AboutDialog;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
@@ -33,7 +34,7 @@ import com.transitionseverywhere.TransitionManager;
  * Created by Flávio Keglevich on 03/05/2017.
  */
 
-public class ModesInterface extends ActivityReferenceModule
+public class ModesInterface extends ActivityModule
 {
     private RelativeLayout modesLayout;
 
@@ -41,12 +42,12 @@ public class ModesInterface extends ActivityReferenceModule
 
     private AboutDialog aboutDialog;
 
-    public ModesInterface(AppCompatActivity compatActivity)
+    public ModesInterface(ActivityReference activityReference)
     {
-        super(compatActivity);
-        setupButtons(compatActivity);
-        modesLayout = (RelativeLayout)compatActivity.findViewById(R.id.modesLayout);
-        aboutDialog = new AboutDialog(compatActivity);
+        super(activityReference);
+        setupButtons();
+        modesLayout = (RelativeLayout)activityReference.weaklyGet().findViewById(R.id.modesLayout);
+        aboutDialog = new AboutDialog(activityReference.weaklyGet());
         fadeTransition.setDuration(150L);
     }
 
@@ -61,8 +62,10 @@ public class ModesInterface extends ActivityReferenceModule
         modesLayout.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
-    private void setupButtons(AppCompatActivity compatActivity)
+    private void setupButtons()
     {
+        AppCompatActivity compatActivity = getActivityReference().weaklyGet();
+
         ImageButton modesButton = (ImageButton)compatActivity.findViewById(R.id.modesButton);
         modesButton.setOnClickListener(new View.OnClickListener()
         {
@@ -88,8 +91,7 @@ public class ModesInterface extends ActivityReferenceModule
         {
             @Override
             public void onClick(View v)
-            {aboutDialog.showDialog(getActivityWeakRef());
-            }
+            {aboutDialog.showDialog(getActivityReference().weaklyGet());}
         });
     }
 }
