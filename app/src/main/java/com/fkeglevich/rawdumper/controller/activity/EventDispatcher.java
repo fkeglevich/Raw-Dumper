@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.controller.activity;
 
 import com.fkeglevich.rawdumper.controller.activity.event.IEvent;
+import com.fkeglevich.rawdumper.util.Assert;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -45,6 +46,7 @@ public class EventDispatcher<T extends Enum<T> & IEvent>
 
     void dispatchEvent(T eventType, Object optionalData)
     {
+        Assert.isInstanceOf(optionalData, eventType.getEventDataClass());
         for (EventListener<T> listener : innerMap.get(eventType))
             listener.onEvent(optionalData);
     }
