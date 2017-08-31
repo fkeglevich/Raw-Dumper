@@ -18,8 +18,6 @@ package com.fkeglevich.rawdumper.ui.dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -31,7 +29,6 @@ import android.widget.TextView;
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.ui.UiUtil;
 import com.fkeglevich.rawdumper.util.PackageUtil;
-import com.fkeglevich.rawdumper.util.exception.NameNotFoundFromItselfException;
 
 /**
  * Represents the About this app dialog
