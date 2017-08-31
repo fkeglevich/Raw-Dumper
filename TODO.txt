@@ -44,6 +44,7 @@ Known bugs:
     - Some changes were made to address this bug, should test again to see if it still happens
  - The ActivityReferenceModule is going to break if the activity is recreated 
    (this probably won't happen on most executions of Raw Dumper, however, is considered extremely bad practice)
+   (making a standardized way to get a updated weak reference from the activity is probably a better idea)
  
 Done:
 
