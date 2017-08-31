@@ -53,4 +53,9 @@ public class Assert
 
         return object;
     }
+
+    public static void isNotNull(Object object)
+    {
+        isTrue(object != null, "The object: " + object + " is null");
+    }
 }
