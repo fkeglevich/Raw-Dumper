@@ -16,13 +16,29 @@
 
 package com.fkeglevich.rawdumper;
 
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.OrientationEventListener;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.fkeglevich.rawdumper.controller.camera.FullscreenPreviewActivity;
+import com.fkeglevich.rawdumper.dng.DngWriter;
+import com.fkeglevich.rawdumper.dng.writer.TileImageWriter;
+import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
+import com.fkeglevich.rawdumper.raw.capture.DateExtractor;
+import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfoExtractor;
+import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
+import com.fkeglevich.rawdumper.raw.data.buffer.FileRawImageData;
+import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
+import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
+import com.fkeglevich.rawdumper.ui.PausingTextureView;
+import com.fkeglevich.rawdumper.util.AssetUtil;
+
+import java.io.IOException;
 
 /**
  * Created by Flávio Keglevich on 13/08/2017.
@@ -34,6 +50,9 @@ public class MainActivity4 extends FullscreenPreviewActivity
     private ModesInterface modesInterface;
 
     private ImageButton captureBt;
+    private boolean visibleTex = true;
+
+    private OrientationEventListener orientationListener = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,19 +60,92 @@ public class MainActivity4 extends FullscreenPreviewActivity
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawable(null);
         setContentView(R.layout.activity_main);
-        modesInterface = new ModesInterface(this);
+        //modesInterface = new ModesInterface(this);
 
         captureBt = (ImageButton) findViewById(R.id.captureButton);
+
         captureBt.setOnClickListener(new View.OnClickListener()
                                      {
                                          @Override
                                          public void onClick(View v)
                                          {
-                                            //getCameraAccess().takePic();
+                                             if (visibleTex)
+                                                ((PausingTextureView)findViewById(R.id.textureView)).pauseUpdating();
+                                             else
+                                                 ((PausingTextureView)findViewById(R.id.textureView)).resumeUpdating();
+
+                                             visibleTex = !visibleTex;
+                                             //getCameraAccess().takePic();
                                          }
                                      });
 
-        initializeCameraPreview((TextureView)findViewById(R.id.textureView));
+        orientationListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_UI)
+        {
+            @Override
+            public void onOrientationChanged(int orientation)
+            {
+                Log.i("ASD", "ori: " + orientation);
+            }
+        };
+
+        //initializeCameraPreview((TextureView)findViewById(R.id.textureView));
+
+        //DngWriter writer = null;//DngWriter.open("/sdcard/outb2.dng");
+        DngWriter writer = DngWriter.open("/sdcard/outb2.dng");
+
+        boolean isFront = !true;
+
+        if (writer != null)
+        {
+            DeviceInfoLoader loader = new DeviceInfoLoader();
+            DeviceInfo deviceInfo = null;
+            try
+            {
+                deviceInfo = loader.loadDeviceInfo(AssetUtil.getAssetAsString("t00x.json"));
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            CaptureInfo captureInfo = new CaptureInfo();
+            captureInfo.device = deviceInfo;
+            captureInfo.camera = deviceInfo.getCameras()[isFront ? 1 : 0];
+            captureInfo.date = new DateExtractor().extractFromCurrentTime();
+            captureInfo.whiteBalanceInfo = new WhiteBalanceInfoExtractor().extractFrom(captureInfo.camera.getColor());
+            captureInfo.imageSize = captureInfo.camera.getSensor().getRawImageSizes()[1];
+            captureInfo.originalRawFilename = "out2.raw";
+            captureInfo.destinationRawFilename = "/sdcard/outb2.dng";
+            captureInfo.orientation = ImageOrientation.TOPLEFT;
+
+            try
+            {
+                FileRawImageData fileRawImageData = new FileRawImageData(captureInfo.imageSize, "/sdcard/zen5/outb.raw");
+                //writer.write(captureInfo, new ScanlineImageWriter(), fileRawImageData);
+                writer.write(captureInfo, new TileImageWriter(), fileRawImageData);
+                Log.i("OK", "OKKK");
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                Log.i("OK", "NOT OK");
+            }
+        }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (orientationListener != null)
+            orientationListener.enable();
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        if (orientationListener != null)
+            orientationListener.disable();
     }
 
     @Override

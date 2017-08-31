@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         numCameras = Camera.getNumberOfCameras();
 
         currentToast = Toast.makeText(this, "", Toast.LENGTH_LONG);
-        modesInterface = new ModesInterface(this);
+        //modesInterface = new ModesInterface(getReference());
         isoInterface = new ISOInterface(this);
         shutterSpeedInterface = new ShutterSpeedInterface(this);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
