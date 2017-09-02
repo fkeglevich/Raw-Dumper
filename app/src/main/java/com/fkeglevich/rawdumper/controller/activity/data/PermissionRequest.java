@@ -36,7 +36,7 @@ public class PermissionRequest
         this.grantResults = grantResults;
     }
 
-    public boolean isTheRightRequest(int requestCode)
+    public boolean hasCode(int requestCode)
     {
         return this.requestCode == requestCode;
     }
