@@ -28,7 +28,11 @@ public abstract class Test
 
     protected String getTag()
     {
-        return ("test-" + getClass().getSimpleName()).substring(0, 23);
+        String result = "test-" + getClass().getSimpleName();
+        if (result.length() > 20)
+            return result.substring(0, 20);
+        else
+            return result;
     }
 
     protected abstract void executeTest() throws Exception;
