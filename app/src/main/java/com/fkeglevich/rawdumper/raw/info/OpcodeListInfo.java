@@ -35,15 +35,15 @@ import java.io.IOException;
 @SuppressWarnings("unused")
 public class OpcodeListInfo
 {
-    private final String opcodeList1File = null;
-    private final String opcodeList2File = null;
-    private final String opcodeList3File = null;
+    private String opcodeList1File;
+    private String opcodeList2File;
+    private String opcodeList3File;
 
-    private Double temperature = null;
+    private byte[] opcodeList1Cache;
+    private byte[] opcodeList2Cache;
+    private byte[] opcodeList3Cache;
 
-    private transient byte[] opcodeList1Cache = null;
-    private transient byte[] opcodeList2Cache = null;
-    private transient byte[] opcodeList3Cache = null;
+    private Double temperature;
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
