@@ -29,13 +29,13 @@ import android.support.annotation.Keep;
 @SuppressWarnings("unused")
 public class ExposureInfo
 {
-    private String[] isoValues;
-    private String isoParameter;
-    private String isoAutoValue;
+    private final String[] isoValues = new String[0];
+    private final String isoParameter = null;
+    private final String isoAutoValue = null;
 
-    private String[] shutterSpeedValues;
-    private String shutterSpeedParameter;
-    private String shutterSpeedAutoValue;
+    private final String[] shutterSpeedValues = new String[0];
+    private final String shutterSpeedParameter = null;
+    private final String shutterSpeedAutoValue = null;
 
     public String[] getIsoValues()
     {

@@ -28,12 +28,12 @@ import java.io.IOException;
  */
 
 @Keep
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedDeclaration", "MismatchedReadAndWriteOfArray"})
 class SupportedDeviceList
 {
     private static final String DEVICE_FILE_EXTENSION = ".json";
 
-    private SupportedDevice[] supportedDevices;
+    private final SupportedDevice[] supportedDevices = new SupportedDevice[0];
 
     String findDeviceInfoFile() throws IOException
     {

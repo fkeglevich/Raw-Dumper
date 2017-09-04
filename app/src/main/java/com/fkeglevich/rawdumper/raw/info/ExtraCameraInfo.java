@@ -32,22 +32,22 @@ import java.util.Locale;
  */
 
 @Keep
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "ConstantConditions", "FieldCanBeLocal"})
 public class ExtraCameraInfo
 {
-    private int id;
-    private String model;
-    private String uniqueCameraModel;
+    private final int id = -1;
+    private final String model = null;
+    private final String uniqueCameraModel = null;
 
-    private SensorInfo sensor;
-    private LensInfo lens;
-    private ColorInfo color;
-    private ExposureInfo exposure;
-    private OpcodeListInfo[] opcodes;
-    private NoiseInfo noise;
+    private final SensorInfo sensor = null;
+    private final LensInfo lens = null;
+    private final ColorInfo color = null;
+    private final ExposureInfo exposure = null;
+    private final OpcodeListInfo[] opcodes = new OpcodeListInfo[0];
+    private final NoiseInfo noise = null;
 
-    private boolean hasKnownMakernote;
-    private boolean retryOnError;
+    private final boolean hasKnownMakernote = false;
+    private final boolean retryOnError = false;
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {

@@ -32,27 +32,27 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
  */
 
 @Keep
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "ConstantConditions", "FieldCanBeLocal"})
 public class SensorInfo
 {
     private static final short[] DEFAULT_CFA_REPEAT_PATTERN_DIM = new short[] {2, 2};
     private static final short[] DEFAULT_BLACK_LEVEL_REPEAT_DIM = new short[] {2, 2};
 
-    private int bitsPerPixel;
-    private int storageBitsPerPixel;
+    private final int bitsPerPixel = -1;
+    private final int storageBitsPerPixel = -1;
 
-    private String name;
-    private String maker;
+    private final String name = null;
+    private final String maker = null;
 
-    private RawImageSize[] rawImageSizes;
-    private RawImageSize[] binningRawImageSizes;
+    private final RawImageSize[] rawImageSizes = new RawImageSize[0];
+    private final RawImageSize[] binningRawImageSizes = new RawImageSize[0];
 
-    private BayerPattern bayerPattern;
+    private final BayerPattern bayerPattern = null;
 
-    private int whiteLevel;
-    private float[] blackLevel;
+    private final int whiteLevel = -1;
+    private final float[] blackLevel = null;
 
-    private int baseISO;
+    private final int baseISO = -1;
 
     public RawImageSize[] getRawImageSizes()
     {

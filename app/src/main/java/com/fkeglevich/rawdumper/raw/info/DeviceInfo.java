@@ -31,10 +31,10 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 @SuppressWarnings("unused")
 public class DeviceInfo
 {
-    private String manufacturer;
-    private ExtraCameraInfo[] cameras;
-    private String dumpDirectoryLocation;
-    private int alignWidth;
+    private final String manufacturer = null;
+    private final ExtraCameraInfo[] cameras = null;
+    private final String dumpDirectoryLocation = null;
+    private final int alignWidth = 0;
 
     public ExtraCameraInfo[] getCameras()
     {

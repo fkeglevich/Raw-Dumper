@@ -24,8 +24,8 @@ package com.fkeglevich.rawdumper.raw.info;
 
 class SupportedDevice
 {
-    String deviceModel;
-    String deviceInfoFile;
+    final String deviceModel;
+    final String deviceInfoFile;
 
     SupportedDevice(String deviceModel, String deviceInfoFile)
     {
