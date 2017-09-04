@@ -34,17 +34,17 @@ import com.fkeglevich.rawdumper.util.MathUtil;
 @SuppressWarnings("unused")
 public class ColorInfo
 {
-    private float[] colorMatrix1;
-    private float[] colorMatrix2;
+    private final float[] colorMatrix1 = null;
+    private final float[] colorMatrix2 = null;
 
-    private float[] forwardMatrix1;
-    private float[] forwardMatrix2;
+    private final float[] forwardMatrix1 = null;
+    private final float[] forwardMatrix2 = null;
 
-    private float[] cameraCalibration1;
-    private float[] cameraCalibration2;
+    private final float[] cameraCalibration1 = null;
+    private final float[] cameraCalibration2 = null;
 
-    private CalibrationIlluminant calibrationIlluminant1;
-    private CalibrationIlluminant calibrationIlluminant2;
+    private final CalibrationIlluminant calibrationIlluminant1 = null;
+    private final CalibrationIlluminant calibrationIlluminant2 = null;
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {

@@ -28,7 +28,7 @@ import android.support.annotation.Keep;
 @SuppressWarnings("unused")
 public class LensInfo
 {
-    private Double aperture = null;
+    private final Double aperture = null;
 
     public Double getAperture()
     {
