@@ -22,8 +22,9 @@ import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 /**
+ * Contains all noise-related information about a camera.
+ *
  * Created by Flávio Keglevich on 27/08/2017.
- * TODO: Add a class header comment!
  */
 
 @Keep
