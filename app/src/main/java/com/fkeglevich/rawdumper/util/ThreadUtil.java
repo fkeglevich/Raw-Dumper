@@ -35,10 +35,4 @@ public class ThreadUtil
         if (!Thread.holdsLock(lock))
             throw new RuntimeException("This method should be called inside a proper synchronized block!");
     }
-
-    public static void checkIfNotSynchronized(Object lock)
-    {
-        if (Thread.holdsLock(lock))
-            throw new RuntimeException("This synchronized block has a risk of causing a dead lock!");
-    }
 }
