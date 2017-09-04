@@ -54,6 +54,8 @@ public class AsyncOperationPoster
      */
     public <T> void enqueueOperation(final AsyncOperation<T> operation, final T argument)
     {
+        if (operation == null) return;
+
         synchronized (operationThreadHandler)
         {
             Runnable runnable = new Runnable()
