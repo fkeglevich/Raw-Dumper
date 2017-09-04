@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.exception;
+package com.fkeglevich.rawdumper.controller.camera.exception;
 
 import android.content.Context;
 
@@ -28,9 +28,6 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 public class CameraOpenException extends MessageException
 {
-    public CameraOpenException()
-    {   }
-
     @Override
     public String getMessageResource(Context context)
     {

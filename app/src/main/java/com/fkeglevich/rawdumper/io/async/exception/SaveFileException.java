@@ -28,9 +28,6 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 public class SaveFileException extends MessageException
 {
-    public SaveFileException()
-    {   }
-
     @Override
     public String getMessageResource(Context context)
     {
