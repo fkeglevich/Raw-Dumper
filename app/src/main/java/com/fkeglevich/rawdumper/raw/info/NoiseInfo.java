@@ -31,9 +31,8 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 @SuppressWarnings("unused")
 public class NoiseInfo
 {
-    private final double[] noiseProfile = null;
+    private double[] noiseProfile;
 
-    @SuppressWarnings("ConstantConditions")
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         if (noiseProfile != null)
