@@ -28,7 +28,7 @@ import java.io.IOException;
  */
 
 @Keep
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "MismatchedReadAndWriteOfArray"})
 class SupportedDeviceList
 {
     private static final String DEVICE_FILE_EXTENSION = ".json";
