@@ -32,9 +32,6 @@ public class NoiseInfo
 {
     private double[] noiseProfile;
 
-    private NoiseInfo()
-    {   }
-
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         if (noiseProfile != null)

@@ -46,9 +46,6 @@ public class ColorInfo
     private CalibrationIlluminant calibrationIlluminant1;
     private CalibrationIlluminant calibrationIlluminant2;
 
-    private ColorInfo()
-    {   }
-
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1,           colorMatrix1, true);

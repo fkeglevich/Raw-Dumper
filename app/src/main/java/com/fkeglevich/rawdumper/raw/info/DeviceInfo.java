@@ -36,9 +36,6 @@ public class DeviceInfo
     private String dumpDirectoryLocation;
     private int alignWidth;
 
-    private DeviceInfo()
-    {   }
-
     public ExtraCameraInfo[] getCameras()
     {
         return cameras;

@@ -30,9 +30,6 @@ public class LensInfo
 {
     private Double aperture = null;
 
-    private LensInfo()
-    {   }
-
     public Double getAperture()
     {
         return aperture;

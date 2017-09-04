@@ -54,9 +54,6 @@ public class SensorInfo
 
     private int baseISO;
 
-    private SensorInfo()
-    {   }
-
     public RawImageSize[] getRawImageSizes()
     {
         return rawImageSizes;

@@ -35,9 +35,6 @@ class SupportedDeviceList
 
     private SupportedDevice[] supportedDevices;
 
-    private SupportedDeviceList()
-    {   }
-
     String findDeviceInfoFile() throws IOException
     {
         for (SupportedDevice sd : supportedDevices)

@@ -45,9 +45,6 @@ public class OpcodeListInfo
 
     private Double temperature;
 
-    private OpcodeListInfo()
-    {   }
-
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         opcodeList1Cache = updateOpcodeListCache(opcodeList1Cache, opcodeList1File);

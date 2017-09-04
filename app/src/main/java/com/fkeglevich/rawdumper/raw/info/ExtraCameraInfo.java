@@ -49,9 +49,6 @@ public class ExtraCameraInfo
     private boolean hasKnownMakernote;
     private boolean retryOnError;
 
-    private ExtraCameraInfo()
-    {   }
-
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         tiffWriter.setField(TiffTag.TIFFTAG_MODEL, String.format(Locale.US, model, Build.MODEL));
