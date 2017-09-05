@@ -31,9 +31,6 @@ public class DateInfo
 {
     public GregorianCalendar captureDate = null;
 
-    public DateInfo()
-    {   }
-
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         if (captureDate != null)

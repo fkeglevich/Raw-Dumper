@@ -48,9 +48,6 @@ public class ExifInfo
     private Flash flash                          = null;
     private Float focalLength                    = null;
 
-    public ExifInfo()
-    {   }
-
     public void getExifDataFromCapture(CaptureInfo captureInfo)
     {
         if (captureInfo.extraJpegBytes != null)

@@ -28,9 +28,6 @@ public class WhiteBalanceInfo
 {
     public float[] asShotNeutral = new float[] {1f, 1f, 1f};
 
-    public WhiteBalanceInfo()
-    {   }
-
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         tiffWriter.setField(TiffTag.TIFFTAG_ASSHOTNEUTRAL, asShotNeutral, true);

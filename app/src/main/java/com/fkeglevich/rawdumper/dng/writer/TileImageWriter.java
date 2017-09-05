@@ -37,9 +37,6 @@ public class TileImageWriter extends ADngImageWriter
     private int tileWidth;
     private int tileHeight;
 
-    public TileImageWriter()
-    {   }
-
     @Override
     protected void init(TiffWriter tiffWriter, RawImageSize rawImageSize)
     {

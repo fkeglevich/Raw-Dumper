@@ -29,9 +29,6 @@ public class WhiteBalanceInfoExtractor
 {
     private static final int DAYLIGHT_TEMPERATURE = 5503;
 
-    public WhiteBalanceInfoExtractor()
-    {   }
-
     public WhiteBalanceInfo extractFrom(double x, double y, ColorInfo colorInfo)
     {
         WhiteBalanceInfo result = new WhiteBalanceInfo();

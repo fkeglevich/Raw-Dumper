@@ -53,9 +53,6 @@ public class CaptureInfo
     public byte[] rawDataBytes                  = null;
     public File relatedI3av4File                = null;
 
-    public CaptureInfo()
-    {   }
-
     public boolean isValid()
     {
         return  device                  != null &&

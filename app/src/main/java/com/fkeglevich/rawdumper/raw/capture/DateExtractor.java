@@ -25,9 +25,6 @@ import java.util.GregorianCalendar;
 
 public class DateExtractor
 {
-    public DateExtractor()
-    {   }
-
     public DateInfo extractFromFilename(String filename)
     {
         int year = Integer.parseInt(filename.substring(4, 8));

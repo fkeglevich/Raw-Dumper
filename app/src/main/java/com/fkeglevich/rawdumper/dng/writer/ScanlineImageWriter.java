@@ -34,9 +34,6 @@ public class ScanlineImageWriter extends ADngImageWriter
 {
     private byte[] buffer;
 
-    public ScanlineImageWriter()
-    {   }
-
     @Override
     protected void init(TiffWriter tiffWriter, RawImageSize rawImageSize)
     {

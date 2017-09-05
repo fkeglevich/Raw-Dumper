@@ -32,9 +32,6 @@ class ExifWriter
 {
     private static final byte[] exifVersion = new byte[]{48, 50, 50, 48};
 
-    ExifWriter()
-    {   }
-
     void createEXIFDirectory(TiffWriter tiffWriter)
     {
         tiffWriter.createEXIFDirectory();
