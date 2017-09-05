@@ -34,11 +34,8 @@ public class AssetUtil
 {
     public static byte[] getAssetBytes(String fileName) throws IOException
     {
-        synchronized (ContextManager.getApplicationContext().getLock())
-        {
-            Context context = ContextManager.getApplicationContext().get();
-            return readInputStream(context.getAssets().open(fileName, AssetManager.ACCESS_BUFFER));
-        }
+        Context context = ContextManager.getApplicationContext();
+        return readInputStream(context.getAssets().open(fileName, AssetManager.ACCESS_BUFFER));
     }
 
     public static String getAssetAsString(String fileName) throws IOException

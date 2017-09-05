@@ -35,11 +35,8 @@ public class IOUtil
 {
     public static void scanFileWithMediaScanner(String filePath)
     {
-        synchronized (ContextManager.getApplicationContext().getLock())
-        {
-            Context context = ContextManager.getApplicationContext().get();
-            MediaScannerConnection.scanFile(context, new String[]{filePath}, null, null);
-        }
+        Context context = ContextManager.getApplicationContext();
+        MediaScannerConnection.scanFile(context, new String[]{filePath}, null, null);
     }
 
     public static void saveBytes(byte[] data, String filePath) throws IOException

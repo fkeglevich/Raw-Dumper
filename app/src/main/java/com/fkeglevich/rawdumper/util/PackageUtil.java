@@ -34,28 +34,22 @@ public class PackageUtil
 {
     public static String getAppNameWithVersion()
     {
-        synchronized (ContextManager.getApplicationContext().getLock())
-        {
-            Context context = ContextManager.getApplicationContext().get();
-            return context.getResources().getString(R.string.app_name_with_version, getAppVersion());
-        }
+        Context context = ContextManager.getApplicationContext();
+        return context.getResources().getString(R.string.app_name_with_version, getAppVersion());
     }
 
     public static String getAppVersion()
     {
-        synchronized (ContextManager.getApplicationContext().getLock())
-        {
-            Context context = ContextManager.getApplicationContext().get();
+        Context context = ContextManager.getApplicationContext();
 
-            try
-            {
-                PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getApplicationInfo().packageName, 0);
-                return packageInfo.versionName;
-            }
-            catch (PackageManager.NameNotFoundException e)
-            {
-                throw new NameNotFoundFromItselfException();
-            }
+        try
+        {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getApplicationInfo().packageName, 0);
+            return packageInfo.versionName;
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            throw new NameNotFoundFromItselfException();
         }
     }
 }

@@ -70,9 +70,6 @@ public class IntelCameraExtensionLoader
 
     private static File getDexCacheDir()
     {
-        synchronized (ContextManager.getApplicationContext().getLock())
-        {
-            return ContextManager.getApplicationContext().get().getDir(DEX_CACHE_DIR_NAME, MODE_PRIVATE);
-        }
+        return ContextManager.getApplicationContext().getDir(DEX_CACHE_DIR_NAME, MODE_PRIVATE);
     }
 }

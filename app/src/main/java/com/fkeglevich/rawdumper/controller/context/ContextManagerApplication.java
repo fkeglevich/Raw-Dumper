@@ -30,6 +30,6 @@ public class ContextManagerApplication extends Application
     public void onCreate()
     {
         super.onCreate();
-        ContextManager.internalInitApplicationContext(this);
+        ContextManager.setApplicationContext(this);
     }
 }

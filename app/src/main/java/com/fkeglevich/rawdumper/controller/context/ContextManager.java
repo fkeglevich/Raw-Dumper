@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.controller.context;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.fkeglevich.rawdumper.async.Locked;
@@ -23,23 +24,35 @@ import com.fkeglevich.rawdumper.async.Locked;
 /**
  * A simple class for getting a static application context easily.
  *
+ * It's ugly to store an application context in a static field, however, since Contexts
+ * are god-objects on the Android framework, passing them as arguments create a very complex
+ * object-graph (Why do I need a context to save that file?) that generates a lot of boilerplate.
+ *
  * Created by Flávio Keglevich on 22/08/2017.
  */
 
 public class ContextManager
 {
-    private static final Locked<Context> applicationContext = new Locked<>(null);
+    @SuppressLint("StaticFieldLeak")
+    private static Context applicationContext = null;
 
-    public static Locked<Context> getApplicationContext()
+    /**
+     * Gets the context associated with the lifetime of the application's process.
+     *
+     * @return  A Context object
+     */
+    public static Context getApplicationContext()
     {
         return applicationContext;
     }
 
-    static void internalInitApplicationContext(Context context)
+    /**
+     * Initializes the application context
+     *
+     * @param context   A Context object
+     */
+    static void setApplicationContext(Context context)
     {
-        synchronized (applicationContext.getLock())
-        {
-            applicationContext.set(context.getApplicationContext());
-        }
+        applicationContext = context.getApplicationContext();
     }
 }
