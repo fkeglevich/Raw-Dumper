@@ -39,9 +39,9 @@ public class OpcodeListInfo
     private String opcodeList2File;
     private String opcodeList3File;
 
-    private byte[] opcodeList1Cache;
-    private byte[] opcodeList2Cache;
-    private byte[] opcodeList3Cache;
+    private transient byte[] opcodeList1Cache;
+    private transient byte[] opcodeList2Cache;
+    private transient byte[] opcodeList3Cache;
 
     private Double temperature;
 
