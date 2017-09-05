@@ -37,9 +37,6 @@ class OrientationManager
     private OrientationEventListener orientationListener = null;
     private int lastDegrees = OrientationEventListener.ORIENTATION_UNKNOWN;
 
-    private OrientationManager()
-    {   }
-
     void setup(Context context)
     {
         disable();
