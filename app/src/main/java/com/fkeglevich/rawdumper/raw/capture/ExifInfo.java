@@ -65,7 +65,7 @@ public class ExifInfo
             if (captureInfo.date != null)
                 getSomeDataFrom(captureInfo.date);
             else
-                getSomeDataFrom(new DateExtractor().extractFromCurrentTime());
+                getSomeDataFrom(DateInfo.createFromCurrentTime());
 
             if (captureInfo.camera != null && captureInfo.camera.getLens() != null)
                 getSomeDataFrom(captureInfo.camera.getLens());

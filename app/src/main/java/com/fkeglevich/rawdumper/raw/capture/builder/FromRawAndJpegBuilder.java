@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.raw.capture.builder;
 
 import android.hardware.Camera;
 
-import com.fkeglevich.rawdumper.raw.capture.DateExtractor;
+import com.fkeglevich.rawdumper.raw.capture.DateInfo;
 import com.fkeglevich.rawdumper.raw.capture.FilenameExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
@@ -73,7 +73,7 @@ public class FromRawAndJpegBuilder extends BaseDateBuilder
     @Override
     void initDateInfo()
     {
-        dateInfo = new DateExtractor().extractFromCurrentTime();
+        dateInfo = DateInfo.createFromCurrentTime();
     }
 
     @Override

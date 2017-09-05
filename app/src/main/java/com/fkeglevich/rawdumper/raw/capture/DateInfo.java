@@ -23,14 +23,62 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import java.util.GregorianCalendar;
 
 /**
+ * Stores date/time information about a raw capture
+ *
  * Created by Flávio Keglevich on 09/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class DateInfo
 {
-    public GregorianCalendar captureDate = null;
+    /**
+     * Creates a DateInfo object from a hal-generated i3av4 filename.
+     * It's useful when the i3av4 file is the only source of information.
+     *
+     * @param filename  A String containing only the name of the file
+     * @return  A DateInfo object
+     */
+    public static DateInfo createFromFilename(String filename)
+    {
+        int year = Integer.parseInt(filename.substring(4, 8));
+        int month = Integer.parseInt(filename.substring(8, 10));
+        int day = Integer.parseInt(filename.substring(10, 12));
+        int hour = Integer.parseInt(filename.substring(13, 15));
+        int minute = Integer.parseInt(filename.substring(15, 17));
+        int second = Integer.parseInt(filename.substring(17, 19));
 
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.set(year, month, day, hour, minute, second);
+
+        return new DateInfo(calendar);
+    }
+
+    /**
+     * Creates a DateInfo object from the current time when this method is called.
+     *
+     * @return  A DateInfo object
+     */
+    public static DateInfo createFromCurrentTime()
+    {
+        return new DateInfo((GregorianCalendar)GregorianCalendar.getInstance());
+    }
+
+    GregorianCalendar captureDate = null;
+
+    /**
+     * Private constructor
+     *
+     * @param captureDate   The main date/time of the capture
+     */
+    private DateInfo(GregorianCalendar captureDate)
+    {
+        this.captureDate = captureDate;
+    }
+
+    /**
+     * Write all information contained by this object as Tiff tags.
+     *
+     * @param tiffWriter    The TiffWriter used to actually write the tags
+     */
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         if (captureDate != null)

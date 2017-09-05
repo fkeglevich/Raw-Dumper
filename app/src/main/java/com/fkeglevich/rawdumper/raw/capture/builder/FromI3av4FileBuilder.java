@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.raw.capture.builder;
 
 import android.hardware.Camera;
 
-import com.fkeglevich.rawdumper.raw.capture.DateExtractor;
+import com.fkeglevich.rawdumper.raw.capture.DateInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
@@ -80,7 +80,7 @@ public class FromI3av4FileBuilder extends BaseDateBuilder
     @Override
     void initDateInfo()
     {
-        dateInfo = new DateExtractor().extractFromFilename(relatedI3av4File.getName());
+        dateInfo = DateInfo.createFromFilename(relatedI3av4File.getName());
     }
 
     @Override
