@@ -20,6 +20,7 @@ import com.fkeglevich.rawdumper.async.Locked;
 import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
 import com.fkeglevich.rawdumper.camera.exception.UnavailableFeatureException;
 import com.fkeglevich.rawdumper.camera.shared.SharedCamera;
+import com.fkeglevich.rawdumper.camera.shared.SharedParameters;
 
 /**
  * Created by Flávio Keglevich on 16/08/2017.
@@ -28,11 +29,13 @@ import com.fkeglevich.rawdumper.camera.shared.SharedCamera;
 
 abstract class AFeature
 {
-    final Locked<SharedCamera> sharedCamera;
+    final SharedParameters sharedParameters;
+    final Object lock;
 
-    AFeature(SharedCameraGetter sharedCameraGetter)
+    AFeature(SharedParameters sharedParameters, Object lock)
     {
-        sharedCamera = sharedCameraGetter.getSharedCamera();
+        this.sharedParameters = sharedParameters;
+        this.lock = lock;
     }
 
     final void checkFeatureAvailability()

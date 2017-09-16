@@ -20,6 +20,11 @@ import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
 import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
+import com.fkeglevich.rawdumper.camera.shared.SharedParameters;
+
+import static com.fkeglevich.rawdumper.camera.extension.IntelParameters.KEY_RAW_DATA_FORMAT;
+import static com.fkeglevich.rawdumper.camera.extension.IntelParameters.RAW_DATA_FORMAT_BAYER;
+import static com.fkeglevich.rawdumper.camera.extension.IntelParameters.RAW_DATA_FORMAT_NONE;
 
 /**
  * Created by Flávio Keglevich on 16/08/2017.
@@ -30,9 +35,9 @@ public class RawCapture extends AFeature
 {
     private Boolean isAvailableCache = null;
 
-    RawCapture(SharedCameraGetter sharedCameraGetter)
+    RawCapture(SharedParameters sharedParameters, Object lock)
     {
-        super(sharedCameraGetter);
+        super(sharedParameters, lock);
     }
 
     public void enable()
@@ -47,35 +52,35 @@ public class RawCapture extends AFeature
 
     public boolean isEnabled()
     {
-        synchronized (sharedCamera.getLock())
+        synchronized (lock)
         {
-            String value = sharedCamera.get().getCamera().getParameters().get(IntelParameters.KEY_RAW_DATA_FORMAT);
-            return IntelParameters.RAW_DATA_FORMAT_BAYER.equals(value);
+            String value = sharedParameters.get(KEY_RAW_DATA_FORMAT);
+            return RAW_DATA_FORMAT_BAYER.equals(value);
         }
     }
 
     public boolean isAvailable()
     {
-        synchronized (sharedCamera.getLock())
+        synchronized (lock)
         {
             if (isAvailableCache != null) return isAvailableCache;
 
             boolean result = true;
-            Camera.Parameters parameters = sharedCamera.get().getCamera().getParameters();
+            Camera.Parameters parameters = sharedParameters.getRawParameters();
             {
-                String old = parameters.get(IntelParameters.KEY_RAW_DATA_FORMAT);
+                String old = parameters.get(KEY_RAW_DATA_FORMAT);
                 {
-                    parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, IntelParameters.RAW_DATA_FORMAT_BAYER);
+                    parameters.set(KEY_RAW_DATA_FORMAT, RAW_DATA_FORMAT_BAYER);
 
-                    try { sharedCamera.get().getCamera().setParameters(parameters); }
+                    try { sharedParameters.setRawParameters(parameters); }
 
                     catch (RuntimeException re) { result = false; }
 
-                    parameters.remove(IntelParameters.KEY_RAW_DATA_FORMAT);
+                    parameters.remove(KEY_RAW_DATA_FORMAT);
                 }
-                if (old != null) parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, old);
+                if (old != null) parameters.set(KEY_RAW_DATA_FORMAT, old);
             }
-            sharedCamera.get().getCamera().setParameters(parameters);
+            sharedParameters.setRawParameters(parameters);
             isAvailableCache = result;
             return result;
         }
@@ -83,13 +88,11 @@ public class RawCapture extends AFeature
 
     private void setValue(boolean value)
     {
-        synchronized (sharedCamera.getLock())
+        synchronized (lock)
         {
             checkFeatureAvailability();
-            Camera.Parameters parameters = sharedCamera.get().getCamera().getParameters();
-            String strValue = value ? IntelParameters.RAW_DATA_FORMAT_BAYER : IntelParameters.RAW_DATA_FORMAT_NONE;
-            parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, strValue);
-            sharedCamera.get().getCamera().setParameters(parameters);
+            String strValue = value ? RAW_DATA_FORMAT_BAYER : RAW_DATA_FORMAT_NONE;
+            sharedParameters.setAndUpdate(KEY_RAW_DATA_FORMAT, strValue);
         }
     }
 }

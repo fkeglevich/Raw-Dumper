@@ -16,11 +16,9 @@
 
 package com.fkeglevich.rawdumper.camera.features;
 
-import android.hardware.Camera;
-
-import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
 import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
 import com.fkeglevich.rawdumper.camera.helper.ExposureHelper;
+import com.fkeglevich.rawdumper.camera.shared.SharedParameters;
 
 /**
  * Class for real time ISO and exposure time metering.
@@ -30,26 +28,26 @@ import com.fkeglevich.rawdumper.camera.helper.ExposureHelper;
 
 public class CurrentExposureMetering extends AFeature
 {
-    CurrentExposureMetering(SharedCameraGetter sharedCameraGetter)
+    CurrentExposureMetering(SharedParameters sharedParameters, Object lock)
     {
-        super(sharedCameraGetter);
+        super(sharedParameters, lock);
     }
 
     public int getCurrentIso()
     {
-        synchronized (sharedCamera.getLock())
+        synchronized (lock)
         {
             checkFeatureAvailability();
-            return sharedCamera.get().getParameters().getInt(AsusParameters.ASUS_XENON_ISO);
+            return sharedParameters.getInt(AsusParameters.ASUS_XENON_ISO);
         }
     }
 
     public double getCurrentExposureTime()
     {
-        synchronized (sharedCamera.getLock())
+        synchronized (lock)
         {
             checkFeatureAvailability();
-            int value = sharedCamera.get().getParameters().getInt(AsusParameters.ASUS_XENON_EXPOSURE_TIME);
+            int value = sharedParameters.getInt(AsusParameters.ASUS_XENON_EXPOSURE_TIME);
             return ExposureHelper.decodeIntegerExposureTime(value);
         }
     }
@@ -57,11 +55,10 @@ public class CurrentExposureMetering extends AFeature
     @Override
     public boolean isAvailable()
     {
-        synchronized (sharedCamera.getLock())
+        synchronized (lock)
         {
-            Camera.Parameters parameters = sharedCamera.get().getCamera().getParameters();
-            String iso          = parameters.get(AsusParameters.ASUS_XENON_ISO);
-            String exposureTime = parameters.get(AsusParameters.ASUS_XENON_EXPOSURE_TIME);
+            String iso          = sharedParameters.get(AsusParameters.ASUS_XENON_ISO);
+            String exposureTime = sharedParameters.get(AsusParameters.ASUS_XENON_EXPOSURE_TIME);
 
             return (iso != null) && (exposureTime != null);
         }

@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.features;
 
-import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
+import com.fkeglevich.rawdumper.camera.shared.SharedParameters;
 
 /**
  * Created by Flávio Keglevich on 27/08/2017.
@@ -25,9 +25,9 @@ import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
 
 public abstract class GainBasedWhiteBalance extends AFeature
 {
-    GainBasedWhiteBalance(SharedCameraGetter sharedCameraGetter)
+    GainBasedWhiteBalance(SharedParameters sharedParameters, Object lock)
     {
-        super(sharedCameraGetter);
+        super(sharedParameters, lock);
     }
 
     public abstract double getBlueGain();

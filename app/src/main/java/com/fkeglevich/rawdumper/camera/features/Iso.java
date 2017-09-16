@@ -16,9 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.features;
 
-import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
+import com.fkeglevich.rawdumper.camera.shared.SharedParameters;
+import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,21 +30,17 @@ import java.util.List;
 
 public class Iso extends AValueOptionsFeature
 {
-    Iso(SharedCameraGetter sharedCameraGetter)
+    private final List<String> validIsoValues;
+
+    Iso(ExposureInfo exposureInfo, SharedParameters sharedParameters, Object lock)
     {
-        super(sharedCameraGetter);
-        synchronized (sharedCamera.getLock())
-        {
-            initializeFeatureParamKey(sharedCamera.get().getExtraCameraInfo().getExposure().getIsoParameter());
-        }
+        super(exposureInfo.getIsoParameter(), sharedParameters, lock);
+        validIsoValues = Collections.unmodifiableList(Arrays.asList(exposureInfo.getIsoValues()));
     }
 
     @Override
     public List<String> getValidValues()
     {
-        synchronized (sharedCamera.getLock())
-        {
-            return Arrays.asList(sharedCamera.get().getExtraCameraInfo().getExposure().getIsoValues().clone());
-        }
+        return validIsoValues;
     }
 }

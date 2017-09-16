@@ -16,9 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.features;
 
-import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
+import com.fkeglevich.rawdumper.camera.shared.SharedParameters;
+import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,21 +30,17 @@ import java.util.List;
 
 public class ShutterSpeed extends AValueOptionsFeature
 {
-    ShutterSpeed(SharedCameraGetter sharedCameraGetter)
+    private final List<String> validShutterSpeedValues;
+
+    ShutterSpeed(ExposureInfo exposureInfo, SharedParameters sharedParameters, Object lock)
     {
-        super(sharedCameraGetter);
-        synchronized (sharedCamera.getLock())
-        {
-            initializeFeatureParamKey(sharedCamera.get().getExtraCameraInfo().getExposure().getShutterSpeedParameter());
-        }
+        super(exposureInfo.getShutterSpeedParameter(), sharedParameters, lock);
+        validShutterSpeedValues = Collections.unmodifiableList(Arrays.asList(exposureInfo.getShutterSpeedValues()));
     }
 
     @Override
     public List<String> getValidValues()
     {
-        synchronized (sharedCamera.getLock())
-        {
-            return Arrays.asList(sharedCamera.get().getExtraCameraInfo().getExposure().getShutterSpeedValues().clone());
-        }
+        return validShutterSpeedValues;
     }
 }

@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.features;
 
 import com.fkeglevich.rawdumper.camera.async.SharedCameraGetter;
+import com.fkeglevich.rawdumper.camera.shared.SharedParameters;
 
 import java.util.List;
 
@@ -27,43 +28,36 @@ import java.util.List;
 
 abstract class AValueOptionsFeature extends AFeature
 {
-    private String featureParamKey;
+    private final String featureParamKey;
 
-    AValueOptionsFeature(SharedCameraGetter sharedCameraGetter)
+    AValueOptionsFeature(String featureParamKey, SharedParameters sharedParameters, Object lock)
     {
-        super(sharedCameraGetter);
-    }
-
-    void initializeFeatureParamKey(String featureParamKey)
-    {
+        super(sharedParameters, lock);
         this.featureParamKey = featureParamKey;
     }
 
     public String getValue()
     {
-        synchronized (sharedCamera.getLock())
+        synchronized (lock)
         {
             checkFeatureAvailability();
-            return sharedCamera.get().getParameters().get(featureParamKey);
+            return sharedParameters.get(featureParamKey);
         }
     }
 
     public void setValue(String value)
     {
-        synchronized (sharedCamera.getLock())
+        synchronized (lock)
         {
             checkFeatureAvailability();
-            sharedCamera.get().getParameters().setAndUpdate(featureParamKey, value);
+            sharedParameters.setAndUpdate(featureParamKey, value);
         }
     }
 
     @Override
     public boolean isAvailable()
     {
-        synchronized (sharedCamera.getLock())
-        {
-            return featureParamKey != null;
-        }
+        return featureParamKey != null;
     }
 
     public abstract List<String> getValidValues();
