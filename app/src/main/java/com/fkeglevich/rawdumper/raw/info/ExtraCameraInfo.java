@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
+import android.hardware.Camera;
 import android.os.Build;
 import android.support.annotation.Keep;
 
@@ -48,6 +49,8 @@ public class ExtraCameraInfo
 
     private boolean hasKnownMakernote;
     private boolean retryOnError;
+
+    private Camera.CameraInfo lazyCameraInfo = null;
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
@@ -93,5 +96,31 @@ public class ExtraCameraInfo
     public boolean hasKnownMakernote()
     {
         return hasKnownMakernote;
+    }
+
+    public synchronized int getFacing()
+    {
+        lazyCreateCameraInfo();
+        return lazyCameraInfo.facing;
+    }
+
+    public synchronized int getOrientation()
+    {
+        lazyCreateCameraInfo();
+        return lazyCameraInfo.orientation;
+    }
+    public synchronized boolean canDisableShutterSound()
+    {
+        lazyCreateCameraInfo();
+        return lazyCameraInfo.canDisableShutterSound;
+    }
+
+    private void lazyCreateCameraInfo()
+    {
+        if (lazyCameraInfo == null)
+        {
+            lazyCameraInfo = new Camera.CameraInfo();
+            Camera.getCameraInfo(getId(), lazyCameraInfo);
+        }
     }
 }
