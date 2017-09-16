@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.raw;
+package com.fkeglevich.rawdumper.camera.extension;
 
 import android.hardware.Camera;
 

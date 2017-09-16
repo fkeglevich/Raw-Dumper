@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.camera.shared;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
-import com.fkeglevich.rawdumper.camera.raw.RawImageCallbackAccess;
+import com.fkeglevich.rawdumper.camera.extension.RawImageCallbackAccess;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 /**
