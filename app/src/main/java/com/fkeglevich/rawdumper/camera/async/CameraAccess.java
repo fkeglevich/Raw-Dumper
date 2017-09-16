@@ -91,14 +91,6 @@ public class CameraAccess
         PreviewHelper.setupPreviewTexture(textureView, sharedCamera);
     }
 
-    public void setParameter(String key, String value)
-    {
-        synchronized (sharedCamera.getLock())
-        {
-            sharedCamera.get().getParameters().setAndUpdate(key, value);
-        }
-    }
-
     private void setCameraSafely(SharedCamera camera)
     {
         synchronized (sharedCamera.getLock())
