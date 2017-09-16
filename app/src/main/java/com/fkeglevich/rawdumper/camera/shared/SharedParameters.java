@@ -79,4 +79,14 @@ public class SharedParameters
     {
         return ParameterHelper.splitIntValues(get(key));
     }
+
+    public Camera.Parameters getRawParameters()
+    {
+        return camera.getParameters();
+    }
+
+    public void setRawParameters(Camera.Parameters parameters)
+    {
+        camera.setParameters(parameters);
+    }
 }
