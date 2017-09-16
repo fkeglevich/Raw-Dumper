@@ -19,7 +19,9 @@ package com.fkeglevich.rawdumper.io.async;
 import com.fkeglevich.rawdumper.async.Locked;
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunctionContext;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
+import com.fkeglevich.rawdumper.io.async.function.LoadDeviceInfoFunction;
 import com.fkeglevich.rawdumper.io.async.function.SaveFileFunction;
+import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
@@ -39,5 +41,10 @@ public class IOAccess
     public void saveFileAsync(Locked<byte[]> data, String filePath, AsyncOperation<Void> callback, AsyncOperation<MessageException> exception)
     {
         functionContext.call(new SaveFileFunction(filePath), data, callback, exception);
+    }
+
+    public void loadDeviceInfo(AsyncOperation<DeviceInfo> callback, AsyncOperation<MessageException> exception)
+    {
+        functionContext.call(new LoadDeviceInfoFunction(), null, callback, exception);
     }
 }
