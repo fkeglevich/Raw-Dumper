@@ -18,13 +18,19 @@ package com.fkeglevich.rawdumper.ui;
 
 import android.content.Context;
 import android.graphics.Matrix;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.TextureView;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
 import com.fkeglevich.rawdumper.util.event.EventListener;
+
+import io.codetail.animation.SupportAnimator;
+import io.codetail.animation.ViewAnimationUtils;
 
 import static com.fkeglevich.rawdumper.R.id.textureView;
 
@@ -36,6 +42,11 @@ import static com.fkeglevich.rawdumper.R.id.textureView;
 
 public class CameraPreviewTexture extends PausingTextureView
 {
+    private static final int ANIMATION_DURATION = 2000;
+
+    private float scale         = 1f;
+    private float translation   = 0f;
+
     public CameraPreviewTexture(Context context)
     {
         super(context);
@@ -66,13 +77,37 @@ public class CameraPreviewTexture extends PausingTextureView
 
     private void updateGeometry(CaptureSize previewSize)
     {
-        float scale = (float) previewSize.getHeight() / (float) previewSize.getWidth();
-        float translation = (getHeight() / 2f) - (getHeight() * scale / 2f);
+        scale = (float) previewSize.getHeight() / (float) previewSize.getWidth();
+
+        //We currently are not using this yet
+        translation = 0f;//(getHeight() / 2f) - (getHeight() * scale / 2f);
 
         Matrix matrix = new Matrix();
         matrix.postScale(1, scale);
-        //We currently are not using this yet
-        //matrix.postTranslate(0, translation);
+        matrix.postTranslate(0, translation);
         setTransform(matrix);
+    }
+
+    public void startOpenCameraAnimation()
+    {
+        SupportAnimator animator = createAnimator();
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.setDuration(ANIMATION_DURATION);
+        animator.start();
+    }
+
+    @NonNull
+    private SupportAnimator createAnimator()
+    {
+        int cx = (getLeft() + getRight()) / 2;
+        int cy = (int) (((getTop() + getBottom()) / 2) * scale + translation);
+        return ViewAnimationUtils.createCircularReveal(this, cx, cy, 0, calcFinalRadius(cx, cy));
+    }
+
+    private float calcFinalRadius(int cx, int cy)
+    {
+        int dx = Math.max(cx, getWidth() - cx);
+        int dy = Math.max(cy, getHeight() - cy);
+        return (float) Math.hypot(dx, dy);
     }
 }

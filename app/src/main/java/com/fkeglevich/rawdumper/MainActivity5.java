@@ -18,23 +18,18 @@ package com.fkeglevich.rawdumper;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.TextureView;
 
 import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.camera.async.CameraThread;
 import com.fkeglevich.rawdumper.camera.async.impl.CameraSelectorImpl;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
 import com.fkeglevich.rawdumper.camera.setup.CameraSetup;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
 import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
 import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
-import com.fkeglevich.rawdumper.ui.animation.CameraOpenAnimation;
 import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -71,6 +66,7 @@ public class MainActivity5 extends ModularActivity
         mWheelView = (WheelView) findViewById(R.id.view2);
 
         textureView = (CameraPreviewTexture) findViewById(R.id.textureView);
+
         cameraSetup = new CameraSetup(textureView, reference,
                 permissionModule.getPermissionManager(), new CameraSelectorImpl());
 
@@ -117,7 +113,8 @@ public class MainActivity5 extends ModularActivity
     private void init()
     {
         textureView.setupPreview(turboCamera);
-        CameraOpenAnimation.animateTextureView(textureView);
+        textureView.startOpenCameraAnimation();
+
 
         List<String> strList = new ArrayList<>();
         List<Iso> isoList = turboCamera.getIsoFeature().getAvailableValues();
