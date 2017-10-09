@@ -17,7 +17,7 @@
 package com.fkeglevich.rawdumper.test;
 
 import com.fkeglevich.rawdumper.BuildConfig;
-import com.fkeglevich.rawdumper.test.controller.dependency.ConcurrentResourceListBasicTest;
+import com.fkeglevich.rawdumper.test.raw.info.RawInfoTest;
 
 /**
  * Created by Flávio Keglevich on 03/09/2017.
@@ -29,7 +29,7 @@ class TestSelector
     static Test getCurrentTest()
     {
         if (BuildConfig.DEBUG)
-            return new ConcurrentResourceListBasicTest();
+            return new RawInfoTest();
         else
             return null;
     }

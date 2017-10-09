@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.controller.permission;
 
+import com.fkeglevich.rawdumper.controller.permission.exception.RootAccessException;
 import com.fkeglevich.rawdumper.su.ShellManager;
 
 import java.util.List;
@@ -27,15 +28,10 @@ import eu.chainfire.libsuperuser.Shell;
  * TODO: Add a class header comment!
  */
 
-class MandatoryRootManager extends MandatoryPermissionManager
+public class MandatoryRootManager extends MandatoryPermissionManager
 {
-    MandatoryRootManager(IPermissionResultListener listener)
-    {
-        super(listener);
-    }
-
     @Override
-    protected void allPermissionsWereGranted(boolean hadDialogPrompt)
+    void dispatchPermissionsGranted()
     {
         if (!ShellManager.getInstance().isRunning())
         {
@@ -45,15 +41,13 @@ class MandatoryRootManager extends MandatoryPermissionManager
                 public void onCommandResult(int commandCode, int exitCode, List<String> output)
                 {
                     if (exitCode == Shell.OnCommandResultListener.SHELL_RUNNING)
-                        permissionResultListener.onAllPermissionsGranted(true);
+                        MandatoryRootManager.super.dispatchPermissionsGranted();
                     else
-                        permissionResultListener.onMissingRootAccess();
+                        dispatchMissingPermissions(new RootAccessException());
                 }
             });
         }
         else
-        {
-            permissionResultListener.onAllPermissionsGranted(hadDialogPrompt);
-        }
+            super.dispatchPermissionsGranted();
     }
 }

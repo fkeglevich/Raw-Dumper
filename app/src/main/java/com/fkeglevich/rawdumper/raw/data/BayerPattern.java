@@ -33,7 +33,8 @@ public enum BayerPattern
     BGGR(new byte[] {2, 1, 1, 0}),
     RGGB(new byte[] {0, 1, 1, 2}),
     GBRG(new byte[] {1, 2, 0, 1}),
-    GRBG(new byte[] {1, 0, 2, 1});
+    GRBG(new byte[] {1, 0, 2, 1}),
+    UNKNOWN(null);
 
     private final byte[] bytePattern;
 
@@ -44,6 +45,7 @@ public enum BayerPattern
 
     public byte[] getBytePattern()
     {
+        if (bytePattern == null) throw new RuntimeException("An unknown bayer pattern can't be encoded!");
         return bytePattern.clone();
     }
 }

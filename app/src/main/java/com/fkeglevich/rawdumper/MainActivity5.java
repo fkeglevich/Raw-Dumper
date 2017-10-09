@@ -17,9 +17,31 @@
 package com.fkeglevich.rawdumper;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.TextureView;
 
-import com.fkeglevich.rawdumper.controller.activity.ModularActivity;
-import com.fkeglevich.rawdumper.ui.activity.FullscreenModule;
+import com.fkeglevich.rawdumper.activity.ModularActivity;
+import com.fkeglevich.rawdumper.camera.async.CameraThread;
+import com.fkeglevich.rawdumper.camera.async.impl.CameraSelectorImpl;
+import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.data.Ev;
+import com.fkeglevich.rawdumper.camera.data.Iso;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
+import com.fkeglevich.rawdumper.camera.setup.CameraSetup;
+import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
+import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
+import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
+import com.fkeglevich.rawdumper.ui.ModesInterface;
+import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
+import com.fkeglevich.rawdumper.ui.animation.CameraOpenAnimation;
+import com.fkeglevich.rawdumper.util.Nothing;
+import com.fkeglevich.rawdumper.util.event.EventListener;
+import com.fkeglevich.rawdumper.util.exception.MessageException;
+import com.lantouzi.wheelview.WheelView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Flávio Keglevich on 29/08/2017.
@@ -28,12 +50,98 @@ import com.fkeglevich.rawdumper.ui.activity.FullscreenModule;
 
 public class MainActivity5 extends ModularActivity
 {
-    private FullscreenModule fullscreenModule = new FullscreenModule(getReference());
+    private FullscreenManager fullscreenManager = new FullscreenManager(reference);
+    private OrientationModule orientationModule = new OrientationModule(reference);
+    private MandatoryPermissionModule permissionModule = new MandatoryPermissionModule(reference);//new MandatoryRootModule(reference);
+
+    private ModesInterface modesInterface;
+    private WheelView mWheelView;
+    private CameraSetup cameraSetup;
+    private TurboCamera turboCamera = null;
+    private CameraPreviewTexture textureView;
 
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getWindow().setBackgroundDrawable(null);
+        //getWindow().setBackgroundDrawable(null);
         setContentView(R.layout.activity_main);
+
+        modesInterface = new ModesInterface(reference);
+
+        mWheelView = (WheelView) findViewById(R.id.view2);
+
+        textureView = (CameraPreviewTexture) findViewById(R.id.textureView);
+        cameraSetup = new CameraSetup(textureView, reference,
+                permissionModule.getPermissionManager(), new CameraSelectorImpl());
+
+        cameraSetup.onComplete.addListener(new EventListener<TurboCamera>() {
+            @Override
+            public void onEvent(TurboCamera eventData)
+            {
+                turboCamera = eventData;
+                init();
+                Log.i("CameraSetup", "ON COMPLETE!");
+            }
+        });
+
+        cameraSetup.onException.addListener(new EventListener<MessageException>() {
+            @Override
+            public void onEvent(MessageException eventData)
+            {
+                Log.i("CameraSetup", "ON EXCEPTION: " + eventData.getMessageResource(getApplicationContext()));
+            }
+        });
+
+        reference.onResume.addListener(new EventListener<Nothing>()
+        {
+            @Override
+            public void onEvent(Nothing eventData)
+            {
+                cameraSetup.setupCamera();
+                Log.i("CameraSetup", "cameraSetup started!");
+            }
+        });
+
+        reference.onPause.addListener(new EventListener<Nothing>() {
+            @Override
+            public void onEvent(Nothing eventData)
+            {
+                if (turboCamera != null) {
+                    CameraThread.getInstance().closeCamera(turboCamera);
+                    turboCamera = null;
+                }
+            }
+        });
+    }
+
+    private void init()
+    {
+        textureView.setupPreview(turboCamera);
+        CameraOpenAnimation.animateTextureView(textureView);
+
+        List<String> strList = new ArrayList<>();
+        List<Iso> isoList = turboCamera.getIsoFeature().getAvailableValues();
+
+        strList.clear();
+        for (Iso iso : isoList)
+            strList.add(iso.displayValue());
+
+        mWheelView.setItems(strList);
+        mWheelView.selectIndex(0);
+        mWheelView.setMaxSelectableIndex(strList.size() - 1);
+
+        mWheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
+            @Override
+            public void onWheelItemChanged(WheelView wheelView, int position) {
+                if (turboCamera != null)
+                    turboCamera.getIsoFeature().setValue(turboCamera.getIsoFeature().getAvailableValues().get(position));
+                    //turboCamera.getEVFeature().setValue(turboCamera.getEVFeature().getAvailableValues().get(position));
+            }
+
+            @Override
+            public void onWheelItemSelected(WheelView wheelView, int position) {
+
+            }
+        });
     }
 }

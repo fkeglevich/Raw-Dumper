@@ -19,8 +19,6 @@ package com.fkeglevich.rawdumper.controller.context;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.fkeglevich.rawdumper.async.Locked;
-
 /**
  * A simple class for getting a static application context easily.
  *

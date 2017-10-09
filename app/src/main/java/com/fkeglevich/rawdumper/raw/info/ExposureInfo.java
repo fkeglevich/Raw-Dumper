@@ -18,6 +18,9 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.support.annotation.Keep;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Contains all implementation-specific information
  * related to manual exposure available on the device.
@@ -29,15 +32,15 @@ import android.support.annotation.Keep;
 @SuppressWarnings("unused")
 public class ExposureInfo
 {
-    private String[] isoValues;
+    private List<String> isoValues;
     private String isoParameter;
     private String isoAutoValue;
 
-    private String[] shutterSpeedValues;
+    private List<String> shutterSpeedValues;
     private String shutterSpeedParameter;
     private String shutterSpeedAutoValue;
 
-    public String[] getIsoValues()
+    public List<String> getIsoValues()
     {
         return isoValues;
     }
@@ -52,7 +55,7 @@ public class ExposureInfo
         return isoAutoValue;
     }
 
-    public String[] getShutterSpeedValues()
+    public List<String> getShutterSpeedValues()
     {
         return shutterSpeedValues;
     }

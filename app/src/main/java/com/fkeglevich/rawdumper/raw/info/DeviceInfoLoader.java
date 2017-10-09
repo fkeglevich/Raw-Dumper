@@ -16,6 +16,9 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
+import android.os.Build;
+import android.util.Log;
+
 import com.fkeglevich.rawdumper.util.AssetUtil;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -39,15 +42,35 @@ public class DeviceInfoLoader
         moshi = new Moshi.Builder().build();
     }
 
-    public String loadDeviceInfoJson() throws IOException
+    public DeviceInfo loadDeviceInfo() throws DeviceLoadException
     {
-        SupportedDeviceList deviceList = loadDeviceList();
-        return AssetUtil.getAssetAsString(deviceList.findDeviceInfoFile());
+        return loadDeviceInfo(Build.MODEL);
     }
 
-    public DeviceInfo loadDeviceInfo(String deviceInfoJson) throws IOException
+    public DeviceInfo loadDeviceInfo(String deviceModel) throws DeviceLoadException
     {
-        return moshi.adapter(DeviceInfo.class).fromJson(deviceInfoJson);
+        try
+        {
+            String deviceInfoJson = loadDeviceInfoJson(deviceModel);
+            DeviceInfo deviceInfo = moshi.adapter(DeviceInfo.class).fromJson(deviceInfoJson);
+            if (deviceInfo != null) deviceInfo.runtimeInit();
+            return deviceInfo;
+        }
+        catch (IOException ioe)
+        {
+            throw new DeviceLoadException();
+        }
+        catch (IllegalArgumentException iae)
+        {
+            Log.i("ueh", iae.getMessage());
+            throw new RuntimeException();
+        }
+    }
+
+    private String loadDeviceInfoJson(String deviceModel) throws IOException
+    {
+        SupportedDeviceList deviceList = loadDeviceList();
+        return AssetUtil.getAssetAsString(deviceList.findDeviceInfoFile(deviceModel));
     }
 
     private SupportedDeviceList loadDeviceList() throws IOException

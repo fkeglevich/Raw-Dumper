@@ -20,8 +20,8 @@ import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.view.TextureView;
 
-import com.fkeglevich.rawdumper.async.Locked;
-import com.fkeglevich.rawdumper.camera.shared.SharedCamera;
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 import java.io.IOException;
 
@@ -36,35 +36,27 @@ public class PreviewHelper
       This could change in future versions */
     private static final int APP_ORIENTATION_DEGREES = 0;
 
-    public static void setupPreviewTexture(TextureView textureView, Locked<SharedCamera> lockedCamera) throws IOException
+    public static void setupPreviewTexture(CameraContext cameraContext, Camera camera) throws IOException
     {
-        synchronized (lockedCamera.getLock())
-        {
-            setCameraDisplayOrientation(lockedCamera, APP_ORIENTATION_DEGREES);
-            lockedCamera.get().getCamera().setPreviewTexture(textureView.getSurfaceTexture());
-
-            Camera.Size previewSize = lockedCamera.get().getCamera().getParameters().getPreviewSize();
-
-            Matrix matrix = new Matrix();
-            matrix.setScale(1, (float)previewSize.height / (float)previewSize.width);
-            textureView.setTransform(matrix);
-        }
+        setCameraDisplayOrientation(cameraContext.getCameraInfo(), camera, APP_ORIENTATION_DEGREES);
+        camera.setPreviewTexture(cameraContext.getSurfaceTexture());
     }
 
-    private static void setCameraDisplayOrientation(Locked<SharedCamera> lockedCamera, int degrees)
+    private static void setCameraDisplayOrientation(ExtraCameraInfo cameraInfo, Camera camera, int degrees)
     {
-        Camera.CameraInfo cameraInfo = lockedCamera.get().getCameraInfo();
+        int facing = cameraInfo.getFacing();
+        int orientation = cameraInfo.getOrientation();
 
         int result;
-        if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT)
+        if (facing == Camera.CameraInfo.CAMERA_FACING_FRONT)
         {
-            result = (cameraInfo.orientation + degrees) % 360;
+            result = (orientation + degrees) % 360;
             result = (360 - result) % 360;  // compensate the mirror
         }
         else // back-facing
         {
-            result = (cameraInfo.orientation - degrees + 360) % 360;
+            result = (orientation - degrees + 360) % 360;
         }
-        lockedCamera.get().getCamera().setDisplayOrientation(result);
+        camera.setDisplayOrientation(result);
     }
 }

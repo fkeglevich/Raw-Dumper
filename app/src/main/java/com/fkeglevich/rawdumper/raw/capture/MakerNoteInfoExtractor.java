@@ -18,7 +18,8 @@ package com.fkeglevich.rawdumper.raw.capture;
 
 import android.util.Log;
 
-import com.fkeglevich.rawdumper.camera.helper.ExposureHelper;
+import com.fkeglevich.rawdumper.camera.data.Iso;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.util.ColorUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -116,9 +117,9 @@ public class MakerNoteInfoExtractor
 
         ByteBuffer wrapped = ByteBuffer.wrap(mknBytes, mknBytes.length - LAST_EXPOSUREITEM_DELTA, EXPOSURELIST_ITEM_SIZE);
         wrapped.order(makerNoteByteOrder);
-        info.exposureTime = ExposureHelper.decodeIntegerExposureTime(wrapped.getInt());
+        info.exposureTime = ShutterSpeed.decodeIntegerExposureTime(wrapped.getInt());
         wrapped.getInt();
-        info.iso = ExposureHelper.decodeFloatIso(wrapped.getFloat(), baseISO);
+        info.iso = Iso.decodeFloatIso(wrapped.getFloat(), baseISO);
         return true;
     }
 

@@ -50,7 +50,21 @@ public class ExtraCameraInfo
     private boolean hasKnownMakernote;
     private boolean retryOnError;
 
-    private Camera.CameraInfo lazyCameraInfo = null;
+    private transient int facing;
+    private transient int orientation;
+    private transient boolean canDisableShutterSound;
+
+    private ExtraCameraInfo()
+    {   }
+
+    void runtimeInit()
+    {
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        Camera.getCameraInfo(getId(), cameraInfo);
+        facing                  = cameraInfo.facing;
+        orientation             = cameraInfo.orientation;
+        canDisableShutterSound  = cameraInfo.canDisableShutterSound;
+    }
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
@@ -100,27 +114,16 @@ public class ExtraCameraInfo
 
     public synchronized int getFacing()
     {
-        lazyCreateCameraInfo();
-        return lazyCameraInfo.facing;
+        return facing;
     }
 
     public synchronized int getOrientation()
     {
-        lazyCreateCameraInfo();
-        return lazyCameraInfo.orientation;
-    }
-    public synchronized boolean canDisableShutterSound()
-    {
-        lazyCreateCameraInfo();
-        return lazyCameraInfo.canDisableShutterSound;
+        return orientation;
     }
 
-    private void lazyCreateCameraInfo()
+    public synchronized boolean canDisableShutterSound()
     {
-        if (lazyCameraInfo == null)
-        {
-            lazyCameraInfo = new Camera.CameraInfo();
-            Camera.getCameraInfo(getId(), lazyCameraInfo);
-        }
+        return canDisableShutterSound;
     }
 }

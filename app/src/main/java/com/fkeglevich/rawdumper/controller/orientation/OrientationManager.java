@@ -20,6 +20,9 @@ import android.content.Context;
 import android.hardware.SensorManager;
 import android.view.OrientationEventListener;
 
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
+
 /**
  * Created by Flávio Keglevich on 27/08/2017.
  * TODO: Add a class header comment!
@@ -63,8 +66,22 @@ class OrientationManager
             orientationListener.enable();
     }
 
-    public int getLastDegrees()
+    public ImageOrientation getImageOrientation(CameraContext cameraContext)
     {
-        return lastDegrees;
+        int cameraOrientation = cameraContext.getCameraInfo().getOrientation();
+        int degrees;
+        if (lastDegrees != OrientationEventListener.ORIENTATION_UNKNOWN)
+            degrees = (lastDegrees + cameraOrientation) % 360;
+        else
+            degrees = cameraOrientation % 360;
+
+        if (degrees >= 45 && degrees < 135)
+            return ImageOrientation.RIGHTTOP;
+        if (degrees >= 135 && degrees < 225)
+            return ImageOrientation.BOTRIGHT;
+        if (degrees >= 225 && degrees < 315)
+            return ImageOrientation.LEFTBOT;
+        else
+            return ImageOrientation.TOPLEFT;
     }
 }

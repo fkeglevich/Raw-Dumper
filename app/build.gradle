@@ -55,6 +55,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'eu.chainfire:libsuperuser:1.0.0.201704021214'
     compile "com.andkulikov:transitionseverywhere:1.7.2"
+    compile 'com.lantouzi.wheelview:library:1.1.2'
     compile 'com.drewnoakes:metadata-extractor:2.9.1'
     compile 'com.squareup.moshi:moshi:1.5.0'
     compile 'de.halfbit:tinymachine:1.1.0'

@@ -16,60 +16,62 @@
 
 package com.fkeglevich.rawdumper.controller.orientation;
 
-import com.fkeglevich.rawdumper.controller.activity.ActivityReference;
-import com.fkeglevich.rawdumper.controller.activity.EventDispatcher;
-import com.fkeglevich.rawdumper.controller.activity.EventListener;
-import com.fkeglevich.rawdumper.controller.activity.event.LifetimeEvent;
-import com.fkeglevich.rawdumper.controller.activity.module.ActivityModule;
+import android.os.Bundle;
+
+import com.fkeglevich.rawdumper.activity.ActivityReference;
+import com.fkeglevich.rawdumper.util.Nothing;
+import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * Created by Flávio Keglevich on 30/08/2017.
  * TODO: Add a class header comment!
  */
 
-public class OrientationModule extends ActivityModule
+public class OrientationModule
 {
+    private final ActivityReference reference;
+
     public OrientationModule(ActivityReference reference)
     {
-        super(reference);
-        setupOnCreateEvent(reference.getLifetimeEvents());
-        setupOnResumeEvent(reference.getLifetimeEvents());
-        setupOnPauseEvent(reference.getLifetimeEvents());
+        this.reference = reference;
+        setupOnCreateEvent();
+        setupOnResumeEvent();
+        setupOnPauseEvent();
     }
 
-    private void setupOnCreateEvent(EventDispatcher<LifetimeEvent> eventDispatcher)
+    private void setupOnCreateEvent()
     {
-        new EventListener<LifetimeEvent>(LifetimeEvent.ON_CREATE, eventDispatcher)
+        reference.onCreate.addListener(new EventListener<Bundle>()
         {
             @Override
-            protected void onEvent(Object optionalData)
+            public void onEvent(Bundle eventData)
             {
-                OrientationManager.getInstance().setup(getActivityReference().weaklyGet());
+                OrientationManager.getInstance().setup(reference.weaklyGet());
             }
-        };
+        });
     }
 
-    private void setupOnResumeEvent(EventDispatcher<LifetimeEvent> eventDispatcher)
+    private void setupOnResumeEvent()
     {
-        new EventListener<LifetimeEvent>(LifetimeEvent.ON_RESUME, eventDispatcher)
+        reference.onResume.addListener(new EventListener<Nothing>()
         {
             @Override
-            protected void onEvent(Object optionalData)
+            public void onEvent(Nothing eventData)
             {
                 OrientationManager.getInstance().enable();
             }
-        };
+        });
     }
 
-    private void setupOnPauseEvent(EventDispatcher<LifetimeEvent> eventDispatcher)
+    private void setupOnPauseEvent()
     {
-        new EventListener<LifetimeEvent>(LifetimeEvent.ON_PAUSE, eventDispatcher)
+        reference.onPause.addListener(new EventListener<Nothing>()
         {
             @Override
-            protected void onEvent(Object optionalData)
+            public void onEvent(Nothing eventData)
             {
                 OrientationManager.getInstance().disable();
             }
-        };
+        });
     }
 }

@@ -22,9 +22,10 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.fkeglevich.rawdumper.R;
-import com.fkeglevich.rawdumper.controller.activity.ActivityReference;
-import com.fkeglevich.rawdumper.controller.activity.module.ActivityModule;
+import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.ui.dialog.AboutDialog;
+import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
+import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
 
@@ -34,29 +35,30 @@ import com.transitionseverywhere.TransitionManager;
  * Created by Flávio Keglevich on 03/05/2017.
  */
 
-public class ModesInterface extends ActivityModule
+public class ModesInterface
 {
+    private final ActivityReference activityReference;
     private RelativeLayout modesLayout;
-
     private Fade fadeTransition = new Fade();
-
     private AboutDialog aboutDialog;
 
     public ModesInterface(ActivityReference activityReference)
     {
-        super(activityReference);
-        setupButtons();
-        modesLayout = (RelativeLayout)activityReference.weaklyGet().findViewById(R.id.modesLayout);
-        aboutDialog = new AboutDialog(activityReference.weaklyGet());
+        this.activityReference = activityReference;
+        modesLayout = (RelativeLayout) this.activityReference.weaklyGet().findViewById(R.id.modesLayout);
+        aboutDialog = new AboutDialog(this.activityReference.weaklyGet());
         fadeTransition.setDuration(150L);
+
+        setupButtons();
+        setupEvents(activityReference);
     }
 
-    public boolean isVisible()
+    private boolean isVisible()
     {
         return modesLayout.getVisibility() == View.VISIBLE;
     }
 
-    public void setIsVisible(boolean visible)
+    private void setIsVisible(boolean visible)
     {
         TransitionManager.beginDelayedTransition(modesLayout, fadeTransition);
         modesLayout.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
@@ -64,7 +66,7 @@ public class ModesInterface extends ActivityModule
 
     private void setupButtons()
     {
-        AppCompatActivity compatActivity = getActivityReference().weaklyGet();
+        AppCompatActivity compatActivity = activityReference.weaklyGet();
 
         ImageButton modesButton = (ImageButton)compatActivity.findViewById(R.id.modesButton);
         modesButton.setOnClickListener(new View.OnClickListener()
@@ -91,7 +93,23 @@ public class ModesInterface extends ActivityModule
         {
             @Override
             public void onClick(View v)
-            {aboutDialog.showDialog(getActivityReference().weaklyGet());}
+            {aboutDialog.showDialog(activityReference.weaklyGet());}
+        });
+    }
+
+    private void setupEvents(ActivityReference activityReference)
+    {
+        activityReference.onBackPressed.addListener(new EventListener<DefaultPreventer>()
+        {
+            @Override
+            public void onEvent(DefaultPreventer eventData)
+            {
+                if (isVisible())
+                {
+                    eventData.preventDefault();
+                    setIsVisible(false);
+                }
+            }
         });
     }
 }

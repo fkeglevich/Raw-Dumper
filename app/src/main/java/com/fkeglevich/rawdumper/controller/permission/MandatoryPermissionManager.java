@@ -18,109 +18,75 @@ package com.fkeglevich.rawdumper.controller.permission;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 
-import com.fkeglevich.rawdumper.util.exception.NameNotFoundFromItselfException;
+import com.fkeglevich.rawdumper.activity.ActivityReference;
+import com.fkeglevich.rawdumper.controller.permission.exception.PermissionException;
+import com.fkeglevich.rawdumper.util.Nothing;
+import com.fkeglevich.rawdumper.util.PermissionUtil;
+import com.fkeglevich.rawdumper.util.event.EventDispatcher;
+import com.fkeglevich.rawdumper.util.event.HandlerDispatcher;
+import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
+import com.fkeglevich.rawdumper.util.exception.MessageException;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.fkeglevich.rawdumper.util.Nothing.NOTHING;
 
 /**
  * Created by Flávio Keglevich on 09/08/2017.
  * TODO: Add a class header comment!
  */
 
-class MandatoryPermissionManager
+public class MandatoryPermissionManager
 {
+    private static <T> SimpleDispatcher<T> createDispatcher()
+    {
+        return new HandlerDispatcher<>(Looper.getMainLooper());
+    }
+
     private static final int REQUEST_CODE = 1;
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
-    final IPermissionResultListener permissionResultListener;
+    public final EventDispatcher<Nothing> onAllPermissionsGranted       = createDispatcher();
+    public final EventDispatcher<MessageException> onMissingPermissions = createDispatcher();
 
-    MandatoryPermissionManager(IPermissionResultListener listener)
-    {
-        permissionResultListener = listener;
-    }
-
-    void requestAllPermissions(Activity activity)
+    public void requestAllPermissions(ActivityReference activityReference)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            requestAllPermissionsMarshmallow(activity);
+            requestAllPermissionsMarshmallow(activityReference.weaklyGet());
         else
-            postAllPermissionsWereGrantedAsync();
+            dispatchPermissionsGranted();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
     private void requestAllPermissionsMarshmallow(Activity activity)
     {
-        List<String> deniedPermissions = new ArrayList<>();
-
-        for (String permission : getPermissionsInManifest(activity))
-            if (activity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)
-                deniedPermissions.add(permission);
+        List<String> deniedPermissions = PermissionUtil.getAllDeniedPermissions(activity);
 
         if (!deniedPermissions.isEmpty())
             ActivityCompat.requestPermissions(activity, deniedPermissions.toArray(EMPTY_STRING_ARRAY), REQUEST_CODE);
         else
-            postAllPermissionsWereGrantedAsync();
+            dispatchPermissionsGranted();
     }
 
-    protected void allPermissionsWereGranted(boolean hadDialogPrompt)
+    void sendRequestPermissionsResult(PermissionRequest request)
     {
-        if (permissionResultListener != null)
-            permissionResultListener.onAllPermissionsGranted(hadDialogPrompt);
+        if (request.allPermissionsWereGranted())
+            dispatchPermissionsGranted();
+        else
+            dispatchMissingPermissions(new PermissionException());
     }
 
-    private void missingPermissions()
+    void dispatchMissingPermissions(MessageException exception)
     {
-        if (permissionResultListener != null)
-            permissionResultListener.onMissingMandatoryPermission();
+        onMissingPermissions.dispatchEvent(exception);
     }
 
-    void sendRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    void dispatchPermissionsGranted()
     {
-        if (requestCode == REQUEST_CODE)
-        {
-            for (int value : grantResults)
-                if (value != PackageManager.PERMISSION_GRANTED)
-                {
-                    missingPermissions();
-                    return;
-                }
-
-            allPermissionsWereGranted(true);
-        }
-    }
-
-    private void postAllPermissionsWereGrantedAsync()
-    {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable()
-        {
-            @Override
-            public void run()
-            {allPermissionsWereGranted(false);
-            }
-        });
-    }
-
-    private String[] getPermissionsInManifest(Context context)
-    {
-        try
-        {
-            return context
-                    .getPackageManager()
-                    .getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS)
-                    .requestedPermissions;
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {
-            throw new NameNotFoundFromItselfException();
-        }
+        onAllPermissionsGranted.dispatchEvent(NOTHING);
     }
 }

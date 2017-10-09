@@ -16,13 +16,12 @@
 
 package com.fkeglevich.rawdumper.io.async.function;
 
+import android.util.Log;
+
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
-import com.fkeglevich.rawdumper.controller.camera.exception.DeviceLoadException;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
-
-import java.io.IOException;
 
 /**
  * Created by Flávio Keglevich on 03/09/2017.
@@ -34,15 +33,7 @@ public class LoadDeviceInfoFunction extends ThrowingAsyncFunction<Void, DeviceIn
     @Override
     protected DeviceInfo call(Void argument) throws MessageException
     {
-        try
-        {
-            DeviceInfoLoader deviceInfoLoader = new DeviceInfoLoader();
-            String deviceInfoJson = deviceInfoLoader.loadDeviceInfoJson();
-            return deviceInfoLoader.loadDeviceInfo(deviceInfoJson);
-        }
-        catch (IOException ioe)
-        {
-            throw new DeviceLoadException();
-        }
+        Log.i("hmmm", "what");
+        return new DeviceInfoLoader().loadDeviceInfo();
     }
 }

@@ -16,6 +16,9 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
+import com.fkeglevich.rawdumper.camera.data.Iso;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+
 /**
  * Created by Flávio Keglevich on 27/05/2017.
  * TODO: Add a class header comment!
@@ -23,8 +26,8 @@ package com.fkeglevich.rawdumper.raw.capture;
 
 public class MakerNoteInfo
 {
-    public Integer iso                  = null;
-    public Double exposureTime          = null;
+    public Iso iso                      = null;
+    public ShutterSpeed exposureTime    = null;
     public Double wbTemperature         = null;
     public float[] wbCoordinatesXY      = null;
     public float[] colorMatrix          = null;

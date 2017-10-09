@@ -21,6 +21,7 @@ import android.os.Looper;
 
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunctionContext;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
+import com.fkeglevich.rawdumper.camera.async.function.CameraOpenFunction;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
@@ -31,7 +32,6 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
 public class CameraThread
 {
     private static final String THREAD_NAME = "CameraThread";
-
     private static CameraThread instance = null;
 
     public static CameraThread getInstance()
@@ -40,22 +40,24 @@ public class CameraThread
         return instance;
     }
 
-    private CameraAccess cameraAccess;
+    private final ThrowingAsyncFunctionContext functionContext;
 
     private CameraThread()
     {
         HandlerThread thread = new HandlerThread(THREAD_NAME);
         thread.start();
-        cameraAccess = new CameraAccess(new ThrowingAsyncFunctionContext(thread.getLooper(), Looper.getMainLooper()));
+        functionContext = new ThrowingAsyncFunctionContext(thread.getLooper(), Looper.getMainLooper());
     }
 
-    public void openCamera(int cameraId, AsyncOperation<CameraAccess> callback, AsyncOperation<MessageException> exception)
+    public void openCamera(CameraContext cameraContext, AsyncOperation<TurboCamera> callback,
+                           AsyncOperation<MessageException> exception)
     {
-        cameraAccess.openCameraAsync(cameraId, callback, exception);
+        functionContext.call(new CameraOpenFunction(), cameraContext, callback, exception);
     }
 
-    public void closeCamera()
+    public void closeCamera(TurboCamera turboCamera)
     {
-        cameraAccess.close();
+        Closeable closeableCamera = (Closeable)turboCamera;
+        closeableCamera.close();
     }
 }

@@ -16,42 +16,46 @@
 
 package com.fkeglevich.rawdumper.camera.async.function;
 
+import android.util.Log;
+
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
-import com.fkeglevich.rawdumper.camera.async.CameraAccess;
-import com.fkeglevich.rawdumper.camera.async.SharedCameraSetter;
-import com.fkeglevich.rawdumper.camera.shared.SharedCamera;
-import com.fkeglevich.rawdumper.camera.shared.SharedCameraOpener;
-import com.fkeglevich.rawdumper.camera.shared.SharedData;
-import com.fkeglevich.rawdumper.camera.shared.SharedDataLoader;
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCamera;
+import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCameraImpl;
+import com.fkeglevich.rawdumper.camera.async.impl.TurboCameraImpl;
+import com.fkeglevich.rawdumper.camera.exception.CameraOpenException;
+import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.camera.extension.IntelCameraExtensionLoader;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
+import java.io.IOException;
+
 /**
- * Created by Flávio Keglevich on 13/08/2017.
- * TODO: Add a class header comment!
+ * TODO: Add class header
+ * <p>
+ * Created by Flávio Keglevich on 08/10/17.
  */
 
-public class CameraOpenFunction extends ThrowingAsyncFunction<Integer, CameraAccess, MessageException>
+public class CameraOpenFunction extends ThrowingAsyncFunction<CameraContext, TurboCamera, MessageException>
 {
-    private final SharedCameraSetter setter;
-    private final CameraAccess cameraAccess;
-
-    public CameraOpenFunction(SharedCameraSetter setter, CameraAccess cameraAccess)
-    {
-        this.setter = setter;
-        this.cameraAccess = cameraAccess;
-    }
-
     @Override
-    protected CameraAccess call(Integer argument) throws MessageException
+    protected TurboCamera call(CameraContext context) throws MessageException
     {
-        SharedDataLoader dataLoader = new SharedDataLoader();
-        SharedData sharedData = dataLoader.load();
+        int cameraId = context.getCameraSelector().getAccess().getSelectedCameraId();
 
-        SharedCameraOpener cameraOpener = new SharedCameraOpener(argument, sharedData);
-        SharedCamera sharedCamera = cameraOpener.open();
+        ICameraExtension cameraExtension = IntelCameraExtensionLoader.extendedOpenCamera(cameraId);
+        if (cameraExtension == null)
+            throw new CameraOpenException();
 
-        setter.setSharedCamera(sharedCamera);
-
-        return cameraAccess;
+        try
+        {
+            LowLevelCamera llCamera = new LowLevelCameraImpl(context, cameraExtension);
+            return new TurboCameraImpl(llCamera);
+        }
+        catch (IOException ioe)
+        {
+            throw new CameraOpenException();
+        }
     }
 }

@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.os.Build;
 import android.support.annotation.Keep;
 
 import java.io.IOException;
@@ -35,12 +34,12 @@ class SupportedDeviceList
 
     private SupportedDevice[] supportedDevices;
 
-    String findDeviceInfoFile() throws IOException
+    String findDeviceInfoFile(String deviceModel) throws IOException
     {
         for (SupportedDevice sd : supportedDevices)
-            if (sd.deviceModel.equals(Build.MODEL))
+            if (sd.deviceModel.equals(deviceModel))
                 return sd.deviceInfoFile + DEVICE_FILE_EXTENSION;
 
-        throw new IOException("Couldn't find the device info file! Build.MODEL: " + Build.MODEL);
+        throw new IOException("Couldn't find the device info file! device model: " + deviceModel);
     }
 }

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
-    tools:context="com.fkeglevich.rawdumper.MainActivity">
+    tools:context="com.fkeglevich.rawdumper.MainActivity5">
 
     <io.codetail.widget.RevealFrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +21,7 @@
             android:layout_gravity="bottom"
             app:srcCompat="@drawable/extra_background"/>
 
-        <com.fkeglevich.rawdumper.ui.PausingTextureView
+        <com.fkeglevich.rawdumper.ui.CameraPreviewTexture
             android:id="@+id/textureView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -111,6 +111,24 @@
             app:srcCompat="@drawable/ic_camera_black_24dp"/>
 
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/adjustBarBackground"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_above="@+id/linearLayout2">
+
+        <view
+            android:id="@+id/view2"
+            class="com.lantouzi.wheelview.WheelView"
+            id="@+id/view"
+            app:lwvMarkTextColor="#FFFFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linearLayout2" />
+    </FrameLayout>
 
     <HorizontalScrollView
         android:id="@+id/shutterSpeedScrollView"

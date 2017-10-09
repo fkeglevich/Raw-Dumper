@@ -16,6 +16,9 @@
 
 package com.fkeglevich.rawdumper.camera.extension;
 
+import com.fkeglevich.rawdumper.camera.parameter.Parameter;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
+
 /**
  * Created by Flávio Keglevich on 21/08/2017.
  * TODO: Add a class header comment!
@@ -26,4 +29,8 @@ public class AsusParameters
     public static final String ASUS_XENON_ISO = "Xe_Iso";
     public static final String ASUS_XENON_BRIGHTNESS = "Xe_brightness";
     public static final String ASUS_XENON_EXPOSURE_TIME = "Xe_exposure_time";
+
+    public static final Parameter<Integer> asusXenonIso = ParameterFactory.createReadOnly(ASUS_XENON_ISO, Integer.class);
+    public static final Parameter<Integer> asusXenonBrightness = ParameterFactory.createReadOnly(ASUS_XENON_BRIGHTNESS, Integer.class);
+    public static final Parameter<Integer> asusExposureTime = ParameterFactory.createReadOnly(ASUS_XENON_EXPOSURE_TIME, Integer.class);
 }

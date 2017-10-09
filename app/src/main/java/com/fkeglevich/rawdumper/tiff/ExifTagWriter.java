@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.tiff;
 
+import com.fkeglevich.rawdumper.camera.data.Iso;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.raw.data.Flash;
 import com.fkeglevich.rawdumper.util.MathUtil;
 
@@ -33,8 +35,9 @@ public class ExifTagWriter
     // Calendar tag formatting
     private static final String DATE_PATTERN = "yyyy:MM:dd HH:mm:ss";
 
-    public static int writeExposureTimeTags(TiffWriter tiffWriter, double exposureTime)
+    public static int writeExposureTimeTags(TiffWriter tiffWriter, ShutterSpeed shutterSpeed)
     {
+        double exposureTime = shutterSpeed.getExposureInSeconds();
         int result;
         result = tiffWriter.setField(ExifTag.EXIFTAG_EXPOSURETIME, exposureTime);
         if (result == 0) return result;
@@ -42,9 +45,9 @@ public class ExifTagWriter
         return result;
     }
 
-    public static int writeISOTag(TiffWriter tiffWriter, short iso)
+    public static int writeISOTag(TiffWriter tiffWriter, Iso iso)
     {
-        return tiffWriter.setField(ExifTag.EXIFTAG_ISOSPEEDRATINGS, new short[]{iso}, true);
+        return tiffWriter.setField(ExifTag.EXIFTAG_ISOSPEEDRATINGS, new short[]{(short)iso.getNumericValue()}, true);
     }
 
     public static int writeMakerNoteTag(TiffWriter tiffWriter, byte[] makerNote)

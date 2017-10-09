@@ -22,6 +22,8 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
+import com.fkeglevich.rawdumper.camera.data.Iso;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.raw.data.Flash;
 import com.fkeglevich.rawdumper.raw.info.LensInfo;
 import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
@@ -40,8 +42,8 @@ import java.util.GregorianCalendar;
 public class ExifInfo
 {
     private GregorianCalendar dateTimeOriginal   = null;
-    private Integer iso                          = null;
-    private Double exposureTime                  = null;
+    private Iso iso                              = null;
+    private ShutterSpeed exposureTime            = null;
     private Double aperture                      = null;
     private byte[] originalMakerNote             = null;
     private Double exposureBias                  = null;
@@ -121,10 +123,10 @@ public class ExifInfo
                 }
 
                 if (directory.containsTag(ExifIFD0Directory.TAG_ISO_EQUIVALENT))
-                    iso = directory.getInt(ExifIFD0Directory.TAG_ISO_EQUIVALENT);
+                    iso = Iso.getFromExifDirectory(directory);
 
                 if (directory.containsTag(ExifIFD0Directory.TAG_EXPOSURE_TIME))
-                    exposureTime = directory.getDouble(ExifIFD0Directory.TAG_EXPOSURE_TIME);
+                    exposureTime = ShutterSpeed.getFromExifDirectory(directory);
 
                 if (directory.containsTag(ExifIFD0Directory.TAG_FNUMBER))
                     aperture = directory.getDouble(ExifIFD0Directory.TAG_FNUMBER);
@@ -164,7 +166,7 @@ public class ExifInfo
         }
 
         if (iso != null)
-            ExifTagWriter.writeISOTag(tiffWriter, iso.shortValue());
+            ExifTagWriter.writeISOTag(tiffWriter, iso);
 
         if (exposureTime != null)
             ExifTagWriter.writeExposureTimeTags(tiffWriter, exposureTime);
