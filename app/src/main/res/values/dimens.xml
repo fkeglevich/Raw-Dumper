@@ -5,4 +5,7 @@
 
     <dimen name="round_button_size">40dp</dimen>
     <dimen name="round_button_padding">8dp</dimen>
+
+    <dimen name="manual_controls_spacing">20dp</dimen>
+
 </resources>
