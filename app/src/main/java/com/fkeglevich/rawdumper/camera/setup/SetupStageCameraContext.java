@@ -20,7 +20,6 @@ import android.graphics.SurfaceTexture;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
-import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 /**

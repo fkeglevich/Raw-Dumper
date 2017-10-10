@@ -18,15 +18,12 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import android.support.annotation.NonNull;
 
-import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.data.Iso;
-import com.fkeglevich.rawdumper.camera.extension.Parameters;
 import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.ValueCollectionFactory;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
-import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 
 import java.util.List;

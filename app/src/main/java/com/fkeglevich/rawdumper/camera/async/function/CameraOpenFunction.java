@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.async.function;
 
-import android.util.Log;
-
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;

@@ -17,12 +17,8 @@
 package com.fkeglevich.rawdumper.camera.extension;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.Ev;
-import com.fkeglevich.rawdumper.camera.data.Iso;
-import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
-import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 
 /**
  * TODO: Add class header

@@ -19,10 +19,7 @@ package com.fkeglevich.rawdumper.camera.feature.restriction;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
-import com.fkeglevich.rawdumper.camera.feature.EvFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
-import com.fkeglevich.rawdumper.camera.feature.IsoFeature;
-import com.fkeglevich.rawdumper.camera.feature.ShutterSpeedFeature;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 

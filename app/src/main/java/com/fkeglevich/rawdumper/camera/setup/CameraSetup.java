@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.setup;
 
-import android.util.Log;
 import android.view.TextureView;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
@@ -33,7 +32,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Queue;
 
 /**
  * TODO: Add class header

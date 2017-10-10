@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.io.async.function;
 
-import android.util.Log;
-
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;

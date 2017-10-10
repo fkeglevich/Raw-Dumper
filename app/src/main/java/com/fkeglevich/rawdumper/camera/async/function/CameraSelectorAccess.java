@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.async.function;
 
-import com.fkeglevich.rawdumper.camera.async.CameraSelector;
-
 /**
  * TODO: Add class header
  * <p>

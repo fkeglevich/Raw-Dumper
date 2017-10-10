@@ -16,9 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.helper;
 
-import android.graphics.Matrix;
 import android.hardware.Camera;
-import android.view.TextureView;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;

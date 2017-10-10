@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.async.impl;
 
-import android.util.Log;
-
 import com.fkeglevich.rawdumper.camera.async.Closeable;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCamera;
@@ -26,10 +24,9 @@ import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
-import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.FeatureRecyclerFactory;
+import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
-import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 
 import java.util.List;
 

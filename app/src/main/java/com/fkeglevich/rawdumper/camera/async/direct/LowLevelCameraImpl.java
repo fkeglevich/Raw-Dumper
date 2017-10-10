@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.camera.async.direct;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
-import com.fkeglevich.rawdumper.camera.extension.IntelCameraExtensionLoader;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 

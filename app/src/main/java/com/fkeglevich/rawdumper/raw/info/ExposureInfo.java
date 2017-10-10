@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.support.annotation.Keep;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -20,8 +20,6 @@ import android.content.Context;
 import android.graphics.Matrix;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.TextureView;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
@@ -31,8 +29,6 @@ import com.fkeglevich.rawdumper.util.event.EventListener;
 
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
-
-import static com.fkeglevich.rawdumper.R.id.textureView;
 
 /**
  * TODO: Add class header
