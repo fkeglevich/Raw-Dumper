@@ -19,7 +19,7 @@ TODO list:
  
  - (IN PROGRESS) Reduce overdraw
  
- - (IN PROGRESS) Autorotate the pictures taken using the phone orientation
+ - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - Create OrientationActivity class or similar
  
  - (IMPORTANT - IN PROGRESS) Make the app work on more devices:
@@ -29,12 +29,9 @@ TODO list:
 	
 	- Possible problems:
 	  - Avaliability of the Shutter Speed feature
-	  - Mismatched number of cameras in the json
- 
- - (IMPORTANT - IN PROGRESS) FIX THE GLUE CODE TO MAKE THE APP WORK IN THE NEXT RELEASE!
+	  - (SOLVED) Mismatched number of cameras in the json
  
  - Better handling of SU shell commands
- - (IMPORTANT - IN PROGRESS) Create a better separation layer between the UI and Camera threads
  - Create a better camera "reopening" for the MM Z00A front camera case 
    (and other cases where the camera crashes)
 
@@ -42,9 +39,6 @@ Known bugs:
  - (MINOR) When displaying some dialog alerts, the app can get out from fullscreen state if the user switches to another app
  - (MINOR) When switching the app too fast, in some rare occasions, the camera is opened twice or the preview is frozen on Android Nougat
     - Some changes were made to address this bug, should test again to see if it still happens
- - The ActivityReferenceModule is going to break if the activity is recreated 
-   (this probably won't happen on most executions of Raw Dumper, however, is considered extremely bad practice)
-   (making a standardized way to get a updated weak reference from the activity is probably a better idea)
  
 Done:
 
@@ -62,4 +56,4 @@ Done:
  - Add the brazillian portuguese language
  - Save DNGs using tiles
  - Use the Noise Profile DNG tag
- 
+ - Create a better separation layer between the UI and Camera threads
