@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.camera.async.CameraThread;
@@ -56,6 +57,9 @@ public class MainActivity5 extends ModularActivity
     private TurboCamera turboCamera = null;
     private CameraPreviewTexture textureView;
 
+    private ImageButton switchButton;
+    private CameraSelectorImpl cameraSelector;
+
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,20 @@ public class MainActivity5 extends ModularActivity
         setContentView(R.layout.activity_main);
 
         modesInterface = new ModesInterface(reference);
+        switchButton = (ImageButton) findViewById(R.id.camSwitchButton);
+        switchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraSelector.selectNextCamera();
+                if (turboCamera != null) {
+                    CameraThread.getInstance().closeCamera(turboCamera);
+                    textureView.setAlpha(0);
+                    turboCamera = null;
+                    textureView.startCloseCameraAnimation();
+                    cameraSetup.setupCamera();
+                }
+            }
+        });
 
         mWheelView = (WheelView) findViewById(R.id.view2);
         findViewById(R.id.wheelFrame).setVisibility(View.INVISIBLE);
@@ -70,8 +88,9 @@ public class MainActivity5 extends ModularActivity
         textureView = (CameraPreviewTexture) findViewById(R.id.textureView);
         textureView.setAlpha(0);
 
+        cameraSelector = new CameraSelectorImpl();
         cameraSetup = new CameraSetup(textureView, reference,
-                permissionModule.getPermissionManager(), new CameraSelectorImpl());
+                permissionModule.getPermissionManager(), cameraSelector);
 
         cameraSetup.onComplete.addListener(new EventListener<TurboCamera>() {
             @Override

@@ -43,8 +43,8 @@ public class LowLevelCameraImpl implements LowLevelCamera
         this.cameraExtension = cameraExtension;
         PreviewHelper.setupPreviewTexture(cameraContext, cameraExtension.getCameraDevice());
         LowLevelParameterInterfaceImpl parameterInterface = new LowLevelParameterInterfaceImpl(cameraExtension.getCameraDevice(), lock);
-        parameterInterface.set("preview-size", "1280x960");
-        parameterInterface.set("picture-size", "4096x3072");
+        //parameterInterface.set("preview-size", "1280x960");
+        //parameterInterface.set("picture-size", "4096x3072");
         this.parameterCollection = new ParameterCollection(parameterInterface);
         cameraExtension.getCameraDevice().startPreview();
         ThreadUtil.simpleDelay(150);

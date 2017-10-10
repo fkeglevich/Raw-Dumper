@@ -86,18 +86,31 @@ public class CameraPreviewTexture extends PausingTextureView
 
     public void startOpenCameraAnimation()
     {
-        SupportAnimator animator = createAnimator();
+        startCircularAnimation(true);
+    }
+
+    public void startCloseCameraAnimation()
+    {
+        startCircularAnimation(false);
+    }
+
+    private void startCircularAnimation(boolean openingAnimation)
+    {
+        SupportAnimator animator = createAnimator(openingAnimation);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.setDuration(ANIMATION_DURATION);
         animator.start();
     }
 
     @NonNull
-    private SupportAnimator createAnimator()
+    private SupportAnimator createAnimator(boolean openingAnimator)
     {
         int cx = (getLeft() + getRight()) / 2;
         int cy = (int) (((getTop() + getBottom()) / 2) * scale + translation);
-        return ViewAnimationUtils.createCircularReveal(this, cx, cy, 0, calcFinalRadius(cx, cy));
+        if (openingAnimator)
+            return ViewAnimationUtils.createCircularReveal(this, cx, cy, 0, calcFinalRadius(cx, cy));
+        else
+            return ViewAnimationUtils.createCircularReveal(this, cx, cy, calcFinalRadius(cx, cy), 0);
     }
 
     private float calcFinalRadius(int cx, int cy)
