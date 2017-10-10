@@ -74,7 +74,6 @@ public class MainActivity5 extends ModularActivity
                 cameraSelector.selectNextCamera();
                 if (turboCamera != null) {
                     CameraThread.getInstance().closeCamera(turboCamera);
-                    textureView.setAlpha(0);
                     turboCamera = null;
                     textureView.startCloseCameraAnimation();
                     cameraSetup.setupCamera();
@@ -86,7 +85,6 @@ public class MainActivity5 extends ModularActivity
         findViewById(R.id.wheelFrame).setVisibility(View.INVISIBLE);
 
         textureView = (CameraPreviewTexture) findViewById(R.id.textureView);
-        textureView.setAlpha(0);
 
         cameraSelector = new CameraSelectorImpl();
         cameraSetup = new CameraSetup(textureView, reference,
@@ -134,7 +132,6 @@ public class MainActivity5 extends ModularActivity
     private void init()
     {
         textureView.setupPreview(turboCamera);
-        textureView.setAlpha(1);
         textureView.startOpenCameraAnimation();
 
         List<String> strList = new ArrayList<>();

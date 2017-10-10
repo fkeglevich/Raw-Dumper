@@ -94,9 +94,33 @@ public class CameraPreviewTexture extends PausingTextureView
         startCircularAnimation(false);
     }
 
-    private void startCircularAnimation(boolean openingAnimation)
+    private void startCircularAnimation(final boolean openingAnimation)
     {
         SupportAnimator animator = createAnimator(openingAnimation);
+        animator.addListener(new SupportAnimator.AnimatorListener()
+        {
+            @Override
+            public void onAnimationStart()
+            {
+                show();
+            }
+
+            @Override
+            public void onAnimationEnd()
+            {
+                if (!openingAnimation) hide();
+            }
+
+            @Override
+            public void onAnimationCancel()
+            {
+                if (!openingAnimation) hide();
+            }
+
+            @Override
+            public void onAnimationRepeat()
+            {   }
+        });
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.setDuration(ANIMATION_DURATION);
         animator.start();
@@ -118,5 +142,15 @@ public class CameraPreviewTexture extends PausingTextureView
         int dx = Math.max(cx, getWidth() - cx);
         int dy = Math.max(cy, getHeight() - cy);
         return (float) Math.hypot(dx, dy);
+    }
+
+    private void hide()
+    {
+        setAlpha(0f);
+    }
+
+    private void show()
+    {
+        setAlpha(1f);
     }
 }
