@@ -35,4 +35,14 @@ public class ThreadUtil
         if (!Thread.holdsLock(lock))
             throw new RuntimeException("This method should be called inside a proper synchronized block!");
     }
+
+    public static void simpleDelay(long milis)
+    {
+        try
+        {
+            Thread.sleep(milis);
+        }
+        catch (InterruptedException ignored)
+        {   }
+    }
 }

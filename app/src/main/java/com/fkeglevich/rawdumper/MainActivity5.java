@@ -65,9 +65,10 @@ public class MainActivity5 extends ModularActivity
         modesInterface = new ModesInterface(reference);
 
         mWheelView = (WheelView) findViewById(R.id.view2);
+        findViewById(R.id.wheelFrame).setVisibility(View.INVISIBLE);
 
         textureView = (CameraPreviewTexture) findViewById(R.id.textureView);
-        textureView.setVisibility(View.VISIBLE);
+        textureView.setAlpha(0);
 
         cameraSetup = new CameraSetup(textureView, reference,
                 permissionModule.getPermissionManager(), new CameraSelectorImpl());
@@ -104,7 +105,7 @@ public class MainActivity5 extends ModularActivity
             {
                 if (turboCamera != null) {
                     CameraThread.getInstance().closeCamera(turboCamera);
-                    textureView.setVisibility(View.INVISIBLE);
+                    textureView.setAlpha(0);
                     turboCamera = null;
                 }
             }
@@ -113,8 +114,8 @@ public class MainActivity5 extends ModularActivity
 
     private void init()
     {
-        textureView.setVisibility(View.VISIBLE);
         textureView.setupPreview(turboCamera);
+        textureView.setAlpha(1);
         textureView.startOpenCameraAnimation();
 
         List<String> strList = new ArrayList<>();

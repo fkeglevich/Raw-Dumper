@@ -20,6 +20,7 @@ import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+import com.fkeglevich.rawdumper.util.ThreadUtil;
 
 import java.io.IOException;
 
@@ -46,6 +47,7 @@ public class LowLevelCameraImpl implements LowLevelCamera
         parameterInterface.set("picture-size", "4096x3072");
         this.parameterCollection = new ParameterCollection(parameterInterface);
         cameraExtension.getCameraDevice().startPreview();
+        ThreadUtil.simpleDelay(150);
     }
 
     @Override
