@@ -18,11 +18,12 @@ package com.fkeglevich.rawdumper;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.camera.async.CameraThread;
-import com.fkeglevich.rawdumper.camera.async.impl.CameraSelectorImpl;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.async.impl.CameraSelectorImpl;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.setup.CameraSetup;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
@@ -58,7 +59,7 @@ public class MainActivity5 extends ModularActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //getWindow().setBackgroundDrawable(null);
+        getWindow().setBackgroundDrawable(null);
         setContentView(R.layout.activity_main);
 
         modesInterface = new ModesInterface(reference);
@@ -66,6 +67,7 @@ public class MainActivity5 extends ModularActivity
         mWheelView = (WheelView) findViewById(R.id.view2);
 
         textureView = (CameraPreviewTexture) findViewById(R.id.textureView);
+        textureView.setVisibility(View.VISIBLE);
 
         cameraSetup = new CameraSetup(textureView, reference,
                 permissionModule.getPermissionManager(), new CameraSelectorImpl());
@@ -76,7 +78,6 @@ public class MainActivity5 extends ModularActivity
             {
                 turboCamera = eventData;
                 init();
-                Log.i("CameraSetup", "ON COMPLETE!");
             }
         });
 
@@ -94,7 +95,6 @@ public class MainActivity5 extends ModularActivity
             public void onEvent(Nothing eventData)
             {
                 cameraSetup.setupCamera();
-                Log.i("CameraSetup", "cameraSetup started!");
             }
         });
 
@@ -104,6 +104,7 @@ public class MainActivity5 extends ModularActivity
             {
                 if (turboCamera != null) {
                     CameraThread.getInstance().closeCamera(turboCamera);
+                    textureView.setVisibility(View.INVISIBLE);
                     turboCamera = null;
                 }
             }
@@ -112,9 +113,9 @@ public class MainActivity5 extends ModularActivity
 
     private void init()
     {
+        textureView.setVisibility(View.VISIBLE);
         textureView.setupPreview(turboCamera);
         textureView.startOpenCameraAnimation();
-
 
         List<String> strList = new ArrayList<>();
         List<Iso> isoList = turboCamera.getIsoFeature().getAvailableValues();
@@ -126,6 +127,7 @@ public class MainActivity5 extends ModularActivity
         mWheelView.setItems(strList);
         mWheelView.selectIndex(0);
         mWheelView.setMaxSelectableIndex(strList.size() - 1);
+        mWheelView.setVisibility(View.INVISIBLE);
 
         mWheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
             @Override
