@@ -1,5 +1,5 @@
-# Raw-Dumper
-Raw Dumper is a simple camera app that can take raw pictures on the Zenfone 2 Z00A
+# Raw Dumper
+Raw Dumper is a simple camera app for taking raw pictures on android devices with x86 processors (like the Zenfone 2)
 
 Screenshot:
 
