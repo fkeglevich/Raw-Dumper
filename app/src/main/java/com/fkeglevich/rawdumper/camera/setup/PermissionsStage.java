@@ -32,14 +32,16 @@ public class PermissionsStage implements SetupStage
     @Override
     public void executeStage(final SetupStageLink setupBase)
     {
-        MandatoryPermissionManager permissionManager = setupBase.getPermissionManager();
+        final MandatoryPermissionManager permissionManager = setupBase.getPermissionManager();
 
         permissionManager.onAllPermissionsGranted.addListener(new EventListener<Nothing>()
         {
             @Override
             public void onEvent(Nothing eventData)
             {
+                setupBase.setPermissionToken();
                 setupBase.processNextStage();
+                permissionManager.onAllPermissionsGranted.removeListener(this);
             }
         });
         permissionManager.onMissingPermissions.addListener(new EventListener<MessageException>()
@@ -48,6 +50,7 @@ public class PermissionsStage implements SetupStage
             public void onEvent(MessageException eventData)
             {
                 setupBase.sendException(eventData);
+                permissionManager.onMissingPermissions.removeListener(this);
             }
         });
         permissionManager.requestAllPermissions(setupBase.getActivity());

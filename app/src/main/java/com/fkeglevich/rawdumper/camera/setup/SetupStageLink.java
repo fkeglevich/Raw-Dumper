@@ -49,4 +49,6 @@ interface SetupStageLink
 
     void processNextStage();
     void sendException(MessageException exception);
+
+    void setPermissionToken();
 }

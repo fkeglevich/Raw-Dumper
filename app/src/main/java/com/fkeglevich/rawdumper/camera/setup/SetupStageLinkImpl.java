@@ -120,4 +120,10 @@ class SetupStageLinkImpl implements SetupStageLink
     {
         setupReference.sendException(exception);
     }
+
+    @Override
+    public void setPermissionToken()
+    {
+        setupReference.removeAllStagesOfType(PermissionsStage.class);
+    }
 }
