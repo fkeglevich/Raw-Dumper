@@ -42,7 +42,7 @@ import static com.fkeglevich.rawdumper.R.id.textureView;
 
 public class CameraPreviewTexture extends PausingTextureView
 {
-    private static final int ANIMATION_DURATION = 2000;
+    private static final int ANIMATION_DURATION = 350;
 
     private float scale         = 1f;
     private float translation   = 0f;
