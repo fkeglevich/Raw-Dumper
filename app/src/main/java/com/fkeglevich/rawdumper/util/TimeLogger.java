@@ -29,6 +29,8 @@ import java.lang.reflect.Method;
 public class TimeLogger
 {
     public static final String TAG = "TimeLogger";
+    public static final int CALL_STACK_INDEX = 4;
+
     private final long nanoTime;
 
     public TimeLogger()
@@ -36,9 +38,23 @@ public class TimeLogger
         nanoTime = System.nanoTime();
     }
 
+    public void log(String methodName)
+    {
+        Log.i(TAG, methodName + " time: " + ((System.nanoTime() - nanoTime)/1000000d) + " ms");
+    }
+
+    public void log(Method enclosingMethod)
+    {
+        log(enclosingMethod.getName());
+    }
+
     public void log()
     {
-        String methodName = Thread.currentThread().getStackTrace()[3].getMethodName();
-        Log.i(TAG, methodName + " time: " + ((System.nanoTime() - nanoTime)/1000000d) + " ms");
+        log(getCallingMethodName());
+    }
+
+    private String getCallingMethodName()
+    {
+        return Thread.currentThread().getStackTrace()[CALL_STACK_INDEX].getMethodName();
     }
 }
