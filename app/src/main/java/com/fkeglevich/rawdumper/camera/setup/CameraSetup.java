@@ -28,6 +28,7 @@ import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class CameraSetup
 {
     private final SetupStageLink setupStageLink;
     private final List<SetupStage> setupStages;
-    private final Queue<SetupStage> stageQueue = new LinkedList<>();
+    private final List<SetupStage> stageQueue = new ArrayList<>();
 
     private boolean setupIsRunning = false;
     TurboCamera turboCamera = null;
@@ -75,10 +76,7 @@ public class CameraSetup
     void processNextStage()
     {
         if (!stageQueue.isEmpty())
-        {
-            Log.i("ASD", "AAAAAAAA");
-            stageQueue.poll().executeStage(setupStageLink);
-        }
+            stageQueue.remove(0).executeStage(setupStageLink);
         else
         {
             Assert.isNotNull(turboCamera);

@@ -33,7 +33,6 @@ public class LoadDeviceInfoFunction extends ThrowingAsyncFunction<Void, DeviceIn
     @Override
     protected DeviceInfo call(Void argument) throws MessageException
     {
-        Log.i("hmmm", "what");
         return new DeviceInfoLoader().loadDeviceInfo();
     }
 }

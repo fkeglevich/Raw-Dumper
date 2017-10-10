@@ -100,7 +100,6 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     public void close()
     {
         recyclerFactory.cleanUpAllFeatures();
-        Log.i("ASD", "CLOSED");
         lowLevelCamera.close();
     }
 }
