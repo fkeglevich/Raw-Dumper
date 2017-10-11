@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.tiff;
 
+import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
@@ -87,9 +88,9 @@ public class ExifTagWriter
         return tiffWriter.setField(ExifTag.EXIFTAG_EXIFVERSION, exifVersion, false);
     }
 
-    public static int writeExposureBiasTag(TiffWriter tiffWriter, double exposureBias)
+    public static int writeExposureBiasTag(TiffWriter tiffWriter, Ev exposureBias)
     {
-        return tiffWriter.setField(ExifTag.EXIFTAG_EXPOSUREBIASVALUE, exposureBias);
+        return tiffWriter.setField(ExifTag.EXIFTAG_EXPOSUREBIASVALUE, (double) exposureBias.getValue());
     }
 
     public static int writeFlashTag(TiffWriter tiffWriter, ExifFlash flash)

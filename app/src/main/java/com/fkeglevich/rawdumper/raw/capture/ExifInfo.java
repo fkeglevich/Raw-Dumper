@@ -22,6 +22,7 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
+import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
@@ -46,7 +47,7 @@ public class ExifInfo
     private ShutterSpeed exposureTime            = null;
     private Double aperture                      = null;
     private byte[] originalMakerNote             = null;
-    private Double exposureBias                  = null;
+    private Ev exposureBias                      = null;
     private ExifFlash flash                      = null;
     private Float focalLength                    = null;
 
@@ -99,7 +100,7 @@ public class ExifInfo
 
     private void getSomeDataFrom(Camera.Parameters parameters)
     {
-        exposureBias = (double)(parameters.getExposureCompensationStep() * parameters.getExposureCompensation());
+        exposureBias = Ev.create(parameters.getExposureCompensationStep() * parameters.getExposureCompensation());
         focalLength = parameters.getFocalLength();
 
         //TODO: Better handling of flash
@@ -135,7 +136,7 @@ public class ExifInfo
                     originalMakerNote = directory.getByteArray(ExifIFD0Directory.TAG_MAKERNOTE);
 
                 if (directory.containsTag(ExifIFD0Directory.TAG_EXPOSURE_BIAS))
-                    exposureBias = directory.getDouble(ExifIFD0Directory.TAG_EXPOSURE_BIAS);
+                    exposureBias = Ev.getFromExifDirectory(directory);
 
                 if (directory.containsTag(ExifIFD0Directory.TAG_FLASH))
                     flash = ExifFlash.getFlashFromValue((short)directory.getInt(ExifIFD0Directory.TAG_FLASH));

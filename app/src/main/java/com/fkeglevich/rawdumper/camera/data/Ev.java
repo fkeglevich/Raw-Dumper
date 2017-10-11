@@ -16,6 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
+import com.drew.metadata.Directory;
+import com.drew.metadata.MetadataException;
+import com.drew.metadata.exif.ExifIFD0Directory;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -30,6 +34,11 @@ public class Ev implements Displayable
 {
     public static final Ev DEFAULT = new Ev(0.0f);
     private static final DecimalFormat DEFAULT_FORMAT = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+
+    public static Ev getFromExifDirectory(Directory directory) throws MetadataException
+    {
+        return create((float) directory.getDouble(ExifIFD0Directory.TAG_EXPOSURE_BIAS));
+    }
 
     public static Ev create(float evValue)
     {
