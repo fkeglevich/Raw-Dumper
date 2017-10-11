@@ -139,7 +139,7 @@ public class ExifInfo
                     exposureBias = Ev.getFromExifDirectory(directory);
 
                 if (directory.containsTag(ExifIFD0Directory.TAG_FLASH))
-                    flash = ExifFlash.getFlashFromValue((short)directory.getInt(ExifIFD0Directory.TAG_FLASH));
+                    flash = ExifFlash.getFromExifDirectory(directory);
 
                 if (directory.containsTag(ExifIFD0Directory.TAG_FOCAL_LENGTH))
                     focalLength = directory.getFloat(ExifIFD0Directory.TAG_FOCAL_LENGTH);

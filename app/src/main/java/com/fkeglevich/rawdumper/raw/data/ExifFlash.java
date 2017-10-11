@@ -16,6 +16,10 @@
 
 package com.fkeglevich.rawdumper.raw.data;
 
+import com.drew.metadata.Directory;
+import com.drew.metadata.MetadataException;
+import com.drew.metadata.exif.ExifIFD0Directory;
+
 /**
  * Enumerates the implemented values of the ExifFlash Exif tag
  *
@@ -37,6 +41,11 @@ public enum ExifFlash
                 return exifFlash;
 
         return UNKNOWN;
+    }
+
+    public static ExifFlash getFromExifDirectory(Directory directory) throws MetadataException
+    {
+        return getFlashFromValue((short)directory.getInt(ExifIFD0Directory.TAG_FLASH));
     }
 
     ExifFlash(short exifValue)
