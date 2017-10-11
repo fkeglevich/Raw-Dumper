@@ -24,7 +24,7 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
-import com.fkeglevich.rawdumper.raw.data.Flash;
+import com.fkeglevich.rawdumper.raw.data.ExifFlash;
 import com.fkeglevich.rawdumper.raw.info.LensInfo;
 import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
@@ -47,7 +47,7 @@ public class ExifInfo
     private Double aperture                      = null;
     private byte[] originalMakerNote             = null;
     private Double exposureBias                  = null;
-    private Flash flash                          = null;
+    private ExifFlash flash                      = null;
     private Float focalLength                    = null;
 
     public void getExifDataFromCapture(CaptureInfo captureInfo)
@@ -104,7 +104,7 @@ public class ExifInfo
 
         //TODO: Better handling of flash
         if (!Camera.Parameters.FLASH_MODE_AUTO.equals(parameters.getFlashMode()))
-            flash = Camera.Parameters.FLASH_MODE_OFF.equals(parameters.getFlashMode()) ? Flash.DID_NOT_FIRE : Flash.FIRED;
+            flash = Camera.Parameters.FLASH_MODE_OFF.equals(parameters.getFlashMode()) ? ExifFlash.DID_NOT_FIRE : ExifFlash.FIRED;
     }
 
     private boolean getSomeDataFrom(byte[] extraJpegBytes, boolean extractMakerNotes)
@@ -138,7 +138,7 @@ public class ExifInfo
                     exposureBias = directory.getDouble(ExifIFD0Directory.TAG_EXPOSURE_BIAS);
 
                 if (directory.containsTag(ExifIFD0Directory.TAG_FLASH))
-                    flash = Flash.getFlashFromValue((short)directory.getInt(ExifIFD0Directory.TAG_FLASH));
+                    flash = ExifFlash.getFlashFromValue((short)directory.getInt(ExifIFD0Directory.TAG_FLASH));
 
                 if (directory.containsTag(ExifIFD0Directory.TAG_FOCAL_LENGTH))
                     focalLength = directory.getFloat(ExifIFD0Directory.TAG_FOCAL_LENGTH);
@@ -180,7 +180,7 @@ public class ExifInfo
         if (exposureBias != null)
             ExifTagWriter.writeExposureBiasTag(tiffWriter, exposureBias);
 
-        if (flash != null && flash != Flash.UNKNOWN)
+        if (flash != null && flash != ExifFlash.UNKNOWN)
             ExifTagWriter.writeFlashTag(tiffWriter, flash);
 
         if (focalLength != null)

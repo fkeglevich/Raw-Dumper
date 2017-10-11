@@ -17,12 +17,12 @@
 package com.fkeglevich.rawdumper.raw.data;
 
 /**
- * Enumerates the implemented values of the Flash Exif tag
+ * Enumerates the implemented values of the ExifFlash Exif tag
  *
  * Created by Flávio Keglevich on 27/05/2017.
  */
 
-public enum Flash
+public enum ExifFlash
 {
     DID_NOT_FIRE((short)0),
     FIRED((short)1),
@@ -30,7 +30,7 @@ public enum Flash
 
     private final short exifValue;
 
-    public static Flash getFlashFromValue(short exifValue)
+    public static ExifFlash getFlashFromValue(short exifValue)
     {
         switch (exifValue)
         {
@@ -40,7 +40,7 @@ public enum Flash
         }
     }
 
-    Flash(short exifValue)
+    ExifFlash(short exifValue)
     {
         this.exifValue = exifValue;
     }
