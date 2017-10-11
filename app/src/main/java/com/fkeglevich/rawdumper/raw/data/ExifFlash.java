@@ -32,12 +32,11 @@ public enum ExifFlash
 
     public static ExifFlash getFlashFromValue(short exifValue)
     {
-        switch (exifValue)
-        {
-            case 0: return DID_NOT_FIRE;
-            case 1: return FIRED;
-            default: return UNKNOWN;
-        }
+        for (ExifFlash exifFlash : ExifFlash.values())
+            if (exifFlash.exifValue == exifValue)
+                return exifFlash;
+
+        return UNKNOWN;
     }
 
     ExifFlash(short exifValue)
