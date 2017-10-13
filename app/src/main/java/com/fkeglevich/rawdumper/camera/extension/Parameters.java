@@ -17,8 +17,11 @@
 package com.fkeglevich.rawdumper.camera.extension;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
+
+import java.util.List;
 
 /**
  * TODO: Add class header
@@ -33,4 +36,8 @@ public class Parameters
     public static final Parameter<Float> EXPOSURE_COMPENSATION_STEP = ParameterFactory.createReadOnly("exposure-compensation-step", Float.TYPE);
 
     public static final Parameter<CaptureSize> PREVIEW_SIZE = ParameterFactory.create("preview-size", CaptureSize.class);
+
+    public static final Parameter<Flash> FLASH_MODE = ParameterFactory.create("flash-mode", Flash.class);
+    public static final Parameter<List<Flash>> FLASH_MODE_VALUES = ParameterFactory.createReadOnlyList("flash-mode-values", Flash.class);
+
 }
