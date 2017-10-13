@@ -38,9 +38,9 @@ class ListDecoder<T> implements ValueDecoder<List<T>>
     @Override
     public List<T> decode(String value)
     {
-        if (value == null)
-            return null;
         List<T> result = new ArrayList<>();
+        if (value == null) return result;
+
         StringTokenizer tokenizer = new StringTokenizer(value, ",");
 
         while (tokenizer.hasMoreElements())
