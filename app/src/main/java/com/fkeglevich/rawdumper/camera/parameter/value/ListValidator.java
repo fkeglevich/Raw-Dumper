@@ -16,6 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.parameter.value;
 
+import android.support.annotation.NonNull;
+
+import com.fkeglevich.rawdumper.camera.parameter.Parameter;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -28,6 +33,12 @@ import java.util.List;
 public class ListValidator<V> implements ValueValidator<V, List<V>>
 {
     private final List<V> valueList;
+
+    @NonNull
+    public static <V> ListValidator<V> createFromListParameter(ParameterCollection parameterCollection, Parameter<List<V>> listParameter)
+    {
+        return new ListValidator<>(parameterCollection.get(listParameter));
+    }
 
     public ListValidator(List<V> valueList)
     {
