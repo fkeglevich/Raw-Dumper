@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
-import android.hardware.Camera;
 import android.support.annotation.Nullable;
 
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
