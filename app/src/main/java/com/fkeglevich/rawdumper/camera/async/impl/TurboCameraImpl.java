@@ -21,6 +21,7 @@ import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCamera;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Ev;
+import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
@@ -44,6 +45,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private WritableFeature<Iso, List<Iso>>                     isoFeature;
     private WritableFeature<ShutterSpeed, List<ShutterSpeed>>   shutterSpeedFeature;
     private WritableFeature<Ev, List<Ev>>                       evFeature;
+    private WritableFeature<Flash, List<Flash>>                 flashFeature;
     private Feature<CaptureSize>                                previewFeature;
 
     private ExposureRestriction                                 exposureRestriction;
@@ -61,6 +63,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         isoFeature          = recyclerFactory.createIsoFeature();
         shutterSpeedFeature = recyclerFactory.createShutterSpeedFeature();
         evFeature           = recyclerFactory.createEVFeature();
+        flashFeature        = recyclerFactory.createFlashFeature();
         previewFeature      = recyclerFactory.createPreviewFeature();
     }
 
@@ -85,6 +88,12 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     public WritableFeature<Ev, List<Ev>> getEVFeature()
     {
         return evFeature;
+    }
+
+    @Override
+    public WritableFeature<Flash, List<Flash>> getFlashFeature()
+    {
+        return flashFeature;
     }
 
     @Override

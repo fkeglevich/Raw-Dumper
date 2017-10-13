@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.camera.feature;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Ev;
+import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
@@ -74,6 +75,13 @@ public class FeatureRecyclerFactory
     public WritableFeature<Ev, List<Ev>> createEVFeature()
     {
         EvFeature result = EvFeature.create(parameterCollection);
+        registerFeature(result);
+        return result;
+    }
+
+    public WritableFeature<Flash, List<Flash>> createFlashFeature()
+    {
+        FlashFeature result = new FlashFeature(parameterCollection);
         registerFeature(result);
         return result;
     }

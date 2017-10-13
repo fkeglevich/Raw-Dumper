@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.async;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Ev;
+import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
@@ -36,6 +37,8 @@ public interface TurboCamera
     WritableFeature<Iso, List<Iso>> getIsoFeature();
     WritableFeature<ShutterSpeed, List<ShutterSpeed>> getShutterSpeedFeature();
     WritableFeature<Ev, List<Ev>> getEVFeature();
+
+    WritableFeature<Flash, List<Flash>> getFlashFeature();
 
     Feature<CaptureSize> getPreviewFeature();
 }
