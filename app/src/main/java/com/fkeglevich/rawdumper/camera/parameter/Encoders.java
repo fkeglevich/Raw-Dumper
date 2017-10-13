@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.parameter;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.data.Flash;
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +54,13 @@ class Encoders
         dispatcher.put(CaptureSize.class, new ValueEncoder<CaptureSize>() {
             @Override
             public String encode(CaptureSize value) {return value.getWidth() + "x" + value.getHeight(); }
+        });
+        dispatcher.put(Flash.class, new ValueEncoder<Flash>()
+        {
+            @Override
+            public String encode(Flash value)
+            {return value.displayValue();
+            }
         });
     }
 
