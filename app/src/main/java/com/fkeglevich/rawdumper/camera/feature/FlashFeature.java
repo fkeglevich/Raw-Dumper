@@ -35,4 +35,10 @@ public class FlashFeature extends WritableFeature<Flash, List<Flash>>
     {
         super(Parameters.FLASH_MODE, parameterCollection, ListValidator.createFromListParameter(parameterCollection, Parameters.FLASH_MODE_VALUES));
     }
+
+    @Override
+    public boolean isAvailable()
+    {
+        return getAvailableValues().size() > 1;
+    }
 }
