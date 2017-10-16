@@ -23,6 +23,7 @@ import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
+import com.fkeglevich.rawdumper.util.Nullable;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ import java.util.List;
 public interface TurboCamera
 {
     WritableFeature<Iso, List<Iso>> getIsoFeature();
+    Feature<Nullable<Iso>> getIsoMeteringFeature();
     WritableFeature<ShutterSpeed, List<ShutterSpeed>> getShutterSpeedFeature();
     WritableFeature<Ev, List<Ev>> getEVFeature();
 
