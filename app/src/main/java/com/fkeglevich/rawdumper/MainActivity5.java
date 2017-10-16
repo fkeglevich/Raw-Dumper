@@ -17,6 +17,8 @@
 package com.fkeglevich.rawdumper;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -26,6 +28,7 @@ import com.fkeglevich.rawdumper.camera.async.CameraThread;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.async.impl.CameraSelectorImpl;
 import com.fkeglevich.rawdumper.camera.data.Iso;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.setup.CameraSetup;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
@@ -33,6 +36,7 @@ import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
 import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 import com.fkeglevich.rawdumper.util.Nothing;
+import com.fkeglevich.rawdumper.util.Nullable;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 import com.lantouzi.wheelview.WheelView;
@@ -129,6 +133,8 @@ public class MainActivity5 extends ModularActivity
         });
     }
 
+    private Handler handler;
+
     private void init()
     {
         textureView.setupPreview(turboCamera);
@@ -159,5 +165,31 @@ public class MainActivity5 extends ModularActivity
 
             }
         });
+
+        handler = new Handler(Looper.getMainLooper());
+        meterTimerLoop();
+    }
+
+    private void meterTimerLoop()
+    {
+        handler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                if (turboCamera != null)
+                {
+                    Nullable<Iso> iso = turboCamera.getIsoMeteringFeature().getValue();
+                    Nullable<ShutterSpeed> shutterSpeed = turboCamera.getSSMeteringFeature().getValue();
+
+                    if (iso.isPresent())
+                        Log.i("METERING", "Iso: " + iso.get().displayValue());
+
+                    if (shutterSpeed.isPresent())
+                        Log.i("METERING", "SS: " + shutterSpeed.get().displayValue());
+                }
+                meterTimerLoop();
+            }
+        }, 100);
     }
 }
