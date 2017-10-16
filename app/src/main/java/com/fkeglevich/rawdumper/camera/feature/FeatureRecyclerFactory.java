@@ -23,6 +23,7 @@ import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+import com.fkeglevich.rawdumper.util.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,9 +66,23 @@ public class FeatureRecyclerFactory
         return result;
     }
 
+    public Feature<Nullable<Iso>> createIsoMeteringFeature()
+    {
+        IsoMeteringFeature result = new IsoMeteringFeature(parameterCollection);
+        registerFeature(result);
+        return result;
+    }
+
     public WritableFeature<ShutterSpeed, List<ShutterSpeed>> createShutterSpeedFeature()
     {
         ShutterSpeedFeature result = ShutterSpeedFeature.create(cameraContext.getCameraInfo().getExposure(), parameterCollection);
+        registerFeature(result);
+        return result;
+    }
+
+    public Feature<Nullable<ShutterSpeed>> createSSMeteringFeature()
+    {
+        SSMeteringFeature result = new SSMeteringFeature(parameterCollection);
         registerFeature(result);
         return result;
     }

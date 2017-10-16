@@ -19,8 +19,10 @@ package com.fkeglevich.rawdumper.camera.parameter;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
 import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
+import com.fkeglevich.rawdumper.util.Nullable;
 
 /**
  * TODO: Add class header
@@ -30,25 +32,28 @@ import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 
 public class ExposureParameterFactory
 {
+    private static final ValueDecoder<Iso> BASIC_ISO_DECODER = new ValueDecoder<Iso>()
+    {
+        @Override
+        public Iso decode(String value)
+        {
+            return Iso.create(Integer.parseInt(value));
+        }
+    };
+
+    private static final ValueEncoder<Iso> BASIC_ISO_ENCODER = new ValueEncoder<Iso>()
+    {
+        @Override
+        public String encode(Iso value)
+        {
+            return "" + value.getNumericValue();
+        }
+    };
+
     public static Parameter<Iso> createIsoParameter(ExposureInfo exposureInfo)
     {
-        ValueDecoder<Iso> isoDecoder = createExposureParameterDecoder(Iso.AUTO, exposureInfo.getIsoAutoValue(), new ValueDecoder<Iso>() {
-            @Override
-            public Iso decode(String value)
-            {
-                return Iso.create(Integer.parseInt(value));
-            }
-        });
-
-        ValueEncoder<Iso> isoEncoder = createExposureParameterEncoder(Iso.AUTO, exposureInfo.getIsoAutoValue(), new ValueEncoder<Iso>()
-        {
-            @Override
-            public String encode(Iso value)
-            {
-                return "" + value.getNumericValue();
-            }
-        });
-
+        ValueDecoder<Iso> isoDecoder = createExposureParameterDecoder(Iso.AUTO, exposureInfo.getIsoAutoValue(), BASIC_ISO_DECODER);
+        ValueEncoder<Iso> isoEncoder = createExposureParameterEncoder(Iso.AUTO, exposureInfo.getIsoAutoValue(), BASIC_ISO_ENCODER);
         return StaticParameter.create(exposureInfo.getIsoParameter(), isoDecoder, isoEncoder);
     }
 
@@ -109,6 +114,32 @@ public class ExposureParameterFactory
         };
 
         return StaticParameter.create("exposure-compensation", evDecoder, evEncoder);
+    }
+
+    public static Parameter<Nullable<Iso>> createIsoMeteringParameter()
+    {
+        return StaticParameter.createReadOnly(AsusParameters.ASUS_XENON_ISO, new ValueDecoder<Nullable<Iso>>()
+        {
+            @Override
+            public Nullable<Iso> decode(String value)
+            {
+                int numeric = Integer.parseInt(value);
+                return Nullable.of(numeric == 0 ? null : Iso.create(numeric));
+            }
+        });
+    }
+
+    public static Parameter<Nullable<ShutterSpeed>> createSSMeteringParameter()
+    {
+        return StaticParameter.createReadOnly(AsusParameters.ASUS_XENON_EXPOSURE_TIME, new ValueDecoder<Nullable<ShutterSpeed>>()
+        {
+            @Override
+            public Nullable<ShutterSpeed> decode(String value)
+            {
+                int numeric = Integer.parseInt(value);
+                return Nullable.of(numeric == 0 ? null : ShutterSpeed.decodeIntegerExposureTime(numeric));
+            }
+        });
     }
 
     private static <T> ValueDecoder<T> createExposureParameterDecoder(final T auto,

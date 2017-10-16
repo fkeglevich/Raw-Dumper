@@ -28,6 +28,7 @@ import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FeatureRecyclerFactory;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
+import com.fkeglevich.rawdumper.util.Nullable;
 
 import java.util.List;
 
@@ -43,7 +44,9 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private final FeatureRecyclerFactory recyclerFactory;
 
     private WritableFeature<Iso, List<Iso>>                     isoFeature;
+    private Feature<Nullable<Iso>>                              isoMeteringFeature;
     private WritableFeature<ShutterSpeed, List<ShutterSpeed>>   shutterSpeedFeature;
+    private Feature<Nullable<ShutterSpeed>>                     ssMeteringFeature;
     private WritableFeature<Ev, List<Ev>>                       evFeature;
     private WritableFeature<Flash, List<Flash>>                 flashFeature;
     private Feature<CaptureSize>                                previewFeature;
@@ -61,7 +64,9 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private void createFeatures()
     {
         isoFeature          = recyclerFactory.createIsoFeature();
+        isoMeteringFeature  = recyclerFactory.createIsoMeteringFeature();
         shutterSpeedFeature = recyclerFactory.createShutterSpeedFeature();
+        ssMeteringFeature   = recyclerFactory.createSSMeteringFeature();
         evFeature           = recyclerFactory.createEVFeature();
         flashFeature        = recyclerFactory.createFlashFeature();
         previewFeature      = recyclerFactory.createPreviewFeature();
@@ -79,9 +84,21 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     }
 
     @Override
+    public Feature<Nullable<Iso>> getIsoMeteringFeature()
+    {
+        return isoMeteringFeature;
+    }
+
+    @Override
     public WritableFeature<ShutterSpeed, List<ShutterSpeed>> getShutterSpeedFeature()
     {
         return shutterSpeedFeature;
+    }
+
+    @Override
+    public Feature<Nullable<ShutterSpeed>> getSSMeteringFeature()
+    {
+        return ssMeteringFeature;
     }
 
     @Override

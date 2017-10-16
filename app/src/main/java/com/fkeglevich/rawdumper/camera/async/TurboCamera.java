@@ -38,6 +38,7 @@ public interface TurboCamera
     WritableFeature<Iso, List<Iso>> getIsoFeature();
     Feature<Nullable<Iso>> getIsoMeteringFeature();
     WritableFeature<ShutterSpeed, List<ShutterSpeed>> getShutterSpeedFeature();
+    Feature<Nullable<ShutterSpeed>> getSSMeteringFeature();
     WritableFeature<Ev, List<Ev>> getEVFeature();
 
     WritableFeature<Flash, List<Flash>> getFlashFeature();
