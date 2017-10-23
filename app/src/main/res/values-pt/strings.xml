@@ -81,4 +81,7 @@
         \nLicença: https://github.com/google/material-design-icons/blob/master/LICENSE
     </string>
     <string name="error_saving_file">Erro ao salvar o arquivo</string>
+    <string name="ev_changed_notification">EV mudou para <xliff:g id="newValue">%s</xliff:g></string>
+    <string name="iso_changed_notification">ISO mudou para <xliff:g id="newValue">%s</xliff:g></string>
+    <string name="ss_changed_notification">Tempo de exposição mudou para <xliff:g id="newValue">%s</xliff:g></string>
 </resources>
