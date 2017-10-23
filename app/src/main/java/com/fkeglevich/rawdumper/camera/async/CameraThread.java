@@ -18,11 +18,18 @@ package com.fkeglevich.rawdumper.camera.async;
 
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunctionContext;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
+import com.fkeglevich.rawdumper.async.operation.WrappingOperation;
+import com.fkeglevich.rawdumper.camera.async.function.CameraCloseFunction;
 import com.fkeglevich.rawdumper.camera.async.function.CameraOpenFunction;
+import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
+
+import java.util.Objects;
 
 /**
  * Created by Flávio Keglevich on 09/08/2017.
@@ -41,6 +48,7 @@ public class CameraThread
     }
 
     private final ThrowingAsyncFunctionContext functionContext;
+    private TurboCamera openedCamera = null;
 
     private CameraThread()
     {
@@ -49,15 +57,63 @@ public class CameraThread
         functionContext = new ThrowingAsyncFunctionContext(thread.getLooper(), Looper.getMainLooper());
     }
 
-    public void openCamera(CameraContext cameraContext, AsyncOperation<TurboCamera> callback,
+    public synchronized void openCamera(CameraContext cameraContext, AsyncOperation<TurboCamera> callback,
                            AsyncOperation<MessageException> exception)
     {
-        functionContext.call(new CameraOpenFunction(), cameraContext, callback, exception);
+        if (getCurrentCamera() != null)
+            throw new IllegalStateException("Camera is already opened!");
+        functionContext.call(new CameraOpenFunction(), cameraContext, wrapOpenCallback(callback), exception);
     }
 
-    public void closeCamera(TurboCamera turboCamera)
+    public void closeCamera()
     {
-        Closeable closeableCamera = (Closeable)turboCamera;
-        closeableCamera.close();
+        assertCameraWasOpened();
+        functionContext.ignoreAllPendingCalls();
+        ((Closeable) getCurrentCamera()).close();
+        openedCamera = null;
+    }
+
+    public void closeCameraAsync(AsyncOperation<Nothing> callback)
+    {
+        assertCameraWasOpened();
+        functionContext.call(new CameraCloseFunction(), getCurrentCamera(), wrapCloseCallback(callback));
+    }
+
+    public TurboCamera getCurrentCamera()
+    {
+        return openedCamera;
+    }
+
+    @NonNull
+    private WrappingOperation<TurboCamera> wrapOpenCallback(final AsyncOperation<TurboCamera> callback)
+    {
+        return new WrappingOperation<TurboCamera>(callback)
+        {
+            @Override
+            protected void execute(TurboCamera argument)
+            {
+                openedCamera = argument;
+                executeWrapped(argument);
+            }
+        };
+    }
+
+    @NonNull
+    private WrappingOperation<Nothing> wrapCloseCallback(final AsyncOperation<Nothing> callback)
+    {
+        return new WrappingOperation<Nothing>(callback)
+        {
+            @Override
+            protected void execute(Nothing argument)
+            {
+                openedCamera = null;
+                executeWrapped(argument);
+            }
+        };
+    }
+
+    private void assertCameraWasOpened()
+    {
+        if (getCurrentCamera() == null) throw new IllegalStateException("Camera wasn't opened!");
     }
 }
