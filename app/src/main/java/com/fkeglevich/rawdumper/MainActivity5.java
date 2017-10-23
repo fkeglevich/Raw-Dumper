@@ -17,32 +17,29 @@
 package com.fkeglevich.rawdumper;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.fkeglevich.rawdumper.activity.ModularActivity;
-import com.fkeglevich.rawdumper.camera.async.CameraThread;
+import com.fkeglevich.rawdumper.camera.async.CameraManager;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import com.fkeglevich.rawdumper.camera.async.impl.CameraSelectorImpl;
-import com.fkeglevich.rawdumper.camera.data.Iso;
-import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
-import com.fkeglevich.rawdumper.camera.setup.CameraSetup;
+import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
+import com.fkeglevich.rawdumper.controller.adapter.ButtonEnablerController;
+import com.fkeglevich.rawdumper.controller.adapter.DismissibleManagerAdapter;
+import com.fkeglevich.rawdumper.controller.adapter.ToastNotificationController;
+import com.fkeglevich.rawdumper.controller.adapter.WheelViewAdapter;
+import com.fkeglevich.rawdumper.controller.feature.DisplayableFeatureController;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
 import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
 import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 import com.fkeglevich.rawdumper.util.Nothing;
-import com.fkeglevich.rawdumper.util.Nullable;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 import com.lantouzi.wheelview.WheelView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Flávio Keglevich on 29/08/2017.
@@ -56,13 +53,22 @@ public class MainActivity5 extends ModularActivity
     private MandatoryPermissionModule permissionModule = new MandatoryPermissionModule(reference);//new MandatoryRootModule(reference);
 
     private ModesInterface modesInterface;
-    private WheelView mWheelView;
-    private CameraSetup cameraSetup;
-    private TurboCamera turboCamera = null;
+    private WheelView wheelView;
+    private CameraManager cameraManager;
     private CameraPreviewTexture textureView;
 
     private ImageButton switchButton;
-    private CameraSelectorImpl cameraSelector;
+    private Button isoButton;
+
+    private EventListener<Nothing> pauseListener = new EventListener<Nothing>() {
+        @Override
+        public void onEvent(Nothing eventData)
+        {
+            cameraManager.closeCamera();
+            textureView.setAlpha(0);
+        }
+    };
+    private DisplayableFeatureController controller;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -75,35 +81,40 @@ public class MainActivity5 extends ModularActivity
         switchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraSelector.selectNextCamera();
-                if (turboCamera != null) {
-                    CameraThread.getInstance().closeCamera(turboCamera);
-                    turboCamera = null;
-                    textureView.startCloseCameraAnimation();
-                    cameraSetup.setupCamera();
-                }
+                textureView.startCloseCameraAnimation();
+                cameraManager.switchCamera();
             }
         });
 
-        mWheelView = (WheelView) findViewById(R.id.view2);
-        findViewById(R.id.wheelFrame).setVisibility(View.INVISIBLE);
+        wheelView = (WheelView) findViewById(R.id.view2);
+        View wheelParent = findViewById(R.id.wheelFrame);
+        isoButton = (Button) findViewById(R.id.isoBt);
+
+        ButtonEnablerController buttonController = new ButtonEnablerController(isoButton,
+                new WheelViewAdapter(wheelView), wheelParent, new ToastNotificationController(this, R.string.iso_changed_notification),
+                new DismissibleManagerAdapter());
+
+        controller = new DisplayableFeatureController(buttonController)
+        {
+            @Override
+            protected WritableFeature selectFeature(TurboCamera camera)
+            {
+                return camera.getIsoFeature();
+            }
+        };
 
         textureView = (CameraPreviewTexture) findViewById(R.id.textureView);
 
-        cameraSelector = new CameraSelectorImpl();
-        cameraSetup = new CameraSetup(textureView, reference,
-                permissionModule.getPermissionManager(), cameraSelector);
-
-        cameraSetup.onComplete.addListener(new EventListener<TurboCamera>() {
+        cameraManager = new CameraManager(reference, textureView);
+        cameraManager.onCameraOpened.addListener(new EventListener<TurboCamera>() {
             @Override
             public void onEvent(TurboCamera eventData)
             {
-                turboCamera = eventData;
-                init();
+                init(eventData);
             }
         });
 
-        cameraSetup.onException.addListener(new EventListener<MessageException>() {
+        cameraManager.onCameraException.addListener(new EventListener<MessageException>() {
             @Override
             public void onEvent(MessageException eventData)
             {
@@ -116,80 +127,19 @@ public class MainActivity5 extends ModularActivity
             @Override
             public void onEvent(Nothing eventData)
             {
-                cameraSetup.setupCamera();
-            }
-        });
-
-        reference.onPause.addListener(new EventListener<Nothing>() {
-            @Override
-            public void onEvent(Nothing eventData)
-            {
-                if (turboCamera != null) {
-                    CameraThread.getInstance().closeCamera(turboCamera);
-                    textureView.setAlpha(0);
-                    turboCamera = null;
-                }
+                cameraManager.openCamera();
             }
         });
     }
 
-    private Handler handler;
-
-    private void init()
+    private void init(final TurboCamera turboCamera)
     {
+        reference.onPause.removeListener(pauseListener);
+        reference.onPause.addListener(pauseListener);
+
         textureView.setupPreview(turboCamera);
         textureView.startOpenCameraAnimation();
 
-        List<String> strList = new ArrayList<>();
-        List<Iso> isoList = turboCamera.getIsoFeature().getAvailableValues();
-
-        strList.clear();
-        for (Iso iso : isoList)
-            strList.add(iso.displayValue());
-
-        mWheelView.setItems(strList);
-        mWheelView.selectIndex(0);
-        mWheelView.setMaxSelectableIndex(strList.size() - 1);
-        mWheelView.setVisibility(View.INVISIBLE);
-
-        mWheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
-            @Override
-            public void onWheelItemChanged(WheelView wheelView, int position) {
-                if (turboCamera != null)
-                    turboCamera.getIsoFeature().setValue(turboCamera.getIsoFeature().getAvailableValues().get(position));
-                    //turboCamera.getEVFeature().setValue(turboCamera.getEVFeature().getAvailableValues().get(position));
-            }
-
-            @Override
-            public void onWheelItemSelected(WheelView wheelView, int position) {
-
-            }
-        });
-
-        handler = new Handler(Looper.getMainLooper());
-        meterTimerLoop();
-    }
-
-    private void meterTimerLoop()
-    {
-        handler.postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                if (turboCamera != null)
-                {
-                    Nullable<Iso> iso = turboCamera.getIsoMeteringFeature().getValue();
-                    Nullable<ShutterSpeed> shutterSpeed = turboCamera.getSSMeteringFeature().getValue();
-
-                    if (iso.isPresent())
-                        Log.i("METERING", "Iso: " + iso.get().displayValue());
-
-                    if (shutterSpeed.isPresent())
-                        Log.i("METERING", "SS: " + shutterSpeed.get().displayValue());
-                }
-                meterTimerLoop();
-            }
-        }, 100);
+        controller.setupFeature(turboCamera, cameraManager.onCameraClosed);
     }
 }
