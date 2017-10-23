@@ -58,4 +58,10 @@ public class Assert
     {
         isTrue(object != null, "The object: " + object + " is null");
     }
+
+    public static <T extends Enum<T>> void state(@Nullable Enum<T> current, @NonNull Enum<T> should)
+    {
+        if (!should.equals(current))
+            throw new IllegalStateException("The state " + current + " should be " + should);
+    }
 }
