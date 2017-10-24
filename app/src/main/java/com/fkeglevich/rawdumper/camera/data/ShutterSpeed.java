@@ -78,7 +78,7 @@ public class ShutterSpeed implements Displayable
         if (this == AUTO)
             return "AUTO";
 
-        if (getExposureInSeconds() > 1.0)
+        if (getExposureInSeconds() > 0.9999)
             return getExposureInSeconds() + "s";
         else
             return "1/" + Math.round(1.0 / getExposureInSeconds());
