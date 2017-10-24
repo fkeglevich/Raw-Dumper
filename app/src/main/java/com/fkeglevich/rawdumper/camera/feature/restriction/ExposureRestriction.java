@@ -35,6 +35,7 @@ import java.util.Set;
  * Created by Flávio Keglevich on 22/09/17.
  */
 
+@SuppressWarnings("unchecked")
 public class ExposureRestriction
 {
     private enum ExposureType
@@ -81,7 +82,7 @@ public class ExposureRestriction
             {
                 addExposureToHistory(type, eventData.parameterValue);
                 if (hasInvalidExposureSequence())
-                    getOldestChangedParameter().setValue(type.autoValue);
+                    changeOldestChangedParameter();
             }
         };
     }
@@ -110,11 +111,13 @@ public class ExposureRestriction
     }
 
     @SuppressWarnings("LoopStatementThatDoesntLoop")
-    private WritableFeature getOldestChangedParameter()
+    private void changeOldestChangedParameter()
     {
         for (ExposureType type : historySet)
-            return parameterMap.get(type);
-
-        return null;
+        {
+            WritableFeature feature = parameterMap.get(type);
+            feature.setValue(type.autoValue);
+            return;
+        }
     }
 }
