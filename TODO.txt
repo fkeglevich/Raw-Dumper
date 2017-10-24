@@ -11,8 +11,12 @@ TODO list:
  - (IMPORTANT - IN PROGRESS) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
     raw pictures among different devices with different workarounds.
 	
- - (IMPORTANT) Create the concept of "applied workarounds" for differents devices. This is specially useful for devices like
-	the Zen2 that differ A LOT between camera blob's versions.
+ - (IMPORTANT) Treat the Zen2 with LL's blobs and the Zen2 with MM's blobs as TWO SEPARATED DEVICES. This simplifies A LOT the handling of each one's features.
+   - Watch out for the differences in the shutter speed
+   - 1/2 shutter speed on the front camera is probably broken on the Zen2 with LL blobs
+   - Long exposure probably don't work on LL Zen2
+
+ - Improve animations
 
  - Improve compatibility of generated DNG files for desktop apps like Darktable
    - Compatibility still needs to improve, because Darktable only recognize uncompressed files with stripes
@@ -57,3 +61,4 @@ Done:
  - Save DNGs using tiles
  - Use the Noise Profile DNG tag
  - Create a better separation layer between the UI and Camera threads
+ - Restrict the exposure when an invalid ISO/Shutter/EV combination occour
