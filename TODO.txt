@@ -18,6 +18,8 @@ TODO list:
 
  - Improve animations
 
+ - Create round button disabled state
+
  - Improve compatibility of generated DNG files for desktop apps like Darktable
    - Compatibility still needs to improve, because Darktable only recognize uncompressed files with stripes
  
