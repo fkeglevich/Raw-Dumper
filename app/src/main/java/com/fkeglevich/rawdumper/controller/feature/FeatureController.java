@@ -38,7 +38,6 @@ public abstract class FeatureController
             public void onEvent(Nothing eventData)
             {
                 reset();
-                onCameraClose.removeListener(this);
             }
         });
     }

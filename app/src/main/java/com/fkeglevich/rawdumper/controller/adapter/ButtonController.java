@@ -16,9 +16,10 @@
 
 package com.fkeglevich.rawdumper.controller.adapter;
 
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.controller.feature.Dismissible;
@@ -26,6 +27,9 @@ import com.fkeglevich.rawdumper.controller.feature.DisplayableFeatureUi;
 import com.fkeglevich.rawdumper.controller.feature.ExternalNotificationController;
 import com.fkeglevich.rawdumper.controller.feature.OnClickNotifier;
 import com.fkeglevich.rawdumper.ui.listener.ItemSelectedListener;
+import com.transitionseverywhere.Fade;
+import com.transitionseverywhere.Slide;
+import com.transitionseverywhere.TransitionManager;
 
 import java.util.List;
 
@@ -35,23 +39,29 @@ import java.util.List;
  * Created by Flávio Keglevich on 23/10/17.
  */
 
-public class ButtonEnablerController implements DisplayableFeatureUi, Dismissible
+public class ButtonController implements DisplayableFeatureUi, Dismissible
 {
-    private final Button button;
+    private final View button;
     private final DisplayableFeatureUi adapter;
     private final View chooser;
     private final ExternalNotificationController notificationController;
     private final OnClickNotifier clickNotifier;
+    private final Fade fadeTransition;
+    private final Slide slideTransition;
 
-    public ButtonEnablerController(Button button, DisplayableFeatureUi adapter, View chooser,
-                                   ExternalNotificationController notificationController,
-                                   OnClickNotifier clickNotifier)
+    public ButtonController(View button, DisplayableFeatureUi adapter, View chooser,
+                            ExternalNotificationController notificationController,
+                            OnClickNotifier clickNotifier)
     {
         this.button = button;
         this.adapter = adapter;
         this.chooser = chooser;
         this.notificationController = notificationController;
         this.clickNotifier = clickNotifier;
+        this.fadeTransition = new Fade();
+        fadeTransition.setDuration(300L);
+        this.slideTransition = new Slide(Gravity.BOTTOM);
+        slideTransition.setDuration(300L);
 
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -59,9 +69,10 @@ public class ButtonEnablerController implements DisplayableFeatureUi, Dismissibl
             public void onClick(View v)
             {
                 toggleChooser();
-                ButtonEnablerController.this.clickNotifier.notifyOnClick();
             }
         });
+
+        hideChooser();
     }
 
     @Override
@@ -94,6 +105,7 @@ public class ButtonEnablerController implements DisplayableFeatureUi, Dismissibl
     {
         adapter.enable();
         button.setEnabled(true);
+        TransitionManager.beginDelayedTransition((ViewGroup) button.getRootView(), slideTransition);
         button.setVisibility(View.VISIBLE);
     }
 
@@ -102,6 +114,7 @@ public class ButtonEnablerController implements DisplayableFeatureUi, Dismissibl
     {
         adapter.disable();
         button.setEnabled(false);
+        TransitionManager.beginDelayedTransition((ViewGroup) button.getRootView(), slideTransition);
         button.setVisibility(View.INVISIBLE);
         hideChooser();
     }
@@ -114,11 +127,13 @@ public class ButtonEnablerController implements DisplayableFeatureUi, Dismissibl
 
     private void hideChooser()
     {
+        TransitionManager.beginDelayedTransition((ViewGroup) chooser.getRootView(), fadeTransition);
         chooser.setVisibility(View.INVISIBLE);
     }
 
     private void showChooser()
     {
+        TransitionManager.beginDelayedTransition((ViewGroup) chooser.getRootView(), fadeTransition);
         chooser.setVisibility(View.VISIBLE);
     }
 
@@ -127,6 +142,9 @@ public class ButtonEnablerController implements DisplayableFeatureUi, Dismissibl
         if (chooser.getVisibility() == View.VISIBLE)
             hideChooser();
         else
+        {
+            clickNotifier.notifyOnClick();
             showChooser();
+        }
     }
 }

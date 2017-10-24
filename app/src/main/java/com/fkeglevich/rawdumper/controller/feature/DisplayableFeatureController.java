@@ -80,7 +80,8 @@ public abstract class DisplayableFeatureController<T extends Displayable> extend
     @Override
     protected void reset()
     {
-        feature.getOnChanged().removeListener(featureChangedListener);
+        if (feature != null)
+            feature.getOnChanged().removeListener(featureChangedListener);
         feature = null;
         featureUi.setListener(null);
         featureUi.disable();

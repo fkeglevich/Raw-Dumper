@@ -16,6 +16,9 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import android.util.Log;
+
+import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
