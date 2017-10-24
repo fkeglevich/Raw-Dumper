@@ -83,6 +83,8 @@
         android:orientation="horizontal"
         android:paddingLeft="11dp"
         android:paddingRight="11dp"
+	android:clipChildren="false"
+	android:clipToPadding="false"
         android:visibility="visible"
         android:id="@+id/linearLayout2">
 
@@ -146,7 +148,6 @@
     </LinearLayout>
 
     <FrameLayout
-	    android:id="@+id/wheelFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/adjustBarBackground"
@@ -155,9 +156,42 @@
         android:layout_above="@+id/linearLayout2">
 
         <view
-            android:id="@+id/view2"
+            android:id="@+id/isoValueChooser"
             class="com.lantouzi.wheelview.WheelView"
-            id="@+id/view"
+            app:lwvMarkTextColor="#FFFFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linearLayout2" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/adjustBarBackground"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_above="@+id/linearLayout2">
+
+	<view
+            android:id="@+id/ssValueChooser"
+            class="com.lantouzi.wheelview.WheelView"
+            app:lwvMarkTextColor="#FFFFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linearLayout2" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/adjustBarBackground"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_above="@+id/linearLayout2">
+
+	<view
+            android:id="@+id/evValueChooser"
+            class="com.lantouzi.wheelview.WheelView"
             app:lwvMarkTextColor="#FFFFFFFF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
