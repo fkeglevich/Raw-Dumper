@@ -108,7 +108,7 @@ public class CameraManager
     public void switchCamera()
     {
         Assert.state(currentState, State.CAMERA_READY);
-        onCameraClosed.dispatchEvent(Nothing.NOTHING);
+        dispatchCameraClose();
         CameraThread.getInstance().closeCameraAsync(new AsyncOperation<Nothing>()
         {
             @Override
@@ -129,8 +129,14 @@ public class CameraManager
         {
             Assert.state(currentState, State.CAMERA_READY);
             CameraThread.getInstance().closeCamera();
-            onCameraClosed.dispatchEvent(Nothing.NOTHING);
+            dispatchCameraClose();
             currentState = State.IDLE;
         }
+    }
+
+    private void dispatchCameraClose()
+    {
+        onCameraClosed.dispatchEvent(Nothing.NOTHING);
+        onCameraClosed.removeAllListeners();
     }
 }
