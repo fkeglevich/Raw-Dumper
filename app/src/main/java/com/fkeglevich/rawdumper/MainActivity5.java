@@ -26,11 +26,13 @@ import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.camera.async.CameraManager;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
-import com.fkeglevich.rawdumper.controller.adapter.ButtonEnablerController;
+import com.fkeglevich.rawdumper.controller.adapter.ButtonController;
 import com.fkeglevich.rawdumper.controller.adapter.DismissibleManagerAdapter;
 import com.fkeglevich.rawdumper.controller.adapter.ToastNotificationController;
 import com.fkeglevich.rawdumper.controller.adapter.WheelViewAdapter;
 import com.fkeglevich.rawdumper.controller.feature.DisplayableFeatureController;
+import com.fkeglevich.rawdumper.controller.feature.FeatureControllerFactory;
+import com.fkeglevich.rawdumper.controller.feature.FeatureControllerManager;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
 import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
@@ -53,12 +55,10 @@ public class MainActivity5 extends ModularActivity
     private MandatoryPermissionModule permissionModule = new MandatoryPermissionModule(reference);//new MandatoryRootModule(reference);
 
     private ModesInterface modesInterface;
-    private WheelView wheelView;
     private CameraManager cameraManager;
     private CameraPreviewTexture textureView;
 
     private ImageButton switchButton;
-    private Button isoButton;
 
     private EventListener<Nothing> pauseListener = new EventListener<Nothing>() {
         @Override
@@ -68,7 +68,8 @@ public class MainActivity5 extends ModularActivity
             textureView.setAlpha(0);
         }
     };
-    private DisplayableFeatureController controller;
+
+    private FeatureControllerManager featureControllerManager = new FeatureControllerManager();
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -86,22 +87,7 @@ public class MainActivity5 extends ModularActivity
             }
         });
 
-        wheelView = (WheelView) findViewById(R.id.view2);
-        View wheelParent = findViewById(R.id.wheelFrame);
-        isoButton = (Button) findViewById(R.id.isoBt);
-
-        ButtonEnablerController buttonController = new ButtonEnablerController(isoButton,
-                new WheelViewAdapter(wheelView), wheelParent, new ToastNotificationController(this, R.string.iso_changed_notification),
-                new DismissibleManagerAdapter());
-
-        controller = new DisplayableFeatureController(buttonController)
-        {
-            @Override
-            protected WritableFeature selectFeature(TurboCamera camera)
-            {
-                return camera.getIsoFeature();
-            }
-        };
+        featureControllerManager.createControllers(reference);
 
         textureView = (CameraPreviewTexture) findViewById(R.id.textureView);
 
@@ -140,6 +126,6 @@ public class MainActivity5 extends ModularActivity
         textureView.setupPreview(turboCamera);
         textureView.startOpenCameraAnimation();
 
-        controller.setupFeature(turboCamera, cameraManager.onCameraClosed);
+        featureControllerManager.setupControllers(turboCamera, cameraManager.onCameraClosed);
     }
 }
