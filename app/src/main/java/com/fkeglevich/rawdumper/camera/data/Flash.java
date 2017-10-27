@@ -40,16 +40,6 @@ public enum Flash implements Displayable
     TORCH(FLASH_MODE_TORCH, ExifFlash.FIRED),
     RED_EYE(FLASH_MODE_RED_EYE, ExifFlash.FIRED);
 
-    @Nullable
-    public static Flash getFromString(String value)
-    {
-        for (Flash flash : Flash.values())
-            if (flash.parameterValue.equals(value))
-                return flash;
-
-        return null;
-    }
-
     private final String parameterValue;
     private final ExifFlash exifFlash;
 

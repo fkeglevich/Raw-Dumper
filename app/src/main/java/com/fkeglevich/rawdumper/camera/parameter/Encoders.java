@@ -17,7 +17,9 @@
 package com.fkeglevich.rawdumper.camera.parameter;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.camera.data.Flash;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,13 +57,8 @@ class Encoders
             @Override
             public String encode(CaptureSize value) {return value.getWidth() + "x" + value.getHeight(); }
         });
-        dispatcher.put(Flash.class, new ValueEncoder<Flash>()
-        {
-            @Override
-            public String encode(Flash value)
-            {return value.displayValue();
-            }
-        });
+        dispatcher.put(Flash.class, createDisplayableParameterDecoder());
+        dispatcher.put(FocusMode.class, createDisplayableParameterDecoder());
     }
 
     @SuppressWarnings("unchecked")
@@ -76,5 +73,17 @@ class Encoders
     static <T> ValueEncoder<List<T>> selectListEncoder(Class<T> elementClass)
     {
         return new ListEncoder<>(selectEncoder(elementClass));
+    }
+
+    private static <T extends Displayable> ValueEncoder<T> createDisplayableParameterDecoder()
+    {
+        return new ValueEncoder<T>()
+        {
+            @Override
+            public String encode(T value)
+            {
+                return value.displayValue();
+            }
+        };
     }
 }
