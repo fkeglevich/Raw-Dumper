@@ -20,6 +20,7 @@ import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
+import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +69,18 @@ class Decoders
         });
         dispatcher.put(Flash.class, createDisplayableParameterDecoder(Flash.values()));
         dispatcher.put(FocusMode.class, createDisplayableParameterDecoder(FocusMode.values()));
+        dispatcher.put(ManualFocus.class, new ValueDecoder<ManualFocus>()
+        {
+            @Override
+            public ManualFocus decode(String value)
+            {
+                int numeric = value != null ? Integer.parseInt(value) : 0;
+                if (numeric == 0)
+                    return ManualFocus.DISABLED;
+
+                return ManualFocus.create(numeric);
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
