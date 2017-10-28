@@ -52,15 +52,6 @@ public class ButtonController implements DisplayableFeatureUi, Dismissible
                             OnClickNotifier clickNotifier)
     {
         this.button = button;
-        this.adapter = adapter;
-        this.chooser = chooser;
-        this.notificationController = notificationController;
-        this.clickNotifier = clickNotifier;
-        this.fadeTransition = new Fade();
-        fadeTransition.setDuration(300L);
-
-        this.buttonDisabledStateController = new ButtonDisabledStateController(button, false);
-
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -70,6 +61,14 @@ public class ButtonController implements DisplayableFeatureUi, Dismissible
             }
         });
 
+        this.adapter = adapter;
+        this.chooser = chooser;
+        this.notificationController = notificationController;
+        this.clickNotifier = clickNotifier;
+        this.fadeTransition = new Fade();
+        fadeTransition.setDuration(300L);
+
+        this.buttonDisabledStateController = new ButtonDisabledStateController(button, false);
         hideChooser();
     }
 
