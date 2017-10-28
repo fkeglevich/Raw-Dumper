@@ -21,6 +21,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
@@ -49,7 +50,6 @@ public class FeatureControllerFactory
 
     public DisplayableFeatureController createISOController(ActivityReference reference)
     {
-
         WheelView wheelView = (WheelView) reference.weaklyGet().findViewById(R.id.isoValueChooser);
         WheelViewAdapter viewAdapter = new WheelViewAdapter(wheelView);
         ButtonController btController = createButtonController(reference, R.id.isoBt, viewAdapter,
@@ -67,7 +67,6 @@ public class FeatureControllerFactory
 
     public DisplayableFeatureController createSSController(ActivityReference reference)
     {
-
         WheelView wheelView = (WheelView) reference.weaklyGet().findViewById(R.id.ssValueChooser);
         WheelViewAdapter viewAdapter = new WheelViewAdapter(wheelView);
         ButtonController btController = createButtonController(reference, R.id.shutterSpeedBt, viewAdapter,
@@ -85,7 +84,6 @@ public class FeatureControllerFactory
 
     public DisplayableFeatureController createEVController(ActivityReference reference)
     {
-
         WheelView wheelView = (WheelView) reference.weaklyGet().findViewById(R.id.evValueChooser);
         WheelViewAdapter viewAdapter = new WheelViewAdapter(wheelView);
         ButtonController btController = createButtonController(reference, R.id.evBt, viewAdapter,
@@ -99,6 +97,12 @@ public class FeatureControllerFactory
                 return camera.getEVFeature();
             }
         };
+    }
+
+    public FlashController createFlashController(ActivityReference reference)
+    {
+        ImageButton flashButton = (ImageButton) reference.weaklyGet().findViewById(R.id.flashButton);
+        return new FlashController(flashButton);
     }
 
     private ButtonController createButtonController(ActivityReference reference,
