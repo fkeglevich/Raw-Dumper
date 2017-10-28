@@ -104,6 +104,10 @@ public class FlashController extends FeatureController
     {
         List<Flash> valueList = new ArrayList<>();
         valueList.addAll(flashFeature.getAvailableValues());
+
+        /*  Currently, we are disabling the torch and red-eye flash modes
+            The reason for that is a pure cosmetic one, since having too much
+            flash states in a single flash button can be irritating to the user*/
         valueList.remove(Flash.TORCH);
         valueList.remove(Flash.RED_EYE);
 
