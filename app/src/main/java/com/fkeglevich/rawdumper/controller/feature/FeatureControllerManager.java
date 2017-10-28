@@ -33,7 +33,7 @@ import java.util.List;
 public class FeatureControllerManager
 {
     private final FeatureControllerFactory controllerFactory;
-    private final List<DisplayableFeatureController> controllersList;
+    private final List<FeatureController> controllersList;
 
     public FeatureControllerManager()
     {
@@ -46,11 +46,12 @@ public class FeatureControllerManager
         controllersList.add(controllerFactory.createISOController(reference));
         controllersList.add(controllerFactory.createSSController(reference));
         controllersList.add(controllerFactory.createEVController(reference));
+        controllersList.add(controllerFactory.createFlashController(reference));
     }
 
     public void setupControllers(TurboCamera camera, EventDispatcher<Nothing> onCameraClose)
     {
-        for (DisplayableFeatureController featureController : controllersList)
+        for (FeatureController featureController : controllersList)
             featureController.setupFeature(camera, onCameraClose);
     }
 }
