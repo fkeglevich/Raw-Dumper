@@ -34,10 +34,10 @@ public class ButtonAnimationController
     public ButtonAnimationController(View button)
     {
         this.button = button;
-        this.enableAnimation = new AlphaAnimation(0.5f, 1f);
+        this.enableAnimation = new AlphaAnimation(0.25f, 1f);
         setupAnimation(enableAnimation);
 
-        this.disableAnimation = new AlphaAnimation(1f, 0.5f);
+        this.disableAnimation = new AlphaAnimation(1f, 0.25f);
         setupAnimation(disableAnimation);
     }
 
