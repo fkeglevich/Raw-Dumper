@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.controller.feature;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -26,7 +27,7 @@ import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
-import com.fkeglevich.rawdumper.controller.animation.ButtonAnimationController;
+import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
 import com.fkeglevich.rawdumper.util.Assert;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class FlashController extends FeatureController
     private WritableFeature<Flash, List<Flash>> flashFeature;
     private final ImageButton flashButton;
     private final Map<Flash, Integer> flashIconMap;
-    private final ButtonAnimationController buttonAnimationController;
+    private final ButtonDisabledStateController buttonDisabledStateController;
 
     private List<Flash> flashList;
     private int selectedFlashIndex;
@@ -55,7 +56,7 @@ public class FlashController extends FeatureController
         this.flashFeature = null;
         this.flashButton = flashButton;
         this.flashIconMap = new HashMap<>();
-        this.buttonAnimationController = new ButtonAnimationController(flashButton);
+        this.buttonDisabledStateController = new ButtonDisabledStateController(flashButton, false);
         initializeFlashIcons();
     }
 
@@ -73,9 +74,8 @@ public class FlashController extends FeatureController
         initFlashIndex();
         updateButtonUi();
 
-        if (!flashButton.isClickable())
-            buttonAnimationController.startEnableAnimation();
-        flashButton.setClickable(true);
+        buttonDisabledStateController.enableAnimated();
+
         flashButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -146,10 +146,12 @@ public class FlashController extends FeatureController
     @Override
     protected void reset()
     {
-        flashFeature = null;
-        if (flashButton.isClickable())
-            buttonAnimationController.startDisableAnimation();
-        flashButton.setClickable(false);
         setIconFromFlash(Flash.OFF);
+        if (flashFeature != null && flashFeature.isAvailable())
+            buttonDisabledStateController.disableAnimated();
+        else
+            buttonDisabledStateController.disable();
+
+        flashFeature = null;
     }
 }

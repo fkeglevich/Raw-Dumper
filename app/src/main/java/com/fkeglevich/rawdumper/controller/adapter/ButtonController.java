@@ -18,10 +18,9 @@ package com.fkeglevich.rawdumper.controller.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 
 import com.fkeglevich.rawdumper.camera.data.Displayable;
-import com.fkeglevich.rawdumper.controller.animation.ButtonAnimationController;
+import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
 import com.fkeglevich.rawdumper.controller.feature.Dismissible;
 import com.fkeglevich.rawdumper.controller.feature.DisplayableFeatureUi;
 import com.fkeglevich.rawdumper.controller.feature.ExternalNotificationController;
@@ -46,7 +45,7 @@ public class ButtonController implements DisplayableFeatureUi, Dismissible
     private final ExternalNotificationController notificationController;
     private final OnClickNotifier clickNotifier;
     private final Fade fadeTransition;
-    private final ButtonAnimationController buttonAnimationController;
+    private final ButtonDisabledStateController buttonDisabledStateController;
 
     public ButtonController(View button, DisplayableFeatureUi adapter, View chooser,
                             ExternalNotificationController notificationController,
@@ -60,7 +59,7 @@ public class ButtonController implements DisplayableFeatureUi, Dismissible
         this.fadeTransition = new Fade();
         fadeTransition.setDuration(300L);
 
-        this.buttonAnimationController = new ButtonAnimationController(button);
+        this.buttonDisabledStateController = new ButtonDisabledStateController(button, false);
 
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -103,20 +102,14 @@ public class ButtonController implements DisplayableFeatureUi, Dismissible
     public void enable()
     {
         adapter.enable();
-        if (!button.isClickable())
-            buttonAnimationController.startEnableAnimation();
-
-        button.setClickable(true);
+        buttonDisabledStateController.enableAnimated();
     }
 
     @Override
     public void disable()
     {
         adapter.disable();
-        if (button.isClickable())
-            buttonAnimationController.startDisableAnimation();
-
-        button.setClickable(false);
+        buttonDisabledStateController.disableAnimated();
         hideChooser();
     }
 
