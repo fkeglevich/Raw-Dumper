@@ -19,6 +19,8 @@ package com.fkeglevich.rawdumper.camera.helper;
 import android.graphics.Rect;
 import android.hardware.Camera;
 
+import com.fkeglevich.rawdumper.camera.data.FocusArea;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,28 +31,32 @@ import java.util.List;
 
 public class FocusHelper
 {
-    private static final int MIN_FOCUS_RECT_POSITION = -1000;
-    private static final int MAX_FOCUS_RECT_POSITION =  1000;
-    private static final int MAX_FOCUS_RECT_SIZE =      2000;
+    private static final int MIN_FOCUS_RECT_POSITION    = -1000;
+    private static final int MAX_FOCUS_RECT_POSITION    =  1000;
+    private static final int MAX_FOCUS_RECT_SIZE        =  2000;
 
-    private static final int DEFAULT_AREA_WEIGHT = 1000;
+    private static final int DEFAULT_AREA_WEIGHT        =  1000;
 
-    public static List<Camera.Area> generateFocusAreas(int x, int y, int viewWidth, int viewHeight, int touchSize)
+    public static List<Camera.Area> generateFocusAreas(FocusArea focusArea)
     {
         List<Camera.Area> areaList = new ArrayList<>();
-        Rect focusRect = calculateFocusRect(x, y, viewWidth, viewHeight, touchSize);
+        Rect focusRect = calculateFocusRect(focusArea);
         areaList.add(new Camera.Area(focusRect, DEFAULT_AREA_WEIGHT));
         return areaList;
     }
 
-    private static Rect calculateFocusRect(int x, int y, int viewWidth, int viewHeight, int touchSize)
+    private static Rect calculateFocusRect(FocusArea focusArea)
     {
+        int x = focusArea.getX(), y = focusArea.getY();
+        int w = focusArea.getViewWidth(), h = focusArea.getViewHeight();
+        int touchSize = focusArea.getTouchSize();
+
         Rect touchRect = new Rect(x - touchSize, y - touchSize, x + touchSize, y + touchSize);
         Rect focusRect = new Rect(
-                touchRect.left * MAX_FOCUS_RECT_SIZE/viewWidth - MAX_FOCUS_RECT_POSITION,
-                touchRect.top * MAX_FOCUS_RECT_SIZE/viewHeight - MAX_FOCUS_RECT_POSITION,
-                touchRect.right * MAX_FOCUS_RECT_SIZE/viewWidth - MAX_FOCUS_RECT_POSITION,
-                touchRect.bottom * MAX_FOCUS_RECT_SIZE/viewHeight - MAX_FOCUS_RECT_POSITION);
+                touchRect.left * MAX_FOCUS_RECT_SIZE/w - MAX_FOCUS_RECT_POSITION,
+                touchRect.top * MAX_FOCUS_RECT_SIZE/h - MAX_FOCUS_RECT_POSITION,
+                touchRect.right * MAX_FOCUS_RECT_SIZE/w - MAX_FOCUS_RECT_POSITION,
+                touchRect.bottom * MAX_FOCUS_RECT_SIZE/h - MAX_FOCUS_RECT_POSITION);
         correctFocusRect(focusRect);
         return focusRect;
     }
@@ -80,30 +86,3 @@ public class FocusHelper
         }
     }
 }
-
-/*
-Rect focusRect = calculateFocusRect(x, y, viewWidth, viewHeight, touchSize);
-
-        List<Camera.Area> focusList = new ArrayList<>();
-        focusList.add(new Camera.Area(focusRect, 1000));
-
-        synchronized (cameraAccess.cameraLock)
-        {
-            if (cameraAccess.cameraLock.getCameraExtension() != null)
-            {
-                Camera camera = cameraAccess.cameraLock.getCameraExtension().getCameraDevice();
-                Camera.Parameters parameters = camera.getParameters();
-                List<String> supportedFocusModes = parameters.getSupportedFocusModes();
-
-                if (supportedFocusModes != null && supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO))
-                {
-                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-                    parameters.setFocusAreas(focusList);
-                    parameters.setMeteringAreas(focusList);
-                    camera.setParameters(parameters);
-
-                    //cameraAccess.autoFocusAsync(autoFocusCallback);
-                }
-            }
-        }
- */

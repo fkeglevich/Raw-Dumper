@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.action.AutoFocusInterface;
 import com.fkeglevich.rawdumper.camera.action.AutoFocusResult;
+import com.fkeglevich.rawdumper.camera.data.FocusArea;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
@@ -48,9 +49,9 @@ public class FocusFeature extends WritableFeature<FocusMode, List<FocusMode>> im
     }
 
     @Override
-    public void startAutoFocus(AutoFocusResult callback)
+    public void startAutoFocus(FocusArea focusArea, AutoFocusResult callback)
     {
         checkFeatureAvailability(this);
-        autoFocusInterface.startAutoFocus(callback);
+        autoFocusInterface.startAutoFocus(focusArea, callback);
     }
 }
