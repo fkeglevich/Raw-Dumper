@@ -18,9 +18,7 @@ package com.fkeglevich.rawdumper.controller.feature;
 
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.fkeglevich.rawdumper.R;
@@ -43,12 +41,12 @@ public class FeatureControllerFactory
 {
     private final DismissibleManagerAdapter dismissibleManager;
 
-    public FeatureControllerFactory()
+    FeatureControllerFactory()
     {
         dismissibleManager = new DismissibleManagerAdapter();
     }
 
-    public DisplayableFeatureController createISOController(ActivityReference reference)
+    DisplayableFeatureController createISOController(ActivityReference reference)
     {
         WheelView wheelView = (WheelView) reference.weaklyGet().findViewById(R.id.isoValueChooser);
         WheelViewAdapter viewAdapter = new WheelViewAdapter(wheelView);
@@ -65,7 +63,7 @@ public class FeatureControllerFactory
         };
     }
 
-    public DisplayableFeatureController createSSController(ActivityReference reference)
+    DisplayableFeatureController createSSController(ActivityReference reference)
     {
         WheelView wheelView = (WheelView) reference.weaklyGet().findViewById(R.id.ssValueChooser);
         WheelViewAdapter viewAdapter = new WheelViewAdapter(wheelView);
@@ -82,7 +80,7 @@ public class FeatureControllerFactory
         };
     }
 
-    public DisplayableFeatureController createEVController(ActivityReference reference)
+    DisplayableFeatureController createEVController(ActivityReference reference)
     {
         WheelView wheelView = (WheelView) reference.weaklyGet().findViewById(R.id.evValueChooser);
         WheelViewAdapter viewAdapter = new WheelViewAdapter(wheelView);
@@ -99,7 +97,7 @@ public class FeatureControllerFactory
         };
     }
 
-    public FlashController createFlashController(ActivityReference reference)
+    FlashController createFlashController(ActivityReference reference)
     {
         ImageButton flashButton = (ImageButton) reference.weaklyGet().findViewById(R.id.flashButton);
         return new FlashController(flashButton);
