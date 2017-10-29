@@ -16,10 +16,12 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.fkeglevich.rawdumper.camera.action.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.FocusArea;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 
 /**
@@ -30,7 +32,6 @@ import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 
 public class TouchFocusController extends FeatureController
 {
-    private final View clickArea;
     private FocusFeature focusFeature;
 
     private final AutoFocusResult autoFocusResult = new AutoFocusResult()
@@ -42,18 +43,22 @@ public class TouchFocusController extends FeatureController
         }
     };
 
-    public TouchFocusController(View clickArea)
+    TouchFocusController(View clickArea)
     {
-        this.clickArea = clickArea;
         this.focusFeature = null;
-
-        clickArea.setOnClickListener(new View.OnClickListener()
+        clickArea.setOnTouchListener(new View.OnTouchListener()
         {
             @Override
-            public void onClick(View v)
+            public boolean onTouch(View v, MotionEvent event)
             {
-                if (focusFeature != null && focusFeature.getValue().canAutoFocus())
-                    focusFeature.startAutoFocus(autoFocusResult);
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    if (focusFeature != null && focusFeature.getValue().canAutoFocus())
+                        focusFeature.startAutoFocus(FocusArea.createTouchArea(v, event), autoFocusResult);
+
+                    v.performClick();
+                }
+                return false;
             }
         });
     }
