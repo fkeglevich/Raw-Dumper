@@ -16,9 +16,13 @@ TODO list:
    - 1/2 shutter speed on the front camera is probably broken on the Zen2 with LL blobs
    - Long exposure probably don't work on LL Zen2
 
- - Enable exposure metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
+ - Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
 
  - Visual feedback for touch focus/exposure region
+
+ - Don't use displayValue for getting parameter values
+
+ - Add the extra logic for differenciating the zen2 camera blobs's version
 
  - Improve compatibility of generated DNG files for desktop apps like Darktable
    - Compatibility still needs to improve, because Darktable only recognize uncompressed files with stripes
@@ -68,3 +72,4 @@ Done:
  - Create round button disabled
  - (BUG FIXED) When switching the app too fast, in some rare occasions, the camera is opened twice or the preview is frozen on Android Nougat
  - FIXED TOUCH FOCUS POSITION YAAAY!
+ - Added Iso and shutter speed metering
