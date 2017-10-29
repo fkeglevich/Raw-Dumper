@@ -108,6 +108,7 @@ public class CameraManager
     public void switchCamera()
     {
         Assert.state(currentState, State.CAMERA_READY);
+        Assert.isTrue(canSwitchCamera());
         dispatchCameraClose();
         CameraThread.getInstance().closeCameraAsync(new AsyncOperation<Nothing>()
         {
@@ -132,6 +133,11 @@ public class CameraManager
             dispatchCameraClose();
             currentState = State.IDLE;
         }
+    }
+
+    public boolean canSwitchCamera()
+    {
+        return cameraSelector.hasMultipleCameras();
     }
 
     private void dispatchCameraClose()
