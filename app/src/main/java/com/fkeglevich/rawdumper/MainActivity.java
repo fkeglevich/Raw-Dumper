@@ -20,8 +20,6 @@ import android.os.Bundle;
 
 import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.controller.feature.CameraLifetimeController;
-import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
-import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
 import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 
@@ -34,8 +32,6 @@ import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 public class MainActivity extends ModularActivity
 {
     private FullscreenManager fullscreenManager = new FullscreenManager(reference);
-    private OrientationModule orientationModule = new OrientationModule(reference);
-    private MandatoryPermissionModule permissionModule = new MandatoryPermissionModule(reference);//new MandatoryRootModule(reference);
 
     private ModesInterface modesInterface;
     private CameraLifetimeController cameraLifetimeController;
