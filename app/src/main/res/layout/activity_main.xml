@@ -115,13 +115,14 @@
             android:background="@drawable/round_button"
             android:text="EV"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/focusBt"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="@dimen/manual_controls_spacing"
             android:background="@drawable/round_button"
-            android:text="MF"/>
+	    android:padding="8dp"
+            app:srcCompat="@drawable/ic_filter_center_focus_black_24dp"/>
 
         <Button
             android:id="@+id/wbBt"
