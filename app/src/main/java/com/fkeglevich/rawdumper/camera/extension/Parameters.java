@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.extension;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Flash;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
 
@@ -40,4 +41,6 @@ public class Parameters
     public static final Parameter<Flash> FLASH_MODE = ParameterFactory.create("flash-mode", Flash.class);
     public static final Parameter<List<Flash>> FLASH_MODE_VALUES = ParameterFactory.createReadOnlyList("flash-mode-values", Flash.class);
 
+    public static final Parameter<FocusMode> FOCUS_MODE = ParameterFactory.create("focus-mode", FocusMode.class);
+    public static final Parameter<List<FocusMode>> FOCUS_MODE_VALUES = ParameterFactory.createReadOnlyList("focus-mode-values", FocusMode.class);
 }
