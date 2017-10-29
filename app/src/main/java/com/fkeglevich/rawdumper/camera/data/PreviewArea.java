@@ -28,7 +28,7 @@ import java.util.List;
  * Created by Flávio Keglevich on 29/10/17.
  */
 
-public class FocusArea
+public class PreviewArea
 {
     private static final int DEFAULT_TOUCH_SIZE = 100;
     private static final List<Integer> VALID_DEGREES = Arrays.asList(0, 90, 180, 270);
@@ -39,17 +39,17 @@ public class FocusArea
     private final int viewHeight;
     private final int touchSize;
 
-    public static FocusArea createTouchArea(View view, MotionEvent motionEvent, int touchSize)
+    public static PreviewArea createTouchArea(View view, MotionEvent motionEvent, int touchSize)
     {
-        return new FocusArea((int) motionEvent.getX(), (int) motionEvent.getY(), view.getWidth(), view.getHeight(), touchSize);
+        return new PreviewArea((int) motionEvent.getX(), (int) motionEvent.getY(), view.getWidth(), view.getHeight(), touchSize);
     }
 
-    public static FocusArea createTouchArea(View view, MotionEvent motionEvent)
+    public static PreviewArea createTouchArea(View view, MotionEvent motionEvent)
     {
         return createTouchArea(view, motionEvent, DEFAULT_TOUCH_SIZE);
     }
 
-    public FocusArea(int x, int y, int viewWidth, int viewHeight, int touchSize)
+    public PreviewArea(int x, int y, int viewWidth, int viewHeight, int touchSize)
     {
         this.x = x;
         this.y = y;
@@ -84,7 +84,7 @@ public class FocusArea
     }
 
     @SuppressWarnings("SuspiciousNameCombination")
-    public FocusArea rotate(int degrees)
+    public PreviewArea rotate(int degrees)
     {
         if (!VALID_DEGREES.contains(degrees))
             throw new IllegalArgumentException();
@@ -92,9 +92,9 @@ public class FocusArea
         switch (degrees)
         {
             case 0:     return this;
-            case 90:    return new FocusArea(y, viewWidth - x, viewHeight, viewWidth, touchSize);
-            case 180:   return new FocusArea(viewWidth - x, viewHeight - y, viewWidth, viewHeight, touchSize);
-            default:    return new FocusArea(viewHeight - y, x, viewHeight, viewWidth, touchSize);
+            case 90:    return new PreviewArea(y, viewWidth - x, viewHeight, viewWidth, touchSize);
+            case 180:   return new PreviewArea(viewWidth - x, viewHeight - y, viewWidth, viewHeight, touchSize);
+            default:    return new PreviewArea(viewHeight - y, x, viewHeight, viewWidth, touchSize);
         }
     }
 }

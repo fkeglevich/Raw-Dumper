@@ -21,7 +21,7 @@ import android.view.View;
 
 import com.fkeglevich.rawdumper.camera.action.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import com.fkeglevich.rawdumper.camera.data.FocusArea;
+import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 
 /**
@@ -54,7 +54,7 @@ public class TouchFocusController extends FeatureController
                 if(event.getAction() == MotionEvent.ACTION_DOWN)
                 {
                     if (focusFeature != null && focusFeature.getValue().canAutoFocus())
-                        focusFeature.startAutoFocus(FocusArea.createTouchArea(v, event), autoFocusResult);
+                        focusFeature.startAutoFocus(PreviewArea.createTouchArea(v, event), autoFocusResult);
 
                     v.performClick();
                 }

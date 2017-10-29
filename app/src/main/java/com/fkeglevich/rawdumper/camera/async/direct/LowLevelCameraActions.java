@@ -20,7 +20,7 @@ import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.action.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
-import com.fkeglevich.rawdumper.camera.data.FocusArea;
+import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.helper.FocusHelper;
 
@@ -46,7 +46,7 @@ public class LowLevelCameraActions implements CameraActions
     }
 
     @Override
-    public void startAutoFocus(FocusArea focusArea, final AutoFocusResult callback)
+    public void startAutoFocus(PreviewArea focusArea, final AutoFocusResult callback)
     {
         List<Camera.Area> areas = FocusHelper.generateFocusAreas(focusArea.rotate(displayRotation));
         synchronized (lock)

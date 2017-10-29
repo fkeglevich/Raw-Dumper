@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.action;
 
-import com.fkeglevich.rawdumper.camera.data.FocusArea;
+import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 
 /**
  * TODO: Add class header
@@ -26,5 +26,5 @@ import com.fkeglevich.rawdumper.camera.data.FocusArea;
 
 public interface AutoFocusInterface
 {
-    void startAutoFocus(FocusArea focusArea, AutoFocusResult callback);
+    void startAutoFocus(PreviewArea focusArea, AutoFocusResult callback);
 }

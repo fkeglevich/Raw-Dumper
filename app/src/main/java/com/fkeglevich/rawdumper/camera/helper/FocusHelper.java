@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.camera.helper;
 import android.graphics.Rect;
 import android.hardware.Camera;
 
-import com.fkeglevich.rawdumper.camera.data.FocusArea;
+import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class FocusHelper
 
     private static final int DEFAULT_AREA_WEIGHT        =  1000;
 
-    public static List<Camera.Area> generateFocusAreas(FocusArea focusArea)
+    public static List<Camera.Area> generateFocusAreas(PreviewArea focusArea)
     {
         List<Camera.Area> areaList = new ArrayList<>();
         Rect focusRect = calculateFocusRect(focusArea);
@@ -45,7 +45,7 @@ public class FocusHelper
         return areaList;
     }
 
-    private static Rect calculateFocusRect(FocusArea focusArea)
+    private static Rect calculateFocusRect(PreviewArea focusArea)
     {
         int x = focusArea.getX(), y = focusArea.getY();
         int w = focusArea.getViewWidth(), h = focusArea.getViewHeight();
