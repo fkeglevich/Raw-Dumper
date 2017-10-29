@@ -16,9 +16,9 @@ TODO list:
    - 1/2 shutter speed on the front camera is probably broken on the Zen2 with LL blobs
    - Long exposure probably don't work on LL Zen2
 
- - Improve animations
+ - Enable exposure metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
 
- - Create round button disabled state
+ - Visual feedback for touch focus/exposure region
 
  - Improve compatibility of generated DNG files for desktop apps like Darktable
    - Compatibility still needs to improve, because Darktable only recognize uncompressed files with stripes
@@ -27,6 +27,7 @@ TODO list:
  
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - Create OrientationActivity class or similar
+   - Needs to change the rotation parameter when shooting jpeg pictures
  
  - (IMPORTANT - IN PROGRESS) Make the app work on more devices:
 	- Razr I
@@ -42,8 +43,7 @@ TODO list:
    (and other cases where the camera crashes)
 
 Known bugs:
- - (MINOR) When displaying some dialog alerts, the app can get out from fullscreen state if the user switches to another app
- - (MINOR) When switching the app too fast, in some rare occasions, the camera is opened twice or the preview is frozen on Android Nougat
+ - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
     - Some changes were made to address this bug, should test again to see if it still happens
  
 Done:
@@ -64,3 +64,6 @@ Done:
  - Use the Noise Profile DNG tag
  - Create a better separation layer between the UI and Camera threads
  - Restrict the exposure when an invalid ISO/Shutter/EV combination occour
+ - Improve animations
+ - Create round button disabled
+ - (BUG FIXED) When switching the app too fast, in some rare occasions, the camera is opened twice or the preview is frozen on Android Nougat
