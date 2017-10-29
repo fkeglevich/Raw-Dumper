@@ -35,7 +35,7 @@ public class FocusHelper
 
     private static final int DEFAULT_AREA_WEIGHT = 1000;
 
-    public static List<Camera.Area> generateFocusAres(int x, int y, int viewWidth, int viewHeight, int touchSize)
+    public static List<Camera.Area> generateFocusAreas(int x, int y, int viewWidth, int viewHeight, int touchSize)
     {
         List<Camera.Area> areaList = new ArrayList<>();
         Rect focusRect = calculateFocusRect(x, y, viewWidth, viewHeight, touchSize);
