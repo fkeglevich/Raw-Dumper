@@ -30,7 +30,8 @@ import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
  * TODO: Add a class header comment!
  */
 
-public class MainActivity5 extends ModularActivity
+@SuppressWarnings("unused")
+public class MainActivity extends ModularActivity
 {
     private FullscreenManager fullscreenManager = new FullscreenManager(reference);
     private OrientationModule orientationModule = new OrientationModule(reference);
