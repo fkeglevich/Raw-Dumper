@@ -28,7 +28,7 @@ import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
  * Created by Flávio Keglevich on 28/10/17.
  */
 
-public class FocusClickController extends FeatureController
+public class TouchFocusController extends FeatureController
 {
     private final View clickArea;
     private FocusFeature focusFeature;
@@ -42,7 +42,7 @@ public class FocusClickController extends FeatureController
         }
     };
 
-    public FocusClickController(View clickArea)
+    public TouchFocusController(View clickArea)
     {
         this.clickArea = clickArea;
         this.focusFeature = null;
