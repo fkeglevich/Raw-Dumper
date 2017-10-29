@@ -89,128 +89,48 @@
         android:visibility="visible"
         android:id="@+id/linearLayout2">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+        <Button
+            android:id="@+id/isoBt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/manual_controls_spacing"
             android:layout_marginStart="@dimen/manual_controls_spacing"
-            android:layout_marginEnd="@dimen/manual_controls_spacing"
-            android:orientation="vertical">
+            android:background="@drawable/round_button"
+            android:text="ISO"/>
 
-            <Button
-                android:id="@+id/isoBt"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/round_button"
-                android:text="ISO"/>
-
-            <TextView
-                android:id="@+id/isoText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                android:text="1600"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/shutterSpeedBt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginEnd="@dimen/manual_controls_spacing"
-            android:orientation="vertical">
+            android:background="@drawable/round_button"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_camera_black_24dp"/>
 
-            <ImageButton
-                android:id="@+id/shutterSpeedBt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_button"
-                android:padding="8dp"
-                app:srcCompat="@drawable/ic_camera_black_24dp"/>
-
-            <TextView
-                android:id="@+id/ssText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                android:text="1/10000s"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+        <Button
+            android:id="@+id/evBt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="@dimen/manual_controls_spacing"
-            android:orientation="vertical">
+            android:background="@drawable/round_button"
+            android:text="EV"/>
 
-            <Button
-                android:id="@+id/evBt"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/round_button"
-                android:text="EV"/>
-
-            <TextView
-                android:id="@+id/evText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                android:text="-0.67"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+        <ImageButton
+            android:id="@+id/focusBt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="@dimen/manual_controls_spacing"
-            android:orientation="vertical">
+            android:background="@drawable/round_button"
+	    android:padding="8dp"
+            app:srcCompat="@drawable/ic_filter_center_focus_black_24dp"/>
 
-            <ImageButton
-                android:id="@+id/focusBt"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/round_button"
-                android:padding="8dp"
-                app:srcCompat="@drawable/ic_filter_center_focus_black_24dp"/>
-
-            <TextView
-                android:id="@+id/focusText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                android:text="AUTO"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+        <Button
+            android:id="@+id/wbBt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="@dimen/manual_controls_spacing"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/wbBt"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/round_button"
-                android:text="WB"/>
-
-            <TextView
-                android:id="@+id/wbText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                android:text="AUTO"/>
-
-        </LinearLayout>
+            android:background="@drawable/round_button"
+            android:text="WB"/>
 
     </LinearLayout>
 
