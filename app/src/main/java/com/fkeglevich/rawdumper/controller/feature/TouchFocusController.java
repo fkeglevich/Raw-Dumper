@@ -52,7 +52,7 @@ public class TouchFocusController extends FeatureController
             @Override
             public void onClick(View v)
             {
-                if (focusFeature != null)
+                if (focusFeature != null && focusFeature.getValue().canAutoFocus())
                     focusFeature.startAutoFocus(autoFocusResult);
             }
         });
