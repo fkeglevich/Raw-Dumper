@@ -34,13 +34,14 @@ public class PreviewHelper
       This could change in future versions */
     private static final int APP_ORIENTATION_DEGREES = 0;
 
-    public static void setupPreviewTexture(CameraContext cameraContext, Camera camera) throws IOException
+    public static int setupPreviewTexture(CameraContext cameraContext, Camera camera) throws IOException
     {
-        setCameraDisplayOrientation(cameraContext.getCameraInfo(), camera, APP_ORIENTATION_DEGREES);
+        int rotation = setCameraDisplayOrientation(cameraContext.getCameraInfo(), camera, APP_ORIENTATION_DEGREES);
         camera.setPreviewTexture(cameraContext.getSurfaceTexture());
+        return rotation;
     }
 
-    private static void setCameraDisplayOrientation(ExtraCameraInfo cameraInfo, Camera camera, int degrees)
+    private static int setCameraDisplayOrientation(ExtraCameraInfo cameraInfo, Camera camera, int degrees)
     {
         int facing = cameraInfo.getFacing();
         int orientation = cameraInfo.getOrientation();
@@ -56,5 +57,6 @@ public class PreviewHelper
             result = (orientation - degrees + 360) % 360;
         }
         camera.setDisplayOrientation(result);
+        return result;
     }
 }
