@@ -45,7 +45,11 @@ public class Ev implements Displayable
         if (Float.isNaN(evValue) || Float.isInfinite(evValue))
             throw new IllegalArgumentException("Invalid EV value!");
 
-        return new Ev(evValue);
+        Ev result = new Ev(evValue);
+        if (result.equals(DEFAULT))
+            return DEFAULT;
+
+        return result;
     }
 
     private final float value;

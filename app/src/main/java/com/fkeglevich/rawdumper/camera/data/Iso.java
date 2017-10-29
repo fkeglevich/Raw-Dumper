@@ -64,7 +64,7 @@ public class Iso implements Displayable
 
     public int getNumericValue()
     {
-        if (this == AUTO)
+        if (equals(AUTO))
             throw new RuntimeException("Auto ISO doesn't contain a numeric value!");
 
         return numericValue;
@@ -73,7 +73,7 @@ public class Iso implements Displayable
     @Override
     public String displayValue()
     {
-        if (this == AUTO)
+        if (equals(AUTO))
             return "AUTO";
         else
             return "" + getNumericValue();

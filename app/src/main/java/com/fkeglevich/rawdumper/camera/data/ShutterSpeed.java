@@ -66,7 +66,7 @@ public class ShutterSpeed implements Displayable
 
     public double getExposureInSeconds()
     {
-        if (this == AUTO)
+        if (equals(AUTO))
             throw new RuntimeException("Auto ShutterSpeed doesn't have a fixed exposure time!");
 
         return exposureInSeconds;
@@ -75,7 +75,7 @@ public class ShutterSpeed implements Displayable
     @Override
     public String displayValue()
     {
-        if (this == AUTO)
+        if (equals(AUTO))
             return "AUTO";
 
         if (getExposureInSeconds() > 0.9999)
