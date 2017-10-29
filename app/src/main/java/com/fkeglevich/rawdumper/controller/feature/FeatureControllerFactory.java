@@ -103,6 +103,12 @@ public class FeatureControllerFactory
         return new FlashController(flashButton);
     }
 
+    TouchFocusController createTouchFocusController(ActivityReference reference)
+    {
+        View textureView = reference.weaklyGet().findViewById(R.id.textureView);
+        return new TouchFocusController(textureView);
+    }
+
     private ButtonController createButtonController(ActivityReference reference,
                                                            @IdRes int buttonId,
                                                            DisplayableFeatureUi adapter,

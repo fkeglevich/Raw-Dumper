@@ -47,6 +47,7 @@ public class FeatureControllerManager
         controllersList.add(controllerFactory.createSSController(reference));
         controllersList.add(controllerFactory.createEVController(reference));
         controllersList.add(controllerFactory.createFlashController(reference));
+        controllersList.add(controllerFactory.createTouchFocusController(reference));
     }
 
     public void setupControllers(TurboCamera camera, EventDispatcher<Nothing> onCameraClose)
