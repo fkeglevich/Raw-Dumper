@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.controller.feature.CameraLifetimeController;
@@ -43,5 +44,16 @@ public class MainActivity extends ModularActivity
         setContentView(R.layout.activity_main);
         modesInterface = new ModesInterface(reference);
         cameraLifetimeController = new CameraLifetimeController(reference);
+
+        disable(findViewById(R.id.focusBt));
+        disable(findViewById(R.id.focusText));
+        disable(findViewById(R.id.wbBt));
+        disable(findViewById(R.id.wbText));
+    }
+
+    private void disable(View view)
+    {
+        view.setClickable(false);
+        view.setAlpha(0.25f);
     }
 }
