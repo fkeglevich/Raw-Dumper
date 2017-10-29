@@ -67,3 +67,4 @@ Done:
  - Improve animations
  - Create round button disabled
  - (BUG FIXED) When switching the app too fast, in some rare occasions, the camera is opened twice or the preview is frozen on Android Nougat
+ - FIXED TOUCH FOCUS POSITION YAAAY!
