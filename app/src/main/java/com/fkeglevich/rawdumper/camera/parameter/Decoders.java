@@ -21,6 +21,7 @@ import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
+import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +80,14 @@ class Decoders
                     return ManualFocus.DISABLED;
 
                 return ManualFocus.create(numeric);
+            }
+        });
+        dispatcher.put(ManualFocusRange.class, new ValueDecoder<ManualFocusRange>()
+        {
+            @Override
+            public ManualFocusRange decode(String value)
+            {
+                return value != null ? ManualFocusRange.parseRange(value) : null;
             }
         });
     }

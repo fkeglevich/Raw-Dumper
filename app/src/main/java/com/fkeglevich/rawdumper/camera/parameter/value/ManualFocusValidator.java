@@ -16,38 +16,39 @@
 
 package com.fkeglevich.rawdumper.camera.parameter.value;
 
-import android.util.Range;
+import com.fkeglevich.rawdumper.camera.data.ManualFocus;
+import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 26/09/17.
+ * Created by Flávio Keglevich on 29/10/17.
  */
 
-public class RangeValidator<V extends Comparable<? super V>> implements ValueValidator<V, Range<V>>
+public class ManualFocusValidator implements ValueValidator<ManualFocus, ManualFocusRange>
 {
-    private final Range<V> valueRange;
+    private final ManualFocusRange focusRange;
 
-    RangeValidator(Range<V> valueRange)
+    public ManualFocusValidator(ManualFocusRange focusRange)
     {
-        this.valueRange = valueRange;
-    }
-
-    @Override
-    public boolean isValid(V value)
-    {
-        return valueRange.contains(value);
-    }
-
-    @Override
-    public Range<V> getAvailableValues()
-    {
-        return valueRange;
+        this.focusRange = focusRange;
     }
 
     @Override
     public boolean isAvailable()
     {
-        return true;
+        return focusRange != null;
+    }
+
+    @Override
+    public boolean isValid(ManualFocus value)
+    {
+        return focusRange.contains(value);
+    }
+
+    @Override
+    public ManualFocusRange getAvailableValues()
+    {
+        return focusRange;
     }
 }

@@ -16,6 +16,13 @@
 
 package com.fkeglevich.rawdumper.camera.extension;
 
+import android.util.Range;
+
+import com.fkeglevich.rawdumper.camera.data.ManualFocus;
+import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
+import com.fkeglevich.rawdumper.camera.parameter.Parameter;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
+
 /**
  * Created by Flávio Keglevich on 21/08/2017.
  * TODO: Add a class header comment!
@@ -26,4 +33,7 @@ public class AsusParameters
     public static final String ASUS_XENON_ISO = "Xe_Iso";
     public static final String ASUS_XENON_BRIGHTNESS = "Xe_brightness";
     public static final String ASUS_XENON_EXPOSURE_TIME = "Xe_exposure_time";
+
+    public static final Parameter<ManualFocus> MANUAL_FOCUS = ParameterFactory.create("set_manual_focus", ManualFocus.class);
+    public static final Parameter<ManualFocusRange> MANUAL_FOCUS_RANGE = ParameterFactory.createReadOnly("focus_range_values", ManualFocusRange.class);
 }
