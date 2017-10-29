@@ -31,7 +31,7 @@ import java.util.List;
 
 public class FlashFeature extends WritableFeature<Flash, List<Flash>>
 {
-    public FlashFeature(ParameterCollection parameterCollection)
+    FlashFeature(ParameterCollection parameterCollection)
     {
         super(Parameters.FLASH_MODE, parameterCollection, ListValidator.createFromListParameter(parameterCollection, Parameters.FLASH_MODE_VALUES));
     }
