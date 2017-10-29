@@ -70,7 +70,6 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
     {
         this.handler = new Handler(Looper.getMainLooper());
         this.meteringView = meteringView;
-        meteringView.setAlpha(0.25f);
         this.defaultValue = defaultValue;
         updateViewFromMetering();
     }
@@ -89,7 +88,6 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
         if (meteringFeature != null && !meteringFeature.isAvailable())
             meteringFeature = null;
 
-        meteringView.setAlpha(1f);
         fallbackFeature.getOnChanged().addListener(fallbackChangedListener);
         handler.post(meteringRunnable);
         updateViewFromMetering();
@@ -104,7 +102,6 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
             fallbackFeature.getOnChanged().removeListener(fallbackChangedListener);
         fallbackFeature = null;
 
-        meteringView.setAlpha(0.25f);
         updateViewFromMetering();
     }
 
@@ -118,10 +115,12 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
     {
         if (fallbackFeature == null)
         {
+            meteringView.setAlpha(0.25f);
             setViewText(defaultValue, true);
             return;
         }
 
+        meteringView.setAlpha(1f);
         T fallbackReadings = fallbackFeature.getValue();
         if (defaultValue.equals(fallbackReadings))
         {
@@ -132,9 +131,7 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
                 setViewText(defaultValue, true);
         }
         else
-        {
             setViewText(fallbackReadings, false);
-        }
     }
 
     private Nullable<T> getMeteringReadings()
