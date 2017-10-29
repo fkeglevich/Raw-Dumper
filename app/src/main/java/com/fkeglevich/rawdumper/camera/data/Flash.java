@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
-import android.support.annotation.Nullable;
-
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
 
 import static android.hardware.Camera.Parameters.FLASH_MODE_AUTO;

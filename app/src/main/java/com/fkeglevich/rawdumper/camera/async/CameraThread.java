@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.camera.async;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunctionContext;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
@@ -28,8 +27,6 @@ import com.fkeglevich.rawdumper.camera.async.function.CameraCloseFunction;
 import com.fkeglevich.rawdumper.camera.async.function.CameraOpenFunction;
 import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
-
-import java.util.Objects;
 
 /**
  * Created by Flávio Keglevich on 09/08/2017.

@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.util.Nullable;
 

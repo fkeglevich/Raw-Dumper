@@ -21,8 +21,6 @@ import com.fkeglevich.rawdumper.camera.async.Closeable;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.util.Nothing;
 
-import java.util.Objects;
-
 /**
  * TODO: Add class header
  * <p>

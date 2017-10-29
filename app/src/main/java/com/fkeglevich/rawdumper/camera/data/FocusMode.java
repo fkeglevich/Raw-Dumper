@@ -16,9 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
-import android.hardware.Camera;
-import android.support.annotation.Nullable;
-
 import static android.hardware.Camera.Parameters.FOCUS_MODE_AUTO;
 import static android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE;
 import static android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO;

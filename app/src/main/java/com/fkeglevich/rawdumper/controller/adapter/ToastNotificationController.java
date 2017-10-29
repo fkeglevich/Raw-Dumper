@@ -21,7 +21,6 @@ import android.content.Context;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
-import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
 import com.fkeglevich.rawdumper.controller.feature.ExternalNotificationController;
