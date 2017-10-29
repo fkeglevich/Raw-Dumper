@@ -20,7 +20,11 @@ import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.action.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.data.FocusArea;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.camera.helper.FocusHelper;
+
+import java.util.List;
 
 /**
  * TODO: Add class header
@@ -31,22 +35,40 @@ import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 public class LowLevelCameraActions implements CameraActions
 {
     private final ICameraExtension cameraExtension;
+    private final Object lock;
 
-    public LowLevelCameraActions(ICameraExtension cameraExtension)
+    LowLevelCameraActions(ICameraExtension cameraExtension, Object lock)
     {
         this.cameraExtension = cameraExtension;
+        this.lock = lock;
     }
 
     @Override
-    public void startAutoFocus(final AutoFocusResult callback)
+    public void startAutoFocus(FocusArea focusArea, final AutoFocusResult callback)
     {
-        cameraExtension.getCameraDevice().autoFocus(new Camera.AutoFocusCallback()
+        List<Camera.Area> areas = FocusHelper.generateFocusAreas(focusArea);
+        synchronized (lock)
         {
-            @Override
-            public void onAutoFocus(boolean success, Camera camera)
+            Camera camera = cameraExtension.getCameraDevice();
+            setAreasParameters(areas, camera);
+            camera.autoFocus(new Camera.AutoFocusCallback()
             {
-                callback.autoFocusDone(success);
-            }
-        });
+                @Override
+                public void onAutoFocus(boolean success, Camera camera)
+                {
+                    callback.autoFocusDone(success);
+                }
+            });
+        }
+    }
+
+    private void setAreasParameters(List<Camera.Area> areas, Camera camera)
+    {
+        Camera.Parameters parameters = camera.getParameters();
+        if (parameters.getMaxNumFocusAreas() >= 1)
+            parameters.setFocusAreas(areas);
+        if (parameters.getMaxNumMeteringAreas() >= 1)
+            parameters.setMeteringAreas(areas);
+        camera.setParameters(parameters);
     }
 }
