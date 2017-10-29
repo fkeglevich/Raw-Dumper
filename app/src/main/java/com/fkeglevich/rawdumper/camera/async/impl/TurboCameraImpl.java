@@ -56,7 +56,9 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     public TurboCameraImpl(LowLevelCamera lowLevelCamera)
     {
         this.lowLevelCamera = lowLevelCamera;
-        this.recyclerFactory = new FeatureRecyclerFactory(lowLevelCamera.getCameraContext(), lowLevelCamera.getParameterCollection());
+        this.recyclerFactory = new FeatureRecyclerFactory(  lowLevelCamera.getCameraContext(),
+                                                            lowLevelCamera.getParameterCollection(),
+                                                            lowLevelCamera.getCameraActions());
         createFeatures();
         createRestrictions();
     }

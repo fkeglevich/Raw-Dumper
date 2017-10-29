@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.async.direct;
 
+import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
@@ -33,14 +34,16 @@ import java.io.IOException;
 public class LowLevelCameraImpl implements LowLevelCamera
 {
     private final Object lock = new Object();
-    private final ICameraExtension cameraExtension;
     private final CameraContext cameraContext;
+    private final ICameraExtension cameraExtension;
+    private final LowLevelCameraActions lowLevelCameraActions;
     private final ParameterCollection parameterCollection;
 
     public LowLevelCameraImpl(CameraContext cameraContext, ICameraExtension cameraExtension) throws IOException
     {
         this.cameraContext = cameraContext;
         this.cameraExtension = cameraExtension;
+        this.lowLevelCameraActions = new LowLevelCameraActions(cameraExtension);
         PreviewHelper.setupPreviewTexture(cameraContext, cameraExtension.getCameraDevice());
         LowLevelParameterInterfaceImpl parameterInterface = new LowLevelParameterInterfaceImpl(cameraExtension.getCameraDevice(), lock);
         //parameterInterface.set("preview-size", "1280x960");
@@ -69,5 +72,11 @@ public class LowLevelCameraImpl implements LowLevelCamera
     public ParameterCollection getParameterCollection()
     {
         return parameterCollection;
+    }
+
+    @Override
+    public CameraActions getCameraActions()
+    {
+        return lowLevelCameraActions;
     }
 }

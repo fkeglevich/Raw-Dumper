@@ -14,22 +14,14 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.direct;
-
-import com.fkeglevich.rawdumper.camera.action.CameraActions;
-import com.fkeglevich.rawdumper.camera.async.CameraContext;
-import com.fkeglevich.rawdumper.camera.async.Closeable;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+package com.fkeglevich.rawdumper.camera.action;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 04/10/17.
+ * Created by Flávio Keglevich on 28/10/17.
  */
 
-public interface LowLevelCamera extends Closeable
+public interface CameraActions extends AutoFocusInterface
 {
-    CameraContext getCameraContext();
-    ParameterCollection getParameterCollection();
-    CameraActions getCameraActions();
 }
