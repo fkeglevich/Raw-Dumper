@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.extension;
 
-import android.util.Range;
-
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
