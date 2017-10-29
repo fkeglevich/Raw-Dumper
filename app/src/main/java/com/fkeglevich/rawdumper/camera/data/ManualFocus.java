@@ -16,13 +16,15 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
+import android.support.annotation.NonNull;
+
 /**
  * TODO: Add class header
  * <p>
  * Created by Flávio Keglevich on 26/10/17.
  */
 
-public class ManualFocus
+public class ManualFocus implements Comparable<ManualFocus>
 {
     private static final int INVALID_NUMERIC_VALUE = 0;
 
@@ -45,9 +47,46 @@ public class ManualFocus
 
     public int getNumericValue()
     {
-        if (this == DISABLED)
+        if (equals(DISABLED))
             throw new RuntimeException("Disabled manual focus doesn't have a numeric value!");
 
         return numericValue;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ManualFocus that = (ManualFocus) o;
+
+        return numericValue == that.numericValue;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return numericValue;
+    }
+
+    /**
+     * Compares this object to the specified object to determine their relative
+     * order.
+     *
+     * @param another the object to compare to this instance.
+     * @return a negative integer if this instance is less than {@code another};
+     * a positive integer if this instance is greater than
+     * {@code another}; 0 if this instance has the same order as
+     * {@code another}.
+     * @throws ClassCastException if {@code another} cannot be converted into something
+     *                            comparable to {@code this} instance.
+     */
+    @Override
+    public int compareTo(@NonNull ManualFocus another)
+    {
+        int myNumeric = equals(DISABLED) ? Integer.MIN_VALUE : getNumericValue();
+        int anotherNumeric = another.equals(DISABLED) ? Integer.MIN_VALUE : another.getNumericValue();
+        return myNumeric - anotherNumeric;
     }
 }
