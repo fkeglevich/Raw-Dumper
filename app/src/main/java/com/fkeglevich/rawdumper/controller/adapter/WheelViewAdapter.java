@@ -63,13 +63,13 @@ public class WheelViewAdapter implements DisplayableFeatureUi
         {
             @Override
             public void onWheelItemChanged(WheelView wheelView, int position)
-            {
-                listener.onSelected(position);
-            }
+            {   }
 
             @Override
             public void onWheelItemSelected(WheelView wheelView, int position)
-            {   }
+            {
+                listener.onSelected(position);
+            }
         });
     }
 
