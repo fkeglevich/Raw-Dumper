@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Ev;
@@ -39,11 +40,15 @@ public class FeatureRecyclerFactory
     private final List<Feature> registeredFeatures = new ArrayList<>();
     private final CameraContext cameraContext;
     private final ParameterCollection parameterCollection;
+    private final CameraActions cameraActions;
 
-    public FeatureRecyclerFactory(CameraContext cameraContext, ParameterCollection parameterCollection)
+    public FeatureRecyclerFactory(CameraContext cameraContext,
+                                  ParameterCollection parameterCollection,
+                                  CameraActions cameraActions)
     {
         this.cameraContext = cameraContext;
         this.parameterCollection = parameterCollection;
+        this.cameraActions = cameraActions;
     }
 
     private void registerFeature(Feature feature)
@@ -104,6 +109,13 @@ public class FeatureRecyclerFactory
     public Feature<CaptureSize> createPreviewFeature()
     {
         PreviewFeature result = new PreviewFeature(parameterCollection);
+        registerFeature(result);
+        return result;
+    }
+
+    public FocusFeature createFocusFeature()
+    {
+        FocusFeature result = new FocusFeature(parameterCollection, cameraActions);
         registerFeature(result);
         return result;
     }
