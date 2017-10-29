@@ -19,6 +19,9 @@ package com.fkeglevich.rawdumper.camera.data;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * TODO: Add class header
  * <p>
@@ -28,6 +31,7 @@ import android.view.View;
 public class FocusArea
 {
     private static final int DEFAULT_TOUCH_SIZE = 100;
+    private static final List<Integer> VALID_DEGREES = Arrays.asList(0, 90, 180, 270);
 
     private final int x;
     private final int y;
@@ -77,5 +81,20 @@ public class FocusArea
     public int getTouchSize()
     {
         return touchSize;
+    }
+
+    @SuppressWarnings("SuspiciousNameCombination")
+    public FocusArea rotate(int degrees)
+    {
+        if (!VALID_DEGREES.contains(degrees))
+            throw new IllegalArgumentException();
+
+        switch (degrees)
+        {
+            case 0:     return this;
+            case 90:    return new FocusArea(y, viewWidth - x, viewHeight, viewWidth, touchSize);
+            case 180:   return new FocusArea(viewWidth - x, viewHeight - y, viewWidth, viewHeight, touchSize);
+            default:    return new FocusArea(viewHeight - y, x, viewHeight, viewWidth, touchSize);
+        }
     }
 }
