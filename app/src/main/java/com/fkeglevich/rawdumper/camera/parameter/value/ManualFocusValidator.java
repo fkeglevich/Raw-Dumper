@@ -16,8 +16,12 @@
 
 package com.fkeglevich.rawdumper.camera.parameter.value;
 
+import android.support.annotation.NonNull;
+
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
+import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 
 /**
  * TODO: Add class header
@@ -29,7 +33,13 @@ public class ManualFocusValidator implements ValueValidator<ManualFocus, ManualF
 {
     private final ManualFocusRange focusRange;
 
-    public ManualFocusValidator(ManualFocusRange focusRange)
+    @NonNull
+    public static ManualFocusValidator create(ParameterCollection parameterCollection)
+    {
+        return new ManualFocusValidator(parameterCollection.get(AsusParameters.MANUAL_FOCUS_RANGE));
+    }
+
+    private ManualFocusValidator(ManualFocusRange focusRange)
     {
         this.focusRange = focusRange;
     }
