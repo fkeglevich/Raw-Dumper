@@ -49,7 +49,7 @@ public class PreviewArea
         return createTouchArea(view, motionEvent, DEFAULT_TOUCH_SIZE);
     }
 
-    public PreviewArea(int x, int y, int viewWidth, int viewHeight, int touchSize)
+    private PreviewArea(int x, int y, int viewWidth, int viewHeight, int touchSize)
     {
         this.x = x;
         this.y = y;
