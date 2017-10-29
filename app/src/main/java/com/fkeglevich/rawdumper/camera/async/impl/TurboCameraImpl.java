@@ -30,6 +30,7 @@ import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
+import com.fkeglevich.rawdumper.camera.feature.restriction.FocusRestriction;
 import com.fkeglevich.rawdumper.util.Nullable;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private ManualFocusFeature                                  manualFocusFeature;
 
     private ExposureRestriction                                 exposureRestriction;
+    private FocusRestriction                                    focusRestriction;
 
     public TurboCameraImpl(LowLevelCamera lowLevelCamera)
     {
@@ -83,6 +85,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private void createRestrictions()
     {
         exposureRestriction = new ExposureRestriction(isoFeature, shutterSpeedFeature, evFeature);
+        focusRestriction    = new FocusRestriction(focusFeature, manualFocusFeature);
     }
 
     @Override
