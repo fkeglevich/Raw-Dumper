@@ -27,6 +27,7 @@ import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FeatureRecyclerFactory;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
+import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
 import com.fkeglevich.rawdumper.util.Nullable;
@@ -52,6 +53,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private WritableFeature<Flash, List<Flash>>                 flashFeature;
     private Feature<CaptureSize>                                previewFeature;
     private FocusFeature                                        focusFeature;
+    private ManualFocusFeature                                  manualFocusFeature;
 
     private ExposureRestriction                                 exposureRestriction;
 
@@ -75,6 +77,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         flashFeature        = recyclerFactory.createFlashFeature();
         previewFeature      = recyclerFactory.createPreviewFeature();
         focusFeature        = recyclerFactory.createFocusFeature();
+        manualFocusFeature  = recyclerFactory.createManualFocusFeature();
     }
 
     private void createRestrictions()
@@ -122,6 +125,12 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     public FocusFeature getFocusFeature()
     {
         return focusFeature;
+    }
+
+    @Override
+    public ManualFocusFeature getManualFocusFeature()
+    {
+        return manualFocusFeature;
     }
 
     @Override

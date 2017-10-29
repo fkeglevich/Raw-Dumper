@@ -23,6 +23,7 @@ import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
+import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.util.Nullable;
 
@@ -44,6 +45,7 @@ public interface TurboCamera
     WritableFeature<Flash, List<Flash>> getFlashFeature();
 
     FocusFeature getFocusFeature();
+    ManualFocusFeature getManualFocusFeature();
 
     Feature<CaptureSize> getPreviewFeature();
 }
