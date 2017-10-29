@@ -102,6 +102,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
+                android:layout_marginBottom="2dp"
                 android:text="ISO"/>
 
             <TextView
@@ -126,6 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_button"
+                android:layout_marginBottom="2dp"
                 android:padding="8dp"
                 app:srcCompat="@drawable/ic_camera_black_24dp"/>
 
@@ -151,6 +153,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
+                android:layout_marginBottom="2dp"
                 android:text="EV"/>
 
             <TextView
@@ -175,6 +178,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
+                android:layout_marginBottom="2dp"
                 android:padding="8dp"
                 app:srcCompat="@drawable/ic_filter_center_focus_black_24dp"/>
 
@@ -200,6 +204,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
+                android:layout_marginBottom="2dp"
                 android:text="WB"/>
 
             <TextView
