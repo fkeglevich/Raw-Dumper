@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
-import android.util.Log;
 import android.view.View;
 
 import com.fkeglevich.rawdumper.R;
@@ -24,7 +23,7 @@ import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.CameraManager;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
-import com.fkeglevich.rawdumper.ui.dialog.FatalErrorDialogs;
+import com.fkeglevich.rawdumper.ui.dialog.FatalErrorDialog;
 import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -52,7 +51,6 @@ public class CameraLifetimeController
     private final CameraPreviewTexture textureView;
     private final CameraManager cameraManager;
     private final SwitchButtonController switchButtonController;
-    private final FatalErrorDialogs errorDialogs;
 
     public CameraLifetimeController(ActivityReference reference)
     {
@@ -64,7 +62,6 @@ public class CameraLifetimeController
         this.cameraManager              = new CameraManager(reference, textureView);
         setupCameraManager();
         this.switchButtonController     = createSwitchButtonController();
-        this.errorDialogs               = new FatalErrorDialogs(reference.weaklyGet());
     }
 
     private void setupActivityListeners()
@@ -93,7 +90,7 @@ public class CameraLifetimeController
             @Override
             public void onEvent(MessageException eventData)
             {
-                errorDialogs.showGenericFatalErrorDialog(reference.weaklyGet(), eventData.getMessageResource(reference.weaklyGet()));
+                FatalErrorDialog.show(reference, eventData);
             }
         });
     }

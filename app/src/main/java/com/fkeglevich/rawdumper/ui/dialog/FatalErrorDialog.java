@@ -22,41 +22,25 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.fkeglevich.rawdumper.R;
+import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.ui.UiUtil;
+import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
  * Created by Flávio Keglevich on 13/08/2017.
  * TODO: Add a class header comment!
  */
 
-public class FatalErrorDialogs
+public class FatalErrorDialog
 {
-    private final AlertDialog needsPermissionDialog;
-    private final AlertDialog needsRootAccessDialog;
-
-    public FatalErrorDialogs(Context context)
+    public static void show(ActivityReference reference, MessageException messageException)
     {
-        needsPermissionDialog = buildTerminatingDialog(context, context.getResources().getString(R.string.permission_error));
-        needsRootAccessDialog = buildTerminatingDialog(context, context.getResources().getString(R.string.root_access_error));
+        AppCompatActivity activity = reference.weaklyGet();
+        AlertDialog dialog = buildTerminatingDialog(activity, messageException.getMessageResource(activity));
+        UiUtil.showDialogInImmersiveMode(dialog, activity);
     }
 
-    public void showNeedsPermissionDialog(AppCompatActivity activity)
-    {
-        UiUtil.showDialogInImmersiveMode(needsPermissionDialog, activity);
-    }
-
-    public void showNeedsRootAccessDialog(AppCompatActivity activity)
-    {
-        UiUtil.showDialogInImmersiveMode(needsRootAccessDialog, activity);
-    }
-
-    public void showGenericFatalErrorDialog(AppCompatActivity activity, String message)
-    {
-        AlertDialog fatalErrorDialog = buildTerminatingDialog(activity, message);
-        UiUtil.showDialogInImmersiveMode(fatalErrorDialog, activity);
-    }
-
-    private AlertDialog buildTerminatingDialog(Context context, String message)
+    private static AlertDialog buildTerminatingDialog(Context context, String message)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
