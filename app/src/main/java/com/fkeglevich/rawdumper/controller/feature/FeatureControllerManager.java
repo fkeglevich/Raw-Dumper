@@ -30,27 +30,30 @@ import java.util.List;
  * Created by Flávio Keglevich on 23/10/17.
  */
 
-public class FeatureControllerManager
+class FeatureControllerManager
 {
     private final FeatureControllerFactory controllerFactory;
     private final List<FeatureController> controllersList;
 
-    public FeatureControllerManager()
+    FeatureControllerManager()
     {
         controllerFactory = new FeatureControllerFactory();
         controllersList = new ArrayList<>();
     }
 
-    public void createControllers(ActivityReference reference)
+    void createControllers(ActivityReference reference)
     {
         controllersList.add(controllerFactory.createISOController(reference));
         controllersList.add(controllerFactory.createSSController(reference));
         controllersList.add(controllerFactory.createEVController(reference));
         controllersList.add(controllerFactory.createFlashController(reference));
         controllersList.add(controllerFactory.createTouchFocusController(reference));
+        controllersList.add(controllerFactory.createIsoMeteringController(reference));
+        controllersList.add(controllerFactory.createSSMeteringController(reference));
+        controllersList.add(controllerFactory.createEvMeteringController(reference));
     }
 
-    public void setupControllers(TurboCamera camera, EventDispatcher<Nothing> onCameraClose)
+    void setupControllers(TurboCamera camera, EventDispatcher<Nothing> onCameraClose)
     {
         for (FeatureController featureController : controllersList)
             featureController.setupFeature(camera, onCameraClose);

@@ -20,15 +20,21 @@ import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.Ev;
+import com.fkeglevich.rawdumper.camera.data.Iso;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.adapter.ButtonController;
 import com.fkeglevich.rawdumper.controller.adapter.DismissibleManagerAdapter;
 import com.fkeglevich.rawdumper.controller.adapter.ToastNotificationController;
 import com.fkeglevich.rawdumper.controller.adapter.WheelViewAdapter;
+import com.fkeglevich.rawdumper.util.Nullable;
 import com.lantouzi.wheelview.WheelView;
 
 /**
@@ -107,6 +113,63 @@ public class FeatureControllerFactory
     {
         View textureView = reference.weaklyGet().findViewById(R.id.textureView);
         return new TouchFocusController(textureView);
+    }
+
+    ValueMeteringController<Iso> createIsoMeteringController(ActivityReference reference)
+    {
+        TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.isoText);
+        return new ValueMeteringController<Iso>(textView, Iso.AUTO)
+        {
+            @Override
+            protected Feature<Nullable<Iso>> getMeteringFeature(TurboCamera turboCamera)
+            {
+                return turboCamera.getIsoMeteringFeature();
+            }
+
+            @Override
+            protected Feature<Iso> getFallbackFeature(TurboCamera turboCamera)
+            {
+                return turboCamera.getIsoFeature();
+            }
+        };
+    }
+
+    ValueMeteringController<ShutterSpeed> createSSMeteringController(ActivityReference reference)
+    {
+        TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.ssText);
+        return new ValueMeteringController<ShutterSpeed>(textView, ShutterSpeed.AUTO)
+        {
+            @Override
+            protected Feature<Nullable<ShutterSpeed>> getMeteringFeature(TurboCamera turboCamera)
+            {
+                return turboCamera.getSSMeteringFeature();
+            }
+
+            @Override
+            protected Feature<ShutterSpeed> getFallbackFeature(TurboCamera turboCamera)
+            {
+                return turboCamera.getShutterSpeedFeature();
+            }
+        };
+    }
+
+    ValueMeteringController<Ev> createEvMeteringController(ActivityReference reference)
+    {
+        TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.evText);
+        return new ValueMeteringController<Ev>(textView, Ev.DEFAULT)
+        {
+            @Override
+            protected Feature<Nullable<Ev>> getMeteringFeature(TurboCamera turboCamera)
+            {
+                return null;
+            }
+
+            @Override
+            protected Feature<Ev> getFallbackFeature(TurboCamera turboCamera)
+            {
+                return turboCamera.getEVFeature();
+            }
+        };
     }
 
     private ButtonController createButtonController(ActivityReference reference,
