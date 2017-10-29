@@ -36,17 +36,19 @@ public class LowLevelCameraActions implements CameraActions
 {
     private final ICameraExtension cameraExtension;
     private final Object lock;
+    private final int displayRotation;
 
-    LowLevelCameraActions(ICameraExtension cameraExtension, Object lock)
+    LowLevelCameraActions(ICameraExtension cameraExtension, Object lock, int displayRotation)
     {
         this.cameraExtension = cameraExtension;
         this.lock = lock;
+        this.displayRotation = displayRotation;
     }
 
     @Override
     public void startAutoFocus(FocusArea focusArea, final AutoFocusResult callback)
     {
-        List<Camera.Area> areas = FocusHelper.generateFocusAreas(focusArea);
+        List<Camera.Area> areas = FocusHelper.generateFocusAreas(focusArea.rotate(displayRotation));
         synchronized (lock)
         {
             Camera camera = cameraExtension.getCameraDevice();

@@ -36,6 +36,7 @@ public class LowLevelCameraImpl implements LowLevelCamera
     private final Object lock = new Object();
     private final CameraContext cameraContext;
     private final ICameraExtension cameraExtension;
+    private final int displayRotation;
     private final LowLevelCameraActions lowLevelCameraActions;
     private final ParameterCollection parameterCollection;
 
@@ -43,8 +44,8 @@ public class LowLevelCameraImpl implements LowLevelCamera
     {
         this.cameraContext = cameraContext;
         this.cameraExtension = cameraExtension;
-        this.lowLevelCameraActions = new LowLevelCameraActions(cameraExtension, lock);
-        PreviewHelper.setupPreviewTexture(cameraContext, cameraExtension.getCameraDevice());
+        this.displayRotation = PreviewHelper.setupPreviewTexture(cameraContext, cameraExtension.getCameraDevice());
+        this.lowLevelCameraActions = new LowLevelCameraActions(cameraExtension, lock, displayRotation);
         LowLevelParameterInterfaceImpl parameterInterface = new LowLevelParameterInterfaceImpl(cameraExtension.getCameraDevice(), lock);
         //parameterInterface.set("preview-size", "1280x960");
         //parameterInterface.set("picture-size", "4096x3072");
