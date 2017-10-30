@@ -28,7 +28,7 @@ public abstract class BaseDateBuilder extends ACaptureInfoBuilder
 {
     DateInfo dateInfo;
 
-    public BaseDateBuilder()
+    BaseDateBuilder()
     {
         super();
         initDateInfo();

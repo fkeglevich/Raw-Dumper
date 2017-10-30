@@ -27,7 +27,7 @@ import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
  * Created by Flávio Keglevich on 26/07/2017.
  */
 
-class CameraSizePair
+public class CameraSizePair
 {
     private final RawImageSize rawImageSize;
     private final ExtraCameraInfo extraCameraInfo;

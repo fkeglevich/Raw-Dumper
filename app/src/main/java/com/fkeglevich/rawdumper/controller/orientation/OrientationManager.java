@@ -28,11 +28,11 @@ import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
  * TODO: Add a class header comment!
  */
 
-class OrientationManager
+public class OrientationManager
 {
     private static final OrientationManager instance = new OrientationManager();
 
-    static OrientationManager getInstance()
+    public static OrientationManager getInstance()
     {
         return instance;
     }
