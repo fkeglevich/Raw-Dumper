@@ -126,4 +126,14 @@ public class ExtraCameraInfo
     {
         return canDisableShutterSound;
     }
+
+    public boolean isRetryOnError()
+    {
+        return retryOnError;
+    }
+
+    public void setRetryOnError(boolean retryOnError)
+    {
+        this.retryOnError = retryOnError;
+    }
 }
