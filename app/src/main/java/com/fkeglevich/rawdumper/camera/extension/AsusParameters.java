@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.extension;
 
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
+import com.fkeglevich.rawdumper.camera.data.PictureMode;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
 
@@ -31,6 +32,8 @@ public class AsusParameters
     public static final String ASUS_XENON_ISO = "Xe_Iso";
     public static final String ASUS_XENON_BRIGHTNESS = "Xe_brightness";
     public static final String ASUS_XENON_EXPOSURE_TIME = "Xe_exposure_time";
+
+    public static final String ASUS_MODE = "mode";
 
     public static final Parameter<ManualFocus> MANUAL_FOCUS = ParameterFactory.create("set_manual_focus", ManualFocus.class);
     public static final Parameter<ManualFocusRange> MANUAL_FOCUS_RANGE = ParameterFactory.createReadOnly("focus_range_values", ManualFocusRange.class);
