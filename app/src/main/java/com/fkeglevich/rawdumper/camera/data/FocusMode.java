@@ -30,7 +30,7 @@ import static android.hardware.Camera.Parameters.FOCUS_MODE_MACRO;
  * Created by Flávio Keglevich on 25/10/17.
  */
 
-public enum FocusMode implements Displayable
+public enum FocusMode implements ParameterValue
 {
     AUTO(FOCUS_MODE_AUTO, true),
     CONTINUOUS_PICTURE(FOCUS_MODE_CONTINUOUS_PICTURE, true),
@@ -50,7 +50,7 @@ public enum FocusMode implements Displayable
     }
 
     @Override
-    public String displayValue()
+    public String getParameterValue()
     {
         return parameterValue;
     }

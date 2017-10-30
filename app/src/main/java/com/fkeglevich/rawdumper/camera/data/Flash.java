@@ -30,7 +30,7 @@ import static android.hardware.Camera.Parameters.FLASH_MODE_TORCH;
  * Created by Flávio Keglevich on 11/10/17.
  */
 
-public enum Flash implements Displayable
+public enum Flash implements ParameterValue
 {
     OFF(FLASH_MODE_OFF, ExifFlash.DID_NOT_FIRE),
     ON(FLASH_MODE_ON, ExifFlash.FIRED),
@@ -48,7 +48,7 @@ public enum Flash implements Displayable
     }
 
     @Override
-    public String displayValue()
+    public String getParameterValue()
     {
         return parameterValue;
     }
