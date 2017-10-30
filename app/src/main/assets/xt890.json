@@ -1,199 +1,201 @@
 {
-  "cameras": [
-    {
-      "color": {
-        "calibrationIlluminant1": "D55",
-        "cameraCalibration1": [
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ],
-        "colorMatrix1": [
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ]
-      },
-      "exposure": {
-        "isoParameter": "iso",
-        "isoAutoValue": "auto",
-        "isoValues": [
-          "auto",
-          "100",
-          "200",
-          "300",
-          "400",
-          "600",
-          "800",
-          "1000",
-          "1200",
-          "1400",
-          "1600"
-        ],
-        "shutterSpeedParameter": "shutter",
-        "shutterSpeedAutoValue": "0",
-        "shutterSpeedValues": [
-          "1",
-          "0",
-          "2",
-          "4",
-          "8",
-          "15",
-          "30",
-          "60",
-          "125",
-          "250",
-          "500",
-          "1000",
-          "2000",
-          "5000",
-          "10000"
-        ]
-      },
-      "hasKnownMakernote": false,
-      "id": 0,
-      "lens": {
-        "aperture": 2.6
-      },
-      "model": "%s (back camera)",
-      "noise": {
-        "noiseProfile": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
-      },
-      "uniqueCameraModel": "Motorola Razr I %s (back camera)",
-      "opcodes": [],
-      "retryOnError": false,
-      "sensor": {
-        "baseISO": 100,
-        "bayerPattern": "GRBG",
-        "binningRawImageSizes": [],
-        "bitsPerPixel": 10,
-        "blackLevel": [
-          64.0,
-          64.0,
-          64.0,
-          64.0
-        ],
-        "maker": "Unknown",
-        "name": "Unknown Sensor",
-        "rawImageSizes": [
-          {
-            "height": 2448,
-            "bytesPerLine": 6528,
-            "paddedHeight": 2448,
-            "bufferLength": 15982592,
-            "paddedWidth": 3264,
-            "paddedWidthBytes": 6528,
-            "width": 3264
-          }
-        ],
-        "storageBitsPerPixel": 16,
-        "whiteLevel": 1023
-      }
-    },
-    {
-      "color": {
-        "calibrationIlluminant1": "D55",
-        "cameraCalibration1": [
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ],
-        "colorMatrix1": [
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ]
-      },
-      "exposure": {
-        "isoParameter": "iso",
-        "isoAutoValue": "auto",
-        "isoValues": [
-          "auto",
-          "100",
-          "200",
-          "300",
-          "400",
-          "600",
-          "800",
-          "1000",
-          "1200",
-          "1400",
-          "1600"
-        ],
-        "shutterSpeedParameter": null,
-        "shutterSpeedAutoValue": null,
-        "shutterSpeedValues": []
-      },
-      "hasKnownMakernote": false,
-      "id": 1,
-      "lens": {
-        "aperture": 2.6
-      },
-      "model": "%s (front camera)",
-      "noise": {
-        "noiseProfile": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
-      },
-      "uniqueCameraModel": "Motorola Razr I %s (front camera)",
-      "opcodes": [],
-      "retryOnError": false,
-      "sensor": {
-        "baseISO": 100,
-        "bayerPattern": "UNKNOWN",
-        "binningRawImageSizes": [],
-        "bitsPerPixel": 10,
-        "blackLevel": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "maker": "Unknown",
-        "name": "Unknown Sensor",
-        "rawImageSizes": [],
-        "storageBitsPerPixel": 16,
-        "whiteLevel": 1023
-      }
-    }
-  ],
-  "alignWidth": 128,
-  "dumpDirectoryLocation": "/data",
-  "manufacturer": "Motorola"
+    "cameras": [
+        {
+            "binningSizes": [],
+            "color": {
+                "calibrationIlluminant1": "D55",
+                "cameraCalibration1": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "colorMatrix1": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            },
+            "exposure": {
+                "isoParameter": "iso",
+                "isoAutoValue": "auto",
+                "isoValues": [
+                    "auto",
+                    "100",
+                    "200",
+                    "300",
+                    "400",
+                    "600",
+                    "800",
+                    "1000",
+                    "1200",
+                    "1400",
+                    "1600"
+                ],
+                "shutterSpeedParameter": "shutter",
+                "shutterSpeedAutoValue": "0",
+                "shutterSpeedValues": [
+                    "1",
+                    "0",
+                    "2",
+                    "4",
+                    "8",
+                    "15",
+                    "30",
+                    "60",
+                    "125",
+                    "250",
+                    "500",
+                    "1000",
+                    "2000",
+                    "5000",
+                    "10000"
+                ]
+            },
+            "hasKnownMakernote": false,
+            "id": 0,
+            "lens": {
+                "aperture": 2.6
+            },
+            "model": "%s (back camera)",
+            "noise": {
+                "noiseProfile": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "uniqueCameraModel": "Motorola Razr I %s (back camera)",
+            "opcodes": [],
+            "retryOnError": false,
+            "sensor": {
+                "baseISO": 100,
+                "bayerPattern": "GRBG",
+                "binningRawImageSizes": [],
+                "bitsPerPixel": 10,
+                "blackLevel": [
+                    64.0,
+                    64.0,
+                    64.0,
+                    64.0
+                ],
+                "maker": "Unknown",
+                "name": "Unknown Sensor",
+                "rawImageSizes": [
+                    {
+                        "height": 2448,
+                        "bytesPerLine": 6528,
+                        "paddedHeight": 2448,
+                        "bufferLength": 15982592,
+                        "paddedWidth": 3264,
+                        "paddedWidthBytes": 6528,
+                        "width": 3264
+                    }
+                ],
+                "storageBitsPerPixel": 16,
+                "whiteLevel": 1023
+            }
+        },
+        {
+            "binningSizes": [],
+            "color": {
+                "calibrationIlluminant1": "D55",
+                "cameraCalibration1": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "colorMatrix1": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            },
+            "exposure": {
+                "isoParameter": "iso",
+                "isoAutoValue": "auto",
+                "isoValues": [
+                    "auto",
+                    "100",
+                    "200",
+                    "300",
+                    "400",
+                    "600",
+                    "800",
+                    "1000",
+                    "1200",
+                    "1400",
+                    "1600"
+                ],
+                "shutterSpeedParameter": null,
+                "shutterSpeedAutoValue": null,
+                "shutterSpeedValues": []
+            },
+            "hasKnownMakernote": false,
+            "id": 1,
+            "lens": {
+                "aperture": 2.6
+            },
+            "model": "%s (front camera)",
+            "noise": {
+                "noiseProfile": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "uniqueCameraModel": "Motorola Razr I %s (front camera)",
+            "opcodes": [],
+            "retryOnError": false,
+            "sensor": {
+                "baseISO": 100,
+                "bayerPattern": "UNKNOWN",
+                "binningRawImageSizes": [],
+                "bitsPerPixel": 10,
+                "blackLevel": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "maker": "Unknown",
+                "name": "Unknown Sensor",
+                "rawImageSizes": [],
+                "storageBitsPerPixel": 16,
+                "whiteLevel": 1023
+            }
+        }
+    ],
+    "alignWidth": 128,
+    "dumpDirectoryLocation": "/data",
+    "manufacturer": "Motorola"
 }

@@ -1,6 +1,14 @@
 {
     "cameras": [
         {
+            "binningSizes": [
+                {
+                    "aspectRatioX": 4,
+                    "aspectRatioY": 3,
+                    "height": 1536,
+                    "width": 2048
+                }
+            ],
             "color": {
                 "calibrationIlluminant1": "D55",
                 "cameraCalibration1": [
@@ -150,6 +158,14 @@
             }
         },
         {
+            "binningSizes": [
+                {
+                    "aspectRatioX": 4,
+                    "aspectRatioY": 3,
+                    "height": 960,
+                    "width": 1280
+                }
+            ],
             "color": {
                 "calibrationIlluminant1": "D55",
                 "cameraCalibration1": [

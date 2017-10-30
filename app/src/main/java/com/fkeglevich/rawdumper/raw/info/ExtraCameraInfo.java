@@ -20,6 +20,7 @@ import android.hardware.Camera;
 import android.os.Build;
 import android.support.annotation.Keep;
 
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -46,6 +47,7 @@ public class ExtraCameraInfo
     private ExposureInfo exposure;
     private OpcodeListInfo[] opcodes;
     private NoiseInfo noise;
+    private CaptureSize[] binningSizes;
 
     private boolean hasKnownMakernote;
     private boolean retryOnError;
@@ -135,5 +137,10 @@ public class ExtraCameraInfo
     public void setRetryOnError(boolean retryOnError)
     {
         this.retryOnError = retryOnError;
+    }
+
+    public CaptureSize[] getBinningSizes()
+    {
+        return binningSizes;
     }
 }
