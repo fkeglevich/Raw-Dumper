@@ -18,6 +18,8 @@ TODO list:
 
  - Visual feedback for touch focus/exposure region
 
+ - Add the ~recoveryng photos~ if the app crash use case
+
  - Don't use displayValue for getting parameter values (especially for FocusMode!)
 
  - DON'T forget to require root access BEFORE presenting the app
@@ -49,6 +51,7 @@ TODO list:
    (and other cases where the camera crashes)
 
 Next features:
+ - PictureSizeFeature
  - Take actual pictures in the 2.0 version
  - Selection of focus mode and manual focus
  - Selection of white balance preset and manual white balance
