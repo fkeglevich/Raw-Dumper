@@ -22,6 +22,8 @@ TODO list:
 
  - DON'T forget to require root access BEFORE presenting the app
 
+ - Create a proper isAvailable() (that works with non-patched LL Zen2) when choosing the raw picture format
+
  - Collect adjusted white balance for many CCTs and create a polynomial function between them
 
  - Improve compatibility of generated DNG files for desktop apps like Darktable
@@ -47,6 +49,7 @@ TODO list:
    (and other cases where the camera crashes)
 
 Next features:
+ - Take actual pictures in the 2.0 version
  - Selection of focus mode and manual focus
  - Selection of white balance preset and manual white balance
  - Visual feedback when getting focus
