@@ -16,6 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.extension;
 
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
+import com.fkeglevich.rawdumper.camera.parameter.Parameter;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
+
 /**
  * Collection of (mostly) every Intel specific camera parameter.
  *
@@ -191,4 +195,6 @@ public class IntelParameters
     public static final String SHARPNESS_MODE_NORMAL = "normal";
     public static final String SHARPNESS_MODE_SOFT = "soft";
     public static final String SHARPNESS_MODE_HARD = "hard";
+
+    public static final Parameter<PictureFormat> PICTURE_FORMAT = ParameterFactory.create(KEY_RAW_DATA_FORMAT, PictureFormat.class);
 }
