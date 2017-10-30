@@ -17,10 +17,11 @@
 package com.fkeglevich.rawdumper.camera.parameter;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
+import com.fkeglevich.rawdumper.camera.data.ParameterValue;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,8 +59,8 @@ class Encoders
             @Override
             public String encode(CaptureSize value) {return value.getWidth() + "x" + value.getHeight(); }
         });
-        dispatcher.put(Flash.class, createDisplayableParameterDecoder());
-        dispatcher.put(FocusMode.class, createDisplayableParameterDecoder());
+        dispatcher.put(Flash.class, createParameterValueDecoder());
+        dispatcher.put(FocusMode.class, createParameterValueDecoder());
         dispatcher.put(ManualFocus.class, new ValueEncoder<ManualFocus>()
         {
             @Override
@@ -70,6 +71,7 @@ class Encoders
                 return String.valueOf(value.getNumericValue());
             }
         });
+        dispatcher.put(PictureFormat.class, createParameterValueDecoder());
     }
 
     @SuppressWarnings("unchecked")
@@ -86,14 +88,14 @@ class Encoders
         return new ListEncoder<>(selectEncoder(elementClass));
     }
 
-    private static <T extends Displayable> ValueEncoder<T> createDisplayableParameterDecoder()
+    private static <T extends ParameterValue> ValueEncoder<T> createParameterValueDecoder()
     {
         return new ValueEncoder<T>()
         {
             @Override
             public String encode(T value)
             {
-                return value.displayValue();
+                return value.getParameterValue();
             }
         };
     }

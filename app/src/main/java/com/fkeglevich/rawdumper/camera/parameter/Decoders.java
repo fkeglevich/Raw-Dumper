@@ -22,6 +22,8 @@ import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
+import com.fkeglevich.rawdumper.camera.data.ParameterValue;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,8 +70,8 @@ class Decoders
                 return null;
             }
         });
-        dispatcher.put(Flash.class, createDisplayableParameterDecoder(Flash.values()));
-        dispatcher.put(FocusMode.class, createDisplayableParameterDecoder(FocusMode.values()));
+        dispatcher.put(Flash.class, createParameterValueDecoder(Flash.values()));
+        dispatcher.put(FocusMode.class, createParameterValueDecoder(FocusMode.values()));
         dispatcher.put(ManualFocus.class, new ValueDecoder<ManualFocus>()
         {
             @Override
@@ -90,6 +92,15 @@ class Decoders
                 return value != null ? ManualFocusRange.parseRange(value) : null;
             }
         });
+        dispatcher.put(PictureFormat.class, new ValueDecoder<PictureFormat>()
+        {
+            @Override
+            public PictureFormat decode(String value)
+            {
+                if (value == null) return null;
+                return PictureFormat.RAW.getParameterValue().equals(value) ? PictureFormat.RAW : PictureFormat.JPEG;
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -106,7 +117,7 @@ class Decoders
         return new ListDecoder<>(selectDecoder(elementClass));
     }
 
-    private static <T extends Displayable> ValueDecoder<T> createDisplayableParameterDecoder(final T[] enumValues)
+    private static <T extends ParameterValue> ValueDecoder<T> createParameterValueDecoder(final T[] enumValues)
     {
         return new ValueDecoder<T>()
         {
@@ -114,7 +125,7 @@ class Decoders
             public T decode(String value)
             {
                 for (T item : enumValues)
-                    if (item.displayValue().equals(value))
+                    if (item.getParameterValue().equals(value))
                         return item;
 
                 return null;
