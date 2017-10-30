@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.dng;
 
+import android.support.annotation.Nullable;
+
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
@@ -33,6 +35,7 @@ public class DngWriter
 {
     private TiffWriter tiffWriter;
 
+    @Nullable
     public static DngWriter open(String dngFile)
     {
         TiffWriter tiffWriter = TiffWriter.open(dngFile);
