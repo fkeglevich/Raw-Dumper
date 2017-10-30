@@ -36,11 +36,14 @@ public class DeviceInfo
     private String dumpDirectoryLocation;
     private int alignWidth;
 
+    private transient String deviceFileName;
+
     private DeviceInfo()
     {   }
 
-    void runtimeInit()
+    void runtimeInit(String deviceFileName)
     {
+        this.deviceFileName = deviceFileName;
         for (ExtraCameraInfo cameraInfo : getCameras())
             cameraInfo.runtimeInit();
     }
@@ -58,5 +61,10 @@ public class DeviceInfo
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         tiffWriter.setField(TiffTag.TIFFTAG_MAKE, manufacturer);
+    }
+
+    public String getDeviceFileName()
+    {
+        return deviceFileName;
     }
 }

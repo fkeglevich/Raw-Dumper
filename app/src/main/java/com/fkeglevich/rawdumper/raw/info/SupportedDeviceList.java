@@ -30,15 +30,13 @@ import java.io.IOException;
 @SuppressWarnings({"unused", "MismatchedReadAndWriteOfArray"})
 class SupportedDeviceList
 {
-    private static final String DEVICE_FILE_EXTENSION = ".json";
-
     private SupportedDevice[] supportedDevices;
 
     String findDeviceInfoFile(String deviceModel) throws IOException
     {
         for (SupportedDevice sd : supportedDevices)
             if (sd.deviceModel.equals(deviceModel))
-                return sd.deviceInfoFile + DEVICE_FILE_EXTENSION;
+                return sd.deviceInfoFile;
 
         throw new IOException("Couldn't find the device info file! device model: " + deviceModel);
     }

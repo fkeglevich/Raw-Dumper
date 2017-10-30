@@ -34,6 +34,7 @@ import java.io.IOException;
 public class DeviceInfoLoader
 {
     private static final String SUPPORTED_DEVICES_FILENAME = "supported_devices.json";
+    private static final String DEVICE_FILE_EXTENSION = ".json";
 
     private Moshi moshi;
 
@@ -51,9 +52,10 @@ public class DeviceInfoLoader
     {
         try
         {
-            String deviceInfoJson = loadDeviceInfoJson(deviceModel);
+            String deviceInfoFileName = getDeviceInfoFileName(deviceModel);
+            String deviceInfoJson = AssetUtil.getAssetAsString(deviceInfoFileName + DEVICE_FILE_EXTENSION);
             DeviceInfo deviceInfo = moshi.adapter(DeviceInfo.class).fromJson(deviceInfoJson);
-            if (deviceInfo != null) deviceInfo.runtimeInit();
+            if (deviceInfo != null) deviceInfo.runtimeInit(deviceInfoFileName);
             return deviceInfo;
         }
         catch (IOException ioe)
@@ -67,10 +69,10 @@ public class DeviceInfoLoader
         }
     }
 
-    private String loadDeviceInfoJson(String deviceModel) throws IOException
+    private String getDeviceInfoFileName(String deviceModel) throws IOException
     {
         SupportedDeviceList deviceList = loadDeviceList();
-        return AssetUtil.getAssetAsString(deviceList.findDeviceInfoFile(deviceModel));
+        return deviceList.findDeviceInfoFile(deviceModel);
     }
 
     private SupportedDeviceList loadDeviceList() throws IOException
