@@ -20,6 +20,8 @@ TODO list:
 
  - Don't use displayValue for getting parameter values (especially for FocusMode!)
 
+ - DON'T forget to require root access BEFORE presenting the app
+
  - Collect adjusted white balance for many CCTs and create a polynomial function between them
 
  - Improve compatibility of generated DNG files for desktop apps like Darktable
@@ -43,6 +45,14 @@ TODO list:
  - Better handling of SU shell commands
  - Create a better camera "reopening" for the MM Z00A front camera case 
    (and other cases where the camera crashes)
+
+Next features:
+ - Selection of focus mode and manual focus
+ - Selection of white balance preset and manual white balance
+ - Visual feedback when getting focus
+ - Selection of picture size
+ - Gain-basead white balance
+ - Night Mode with raw pictures
 
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
