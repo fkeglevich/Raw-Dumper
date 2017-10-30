@@ -10,19 +10,17 @@ TODO list:
 
  - (IMPORTANT - IN PROGRESS) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
     raw pictures among different devices with different workarounds.
-	
- - (IMPORTANT) Treat the Zen2 with LL's blobs and the Zen2 with MM's blobs as TWO SEPARATED DEVICES. This simplifies A LOT the handling of each one's features.
-   - Watch out for the differences in the shutter speed
-   - 1/2 shutter speed on the front camera is probably broken on the Zen2 with LL blobs
-   - Long exposure probably don't work on LL Zen2
+
+ - Test if 1/2 shutter speed on the front camera works on the Zen2 with LL blobs
+ - Test if 1s long expo works on the Zen2 with LL blobs
 
  - Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
 
  - Visual feedback for touch focus/exposure region
 
- - Don't use displayValue for getting parameter values
+ - Don't use displayValue for getting parameter values (especially for FocusMode!)
 
- - Add the extra logic for differenciating the zen2 camera blobs's version
+ - Collect adjusted white balance for many CCTs and create a polynomial function between them
 
  - Improve compatibility of generated DNG files for desktop apps like Darktable
    - Compatibility still needs to improve, because Darktable only recognize uncompressed files with stripes
@@ -30,7 +28,7 @@ TODO list:
  - (IN PROGRESS) Reduce overdraw
  
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
-   - Create OrientationActivity class or similar
+   - (DONE!) Create OrientationActivity class or similar
    - Needs to change the rotation parameter when shooting jpeg pictures
  
  - (IMPORTANT - IN PROGRESS) Make the app work on more devices:
@@ -39,7 +37,7 @@ TODO list:
 	- Zenfone 2 with LL blobs
 	
 	- Possible problems:
-	  - Avaliability of the Shutter Speed feature
+	  - (ALMOST SOLVED) Avaliability of the Shutter Speed feature
 	  - (SOLVED) Mismatched number of cameras in the json
  
  - Better handling of SU shell commands
@@ -49,6 +47,7 @@ TODO list:
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
     - Some changes were made to address this bug, should test again to see if it still happens
+ - (MINOR) The space between the buttons is too small when the shutter is set to 1/10000
  
 Done:
 
@@ -73,3 +72,4 @@ Done:
  - (BUG FIXED) When switching the app too fast, in some rare occasions, the camera is opened twice or the preview is frozen on Android Nougat
  - FIXED TOUCH FOCUS POSITION YAAAY!
  - Added Iso and shutter speed metering
+ - Add the extra logic for differenciating the zen2 camera blobs's version
