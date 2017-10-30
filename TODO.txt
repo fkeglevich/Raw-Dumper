@@ -86,3 +86,4 @@ Done:
  - FIXED TOUCH FOCUS POSITION YAAAY!
  - Added Iso and shutter speed metering
  - Add the extra logic for differenciating the zen2 camera blobs's version
+ - Test Brightness metering (result: it's not obsviously useful)
