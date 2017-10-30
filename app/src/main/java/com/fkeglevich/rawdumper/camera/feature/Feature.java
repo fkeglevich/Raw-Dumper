@@ -40,7 +40,7 @@ public abstract class Feature<T> implements Available, DeltaParameter<T>
             throw new UnavailableFeatureException();
     }
 
-    public static <T> void clearEventDispatchers(Feature<T> feature)
+    static <T> void clearEventDispatchers(Feature<T> feature)
     {
         feature.getOnChanging().removeAllListeners();
         feature.getOnChanged().removeAllListeners();
