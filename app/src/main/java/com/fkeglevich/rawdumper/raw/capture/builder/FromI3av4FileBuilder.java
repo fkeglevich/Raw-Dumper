@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.raw.capture.builder;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.capture.DateInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
@@ -43,6 +44,7 @@ public class FromI3av4FileBuilder extends BaseDateBuilder
     private final File relatedI3av4File;
     private final CameraSizePair pair;
     private final Camera.Parameters parameters;
+    private final ImageOrientation orientation;
     private final WhiteBalanceInfoExtractor whiteBalanceExtractor;
 
     private MakerNoteInfo makerNoteInfo;
@@ -50,23 +52,25 @@ public class FromI3av4FileBuilder extends BaseDateBuilder
     public FromI3av4FileBuilder(CameraContext cameraContext, File relatedI3av4File, Camera.Parameters parameters)
     {
         this(cameraContext.getDeviceInfo(), CameraSizePair.createFromParameters(parameters,
-                cameraContext.getCameraInfo()), relatedI3av4File, parameters);
+                cameraContext.getCameraInfo()), relatedI3av4File, parameters,
+                OrientationManager.getInstance().getImageOrientation(cameraContext));
     }
 
-    private FromI3av4FileBuilder(DeviceInfo device, CameraSizePair cameraSizePair, File relatedI3av4File, Camera.Parameters parameters)
+    private FromI3av4FileBuilder(DeviceInfo device, CameraSizePair cameraSizePair, File relatedI3av4File, Camera.Parameters parameters, ImageOrientation orientation)
     {
         super();
         this.device = device;
         this.pair = cameraSizePair;
         this.relatedI3av4File = relatedI3av4File;
         this.parameters = parameters;
+        this.orientation = orientation;
         this.whiteBalanceExtractor = new WhiteBalanceInfoExtractor();
         initMakerNoteInfo();
     }
 
     public FromI3av4FileBuilder(DeviceInfo device, File relatedI3av4File, Camera.Parameters parameters)
     {
-        this(device, new CameraSizePairList(device).getBestPair(relatedI3av4File.length()), relatedI3av4File, parameters);
+        this(device, new CameraSizePairList(device).getBestPair(relatedI3av4File.length()), relatedI3av4File, parameters, ImageOrientation.TOPLEFT);
     }
 
     public FromI3av4FileBuilder(DeviceInfo device, File relatedI3av4File)
@@ -128,7 +132,7 @@ public class FromI3av4FileBuilder extends BaseDateBuilder
     @Override
     public void buildOrientation()
     {
-        captureInfo.orientation = ImageOrientation.TOPLEFT;
+        captureInfo.orientation = orientation;
     }
 
     @Override
