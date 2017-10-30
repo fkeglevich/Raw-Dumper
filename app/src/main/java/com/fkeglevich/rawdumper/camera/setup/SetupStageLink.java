@@ -36,6 +36,7 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
 interface SetupStageLink
 {
     void setDeviceInfo(DeviceInfo deviceInfo);
+    DeviceInfo getDeviceInfo();
     void setSurfaceTexture(SurfaceTexture surfaceTexture);
 
     TextureView getTextureView();
@@ -51,4 +52,5 @@ interface SetupStageLink
     void sendException(MessageException exception);
 
     void setPermissionToken();
+    void setWorkaroundToken();
 }

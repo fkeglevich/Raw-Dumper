@@ -66,6 +66,12 @@ class SetupStageLinkImpl implements SetupStageLink
     }
 
     @Override
+    public DeviceInfo getDeviceInfo()
+    {
+        return deviceInfo;
+    }
+
+    @Override
     public void setSurfaceTexture(SurfaceTexture surfaceTexture)
     {
         this.surfaceTexture = surfaceTexture;
@@ -125,5 +131,11 @@ class SetupStageLinkImpl implements SetupStageLink
     public void setPermissionToken()
     {
         setupReference.removeAllStagesOfType(PermissionsStage.class);
+    }
+
+    @Override
+    public void setWorkaroundToken()
+    {
+        setupReference.removeAllStagesOfType(WorkaroundStage.class);
     }
 }
