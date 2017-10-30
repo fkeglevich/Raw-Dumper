@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.capture.builder;
 
 import android.hardware.Camera;
 
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.raw.capture.DateInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
@@ -46,7 +47,13 @@ public class FromI3av4FileBuilder extends BaseDateBuilder
 
     private MakerNoteInfo makerNoteInfo;
 
-    public FromI3av4FileBuilder(DeviceInfo device, CameraSizePair cameraSizePair, File relatedI3av4File, Camera.Parameters parameters)
+    public FromI3av4FileBuilder(CameraContext cameraContext, File relatedI3av4File, Camera.Parameters parameters)
+    {
+        this(cameraContext.getDeviceInfo(), CameraSizePair.createFromParameters(parameters,
+                cameraContext.getCameraInfo()), relatedI3av4File, parameters);
+    }
+
+    private FromI3av4FileBuilder(DeviceInfo device, CameraSizePair cameraSizePair, File relatedI3av4File, Camera.Parameters parameters)
     {
         super();
         this.device = device;

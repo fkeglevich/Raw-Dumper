@@ -18,6 +18,8 @@ package com.fkeglevich.rawdumper.raw.capture.builder;
 
 import android.hardware.Camera;
 
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.capture.DateInfo;
 import com.fkeglevich.rawdumper.raw.capture.FilenameExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
@@ -45,9 +47,18 @@ public class FromRawAndJpegBuilder extends BaseDateBuilder
 
     private MakerNoteInfo makerNoteInfo;
 
-    public FromRawAndJpegBuilder(DeviceInfo device, CameraSizePair cameraSizePair,
-                                 Camera.Parameters parameters, ImageOrientation orientation,
+    public FromRawAndJpegBuilder(CameraContext cameraContext, Camera.Parameters parameters,
                                  byte[] rawDataBytes, byte[] extraJpegBytes)
+    {
+        this(cameraContext.getDeviceInfo(), CameraSizePair.createFromParameters(parameters,
+                cameraContext.getCameraInfo()), parameters,
+                OrientationManager.getInstance().getImageOrientation(cameraContext),
+                rawDataBytes, extraJpegBytes);
+    }
+
+    private FromRawAndJpegBuilder(DeviceInfo device, CameraSizePair cameraSizePair,
+                                  Camera.Parameters parameters, ImageOrientation orientation,
+                                  byte[] rawDataBytes, byte[] extraJpegBytes)
     {
         super();
         this.device = device;
