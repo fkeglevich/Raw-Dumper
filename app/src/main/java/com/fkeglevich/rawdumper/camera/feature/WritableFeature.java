@@ -28,7 +28,7 @@ import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 
 public abstract class WritableFeature<T, A> extends Feature<T>
 {
-    private final ValueValidator<T, A> validator;
+    private ValueValidator<T, A> validator;
 
     WritableFeature(Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, A> validator)
     {
@@ -56,4 +56,12 @@ public abstract class WritableFeature<T, A> extends Feature<T>
         return validator.getAvailableValues();
     }
 
+    protected void changeValidator(ValueValidator<T, A> newValidator, T newValue)
+    {
+        if (!newValidator.isValid(newValue))
+            throw new IllegalArgumentException();
+
+        validator = newValidator;
+        setValue(newValue);
+    }
 }
