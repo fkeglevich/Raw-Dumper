@@ -18,7 +18,12 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
+import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
+import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
+
+import java.util.List;
 
 /**
  * TODO: Add class header
@@ -26,10 +31,11 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
  * Created by Flávio Keglevich on 05/10/17.
  */
 
-public class PreviewFeature extends Feature<CaptureSize>
+class PreviewFeature extends WritableFeature<CaptureSize, List<CaptureSize>>
 {
     PreviewFeature(ParameterCollection parameterCollection)
     {
-        super(Parameters.PREVIEW_SIZE, parameterCollection);
+        super(  Parameters.PREVIEW_SIZE, parameterCollection,
+                ListValidator.createFromListParameter(parameterCollection, Parameters.PREVIEW_SIZE_VALUES));
     }
 }

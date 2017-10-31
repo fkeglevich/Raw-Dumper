@@ -37,6 +37,7 @@ public class Parameters
     public static final Parameter<Float> EXPOSURE_COMPENSATION_STEP = ParameterFactory.createReadOnly("exposure-compensation-step", Float.TYPE);
 
     public static final Parameter<CaptureSize> PREVIEW_SIZE = ParameterFactory.create("preview-size", CaptureSize.class);
+    public static final Parameter<List<CaptureSize>> PREVIEW_SIZE_VALUES = ParameterFactory.createReadOnlyList("preview-size-values", CaptureSize.class);
 
     public static final Parameter<Flash> FLASH_MODE = ParameterFactory.create("flash-mode", Flash.class);
     public static final Parameter<List<Flash>> FLASH_MODE_VALUES = ParameterFactory.createReadOnlyList("flash-mode-values", Flash.class);
