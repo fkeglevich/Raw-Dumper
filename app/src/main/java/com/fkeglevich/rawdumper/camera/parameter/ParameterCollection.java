@@ -16,7 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.parameter;
 
+import android.support.annotation.NonNull;
+
 import com.fkeglevich.rawdumper.camera.async.direct.LowLevelParameterInterface;
+import com.fkeglevich.rawdumper.camera.async.direct.VirtualParameterInterface;
 
 /**
  * TODO: Add class header
@@ -27,6 +30,12 @@ import com.fkeglevich.rawdumper.camera.async.direct.LowLevelParameterInterface;
 public class ParameterCollection
 {
     private final LowLevelParameterInterface parameterInterface;
+
+    @NonNull
+    public static ParameterCollection createVirtualParameterCollection()
+    {
+        return new ParameterCollection(new VirtualParameterInterface());
+    }
 
     public ParameterCollection(LowLevelParameterInterface parameterInterface)
     {
