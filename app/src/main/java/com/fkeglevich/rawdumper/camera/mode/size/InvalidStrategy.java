@@ -14,31 +14,24 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.parameter.size;
+package com.fkeglevich.rawdumper.camera.mode.size;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 18/09/17.
+ * Created by Flávio Keglevich on 30/10/17.
  */
 
-public abstract class PictureSizeTranslator
+public class InvalidStrategy extends PictureSizeStrategy
 {
-    /*public static PictureSizeTranslator create(SharedParameters parameters, SensorInfo sensorInfo)
+    @Override
+    public List<CaptureSize> getAvailableSizes()
     {
-        if (StringUtil.compare(RAW_DATA_FORMAT_BAYER, parameters.get(KEY_RAW_DATA_FORMAT)) == 0)
-            return new RawSizeTranslator(parameters, sensorInfo);
-        else
-            return new JpegSizeTranslator(parameters);
-    }*/
-
-    abstract List<CaptureSize> getPictureSizes();
-
-    abstract CaptureSize getCurrentSize();
-
-    abstract void setCurrentSize(CaptureSize pictureSize);
+        return new ArrayList<>();
+    }
 }

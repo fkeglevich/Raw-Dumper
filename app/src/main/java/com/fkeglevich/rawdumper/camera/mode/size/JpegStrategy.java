@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline.strategy;
+package com.fkeglevich.rawdumper.camera.mode.size;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.extension.Parameters;
+import com.fkeglevich.rawdumper.camera.parameter.Parameter;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,11 +29,20 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class InvalidSizeStrategy implements PictureSizeStrategy
+public class JpegStrategy extends PictureSizeStrategy
 {
-    @Override
-    public List<CaptureSize> getValidPictureSizes()
+    private final ParameterCollection parameterCollection;
+    private final Parameter<List<CaptureSize>> pictureSizeValues;
+
+    public JpegStrategy(ParameterCollection parameterCollection)
     {
-        return new ArrayList<>();
+        this.parameterCollection = parameterCollection;
+        this.pictureSizeValues = Parameters.PICTURE_SIZE_VALUES;
+    }
+
+    @Override
+    public List<CaptureSize> getAvailableSizes()
+    {
+        return parameterCollection.get(pictureSizeValues);
     }
 }

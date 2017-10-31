@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline.strategy;
+package com.fkeglevich.rawdumper.camera.mode.format;
 
-import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.SensorInfo;
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
+
+import java.util.List;
 
 /**
  * TODO: Add class header
@@ -25,16 +27,14 @@ import com.fkeglevich.rawdumper.raw.info.SensorInfo;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class LLRawSizeStrategy extends RawSizeStrategyBase
+public class CompoundFormat
 {
-    public LLRawSizeStrategy(SensorInfo sensorInfo)
-    {
-        super(sensorInfo);
-    }
+    public final PictureFormat pictureFormat;
+    public final List<CaptureSize> pictureSizes;
 
-    @Override
-    protected RawImageSize[] getSizeListFromSensor(SensorInfo sensorInfo)
+    public CompoundFormat(PictureFormat pictureFormat, List<CaptureSize> pictureSizes)
     {
-        return sensorInfo.getBinningRawImageSizes();
+        this.pictureFormat = pictureFormat;
+        this.pictureSizes = pictureSizes;
     }
 }

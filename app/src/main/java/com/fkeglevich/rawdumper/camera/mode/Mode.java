@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline.strategy;
+package com.fkeglevich.rawdumper.camera.mode;
 
-import com.fkeglevich.rawdumper.camera.async.pipeline.PicturePipeline;
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.mode.format.CompoundFormat;
+import com.fkeglevich.rawdumper.camera.mode.format.FormatStrategy;
 
 import java.util.List;
 
@@ -27,29 +27,29 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class CaptureStrategy
+public abstract class Mode
 {
-    private final PictureSizeStrategy pictureSizeStrategy;
-    private final PicturePipeline pipeline;
+    private final String modeParameterValue;
+    private final FormatStrategy formatStrategy;
 
-    public CaptureStrategy(PictureSizeStrategy pictureSizeStrategy, PicturePipeline pipeline)
+    Mode(String modeParameterValue, FormatStrategy formatStrategy)
     {
-        this.pictureSizeStrategy = pictureSizeStrategy;
-        this.pipeline = pipeline;
+        this.modeParameterValue = modeParameterValue;
+        this.formatStrategy = formatStrategy;
     }
 
-    List<CaptureSize> getValidPictureSizes()
+    public List<CompoundFormat> getAvailableFormats()
     {
-        return pictureSizeStrategy.getValidPictureSizes();
+        return formatStrategy.getAvailableFormats();
     }
 
-    PicturePipeline getPicturePipeline()
+    public boolean isAvailable()
     {
-        return pipeline;
+        return formatStrategy.isAvailable();
     }
 
-    boolean isValid()
+    public String getModeParameterValue()
     {
-        return !getValidPictureSizes().isEmpty();
+        return modeParameterValue;
     }
 }

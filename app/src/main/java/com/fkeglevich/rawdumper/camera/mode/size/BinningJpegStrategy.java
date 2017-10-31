@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline.strategy;
+package com.fkeglevich.rawdumper.camera.mode.size;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.extension.Parameters;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
-
-import java.util.List;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 /**
  * TODO: Add class header
@@ -29,20 +25,22 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class JpegSizeStrategy implements PictureSizeStrategy
+public class BinningJpegStrategy extends CameraInfoStrategy<CaptureSize>
 {
-    private final ParameterCollection parameterCollection;
-    private final Parameter<List<CaptureSize>> pictureSizeValues;
-
-    public JpegSizeStrategy(ParameterCollection parameterCollection)
+    public BinningJpegStrategy(ExtraCameraInfo cameraInfo)
     {
-        this.parameterCollection = parameterCollection;
-        this.pictureSizeValues = Parameters.PICTURE_SIZE_VALUES;
+        super(cameraInfo);
     }
 
     @Override
-    public List<CaptureSize> getValidPictureSizes()
+    CaptureSize[] getSizeListFromCameraInfo(ExtraCameraInfo cameraInfo)
     {
-        return parameterCollection.get(pictureSizeValues);
+        return cameraInfo.getBinningSizes();
+    }
+
+    @Override
+    CaptureSize toCaptureSize(CaptureSize size)
+    {
+        return size;
     }
 }

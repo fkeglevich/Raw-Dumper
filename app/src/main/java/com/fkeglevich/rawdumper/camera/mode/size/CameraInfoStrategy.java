@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline.strategy;
+package com.fkeglevich.rawdumper.camera.mode.size;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.SensorInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,29 +29,31 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public abstract class RawSizeStrategyBase implements PictureSizeStrategy
+abstract class CameraInfoStrategy<T> extends PictureSizeStrategy
 {
-    private final List<CaptureSize> rawSizes;
+    private final List<CaptureSize> sizeList;
 
-    public RawSizeStrategyBase(SensorInfo sensorInfo)
+    CameraInfoStrategy(ExtraCameraInfo cameraInfo)
     {
-        rawSizes = initRawSizes(sensorInfo);
+        sizeList = initRawSizes(cameraInfo);
     }
 
-    private List<CaptureSize> initRawSizes(SensorInfo sensorInfo)
+    private List<CaptureSize> initRawSizes(ExtraCameraInfo cameraInfo)
     {
         List<CaptureSize> result = new ArrayList<>();
-        for (RawImageSize rawImageSize : getSizeListFromSensor(sensorInfo))
-            result.add(new CaptureSize(rawImageSize.getPaddedWidth(), rawImageSize.getPaddedHeight()));
+        for (T size : getSizeListFromCameraInfo(cameraInfo))
+            result.add(toCaptureSize(size));
 
         return Collections.unmodifiableList(result);
     }
 
-    protected abstract RawImageSize[] getSizeListFromSensor(SensorInfo sensorInfo);
-
     @Override
-    public List<CaptureSize> getValidPictureSizes()
+    public List<CaptureSize> getAvailableSizes()
     {
-        return rawSizes;
+        return sizeList;
     }
+
+    abstract T[] getSizeListFromCameraInfo(ExtraCameraInfo cameraInfo);
+
+    abstract CaptureSize toCaptureSize(T size);
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline.strategy;
+package com.fkeglevich.rawdumper.camera.mode.size;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 
@@ -26,7 +26,12 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public interface PictureSizeStrategy
+public abstract class PictureSizeStrategy
 {
-    List<CaptureSize> getValidPictureSizes();
+    public abstract List<CaptureSize> getAvailableSizes();
+
+    public boolean isAvailable()
+    {
+        return !getAvailableSizes().isEmpty();
+    }
 }

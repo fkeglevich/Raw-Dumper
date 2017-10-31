@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline.strategy;
+package com.fkeglevich.rawdumper.camera.mode.size;
 
-import com.fkeglevich.rawdumper.camera.async.pipeline.strategy.RawSizeStrategyBase;
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.SensorInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 /**
  * TODO: Add class header
@@ -26,16 +26,22 @@ import com.fkeglevich.rawdumper.raw.info.SensorInfo;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class RawSizeStrategy extends RawSizeStrategyBase
+public class RawStrategy extends CameraInfoStrategy<RawImageSize>
 {
-    public RawSizeStrategy(SensorInfo sensorInfo)
+    public RawStrategy(ExtraCameraInfo cameraInfo)
     {
-        super(sensorInfo);
+        super(cameraInfo);
     }
 
     @Override
-    protected RawImageSize[] getSizeListFromSensor(SensorInfo sensorInfo)
+    RawImageSize[] getSizeListFromCameraInfo(ExtraCameraInfo cameraInfo)
     {
-        return sensorInfo.getRawImageSizes();
+        return cameraInfo.getSensor().getRawImageSizes();
+    }
+
+    @Override
+    CaptureSize toCaptureSize(RawImageSize size)
+    {
+        return new CaptureSize(size.getWidth(), size.getHeight());
     }
 }
