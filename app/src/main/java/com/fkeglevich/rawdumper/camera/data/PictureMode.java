@@ -24,8 +24,8 @@ package com.fkeglevich.rawdumper.camera.data;
 
 public enum PictureMode implements ParameterValue
 {
-    NORMAL("PRO"),
-    LOW_LIGHT("LL");
+    NORMAL("normal"),
+    LOW_LIGHT("low-light");
 
     private final String parameterValue;
 

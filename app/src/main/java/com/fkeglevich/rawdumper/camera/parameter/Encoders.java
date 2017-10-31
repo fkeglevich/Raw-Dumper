@@ -22,6 +22,7 @@ import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ParameterValue;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
+import com.fkeglevich.rawdumper.camera.data.PictureMode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,6 +73,7 @@ class Encoders
             }
         });
         dispatcher.put(PictureFormat.class, createParameterValueDecoder());
+        dispatcher.put(PictureMode.class, createParameterValueDecoder());
     }
 
     @SuppressWarnings("unchecked")
