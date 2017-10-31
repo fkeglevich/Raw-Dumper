@@ -195,6 +195,4 @@ public class IntelParameters
     public static final String SHARPNESS_MODE_NORMAL = "normal";
     public static final String SHARPNESS_MODE_SOFT = "soft";
     public static final String SHARPNESS_MODE_HARD = "hard";
-
-    public static final Parameter<PictureFormat> PICTURE_FORMAT = ParameterFactory.create(KEY_RAW_DATA_FORMAT, PictureFormat.class);
 }
