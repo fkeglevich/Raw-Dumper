@@ -30,9 +30,9 @@ import static com.fkeglevich.rawdumper.camera.extension.IntelParameters.RAW_DATA
 
 public enum PictureFormat implements ParameterValue
 {
-    JPEG(RAW_DATA_FORMAT_NONE, new NoPipeline()),
-    RAW(RAW_DATA_FORMAT_BAYER, new NoPipeline()),
-    YUV(RAW_DATA_FORMAT_NONE, new NoPipeline());
+    JPEG("jpeg", new NoPipeline()),
+    RAW("raw", new NoPipeline()),
+    YUV("yuv", new NoPipeline());
 
     private final String rawDataFormatValue;
     private final PicturePipeline picturePipeline;
