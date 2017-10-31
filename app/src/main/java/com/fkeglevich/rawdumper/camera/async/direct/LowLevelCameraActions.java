@@ -73,4 +73,22 @@ public class LowLevelCameraActions implements CameraActions
             parameters.setMeteringAreas(areas);
         camera.setParameters(parameters);
     }
+
+    @Override
+    public void stopPreview()
+    {
+        synchronized (lock)
+        {
+            cameraExtension.getCameraDevice().stopPreview();
+        }
+    }
+
+    @Override
+    public void startPreview()
+    {
+        synchronized (lock)
+        {
+            cameraExtension.getCameraDevice().startPreview();
+        }
+    }
 }

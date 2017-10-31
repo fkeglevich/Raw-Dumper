@@ -19,9 +19,11 @@ package com.fkeglevich.rawdumper.camera.action;
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 28/10/17.
+ * Created by Flávio Keglevich on 31/10/17.
  */
 
-public interface CameraActions extends AutoFocusInterface, PreviewActions
+public interface PreviewActions
 {
+    void stopPreview();
+    void startPreview();
 }
