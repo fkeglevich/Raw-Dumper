@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.data.mode.format.DefaultFormatStrategy;
 import com.fkeglevich.rawdumper.camera.data.mode.size.BinningJpegStrategy;
+import com.fkeglevich.rawdumper.camera.data.mode.size.BinningRawStrategy;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 /**
@@ -40,6 +41,6 @@ public class LowLightMode extends Mode
     {
         return new DefaultFormatStrategy(   new BinningJpegStrategy(cameraInfo),
                                             new BinningJpegStrategy(cameraInfo),
-                                            new BinningJpegStrategy(cameraInfo));
+                                            new BinningRawStrategy(cameraInfo));
     }
 }
