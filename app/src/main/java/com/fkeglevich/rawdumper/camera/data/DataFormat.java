@@ -14,21 +14,32 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.extension;
+package com.fkeglevich.rawdumper.camera.data;
 
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
-import com.fkeglevich.rawdumper.camera.data.mode.Mode;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
+import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 30/10/17.
+ * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class VirtualParameters
+public enum DataFormat implements ParameterValue
 {
-    public static final Parameter<Mode>         PICTURE_MODE    = ParameterFactory.createCodecless("picture-mode");
-    public static final Parameter<PicFormat>    PICTURE_FORMAT  = ParameterFactory.createCodecless("picture-format");
+    JPEG(IntelParameters.RAW_DATA_FORMAT_NONE),
+    YUV(IntelParameters.RAW_DATA_FORMAT_NONE),
+    RAW(IntelParameters.RAW_DATA_FORMAT_BAYER);
+
+    private final String parameterValue;
+
+    DataFormat(String parameterValue)
+    {
+        this.parameterValue = parameterValue;
+    }
+
+    @Override
+    public String getParameterValue()
+    {
+        return parameterValue;
+    }
 }

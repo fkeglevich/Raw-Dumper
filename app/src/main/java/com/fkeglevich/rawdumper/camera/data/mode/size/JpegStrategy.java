@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode.size;
+package com.fkeglevich.rawdumper.camera.data.mode.size;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+import com.fkeglevich.rawdumper.camera.extension.Parameters;
+import com.fkeglevich.rawdumper.camera.parameter.Parameter;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,31 +29,20 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-abstract class CameraInfoStrategy<T> extends PictureSizeStrategy
+public class JpegStrategy extends PictureSizeStrategy
 {
-    private final List<CaptureSize> sizeList;
+    private final ParameterCollection parameterCollection;
+    private final Parameter<List<CaptureSize>> pictureSizeValues;
 
-    CameraInfoStrategy(ExtraCameraInfo cameraInfo)
+    public JpegStrategy(ParameterCollection parameterCollection)
     {
-        sizeList = initRawSizes(cameraInfo);
-    }
-
-    private List<CaptureSize> initRawSizes(ExtraCameraInfo cameraInfo)
-    {
-        List<CaptureSize> result = new ArrayList<>();
-        for (T size : getSizeListFromCameraInfo(cameraInfo))
-            result.add(toCaptureSize(size));
-
-        return Collections.unmodifiableList(result);
+        this.parameterCollection = parameterCollection;
+        this.pictureSizeValues = Parameters.PICTURE_SIZE_VALUES;
     }
 
     @Override
     public List<CaptureSize> getAvailableSizes()
     {
-        return sizeList;
+        return parameterCollection.get(pictureSizeValues);
     }
-
-    abstract T[] getSizeListFromCameraInfo(ExtraCameraInfo cameraInfo);
-
-    abstract CaptureSize toCaptureSize(T size);
 }

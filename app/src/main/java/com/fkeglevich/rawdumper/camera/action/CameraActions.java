@@ -22,6 +22,6 @@ package com.fkeglevich.rawdumper.camera.action;
  * Created by Flávio Keglevich on 28/10/17.
  */
 
-public interface CameraActions extends AutoFocusInterface, PreviewActions
+public interface CameraActions extends AutoFocusInterface, PreviewActions, PictureModeAction, PictureFormatAction
 {
 }

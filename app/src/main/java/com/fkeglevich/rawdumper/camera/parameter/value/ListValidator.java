@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,6 +39,13 @@ public class ListValidator<V> implements ValueValidator<V, List<V>>
     public static <V> ListValidator<V> createFromListParameter(ParameterCollection parameterCollection, Parameter<List<V>> listParameter)
     {
         return new ListValidator<>(parameterCollection.get(listParameter));
+    }
+
+    @NonNull
+    @SuppressWarnings("unchecked")
+    public static <V> ListValidator<V> createInvalid()
+    {
+        return new ListValidator<>(Collections.<V>emptyList());
     }
 
     public ListValidator(List<V> valueList)

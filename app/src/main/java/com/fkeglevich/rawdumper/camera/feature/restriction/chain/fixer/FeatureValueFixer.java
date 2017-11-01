@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode.format;
+package com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer;
 
-import java.util.List;
+import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 30/10/17.
+ * Created by Flávio Keglevich on 31/10/17.
  */
 
-public abstract class FormatStrategy
+public interface FeatureValueFixer<M, S, L>
 {
-    public abstract List<CompoundFormat> getAvailableFormats();
-
-    public boolean isAvailable()
-    {
-        return !getAvailableFormats().isEmpty();
-    }
+    S fixValue(ValueValidator<S, L> newValidator, S toBeFixed, M extraData);
 }

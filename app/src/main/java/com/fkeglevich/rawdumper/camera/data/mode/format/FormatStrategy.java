@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.parameter.value;
+package com.fkeglevich.rawdumper.camera.data.mode.format;
 
-import com.fkeglevich.rawdumper.camera.data.PictureFormat;
-import com.fkeglevich.rawdumper.raw.info.SensorInfo;
+import com.fkeglevich.rawdumper.camera.data.DataContainer;
+import com.fkeglevich.rawdumper.camera.data.PicFormat;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,18 +27,10 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class PictureFormatValidator extends ListValidator<PictureFormat>
+public abstract class FormatStrategy implements DataContainer<PicFormat>
 {
-    public PictureFormatValidator(SensorInfo sensorInfo)
+    public boolean isAvailable()
     {
-        super(createFromListParameter(sensorInfo));
-    }
-
-    private static List<PictureFormat> createFromListParameter(SensorInfo sensorInfo)
-    {
-        if (sensorInfo.getRawImageSizes().length == 0)
-            return Arrays.asList(PictureFormat.JPEG, PictureFormat.YUV);
-        else
-            return Arrays.asList(PictureFormat.RAW, PictureFormat.JPEG, PictureFormat.YUV);
+        return !getAvailableValues().isEmpty();
     }
 }

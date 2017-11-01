@@ -14,29 +14,25 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.data;
+package com.fkeglevich.rawdumper.camera.feature.restriction.chain.validator;
+
+import com.fkeglevich.rawdumper.camera.data.DataContainer;
+import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
+import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
+
+import java.util.List;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 30/10/17.
+ * Created by Flávio Keglevich on 31/10/17.
  */
 
-public enum PictureMode implements ParameterValue
+public class DataContainerVF<M extends DataContainer<S>, S> implements ValidatorFactory<M, S, List<S>>
 {
-    NORMAL("normal"),
-    LOW_LIGHT("low-light");
-
-    private final String parameterValue;
-
-    PictureMode(String parameterValue)
-    {
-        this.parameterValue = parameterValue;
-    }
-
     @Override
-    public String getParameterValue()
+    public ValueValidator<S, List<S>> create(M masterValue)
     {
-        return parameterValue;
+        return new ListValidator<>(masterValue.getAvailableValues());
     }
 }

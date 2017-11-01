@@ -52,4 +52,9 @@ public class ParameterFactory
     {
         return new RuntimeParameter<>(parameterImplementor);
     }
+
+    public static <T> Parameter<T> createCodecless(String key)
+    {
+        return StaticParameter.create(key, null, null);
+    }
 }

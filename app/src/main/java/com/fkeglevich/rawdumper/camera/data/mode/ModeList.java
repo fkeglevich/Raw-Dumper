@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode.size;
+package com.fkeglevich.rawdumper.camera.data.mode;
 
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.data.DataContainer;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO: Add class header
@@ -25,22 +29,25 @@ import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class BinningJpegStrategy extends CameraInfoStrategy<CaptureSize>
+public class ModeList implements DataContainer<Mode>
 {
-    public BinningJpegStrategy(ExtraCameraInfo cameraInfo)
+    private final List<Mode> modeList = new ArrayList<>();
+
+    public ModeList(ParameterCollection parameterCollection, ExtraCameraInfo cameraInfo)
     {
-        super(cameraInfo);
+        addModeIfAvailable(new NormalMode(parameterCollection, cameraInfo));
+        addModeIfAvailable(new LowLightMode(cameraInfo));
+    }
+
+    private void addModeIfAvailable(Mode mode)
+    {
+        if (mode.isAvailable())
+            modeList.add(mode);
     }
 
     @Override
-    CaptureSize[] getSizeListFromCameraInfo(ExtraCameraInfo cameraInfo)
+    public List<Mode> getAvailableValues()
     {
-        return cameraInfo.getBinningSizes();
-    }
-
-    @Override
-    CaptureSize toCaptureSize(CaptureSize size)
-    {
-        return size;
+        return modeList;
     }
 }

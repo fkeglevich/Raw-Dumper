@@ -16,10 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.extension;
 
-import com.fkeglevich.rawdumper.camera.data.PictureFormat;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
-
 /**
  * Collection of (mostly) every Intel specific camera parameter.
  *

@@ -16,11 +16,12 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.PictureMode;
-import com.fkeglevich.rawdumper.camera.mode.ModeList;
+import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.data.mode.Mode;
+import com.fkeglevich.rawdumper.camera.parameter.CodeclessParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
-import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+import com.fkeglevich.rawdumper.camera.parameter.PictureSizeParameterCollection;
+import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 
 import java.util.List;
 
@@ -32,33 +33,35 @@ import java.util.List;
 
 public class VirtualFeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 {
-    private final ParameterCollection virtualParameterCollection = ParameterCollection.createVirtualParameterCollection();
-    private final ModeList modeList;
-    private final ParameterCollection parameterCollection;
+    private final ParameterCollection virtualParameterCollection = new CodeclessParameterCollection();
+    private final CameraActions cameraActions;
+    private final ParameterCollection pictureSizeCollection;
 
-    public VirtualFeatureRecyclerFactory(ModeList modeList, ParameterCollection parameterCollection)
+    public VirtualFeatureRecyclerFactory(ParameterCollection parameterCollection,
+                                         SensorInfo sensorInfo,
+                                         CameraActions cameraActions)
     {
-        this.modeList = modeList;
-        this.parameterCollection = parameterCollection;
+        this.cameraActions = cameraActions;
+        this.pictureSizeCollection = new PictureSizeParameterCollection(parameterCollection, sensorInfo);
     }
 
-    public PictureModeFeature createPictureModeFeature()
+    public PictureModeFeature createPictureModeFeature(List<Mode> valueList)
     {
-        PictureModeFeature result = new PictureModeFeature(virtualParameterCollection, modeList);
+        final PictureModeFeature result = new PictureModeFeature(virtualParameterCollection, cameraActions, valueList);
         registerFeature(result);
         return result;
     }
 
-    public PictureFormatFeature createPictureFormatFeature(PictureModeFeature pictureModeFeature)
+    public PictureFormatFeature createPictureFormatFeature()
     {
-        PictureFormatFeature result = new PictureFormatFeature(virtualParameterCollection, pictureModeFeature);
+        PictureFormatFeature result = new PictureFormatFeature(virtualParameterCollection, cameraActions);
         registerFeature(result);
         return result;
     }
 
-    public PictureSizeFeature createPictureSizeFeature(PictureFormatFeature pictureFormatFeature)
+    public PictureSizeFeature createPictureSizeFeature()
     {
-        PictureSizeFeature result = new PictureSizeFeature(parameterCollection, pictureFormatFeature);
+        PictureSizeFeature result = new PictureSizeFeature(pictureSizeCollection);
         registerFeature(result);
         return result;
     }

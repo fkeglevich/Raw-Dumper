@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode;
+package com.fkeglevich.rawdumper.camera.data.mode;
 
 import android.support.annotation.NonNull;
 
-import com.fkeglevich.rawdumper.camera.mode.format.DefaultFormatStrategy;
-import com.fkeglevich.rawdumper.camera.mode.size.JpegStrategy;
-import com.fkeglevich.rawdumper.camera.mode.size.RawStrategy;
+import com.fkeglevich.rawdumper.camera.data.mode.format.DefaultFormatStrategy;
+import com.fkeglevich.rawdumper.camera.data.mode.size.JpegStrategy;
+import com.fkeglevich.rawdumper.camera.data.mode.size.RawStrategy;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 

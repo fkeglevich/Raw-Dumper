@@ -14,24 +14,17 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode.size;
-
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+package com.fkeglevich.rawdumper.camera.data;
 
 import java.util.List;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 30/10/17.
+ * Created by Flávio Keglevich on 31/10/17.
  */
 
-public abstract class PictureSizeStrategy
+public interface DataContainer<T>
 {
-    public abstract List<CaptureSize> getAvailableSizes();
-
-    public boolean isAvailable()
-    {
-        return !getAvailableSizes().isEmpty();
-    }
+    List<T> getAvailableValues();
 }

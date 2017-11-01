@@ -14,27 +14,17 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode.format;
+package com.fkeglevich.rawdumper.camera.action;
 
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.PictureFormat;
-
-import java.util.List;
+import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 30/10/17.
+ * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class CompoundFormat
+public interface PictureModeAction
 {
-    public final PictureFormat pictureFormat;
-    public final List<CaptureSize> pictureSizes;
-
-    public CompoundFormat(PictureFormat pictureFormat, List<CaptureSize> pictureSizes)
-    {
-        this.pictureFormat = pictureFormat;
-        this.pictureSizes = pictureSizes;
-    }
+    void setMode(Mode mode);
 }

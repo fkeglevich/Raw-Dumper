@@ -35,9 +35,8 @@ import java.util.List;
  * Created by Flávio Keglevich on 04/10/17.
  */
 
-public class FeatureRecyclerFactory
+public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 {
-    private final List<Feature> registeredFeatures = new ArrayList<>();
     private final CameraContext cameraContext;
     private final ParameterCollection parameterCollection;
     private final CameraActions cameraActions;
@@ -46,22 +45,9 @@ public class FeatureRecyclerFactory
                                   ParameterCollection parameterCollection,
                                   CameraActions cameraActions)
     {
-        this.cameraContext = cameraContext;
         this.parameterCollection = parameterCollection;
         this.cameraActions = cameraActions;
-    }
-
-    private void registerFeature(Feature feature)
-    {
-        registeredFeatures.add(feature);
-    }
-
-    public void cleanUpAllFeatures()
-    {
-        for (Feature feature : registeredFeatures)
-            Feature.clearEventDispatchers(feature);
-
-        registeredFeatures.clear();
+        this.cameraContext = cameraContext;
     }
 
     public WritableFeature<Iso, List<Iso>> createIsoFeature()
@@ -106,7 +92,7 @@ public class FeatureRecyclerFactory
         return result;
     }
 
-    public Feature<CaptureSize> createPreviewFeature()
+    public PreviewFeature createPreviewFeature()
     {
         PreviewFeature result = new PreviewFeature(parameterCollection);
         registerFeature(result);

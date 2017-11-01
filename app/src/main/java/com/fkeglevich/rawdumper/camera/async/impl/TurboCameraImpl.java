@@ -23,14 +23,23 @@ import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.Iso;
+import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FeatureRecyclerFactory;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
+import com.fkeglevich.rawdumper.camera.feature.PictureFormatFeature;
+import com.fkeglevich.rawdumper.camera.feature.PictureModeFeature;
+import com.fkeglevich.rawdumper.camera.feature.PictureSizeFeature;
+import com.fkeglevich.rawdumper.camera.feature.PreviewFeature;
+import com.fkeglevich.rawdumper.camera.feature.VirtualFeatureRecyclerFactory;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.FocusRestriction;
+import com.fkeglevich.rawdumper.camera.data.mode.ModeList;
+import com.fkeglevich.rawdumper.camera.feature.restriction.chain.ModeRestrictionChain;
 import com.fkeglevich.rawdumper.util.Nullable;
 
 import java.util.List;
@@ -45,6 +54,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
 {
     private final LowLevelCamera lowLevelCamera;
     private final FeatureRecyclerFactory recyclerFactory;
+    private final VirtualFeatureRecyclerFactory virtualRecyclerFactory;
 
     private WritableFeature<Iso, List<Iso>>                     isoFeature;
     private Feature<Nullable<Iso>>                              isoMeteringFeature;
@@ -52,12 +62,17 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private Feature<Nullable<ShutterSpeed>>                     ssMeteringFeature;
     private WritableFeature<Ev, List<Ev>>                       evFeature;
     private WritableFeature<Flash, List<Flash>>                 flashFeature;
-    private Feature<CaptureSize>                                previewFeature;
+    private PreviewFeature                                      previewFeature;
+    private PictureSizeFeature                                  pictureSizeFeature;
     private FocusFeature                                        focusFeature;
     private ManualFocusFeature                                  manualFocusFeature;
+    private PictureModeFeature                                  pictureModeFeature;
+    private PictureFormatFeature                                pictureFormatFeature;
 
     private ExposureRestriction                                 exposureRestriction;
     private FocusRestriction                                    focusRestriction;
+    private ModeRestrictionChain                                modeRestrictionChain;
+    private final ModeList modeList;
 
     public TurboCameraImpl(LowLevelCamera lowLevelCamera)
     {
@@ -65,7 +80,14 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         this.recyclerFactory = new FeatureRecyclerFactory(  lowLevelCamera.getCameraContext(),
                                                             lowLevelCamera.getParameterCollection(),
                                                             lowLevelCamera.getCameraActions());
+
+        modeList = new ModeList(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext().getCameraInfo());
+        virtualRecyclerFactory = new VirtualFeatureRecyclerFactory(lowLevelCamera.getParameterCollection(),
+                lowLevelCamera.getCameraContext().getCameraInfo().getSensor(),
+                lowLevelCamera.getCameraActions());
+
         createFeatures();
+        createVirtualFeatures();
         createRestrictions();
     }
 
@@ -82,10 +104,18 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         manualFocusFeature  = recyclerFactory.createManualFocusFeature();
     }
 
+    private void createVirtualFeatures()
+    {
+        pictureModeFeature      = virtualRecyclerFactory.createPictureModeFeature(modeList.getAvailableValues());
+        pictureFormatFeature    = virtualRecyclerFactory.createPictureFormatFeature();
+        pictureSizeFeature      = virtualRecyclerFactory.createPictureSizeFeature();
+    }
+
     private void createRestrictions()
     {
-        exposureRestriction = new ExposureRestriction(isoFeature, shutterSpeedFeature, evFeature);
-        focusRestriction    = new FocusRestriction(focusFeature, manualFocusFeature);
+        exposureRestriction     = new ExposureRestriction(isoFeature, shutterSpeedFeature, evFeature);
+        focusRestriction        = new FocusRestriction(focusFeature, manualFocusFeature);
+        modeRestrictionChain    = new ModeRestrictionChain(pictureModeFeature, pictureFormatFeature, pictureSizeFeature, previewFeature, lowLevelCamera.getCameraActions());
     }
 
     @Override
@@ -137,6 +167,24 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     }
 
     @Override
+    public WritableFeature<Mode, List<Mode>> getPictureModeFeature()
+    {
+        return pictureModeFeature;
+    }
+
+    @Override
+    public WritableFeature<PicFormat, List<PicFormat>> getPictureFormatFeature()
+    {
+        return pictureFormatFeature;
+    }
+
+    @Override
+    public WritableFeature<CaptureSize, List<CaptureSize>> getPictureSizeFeature()
+    {
+        return pictureSizeFeature;
+    }
+
+    @Override
     public Feature<CaptureSize> getPreviewFeature()
     {
         return previewFeature;
@@ -146,6 +194,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     public void close()
     {
         recyclerFactory.cleanUpAllFeatures();
+        virtualRecyclerFactory.cleanUpAllFeatures();
         lowLevelCamera.close();
     }
 }

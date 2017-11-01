@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode.size;
+package com.fkeglevich.rawdumper.camera.data.mode.size;
 
-import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO: Add class header
@@ -25,16 +27,11 @@ import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class BinningRawStrategy extends RawStrategy
+public class InvalidStrategy extends PictureSizeStrategy
 {
-    public BinningRawStrategy(ExtraCameraInfo cameraInfo)
-    {
-        super(cameraInfo);
-    }
-
     @Override
-    RawImageSize[] getSizeListFromCameraInfo(ExtraCameraInfo cameraInfo)
+    public List<CaptureSize> getAvailableSizes()
     {
-        return cameraInfo.getSensor().getBinningRawImageSizes();
+        return new ArrayList<>();
     }
 }

@@ -29,23 +29,30 @@ import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 public abstract class WritableFeature<T, A> extends Feature<T>
 {
     private ValueValidator<T, A> validator;
+    private final boolean isMutable;
 
     WritableFeature(Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, A> validator)
     {
+        this(featureParameter, parameterCollection, validator, false);
+    }
+
+    WritableFeature(Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, A> validator, boolean isMutable)
+    {
         super(featureParameter, parameterCollection);
         this.validator = validator;
+        this.isMutable = isMutable;
     }
 
     @Override
     public boolean isAvailable()
     {
-        return validator.isAvailable();
+        return getValidator().isAvailable();
     }
 
     public void setValue(T value)
     {
         checkFeatureAvailability(this);
-        if (!validator.isValid(value))
+        if (!getValidator().isValid(value))
             throw new IllegalArgumentException();
 
         parameterCollection.set(parameter, value);
@@ -53,15 +60,28 @@ public abstract class WritableFeature<T, A> extends Feature<T>
 
     public A getAvailableValues()
     {
-        return validator.getAvailableValues();
+        return getValidator().getAvailableValues();
     }
 
-    protected void changeValidator(ValueValidator<T, A> newValidator, T newValue)
+    public void changeValidator(ValueValidator<T, A> newValidator, T newValue)
     {
+        if (!isMutable())
+            throw new IllegalStateException("Attempting to change the validator of a immutable WritableFeature!");
+
         if (!newValidator.isValid(newValue))
             throw new IllegalArgumentException();
 
         validator = newValidator;
         setValue(newValue);
+    }
+
+    public boolean isMutable()
+    {
+        return isMutable;
+    }
+
+    public ValueValidator<T, A> getValidator()
+    {
+        return validator;
     }
 }

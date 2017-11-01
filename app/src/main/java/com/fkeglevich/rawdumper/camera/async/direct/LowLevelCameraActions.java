@@ -20,8 +20,12 @@ import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.action.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
+import com.fkeglevich.rawdumper.camera.data.mode.Mode;
+import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
 import com.fkeglevich.rawdumper.camera.helper.FocusHelper;
 
 import java.util.List;
@@ -89,6 +93,29 @@ public class LowLevelCameraActions implements CameraActions
         synchronized (lock)
         {
             cameraExtension.getCameraDevice().startPreview();
+        }
+    }
+
+    @Override
+    public void setMode(Mode mode)
+    {
+        synchronized (lock)
+        {
+            Camera.Parameters parameters = cameraExtension.getCameraDevice().getParameters();
+            parameters.set(AsusParameters.ASUS_MODE, mode.getParameterValue());
+            parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, IntelParameters.RAW_DATA_FORMAT_NONE);
+            cameraExtension.getCameraDevice().setParameters(parameters);
+        }
+    }
+
+    @Override
+    public void setPictureFormat(PicFormat pictureFormat)
+    {
+        synchronized (lock)
+        {
+            Camera.Parameters parameters = cameraExtension.getCameraDevice().getParameters();
+            parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, pictureFormat.getFormat().getParameterValue());
+            cameraExtension.getCameraDevice().setParameters(parameters);
         }
     }
 }

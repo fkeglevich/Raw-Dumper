@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.extension;
+package com.fkeglevich.rawdumper.camera.feature;
 
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
-import com.fkeglevich.rawdumper.camera.data.mode.Mode;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
+import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO: Add class header
@@ -27,8 +29,20 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class VirtualParameters
+class FeatureRecyclerFactoryBase
 {
-    public static final Parameter<Mode>         PICTURE_MODE    = ParameterFactory.createCodecless("picture-mode");
-    public static final Parameter<PicFormat>    PICTURE_FORMAT  = ParameterFactory.createCodecless("picture-format");
+    private final List<Feature> registeredFeatures = new ArrayList<>();
+
+    void registerFeature(Feature feature)
+    {
+        registeredFeatures.add(feature);
+    }
+
+    public void cleanUpAllFeatures()
+    {
+        for (Feature feature : registeredFeatures)
+            Feature.clearEventDispatchers(feature);
+
+        registeredFeatures.clear();
+    }
 }

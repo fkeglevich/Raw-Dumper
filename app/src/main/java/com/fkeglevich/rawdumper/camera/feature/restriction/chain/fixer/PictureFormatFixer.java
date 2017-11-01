@@ -14,21 +14,28 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.extension;
+package com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer;
 
+import com.fkeglevich.rawdumper.camera.data.DataContainer;
 import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
+import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
+import com.fkeglevich.rawdumper.util.Assert;
+
+import java.util.List;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 30/10/17.
+ * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class VirtualParameters
+public class PictureFormatFixer implements FeatureValueFixer<Mode, PicFormat, List<PicFormat>>
 {
-    public static final Parameter<Mode>         PICTURE_MODE    = ParameterFactory.createCodecless("picture-mode");
-    public static final Parameter<PicFormat>    PICTURE_FORMAT  = ParameterFactory.createCodecless("picture-format");
+    @Override
+    public PicFormat fixValue(ValueValidator<PicFormat, List<PicFormat>> newValidator, PicFormat ignoredFormat, Mode ignoredMode)
+    {
+        Assert.isTrue(!newValidator.getAvailableValues().isEmpty());
+        return newValidator.getAvailableValues().get(0);
+    }
 }

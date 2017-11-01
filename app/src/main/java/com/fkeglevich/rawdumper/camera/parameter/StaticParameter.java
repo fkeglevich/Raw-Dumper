@@ -54,6 +54,7 @@ class StaticParameter<T> extends Parameter<T>
     @Override
     ValueDecoder<T> getDecoder()
     {
+        if (decoder == null) throw new RuntimeException("This parameter doesn't have a decoder!");
         return decoder;
     }
 

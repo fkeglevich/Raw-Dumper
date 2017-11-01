@@ -16,26 +16,34 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.extension.Parameters;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
+import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
-import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 
 import java.util.List;
+
+import static com.fkeglevich.rawdumper.camera.extension.VirtualParameters.PICTURE_FORMAT;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 05/10/17.
+ * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class PreviewFeature extends WritableFeature<CaptureSize, List<CaptureSize>>
+public class PictureFormatFeature extends WritableFeature<PicFormat, List<PicFormat>> implements VirtualFeature
 {
-    PreviewFeature(ParameterCollection parameterCollection)
+    private final CameraActions cameraActions;
+
+    PictureFormatFeature(ParameterCollection parameterCollection, CameraActions cameraActions)
     {
-        super(  Parameters.PREVIEW_SIZE, parameterCollection,
-                ListValidator.createFromListParameter(parameterCollection, Parameters.PREVIEW_SIZE_VALUES));
+        super(PICTURE_FORMAT, parameterCollection, ListValidator.<PicFormat>createInvalid(), true);
+        this.cameraActions = cameraActions;
+    }
+
+    @Override
+    public void performUpdate()
+    {
+        cameraActions.setPictureFormat(getValue());
     }
 }

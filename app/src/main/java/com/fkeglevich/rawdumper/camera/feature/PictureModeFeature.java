@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode.size;
+package com.fkeglevich.rawdumper.camera.feature;
 
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.extension.Parameters;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
+import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.extension.VirtualParameters;
+import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
 
 import java.util.List;
 
@@ -29,20 +30,19 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class JpegStrategy extends PictureSizeStrategy
+public class PictureModeFeature extends WritableFeature<Mode, List<Mode>> implements VirtualFeature
 {
-    private final ParameterCollection parameterCollection;
-    private final Parameter<List<CaptureSize>> pictureSizeValues;
+    private final CameraActions cameraActions;
 
-    public JpegStrategy(ParameterCollection parameterCollection)
+    PictureModeFeature(ParameterCollection parameterCollection, CameraActions cameraActions, List<Mode> valueList)
     {
-        this.parameterCollection = parameterCollection;
-        this.pictureSizeValues = Parameters.PICTURE_SIZE_VALUES;
+        super(VirtualParameters.PICTURE_MODE, parameterCollection, new ListValidator<>(valueList), true);
+        this.cameraActions = cameraActions;;
     }
 
     @Override
-    public List<CaptureSize> getAvailableSizes()
+    public void performUpdate()
     {
-        return parameterCollection.get(pictureSizeValues);
+        cameraActions.setMode(getValue());
     }
 }

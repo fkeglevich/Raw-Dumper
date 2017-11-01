@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.extension;
+package com.fkeglevich.rawdumper.camera.data.mode.size;
 
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
-import com.fkeglevich.rawdumper.camera.data.mode.Mode;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
+import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 /**
  * TODO: Add class header
@@ -27,8 +25,16 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class VirtualParameters
+public class BinningRawStrategy extends RawStrategy
 {
-    public static final Parameter<Mode>         PICTURE_MODE    = ParameterFactory.createCodecless("picture-mode");
-    public static final Parameter<PicFormat>    PICTURE_FORMAT  = ParameterFactory.createCodecless("picture-format");
+    public BinningRawStrategy(ExtraCameraInfo cameraInfo)
+    {
+        super(cameraInfo);
+    }
+
+    @Override
+    RawImageSize[] getSizeListFromCameraInfo(ExtraCameraInfo cameraInfo)
+    {
+        return cameraInfo.getSensor().getBinningRawImageSizes();
+    }
 }

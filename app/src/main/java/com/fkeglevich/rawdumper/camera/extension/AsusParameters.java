@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.camera.extension;
 
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
-import com.fkeglevich.rawdumper.camera.data.PictureMode;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
 

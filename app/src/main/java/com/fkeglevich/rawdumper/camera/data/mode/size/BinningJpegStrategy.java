@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode;
+package com.fkeglevich.rawdumper.camera.data.mode.size;
 
-import android.support.annotation.NonNull;
-
-import com.fkeglevich.rawdumper.camera.mode.format.DefaultFormatStrategy;
-import com.fkeglevich.rawdumper.camera.mode.size.BinningJpegStrategy;
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 /**
@@ -28,18 +25,22 @@ import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class LowLightMode extends Mode
+public class BinningJpegStrategy extends CameraInfoStrategy<CaptureSize>
 {
-    LowLightMode(ExtraCameraInfo cameraInfo)
+    public BinningJpegStrategy(ExtraCameraInfo cameraInfo)
     {
-        super("LL", getFormatStrategy(cameraInfo));
+        super(cameraInfo);
     }
 
-    @NonNull
-    private static DefaultFormatStrategy getFormatStrategy(ExtraCameraInfo cameraInfo)
+    @Override
+    CaptureSize[] getSizeListFromCameraInfo(ExtraCameraInfo cameraInfo)
     {
-        return new DefaultFormatStrategy(   new BinningJpegStrategy(cameraInfo),
-                                            new BinningJpegStrategy(cameraInfo),
-                                            new BinningJpegStrategy(cameraInfo));
+        return cameraInfo.getBinningSizes();
+    }
+
+    @Override
+    CaptureSize toCaptureSize(CaptureSize size)
+    {
+        return size;
     }
 }

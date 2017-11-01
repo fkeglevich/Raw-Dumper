@@ -14,24 +14,17 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode.size;
+package com.fkeglevich.rawdumper.camera.feature.restriction.chain.validator;
 
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 30/10/17.
+ * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class InvalidStrategy extends PictureSizeStrategy
+public interface ValidatorFactory<M, S, L>
 {
-    @Override
-    public List<CaptureSize> getAvailableSizes()
-    {
-        return new ArrayList<>();
-    }
+    ValueValidator<S, L> create(M masterValue);
 }

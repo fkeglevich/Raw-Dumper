@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode;
+package com.fkeglevich.rawdumper.camera.data.mode.size;
 
-import com.fkeglevich.rawdumper.camera.mode.format.CompoundFormat;
-import com.fkeglevich.rawdumper.camera.mode.format.FormatStrategy;
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 
 import java.util.List;
 
@@ -27,29 +26,12 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public abstract class Mode
+public abstract class PictureSizeStrategy
 {
-    private final String modeParameterValue;
-    private final FormatStrategy formatStrategy;
-
-    Mode(String modeParameterValue, FormatStrategy formatStrategy)
-    {
-        this.modeParameterValue = modeParameterValue;
-        this.formatStrategy = formatStrategy;
-    }
-
-    public List<CompoundFormat> getAvailableFormats()
-    {
-        return formatStrategy.getAvailableFormats();
-    }
+    public abstract List<CaptureSize> getAvailableSizes();
 
     public boolean isAvailable()
     {
-        return formatStrategy.isAvailable();
-    }
-
-    public String getModeParameterValue()
-    {
-        return modeParameterValue;
+        return !getAvailableSizes().isEmpty();
     }
 }

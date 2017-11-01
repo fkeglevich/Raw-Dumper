@@ -17,14 +17,11 @@
 package com.fkeglevich.rawdumper.camera.parameter;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 import com.fkeglevich.rawdumper.camera.data.ParameterValue;
-import com.fkeglevich.rawdumper.camera.data.PictureFormat;
-import com.fkeglevich.rawdumper.camera.data.PictureMode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -93,8 +90,6 @@ class Decoders
                 return value != null ? ManualFocusRange.parseRange(value) : null;
             }
         });
-        dispatcher.put(PictureFormat.class, createParameterValueDecoder(PictureFormat.values(), PictureFormat.RAW));
-        dispatcher.put(PictureMode.class, createParameterValueDecoder(PictureMode.values(), PictureMode.NORMAL));
     }
 
     @SuppressWarnings("unchecked")

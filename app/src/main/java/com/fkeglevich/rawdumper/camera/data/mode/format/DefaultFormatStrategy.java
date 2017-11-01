@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.mode.format;
+package com.fkeglevich.rawdumper.camera.data.mode.format;
 
-import com.fkeglevich.rawdumper.camera.data.PictureFormat;
-import com.fkeglevich.rawdumper.camera.mode.size.PictureSizeStrategy;
+import com.fkeglevich.rawdumper.camera.data.DataContainer;
+import com.fkeglevich.rawdumper.camera.data.DataFormat;
+import com.fkeglevich.rawdumper.camera.data.PicFormat;
+import com.fkeglevich.rawdumper.camera.data.mode.size.PictureSizeStrategy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,33 +33,33 @@ import java.util.List;
 
 public class DefaultFormatStrategy extends FormatStrategy
 {
-    private final List<CompoundFormat> compoundFormats;
+    private final List<PicFormat> pictureFormats;
 
     public DefaultFormatStrategy(PictureSizeStrategy jpegStrategy, PictureSizeStrategy yuvStrategy, PictureSizeStrategy rawStrategy)
     {
-        compoundFormats = initCompoundFormats(jpegStrategy, yuvStrategy, rawStrategy);
+        pictureFormats = initFormats(jpegStrategy, yuvStrategy, rawStrategy);
     }
 
-    private List<CompoundFormat> initCompoundFormats(PictureSizeStrategy jpegStrategy, PictureSizeStrategy yuvStrategy, PictureSizeStrategy rawStrategy)
+    private List<PicFormat> initFormats(PictureSizeStrategy jpegStrategy, PictureSizeStrategy yuvStrategy, PictureSizeStrategy rawStrategy)
     {
-        List<CompoundFormat> formatList = new ArrayList<>();
+        List<PicFormat> formatList = new ArrayList<>();
 
-        addIfAvailable(jpegStrategy, PictureFormat.JPEG, formatList);
-        addIfAvailable(yuvStrategy, PictureFormat.YUV, formatList);
-        addIfAvailable(rawStrategy, PictureFormat.RAW, formatList);
+        addIfAvailable(jpegStrategy, DataFormat.JPEG, formatList);
+        addIfAvailable(yuvStrategy, DataFormat.YUV, formatList);
+        addIfAvailable(rawStrategy, DataFormat.RAW, formatList);
 
         return Collections.unmodifiableList(formatList);
     }
 
-    private void addIfAvailable(PictureSizeStrategy sizeStrategy, PictureFormat pictureFormat, List<CompoundFormat> formatList)
+    private void addIfAvailable(PictureSizeStrategy sizeStrategy, DataFormat dataFormat, List<PicFormat> formatList)
     {
         if (sizeStrategy.isAvailable())
-            formatList.add(new CompoundFormat(pictureFormat, sizeStrategy.getAvailableSizes()));
+            formatList.add(new PicFormat(dataFormat, sizeStrategy.getAvailableSizes()));
     }
 
     @Override
-    public List<CompoundFormat> getAvailableFormats()
+    public List<PicFormat> getAvailableValues()
     {
-        return compoundFormats;
+        return pictureFormats;
     }
 }

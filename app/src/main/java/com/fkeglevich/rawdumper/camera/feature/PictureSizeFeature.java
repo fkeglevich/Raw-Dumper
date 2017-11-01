@@ -18,24 +18,27 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
-import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 
 import java.util.List;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 05/10/17.
+ * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class PreviewFeature extends WritableFeature<CaptureSize, List<CaptureSize>>
+public class PictureSizeFeature extends WritableFeature<CaptureSize, List<CaptureSize>> implements VirtualFeature
 {
-    PreviewFeature(ParameterCollection parameterCollection)
+    PictureSizeFeature(ParameterCollection parameterCollection)
     {
-        super(  Parameters.PREVIEW_SIZE, parameterCollection,
-                ListValidator.createFromListParameter(parameterCollection, Parameters.PREVIEW_SIZE_VALUES));
+        super(Parameters.PICTURE_SIZE, parameterCollection, ListValidator.<CaptureSize>createInvalid(), true);
+    }
+
+    @Override
+    public void performUpdate()
+    {
+        //nothing
     }
 }
