@@ -17,15 +17,8 @@
 package com.fkeglevich.rawdumper.camera.feature.restriction.chain;
 
 import com.fkeglevich.rawdumper.camera.feature.Feature;
-import com.fkeglevich.rawdumper.camera.feature.VirtualFeature;
-import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
-import com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer.FeatureValueFixer;
-import com.fkeglevich.rawdumper.camera.feature.restriction.chain.validator.ValidatorFactory;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
-import com.fkeglevich.rawdumper.util.Assert;
 import com.fkeglevich.rawdumper.util.event.EventListener;
-
-import java.util.List;
 
 /**
  * TODO: Add class header
