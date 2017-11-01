@@ -19,22 +19,15 @@ package com.fkeglevich.rawdumper.camera.async.pipeline;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
-import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.dng.DngWriter;
 import com.fkeglevich.rawdumper.dng.writer.ScanlineImageWriter;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
-import com.fkeglevich.rawdumper.raw.capture.builder.CameraSizePair;
-import com.fkeglevich.rawdumper.raw.capture.builder.CameraSizePairList;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromI3av4FileBuilder;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromRawAndJpegBuilder;
-import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.data.buffer.ArrayRawImageData;
 import com.fkeglevich.rawdumper.raw.data.buffer.FileRawImageData;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
-import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
-import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 import java.io.File;
 import java.io.IOException;

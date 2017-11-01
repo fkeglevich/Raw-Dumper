@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.parameter;
 
-import com.fkeglevich.rawdumper.camera.async.direct.LowLevelParameterInterface;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;

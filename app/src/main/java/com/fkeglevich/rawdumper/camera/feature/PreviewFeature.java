@@ -18,10 +18,8 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
-import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
-import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 
 import java.util.List;
 

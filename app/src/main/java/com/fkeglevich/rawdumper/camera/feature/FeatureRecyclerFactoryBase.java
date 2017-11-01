@@ -16,10 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import com.fkeglevich.rawdumper.camera.action.CameraActions;
-import com.fkeglevich.rawdumper.camera.async.CameraContext;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
-
 import java.util.ArrayList;
 import java.util.List;
 

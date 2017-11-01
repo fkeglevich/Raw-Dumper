@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer;
 
-import com.fkeglevich.rawdumper.camera.data.DataContainer;
 import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;

@@ -18,23 +18,17 @@ package com.fkeglevich.rawdumper.camera.feature.restriction.chain;
 
 import com.fkeglevich.rawdumper.camera.action.PreviewActions;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.DataContainer;
 import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.feature.PictureFormatFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureModeFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureSizeFeature;
 import com.fkeglevich.rawdumper.camera.feature.PreviewFeature;
-import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
-import com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer.FeatureValueFixer;
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer.PictureFormatFixer;
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer.PictureSizeFixer;
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer.PreviewSizeFixer;
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.validator.DataContainerVF;
-import com.fkeglevich.rawdumper.camera.feature.restriction.chain.validator.ValidatorFactory;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**

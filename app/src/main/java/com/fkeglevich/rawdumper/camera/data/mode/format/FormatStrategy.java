@@ -19,8 +19,6 @@ package com.fkeglevich.rawdumper.camera.data.mode.format;
 import com.fkeglevich.rawdumper.camera.data.DataContainer;
 import com.fkeglevich.rawdumper.camera.data.PicFormat;
 
-import java.util.List;
-
 /**
  * TODO: Add class header
  * <p>

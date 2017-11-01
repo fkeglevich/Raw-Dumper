@@ -21,7 +21,6 @@ import android.support.annotation.NonNull;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
