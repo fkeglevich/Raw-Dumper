@@ -25,12 +25,13 @@ package com.fkeglevich.rawdumper.camera.async.pipeline;
 public class NoPipeline implements PicturePipeline
 {
     @Override
-    public void takePicture(PictureListener callback)
+    public void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
     {
         /*
         We don't take pictures, we don't stop the camera preview
         so it's always a success :D
          */
-        callback.onPictureTaken(true);
+        pictureCallback.onPictureTaken();
+        pictureCallback.onPictureSaved();
     }
 }

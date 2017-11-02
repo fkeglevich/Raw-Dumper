@@ -16,14 +16,15 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline;
 
+import com.fkeglevich.rawdumper.util.exception.MessageException;
+
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 30/10/17.
+ * Created by Flávio Keglevich on 02/11/17.
  */
 
-public interface PictureListener
+public interface PictureExceptionListener
 {
-    void onPictureTaken();
-    void onPictureSaved();
+    void onException(MessageException exception);
 }

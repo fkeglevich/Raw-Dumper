@@ -24,5 +24,5 @@ package com.fkeglevich.rawdumper.camera.async.pipeline;
 
 public interface PicturePipeline
 {
-    void takePicture(PictureListener callback);
+    void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback);
 }
