@@ -20,11 +20,17 @@ TODO list:
 
  - Add the ~recoveryng photos~ if the app crash use case
 
- - Don't use displayValue for getting parameter values (especially for FocusMode!)
+ - Use checsums to validate the existence of patches
 
  - DON'T forget to require root access BEFORE presenting the app
 
+ - Create the picture pipelines
+   - Jpeg
+   - Raw (NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
+   - YUV 
+
  - Create a proper isAvailable() (that works with non-patched LL Zen2) when choosing the raw picture format
+   update: we are going to use a workaround manager to solve these
 
  - Collect adjusted white balance for many CCTs and create a polynomial function between them
 
@@ -90,3 +96,4 @@ Done:
  - Added Iso and shutter speed metering
  - Add the extra logic for differenciating the zen2 camera blobs's version
  - Test Brightness metering (result: it's not obsviously useful)
+ - Don't use displayValue for getting parameter values (especially for FocusMode!)
