@@ -16,8 +16,9 @@
 
 package com.fkeglevich.rawdumper.raw.capture.builder;
 
+import com.fkeglevich.rawdumper.camera.async.pipeline.filename.FilenameBuilder;
+import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.raw.capture.DateInfo;
-import com.fkeglevich.rawdumper.raw.capture.FilenameExtractor;
 
 /**
  * Created by Flávio Keglevich on 25/08/2017.
@@ -45,6 +46,14 @@ public abstract class BaseDateBuilder extends ACaptureInfoBuilder
     @Override
     public void buildDestinationRawFilename()
     {
-        captureInfo.destinationRawFilename = new FilenameExtractor().extractFromDateInfo(dateInfo);
+        captureInfo.destinationRawFilename = generateRawFilename();
+    }
+
+    String generateRawFilename()
+    {
+        return new FilenameBuilder().useDateInfo(dateInfo)
+                                    .useFileFormat(FileFormat.DNG)
+                                    .isPicture()
+                                    .build();
     }
 }

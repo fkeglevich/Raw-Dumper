@@ -21,7 +21,6 @@ import android.hardware.Camera;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.capture.DateInfo;
-import com.fkeglevich.rawdumper.raw.capture.FilenameExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
@@ -119,7 +118,7 @@ public class FromRawAndJpegBuilder extends BaseDateBuilder
     @Override
     public void buildOriginalRawFilename()
     {
-        captureInfo.originalRawFilename = new FilenameExtractor().extractFromDateInfo(dateInfo);
+        captureInfo.originalRawFilename = generateRawFilename();
     }
 
     @Override
