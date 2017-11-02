@@ -40,11 +40,17 @@ abstract class CameraInfoStrategy<T> extends PictureSizeStrategy
 
     private List<CaptureSize> initRawSizes(ExtraCameraInfo cameraInfo)
     {
-        List<CaptureSize> result = new ArrayList<>();
-        for (T size : getSizeListFromCameraInfo(cameraInfo))
-            result.add(toCaptureSize(size));
+        T[] sizes = getSizeListFromCameraInfo(cameraInfo);
+        if (sizes.length > 0)
+        {
+            List<CaptureSize> result = new ArrayList<>();
+            for (T size : sizes)
+                result.add(toCaptureSize(size));
 
-        return Collections.unmodifiableList(result);
+            return Collections.unmodifiableList(result);
+        }
+        else
+            return Collections.emptyList();
     }
 
     @Override
