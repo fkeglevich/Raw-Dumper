@@ -62,7 +62,7 @@ public class DateInfo
         return new DateInfo((GregorianCalendar)GregorianCalendar.getInstance());
     }
 
-    GregorianCalendar captureDate = null;
+    private GregorianCalendar captureDate = null;
 
     /**
      * Private constructor
@@ -81,7 +81,17 @@ public class DateInfo
      */
     public void writeTiffTags(TiffWriter tiffWriter)
     {
-        if (captureDate != null)
-            tiffWriter.setField(TiffTag.TIFFTAG_DATETIME, ExifTagWriter.formatCalendarTag(captureDate));
+        if (getCaptureDate() != null)
+            tiffWriter.setField(TiffTag.TIFFTAG_DATETIME, ExifTagWriter.formatCalendarTag(getCaptureDate()));
+    }
+
+    /**
+     * Gets the picture capture date
+     *
+     * @return  A GregorianCalendar
+     */
+    public GregorianCalendar getCaptureDate()
+    {
+        return captureDate;
     }
 }
