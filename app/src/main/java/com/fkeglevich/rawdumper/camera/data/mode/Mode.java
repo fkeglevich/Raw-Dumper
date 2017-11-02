@@ -32,11 +32,13 @@ import java.util.List;
 public abstract class Mode implements DataContainer<PicFormat>, ParameterValue
 {
     private final String modeParameterValue;
+    private final boolean useUltraPixels;
     private final FormatStrategy formatStrategy;
 
-    Mode(String modeParameterValue, FormatStrategy formatStrategy)
+    Mode(String modeParameterValue, boolean useUltraPixels, FormatStrategy formatStrategy)
     {
         this.modeParameterValue = modeParameterValue;
+        this.useUltraPixels = useUltraPixels;
         this.formatStrategy = formatStrategy;
     }
 
@@ -55,5 +57,10 @@ public abstract class Mode implements DataContainer<PicFormat>, ParameterValue
     public boolean isAvailable()
     {
         return formatStrategy.isAvailable();
+    }
+
+    public boolean isUseUltraPixels()
+    {
+        return useUltraPixels;
     }
 }
