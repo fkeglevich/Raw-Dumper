@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline;
+package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
 import android.hardware.Camera;
 

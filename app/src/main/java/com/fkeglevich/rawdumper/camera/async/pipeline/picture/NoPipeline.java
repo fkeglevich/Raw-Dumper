@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline;
+package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
+
+import com.fkeglevich.rawdumper.camera.async.pipeline.picture.listener.PictureExceptionListener;
+import com.fkeglevich.rawdumper.camera.async.pipeline.picture.listener.PictureListener;
 
 /**
  * TODO: Add class header
