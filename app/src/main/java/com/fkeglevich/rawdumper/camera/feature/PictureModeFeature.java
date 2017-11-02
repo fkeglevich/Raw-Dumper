@@ -17,8 +17,8 @@
 package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
-import com.fkeglevich.rawdumper.camera.extension.VirtualParameters;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
+import com.fkeglevich.rawdumper.camera.extension.VirtualParameters;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
 
@@ -44,5 +44,11 @@ public class PictureModeFeature extends WritableFeature<Mode, List<Mode>> implem
     public void performUpdate()
     {
         cameraActions.setMode(getValue());
+    }
+
+    @Override
+    public boolean isAvailable()
+    {
+        return true;
     }
 }

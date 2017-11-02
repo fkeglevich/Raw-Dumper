@@ -46,4 +46,10 @@ public class PictureFormatFeature extends WritableFeature<PicFormat, List<PicFor
     {
         cameraActions.setPictureFormat(getValue());
     }
+
+    @Override
+    public boolean isAvailable()
+    {
+        return true;
+    }
 }
