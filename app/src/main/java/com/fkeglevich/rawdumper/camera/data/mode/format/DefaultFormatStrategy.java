@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.data.mode.format;
 
-import com.fkeglevich.rawdumper.camera.data.DataContainer;
 import com.fkeglevich.rawdumper.camera.data.DataFormat;
 import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.size.PictureSizeStrategy;
@@ -45,8 +44,8 @@ public class DefaultFormatStrategy extends FormatStrategy
         List<PicFormat> formatList = new ArrayList<>();
 
         addIfAvailable(jpegStrategy, DataFormat.JPEG, formatList);
-        addIfAvailable(yuvStrategy, DataFormat.YUV, formatList);
         addIfAvailable(rawStrategy, DataFormat.RAW, formatList);
+        addIfAvailable(yuvStrategy, DataFormat.YUV, formatList);
 
         return Collections.unmodifiableList(formatList);
     }
