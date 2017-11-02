@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.info.workaround;
 
+import android.hardware.Camera;
+
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
@@ -49,6 +51,8 @@ class Zen2LLWorkaround implements DeviceWorkaround
             cameraInfo.setRetryOnError(false);
             exposureInfo = cameraInfo.getExposure();
             removeLongExposureValues(exposureInfo.getShutterSpeedValues());
+            if (cameraInfo.getFacing() == Camera.CameraInfo.CAMERA_FACING_BACK)
+                cameraInfo.getSensor().disableRaw();
         }
     }
 
