@@ -87,4 +87,10 @@ public class SensorInfo
 
         return null;
     }
+
+    public void disableRaw()
+    {
+        rawImageSizes = new RawImageSize[0];
+        binningRawImageSizes = new RawImageSize[0];
+    }
 }
