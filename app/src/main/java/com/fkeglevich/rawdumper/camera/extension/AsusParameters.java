@@ -33,6 +33,7 @@ public class AsusParameters
     public static final String ASUS_XENON_EXPOSURE_TIME = "Xe_exposure_time";
 
     public static final String ASUS_MODE = "mode";
+    public static final String ASUS_ULTRA_PIXELS = "ultra_pixels_mode";
 
     public static final Parameter<ManualFocus> MANUAL_FOCUS = ParameterFactory.create("set_manual_focus", ManualFocus.class);
     public static final Parameter<ManualFocusRange> MANUAL_FOCUS_RANGE = ParameterFactory.createReadOnly("focus_range_values", ManualFocusRange.class);
