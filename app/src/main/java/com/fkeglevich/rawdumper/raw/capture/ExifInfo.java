@@ -83,7 +83,7 @@ public class ExifInfo
 
     private void getSomeDataFrom(DateInfo dateInfo)
     {
-        dateTimeOriginal = dateInfo.captureDate;
+        dateTimeOriginal = dateInfo.getCaptureDate();
     }
 
     private void getSomeDataFrom(MakerNoteInfo makerNoteInfo)
