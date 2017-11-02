@@ -33,12 +33,19 @@ public class PictureSizeFeature extends WritableFeature<CaptureSize, List<Captur
 {
     PictureSizeFeature(ParameterCollection parameterCollection)
     {
-        super(Parameters.PICTURE_SIZE, parameterCollection, ListValidator.<CaptureSize>createInvalid(), true);
+        super(Parameters.PICTURE_SIZE, parameterCollection,
+                ListValidator.createFromListParameter(parameterCollection, Parameters.PICTURE_SIZE_VALUES), true);
     }
 
     @Override
     public void performUpdate()
     {
         //nothing
+    }
+
+    @Override
+    public boolean isAvailable()
+    {
+        return true;
     }
 }
