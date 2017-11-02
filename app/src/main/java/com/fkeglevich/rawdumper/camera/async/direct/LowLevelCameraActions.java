@@ -20,6 +20,7 @@ import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.action.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.data.DataFormat;
 import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
@@ -27,6 +28,7 @@ import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
 import com.fkeglevich.rawdumper.camera.helper.FocusHelper;
+import com.fkeglevich.rawdumper.camera.parameter.PictureSizeParameterCollection;
 
 import java.util.List;
 
@@ -41,12 +43,16 @@ public class LowLevelCameraActions implements CameraActions
     private final ICameraExtension cameraExtension;
     private final Object lock;
     private final int displayRotation;
+    private final PictureSizeParameterCollection pictureSizeParameterCollection;
 
-    LowLevelCameraActions(ICameraExtension cameraExtension, Object lock, int displayRotation)
+    private boolean isPreviewing = false;
+
+    LowLevelCameraActions(ICameraExtension cameraExtension, Object lock, int displayRotation, PictureSizeParameterCollection pictureSizeParameterCollection)
     {
         this.cameraExtension = cameraExtension;
         this.lock = lock;
         this.displayRotation = displayRotation;
+        this.pictureSizeParameterCollection = pictureSizeParameterCollection;
     }
 
     @Override
@@ -83,7 +89,9 @@ public class LowLevelCameraActions implements CameraActions
     {
         synchronized (lock)
         {
-            cameraExtension.getCameraDevice().stopPreview();
+            if (isPreviewing)
+                cameraExtension.getCameraDevice().stopPreview();
+            isPreviewing = false;
         }
     }
 
@@ -92,7 +100,9 @@ public class LowLevelCameraActions implements CameraActions
     {
         synchronized (lock)
         {
-            cameraExtension.getCameraDevice().startPreview();
+            if (!isPreviewing)
+                cameraExtension.getCameraDevice().startPreview();
+            isPreviewing = true;
         }
     }
 
@@ -103,6 +113,8 @@ public class LowLevelCameraActions implements CameraActions
         {
             Camera.Parameters parameters = cameraExtension.getCameraDevice().getParameters();
             parameters.set(AsusParameters.ASUS_MODE, mode.getParameterValue());
+            parameters.set("image_optimize", "off");
+            parameters.set(AsusParameters.ASUS_ULTRA_PIXELS, mode.isUseUltraPixels() ? "on" : "off");
             parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, IntelParameters.RAW_DATA_FORMAT_NONE);
             cameraExtension.getCameraDevice().setParameters(parameters);
         }
@@ -113,6 +125,11 @@ public class LowLevelCameraActions implements CameraActions
     {
         synchronized (lock)
         {
+            if (pictureFormat.getFormat() == DataFormat.RAW)
+                pictureSizeParameterCollection.enableRawMode();
+            else
+                pictureSizeParameterCollection.disableRawMode();
+
             Camera.Parameters parameters = cameraExtension.getCameraDevice().getParameters();
             parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, pictureFormat.getFormat().getParameterValue());
             cameraExtension.getCameraDevice().setParameters(parameters);

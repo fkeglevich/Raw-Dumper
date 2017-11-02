@@ -17,12 +17,15 @@
 package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.parameter.CodeclessParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.PictureSizeParameterCollection;
 import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,12 +40,10 @@ public class VirtualFeatureRecyclerFactory extends FeatureRecyclerFactoryBase
     private final CameraActions cameraActions;
     private final ParameterCollection pictureSizeCollection;
 
-    public VirtualFeatureRecyclerFactory(ParameterCollection parameterCollection,
-                                         SensorInfo sensorInfo,
-                                         CameraActions cameraActions)
+    public VirtualFeatureRecyclerFactory(CameraActions cameraActions, ParameterCollection pictureSizeCollection)
     {
         this.cameraActions = cameraActions;
-        this.pictureSizeCollection = new PictureSizeParameterCollection(parameterCollection, sensorInfo);
+        this.pictureSizeCollection = pictureSizeCollection;
     }
 
     public PictureModeFeature createPictureModeFeature(List<Mode> valueList)
@@ -62,6 +63,10 @@ public class VirtualFeatureRecyclerFactory extends FeatureRecyclerFactoryBase
     public PictureSizeFeature createPictureSizeFeature()
     {
         PictureSizeFeature result = new PictureSizeFeature(pictureSizeCollection);
+        List<CaptureSize> pictureSizes = new ArrayList<>();
+        pictureSizes.addAll(result.getAvailableValues());
+        Collections.sort(pictureSizes);
+        result.setValue(pictureSizes.get(pictureSizes.size() - 1));
         registerFeature(result);
         return result;
     }

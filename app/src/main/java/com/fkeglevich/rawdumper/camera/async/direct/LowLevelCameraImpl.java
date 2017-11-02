@@ -21,7 +21,7 @@ import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
-import com.fkeglevich.rawdumper.util.ThreadUtil;
+import com.fkeglevich.rawdumper.camera.parameter.PictureSizeParameterCollection;
 
 import java.io.IOException;
 
@@ -39,19 +39,21 @@ public class LowLevelCameraImpl implements LowLevelCamera
     private final int displayRotation;
     private final LowLevelCameraActions lowLevelCameraActions;
     private final ParameterCollection parameterCollection;
+    private final PictureSizeParameterCollection pictureSizeParameterCollection;
 
     public LowLevelCameraImpl(CameraContext cameraContext, ICameraExtension cameraExtension) throws IOException
     {
         this.cameraContext = cameraContext;
         this.cameraExtension = cameraExtension;
         this.displayRotation = PreviewHelper.setupPreviewTexture(cameraContext, cameraExtension.getCameraDevice());
-        this.lowLevelCameraActions = new LowLevelCameraActions(cameraExtension, lock, displayRotation);
         LowLevelParameterInterfaceImpl parameterInterface = new LowLevelParameterInterfaceImpl(cameraExtension.getCameraDevice(), lock);
         //parameterInterface.set("preview-size", "1280x960");
         //parameterInterface.set("picture-size", "4096x3072");
         this.parameterCollection = new ParameterCollection(parameterInterface);
-        cameraExtension.getCameraDevice().startPreview();
-        ThreadUtil.simpleDelay(150);
+        this.pictureSizeParameterCollection = new PictureSizeParameterCollection(parameterCollection, cameraContext.getCameraInfo().getSensor());
+        this.lowLevelCameraActions = new LowLevelCameraActions(cameraExtension, lock, displayRotation, pictureSizeParameterCollection);
+        //cameraExtension.getCameraDevice().startPreview();
+        //ThreadUtil.simpleDelay(150);
     }
 
     @Override
@@ -73,6 +75,12 @@ public class LowLevelCameraImpl implements LowLevelCamera
     public ParameterCollection getParameterCollection()
     {
         return parameterCollection;
+    }
+
+    @Override
+    public ParameterCollection getPictureSizeParameterCollection()
+    {
+        return pictureSizeParameterCollection;
     }
 
     @Override

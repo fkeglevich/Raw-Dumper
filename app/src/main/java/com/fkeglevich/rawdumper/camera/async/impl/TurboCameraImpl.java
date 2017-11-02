@@ -26,6 +26,7 @@ import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
+import com.fkeglevich.rawdumper.camera.data.mode.ModeList;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FeatureRecyclerFactory;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
@@ -38,10 +39,11 @@ import com.fkeglevich.rawdumper.camera.feature.VirtualFeatureRecyclerFactory;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.FocusRestriction;
-import com.fkeglevich.rawdumper.camera.data.mode.ModeList;
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.ModeRestrictionChain;
 import com.fkeglevich.rawdumper.util.Nullable;
+import com.fkeglevich.rawdumper.util.ThreadUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,13 +84,16 @@ public class TurboCameraImpl implements TurboCamera, Closeable
                                                             lowLevelCamera.getCameraActions());
 
         modeList = new ModeList(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext().getCameraInfo());
-        virtualRecyclerFactory = new VirtualFeatureRecyclerFactory(lowLevelCamera.getParameterCollection(),
-                lowLevelCamera.getCameraContext().getCameraInfo().getSensor(),
-                lowLevelCamera.getCameraActions());
+        virtualRecyclerFactory = new VirtualFeatureRecyclerFactory(lowLevelCamera.getCameraActions(), lowLevelCamera.getPictureSizeParameterCollection());
 
         createFeatures();
         createVirtualFeatures();
         createRestrictions();
+        //mode format
+        pictureModeFeature.setValue(pictureModeFeature.getAvailableValues().get(0));
+
+        ThreadUtil.simpleDelay(150);
+        //_ZN7android34getGFXHALPixelFormatFromV4L2FormatEi
     }
 
     private void createFeatures()
