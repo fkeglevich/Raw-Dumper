@@ -25,12 +25,12 @@ TODO list:
  - DON'T forget to require root access BEFORE presenting the app
 
  - Create the picture pipelines
-   - Jpeg
+   - (DONE!) Jpeg
    - Raw (NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
    - YUV 
 
  - Create a proper isAvailable() (that works with non-patched LL Zen2) when choosing the raw picture format
-   update: we are going to use a workaround manager to solve these
+   update: we are going to use a workaround manager to solve these, and we'll be using checksums
 
  - Collect adjusted white balance for many CCTs and create a polynomial function between them
 
@@ -65,6 +65,7 @@ Next features:
  - Selection of picture size
  - Gain-basead white balance
  - Night Mode with raw pictures
+ - Implement focus peaking
 
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
