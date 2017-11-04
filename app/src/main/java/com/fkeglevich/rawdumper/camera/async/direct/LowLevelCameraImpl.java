@@ -18,10 +18,11 @@ package com.fkeglevich.rawdumper.camera.async.direct;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.camera.async.direct.mutable.MutableParameterCollection;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
-import com.fkeglevich.rawdumper.camera.parameter.PictureSizeParameterCollection;
+import com.fkeglevich.rawdumper.camera.parameter.PictureSizeLayer;
 
 import java.io.IOException;
 

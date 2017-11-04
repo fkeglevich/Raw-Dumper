@@ -30,7 +30,7 @@ import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
 import com.fkeglevich.rawdumper.camera.helper.FocusHelper;
-import com.fkeglevich.rawdumper.camera.parameter.PictureSizeParameterCollection;
+import com.fkeglevich.rawdumper.camera.parameter.PictureSizeLayer;
 
 import java.util.List;
 

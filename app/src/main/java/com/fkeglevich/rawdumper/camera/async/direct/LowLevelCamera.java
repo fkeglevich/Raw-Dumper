@@ -31,6 +31,6 @@ public interface LowLevelCamera extends Closeable
 {
     CameraContext getCameraContext();
     ParameterCollection getParameterCollection();
-    ParameterCollection getPictureSizeParameterCollection();
+    ParameterCollection getPictureSizeLayer();
     CameraActions getCameraActions();
 }
