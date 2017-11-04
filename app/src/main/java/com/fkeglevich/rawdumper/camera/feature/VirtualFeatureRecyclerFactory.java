@@ -21,8 +21,6 @@ import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.parameter.CodeclessParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
-import com.fkeglevich.rawdumper.camera.parameter.PictureSizeParameterCollection;
-import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;

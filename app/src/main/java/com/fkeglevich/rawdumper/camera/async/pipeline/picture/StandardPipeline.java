@@ -21,9 +21,9 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
-import com.fkeglevich.rawdumper.camera.async.pipeline.filename.FilenameBuilder;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.async.pipeline.filename.FilenameBuilder;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
 
 import java.util.Calendar;

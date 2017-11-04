@@ -43,7 +43,6 @@ import com.fkeglevich.rawdumper.camera.feature.restriction.chain.ModeRestriction
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

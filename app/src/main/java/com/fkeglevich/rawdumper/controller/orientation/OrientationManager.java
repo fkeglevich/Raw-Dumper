@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.controller.orientation;
 
 import android.content.Context;
-import android.hardware.Camera;
 import android.hardware.SensorManager;
 import android.view.OrientationEventListener;
 
