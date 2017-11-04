@@ -83,7 +83,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
                                                             lowLevelCamera.getCameraActions());
 
         modeList = new ModeList(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext().getCameraInfo());
-        virtualRecyclerFactory = new VirtualFeatureRecyclerFactory(lowLevelCamera.getCameraActions(), lowLevelCamera.getPictureSizeParameterCollection());
+        virtualRecyclerFactory = new VirtualFeatureRecyclerFactory(lowLevelCamera.getCameraActions(), lowLevelCamera.getPictureSizeLayer());
 
         createFeatures();
         createVirtualFeatures();
@@ -92,7 +92,6 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         pictureModeFeature.setValue(pictureModeFeature.getAvailableValues().get(0));
 
         ThreadUtil.simpleDelay(150);
-        //_ZN7android34getGFXHALPixelFormatFromV4L2FormatEi
     }
 
     private void createFeatures()
