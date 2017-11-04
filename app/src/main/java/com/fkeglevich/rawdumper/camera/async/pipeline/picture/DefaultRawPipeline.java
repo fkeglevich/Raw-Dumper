@@ -18,8 +18,10 @@ package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
 import android.hardware.Camera;
 
+import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.data.FileFormat;
 
 /**
  * TODO: Add class header
@@ -27,15 +29,15 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
  * Created by Flávio Keglevich on 03/11/17.
  */
 
-public class RawPipeline extends PicturePipelineBase
+public class DefaultRawPipeline extends StandardPipeline
 {
-    RawPipeline(Camera lowLevelCamera, Object lock)
+    DefaultRawPipeline(Camera lowLevelCamera, Object lock, CameraActions cameraActions)
     {
-        super(lowLevelCamera, lock);
+        super(lowLevelCamera, lock, cameraActions, FileFormat.DNG);
     }
 
     @Override
-    protected void processPipeline(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
+    void saveImage(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback, String filename)
     {
 
     }
