@@ -17,11 +17,14 @@
 package com.fkeglevich.rawdumper.controller.orientation;
 
 import android.content.Context;
+import android.hardware.Camera;
 import android.hardware.SensorManager;
 import android.view.OrientationEventListener;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
+
+import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 
 /**
  * Created by Flávio Keglevich on 27/08/2017.
@@ -83,5 +86,21 @@ public class OrientationManager
             return ImageOrientation.LEFTBOT;
         else
             return ImageOrientation.TOPLEFT;
+    }
+
+    public int getCameraRotation(CameraContext cameraContext)
+    {
+        if (lastDegrees == OrientationEventListener.ORIENTATION_UNKNOWN)
+            return 0;
+
+        int orientation = (lastDegrees + 45) / 90 * 90;
+
+        int facing = cameraContext.getCameraInfo().getFacing();
+        int infoOrientation = cameraContext.getCameraInfo().getOrientation();
+
+        if (facing == CAMERA_FACING_FRONT)
+            return (infoOrientation - orientation + 360) % 360;
+        else
+            return (infoOrientation + orientation) % 360;
     }
 }
