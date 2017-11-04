@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.function;
+package com.fkeglevich.rawdumper.camera.extension;
 
 /**
  * TODO: Add class header

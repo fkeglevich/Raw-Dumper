@@ -16,7 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.extension;
 
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.camera.exception.CameraOpenException;
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
+import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.File;
 
@@ -45,8 +48,19 @@ public class IntelCameraExtensionLoader
 
     private static Class<Object> intelCameraClassCache = null;
 
+    public static ICameraExtension extendedOpenCamera(CameraContext context) throws MessageException
+    {
+        int cameraId = context.getCameraSelector().getAccess().getSelectedCameraId();
+
+        ICameraExtension cameraExtension = extendedOpenCamera(cameraId);
+        if (cameraExtension == null)
+            throw new CameraOpenException();
+
+        return cameraExtension;
+    }
+
     @SuppressWarnings("unchecked")
-    public static ICameraExtension extendedOpenCamera(int cameraId)
+    private static ICameraExtension extendedOpenCamera(int cameraId)
     {
         if (intelCameraClassCache != null)
             return IntelCameraProxy.createNew(intelCameraClassCache, cameraId);

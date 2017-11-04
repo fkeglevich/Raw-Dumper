@@ -40,11 +40,7 @@ public class CameraOpenFunction extends ThrowingAsyncFunction<CameraContext, Tur
     @Override
     protected TurboCamera call(CameraContext context) throws MessageException
     {
-        int cameraId = context.getCameraSelector().getAccess().getSelectedCameraId();
-
-        ICameraExtension cameraExtension = IntelCameraExtensionLoader.extendedOpenCamera(cameraId);
-        if (cameraExtension == null)
-            throw new CameraOpenException();
+        ICameraExtension cameraExtension = IntelCameraExtensionLoader.extendedOpenCamera(context);
 
         try
         {
