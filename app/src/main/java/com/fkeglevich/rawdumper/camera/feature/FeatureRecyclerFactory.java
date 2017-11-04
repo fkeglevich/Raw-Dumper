@@ -50,7 +50,7 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 
     public WritableFeature<Iso, List<Iso>> createIsoFeature()
     {
-        IsoFeature result = IsoFeature.create(cameraContext.getCameraInfo().getExposure(), parameterCollection);
+        IsoFeature result = IsoFeature.create(cameraContext.getExposureInfo(), parameterCollection);
         registerFeature(result);
         return result;
     }
@@ -64,7 +64,7 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 
     public WritableFeature<ShutterSpeed, List<ShutterSpeed>> createShutterSpeedFeature()
     {
-        ShutterSpeedFeature result = ShutterSpeedFeature.create(cameraContext.getCameraInfo().getExposure(), parameterCollection);
+        ShutterSpeedFeature result = ShutterSpeedFeature.create(cameraContext.getExposureInfo(), parameterCollection);
         registerFeature(result);
         return result;
     }
