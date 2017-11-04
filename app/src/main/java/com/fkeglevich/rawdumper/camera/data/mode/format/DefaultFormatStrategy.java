@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.data.mode.format;
 
-import com.fkeglevich.rawdumper.camera.data.DataFormat;
+import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.size.PictureSizeStrategy;
 
@@ -43,17 +43,18 @@ public class DefaultFormatStrategy extends FormatStrategy
     {
         List<PicFormat> formatList = new ArrayList<>();
 
-        addIfAvailable(jpegStrategy, DataFormat.JPEG, formatList);
-        addIfAvailable(rawStrategy, DataFormat.RAW, formatList);
-        addIfAvailable(yuvStrategy, DataFormat.YUV, formatList);
+        addIfAvailable(jpegStrategy, FileFormat.JPEG, formatList);
+        addIfAvailable(rawStrategy, FileFormat.DNG, formatList);
+        addIfAvailable(yuvStrategy, FileFormat.PNG, formatList);
+        addIfAvailable(yuvStrategy, FileFormat.WEBP, formatList);
 
         return Collections.unmodifiableList(formatList);
     }
 
-    private void addIfAvailable(PictureSizeStrategy sizeStrategy, DataFormat dataFormat, List<PicFormat> formatList)
+    private void addIfAvailable(PictureSizeStrategy sizeStrategy, FileFormat fileFormat, List<PicFormat> formatList)
     {
         if (sizeStrategy.isAvailable())
-            formatList.add(new PicFormat(dataFormat, sizeStrategy.getAvailableSizes()));
+            formatList.add(new PicFormat(fileFormat, sizeStrategy.getAvailableSizes()));
     }
 
     @Override
