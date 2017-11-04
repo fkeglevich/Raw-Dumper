@@ -26,18 +26,23 @@ import java.util.List;
 
 public class PicFormat implements DataContainer<CaptureSize>
 {
-    private final DataFormat format;
+    private final FileFormat fileFormat;
     private final List<CaptureSize> availableSizes;
 
-    public PicFormat(DataFormat format, List<CaptureSize> availableSizes)
+    public PicFormat(FileFormat fileFormat, List<CaptureSize> availableSizes)
     {
-        this.format = format;
+        this.fileFormat = fileFormat;
         this.availableSizes = availableSizes;
     }
 
-    public DataFormat getFormat()
+    public DataFormat getDataFormat()
     {
-        return format;
+        return fileFormat.getDataFormat();
+    }
+
+    public FileFormat getFileFormat()
+    {
+        return fileFormat;
     }
 
     @Override
