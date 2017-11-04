@@ -31,15 +31,17 @@ import com.fkeglevich.rawdumper.camera.data.FileFormat;
 
 public class YuvPipeline extends StandardPipeline
 {
+    private final FileFormat fileFormat;
+
     YuvPipeline(Camera lowLevelCamera, Object lock, CameraActions cameraActions, FileFormat fileFormat)
     {
         super(lowLevelCamera, lock, cameraActions, fileFormat);
+        this.fileFormat = fileFormat;
     }
 
     @Override
     void saveImage(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback, String filename)
     {
-        //Bitmap asd;
-        //asd.compress(Bitmap.CompressFormat.WEBP);
+        throw new UnsupportedOperationException();
     }
 }
