@@ -16,8 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import com.fkeglevich.rawdumper.camera.action.AutoFocusInterface;
-import com.fkeglevich.rawdumper.camera.action.AutoFocusResult;
+import com.fkeglevich.rawdumper.camera.action.AutoFocusAction;
+import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
@@ -32,14 +32,14 @@ import java.util.List;
  * Created by Flávio Keglevich on 28/10/17.
  */
 
-public class FocusFeature extends WritableFeature<FocusMode, List<FocusMode>> implements AutoFocusInterface
+public class FocusFeature extends WritableFeature<FocusMode, List<FocusMode>> implements AutoFocusAction
 {
-    private final AutoFocusInterface autoFocusInterface;
+    private final AutoFocusAction autoFocusAction;
 
-    FocusFeature(ParameterCollection parameterCollection, AutoFocusInterface autoFocusInterface)
+    FocusFeature(ParameterCollection parameterCollection, AutoFocusAction autoFocusAction)
     {
         super(Parameters.FOCUS_MODE, parameterCollection, ListValidator.createFromListParameter(parameterCollection, Parameters.FOCUS_MODE_VALUES));
-        this.autoFocusInterface = autoFocusInterface;
+        this.autoFocusAction = autoFocusAction;
     }
 
     @Override
@@ -52,6 +52,6 @@ public class FocusFeature extends WritableFeature<FocusMode, List<FocusMode>> im
     public void startAutoFocus(PreviewArea focusArea, AutoFocusResult callback)
     {
         checkFeatureAvailability(this);
-        autoFocusInterface.startAutoFocus(focusArea, callback);
+        autoFocusAction.startAutoFocus(focusArea, callback);
     }
 }

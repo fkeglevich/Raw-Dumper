@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline.picture.listener;
-
-import com.fkeglevich.rawdumper.util.exception.MessageException;
+package com.fkeglevich.rawdumper.camera.action.listener;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 02/11/17.
+ * Created by Flávio Keglevich on 30/10/17.
  */
 
-public interface PictureExceptionListener
+public interface PictureListener
 {
-    void onException(MessageException exception);
+    void onPictureTaken();
+    void onPictureSaved();
 }

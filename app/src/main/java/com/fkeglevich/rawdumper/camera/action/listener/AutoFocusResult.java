@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.async.pipeline.picture.listener;
+package com.fkeglevich.rawdumper.camera.action.listener;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 30/10/17.
+ * Created by Flávio Keglevich on 28/10/17.
  */
 
-public interface PictureListener
+public interface AutoFocusResult
 {
-    void onPictureTaken();
-    void onPictureSaved();
+    void autoFocusDone(boolean success);
 }

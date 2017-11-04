@@ -16,13 +16,16 @@
 
 package com.fkeglevich.rawdumper.camera.action;
 
+import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
+import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 28/10/17.
+ * Created by Flávio Keglevich on 04/11/17.
  */
 
-public interface CameraActions extends AutoFocusAction, PreviewActions, PictureModeAction,
-        PictureFormatAction, TakePictureAction
+public interface TakePictureAction
 {
+    void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback);
 }

@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.action;
+package com.fkeglevich.rawdumper.camera.action.listener;
+
+import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 28/10/17.
+ * Created by Flávio Keglevich on 02/11/17.
  */
 
-public interface AutoFocusResult
+public interface PictureExceptionListener
 {
-    void autoFocusDone(boolean success);
+    void onException(MessageException exception);
 }
