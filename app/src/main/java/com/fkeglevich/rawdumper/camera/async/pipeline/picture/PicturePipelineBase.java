@@ -44,6 +44,7 @@ public abstract class PicturePipelineBase implements PicturePipeline
         synchronized (lock)
         {
             final PipelineData pipelineData = new PipelineData();
+
             lowLevelCamera.takePicture(null, new Camera.PictureCallback()
             {
                 @Override
@@ -64,5 +65,5 @@ public abstract class PicturePipelineBase implements PicturePipeline
         }
     }
 
-    abstract void processPipeline(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback);
+    protected abstract void processPipeline(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback);
 }

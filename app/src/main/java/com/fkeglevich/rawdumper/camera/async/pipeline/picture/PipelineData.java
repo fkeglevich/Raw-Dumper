@@ -22,7 +22,7 @@ package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
  * Created by Flávio Keglevich on 02/11/17.
  */
 
-class PipelineData
+public class PipelineData
 {
     public byte[] rawData;
     public byte[] jpegData;

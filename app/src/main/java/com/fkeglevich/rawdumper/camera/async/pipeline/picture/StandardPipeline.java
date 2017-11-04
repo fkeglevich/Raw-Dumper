@@ -49,7 +49,7 @@ abstract class StandardPipeline extends PicturePipelineBase
     }
 
     @Override
-    void processPipeline(PipelineData pipelineData, final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback)
+    protected void processPipeline(PipelineData pipelineData, final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback)
     {
         String filename = filenameBuilder.useCalendar(Calendar.getInstance()).build();
         saveImage(pipelineData, pictureCallback, exceptionCallback, filename);
