@@ -18,8 +18,12 @@ package com.fkeglevich.rawdumper.camera.async;
 
 import android.graphics.SurfaceTexture;
 
+import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
+import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+import com.fkeglevich.rawdumper.raw.info.LensInfo;
+import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 
 /**
  * TODO: Add class header
@@ -38,5 +42,25 @@ public abstract class CameraContext
         DeviceInfo deviceInfo = getDeviceInfo();
         CameraSelector cameraSelector = getCameraSelector();
         return deviceInfo.getCameras()[cameraSelector.getSelectedCameraId()];
+    }
+
+    public SensorInfo getSensorInfo()
+    {
+        return getCameraInfo().getSensor();
+    }
+
+    public ColorInfo getColorInfo()
+    {
+        return getCameraInfo().getColor();
+    }
+
+    public ExposureInfo getExposureInfo()
+    {
+        return getCameraInfo().getExposure();
+    }
+
+    public LensInfo getLensInfo()
+    {
+        return getCameraInfo().getLens();
     }
 }
