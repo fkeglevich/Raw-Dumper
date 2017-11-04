@@ -41,7 +41,7 @@ TODO list:
  
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (DONE!) Create OrientationActivity class or similar
-   - Needs to change the rotation parameter when shooting jpeg pictures
+   - (ALMOST DONE) Needs to change the rotation parameter when shooting jpeg pictures
  
  - (IMPORTANT - IN PROGRESS) Make the app work on more devices:
 	- Razr I
