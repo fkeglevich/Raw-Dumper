@@ -18,8 +18,10 @@ package com.fkeglevich.rawdumper.camera.async.direct;
 
 import android.hardware.Camera;
 
-import com.fkeglevich.rawdumper.camera.action.AutoFocusResult;
+import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
+import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.data.DataFormat;
 import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;

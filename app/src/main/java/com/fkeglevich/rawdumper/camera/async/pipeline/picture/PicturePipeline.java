@@ -16,8 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
-import com.fkeglevich.rawdumper.camera.async.pipeline.picture.listener.PictureExceptionListener;
-import com.fkeglevich.rawdumper.camera.async.pipeline.picture.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
+import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 
 /**
  * TODO: Add class header
