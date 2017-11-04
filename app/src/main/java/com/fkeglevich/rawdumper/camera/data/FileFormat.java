@@ -26,7 +26,8 @@ public enum FileFormat
 {
     JPEG(DataFormat.JPEG, ".jpeg"),
     DNG(DataFormat.RAW, ".dng"),
-    PNG(DataFormat.YUV, ".png");
+    PNG(DataFormat.YUV, ".png"),
+    WEBP(DataFormat.YUV, ".webp");
 
     private final DataFormat dataFormat;
     private final String extension;
