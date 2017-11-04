@@ -18,10 +18,11 @@ package com.fkeglevich.rawdumper.camera.async.direct;
 
 import android.hardware.Camera;
 
-import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.async.pipeline.PipelineManager;
 import com.fkeglevich.rawdumper.camera.data.DataFormat;
 import com.fkeglevich.rawdumper.camera.data.PicFormat;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
@@ -31,6 +32,7 @@ import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
 import com.fkeglevich.rawdumper.camera.helper.FocusHelper;
 import com.fkeglevich.rawdumper.camera.parameter.PictureSizeLayer;
+import com.fkeglevich.rawdumper.util.Mutable;
 
 import java.util.List;
 
@@ -42,19 +44,41 @@ import java.util.List;
 
 public class LowLevelCameraActions implements CameraActions
 {
-    private final ICameraExtension cameraExtension;
+    private final Mutable<ICameraExtension> cameraExtension;
     private final Object lock;
-    private final int displayRotation;
-    private final PictureSizeParameterCollection pictureSizeParameterCollection;
+    private final PictureSizeLayer pictureSizeLayer;
+    private final PipelineManager pipelineManager;
 
-    private boolean isPreviewing = false;
+    //Mutable state fields
+    private boolean isPreviewing;
+    private int displayRotation;
 
-    LowLevelCameraActions(ICameraExtension cameraExtension, Object lock, int displayRotation, PictureSizeParameterCollection pictureSizeParameterCollection)
+    static LowLevelCameraActions createInvalid(Mutable<ICameraExtension> cameraExtension,
+                                               Object lock,
+                                               PictureSizeLayer pictureSizeLayer,
+                                               PipelineManager pipelineManager)
+    {
+        return new LowLevelCameraActions(cameraExtension, lock, pictureSizeLayer, pipelineManager);
+    }
+
+    private LowLevelCameraActions(Mutable<ICameraExtension> cameraExtension,
+                          Object lock,
+                          PictureSizeLayer pictureSizeLayer,
+                          PipelineManager pipelineManager)
     {
         this.cameraExtension = cameraExtension;
         this.lock = lock;
-        this.displayRotation = displayRotation;
-        this.pictureSizeParameterCollection = pictureSizeParameterCollection;
+        this.pictureSizeLayer = pictureSizeLayer;
+        this.pipelineManager = pipelineManager;
+    }
+
+    void setupMutableState(int displayRotation)
+    {
+        synchronized (lock)
+        {
+            this.displayRotation = displayRotation;
+            this.isPreviewing = false;
+        }
     }
 
     @Override
@@ -63,7 +87,7 @@ public class LowLevelCameraActions implements CameraActions
         List<Camera.Area> areas = FocusHelper.generateFocusAreas(focusArea.rotate(displayRotation));
         synchronized (lock)
         {
-            Camera camera = cameraExtension.getCameraDevice();
+            Camera camera = getCamera();
             setAreasParameters(areas, camera);
             camera.autoFocus(new Camera.AutoFocusCallback()
             {
@@ -92,7 +116,7 @@ public class LowLevelCameraActions implements CameraActions
         synchronized (lock)
         {
             if (isPreviewing)
-                cameraExtension.getCameraDevice().stopPreview();
+                getCamera().stopPreview();
             isPreviewing = false;
         }
     }
@@ -103,7 +127,7 @@ public class LowLevelCameraActions implements CameraActions
         synchronized (lock)
         {
             if (!isPreviewing)
-                cameraExtension.getCameraDevice().startPreview();
+                getCamera().startPreview();
             isPreviewing = true;
         }
     }
@@ -113,12 +137,12 @@ public class LowLevelCameraActions implements CameraActions
     {
         synchronized (lock)
         {
-            Camera.Parameters parameters = cameraExtension.getCameraDevice().getParameters();
+            Camera.Parameters parameters = getCamera().getParameters();
             parameters.set(AsusParameters.ASUS_MODE, mode.getParameterValue());
-            parameters.set("image_optimize", "off");
+            parameters.set(AsusParameters.ASUS_IMAGE_OPTIMIZE, "off");
             parameters.set(AsusParameters.ASUS_ULTRA_PIXELS, mode.isUseUltraPixels() ? "on" : "off");
             parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, IntelParameters.RAW_DATA_FORMAT_NONE);
-            cameraExtension.getCameraDevice().setParameters(parameters);
+            getCamera().setParameters(parameters);
         }
     }
 
@@ -127,14 +151,31 @@ public class LowLevelCameraActions implements CameraActions
     {
         synchronized (lock)
         {
-            if (pictureFormat.getFormat() == DataFormat.RAW)
-                pictureSizeParameterCollection.enableRawMode();
+            if (pictureFormat.getDataFormat() == DataFormat.RAW)
+                pictureSizeLayer.enableRawMode();
             else
-                pictureSizeParameterCollection.disableRawMode();
+                pictureSizeLayer.disableRawMode();
 
-            Camera.Parameters parameters = cameraExtension.getCameraDevice().getParameters();
-            parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, pictureFormat.getFormat().getParameterValue());
-            cameraExtension.getCameraDevice().setParameters(parameters);
+            pipelineManager.updateFileFormat(pictureFormat.getFileFormat());
+
+            Camera.Parameters parameters = getCamera().getParameters();
+            parameters.set(IntelParameters.KEY_RAW_DATA_FORMAT, pictureFormat.getDataFormat().getParameterValue());
+            getCamera().setParameters(parameters);
         }
+    }
+
+    @Override
+    public void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
+    {
+        synchronized (lock)
+        {
+            isPreviewing = false;
+            pipelineManager.getPicturePipeline().takePicture(pictureCallback, exceptionCallback);
+        }
+    }
+
+    private Camera getCamera()
+    {
+        return cameraExtension.get().getCameraDevice();
     }
 }

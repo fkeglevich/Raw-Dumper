@@ -16,13 +16,19 @@
 
 package com.fkeglevich.rawdumper.camera.async.direct;
 
+import android.hardware.Camera;
+
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.direct.mutable.MutableParameterCollection;
+import com.fkeglevich.rawdumper.camera.async.pipeline.NoPipelineManager;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.camera.extension.IntelCameraExtensionLoader;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.PictureSizeLayer;
+import com.fkeglevich.rawdumper.util.Mutable;
+import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;
 
@@ -32,24 +38,37 @@ import java.io.IOException;
  * Created by Flávio Keglevich on 04/10/17.
  */
 
-public class LowLevelCameraImpl implements LowLevelCamera
+public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
 {
     private final Object lock = new Object();
     private final CameraContext cameraContext;
-    private final ICameraExtension cameraExtension;
-    private final LowLevelCameraActions lowLevelCameraActions;
-    private final ParameterCollection parameterCollection;
-    private final PictureSizeParameterCollection pictureSizeParameterCollection;
 
-    public LowLevelCameraImpl(CameraContext cameraContext, ICameraExtension cameraExtension) throws IOException
+    //mutable fields
+    private final Mutable<ICameraExtension>  cameraExtension        = Mutable.createInvalid();
+    private final MutableParameterCollection parameterCollection    = MutableParameterCollection.createInvalid();
+    private final PictureSizeLayer           pictureSizeLayer       = PictureSizeLayer.createInvalid();
+    private final LowLevelCameraActions      lowLevelCameraActions  = LowLevelCameraActions.createInvalid(cameraExtension, lock, pictureSizeLayer, new NoPipelineManager());
+
+    public LowLevelCameraImpl(CameraContext cameraContext, ICameraExtension extension) throws IOException
     {
         this.cameraContext = cameraContext;
-        this.cameraExtension = cameraExtension;
-        int displayRotation = PreviewHelper.setupPreviewTexture(cameraContext, cameraExtension.getCameraDevice());
-        LowLevelParameterInterfaceImpl parameterInterface = new LowLevelParameterInterfaceImpl(cameraExtension.getCameraDevice(), lock);
-        this.parameterCollection = new ParameterCollection(parameterInterface);
-        this.pictureSizeParameterCollection = new PictureSizeParameterCollection(parameterCollection, cameraContext.getCameraInfo().getSensor());
-        this.lowLevelCameraActions = new LowLevelCameraActions(cameraExtension, lock, displayRotation, pictureSizeParameterCollection);
+        setupMutableState(extension);
+    }
+
+    private void setupMutableState(ICameraExtension extension) throws IOException
+    {
+        synchronized (lock)
+        {
+            Camera camera = extension.getCameraDevice();
+            int displayRotation = PreviewHelper.setupPreviewTexture(cameraContext, camera);
+            LowLevelParameterInterfaceImpl parameterInterface = new LowLevelParameterInterfaceImpl(camera, lock);
+            ParameterCollection parameters = new ParameterCollection(parameterInterface);
+
+            cameraExtension.setupMutableState(extension);
+            parameterCollection.setupMutableState(parameters);
+            pictureSizeLayer.setupMutableState(parameters, cameraContext.getSensorInfo());
+            lowLevelCameraActions.setupMutableState(displayRotation);
+        }
     }
 
     @Override
@@ -57,7 +76,7 @@ public class LowLevelCameraImpl implements LowLevelCamera
     {
         synchronized (lock)
         {
-            cameraExtension.release();
+            cameraExtension.get().release();
         }
     }
 
@@ -74,14 +93,29 @@ public class LowLevelCameraImpl implements LowLevelCamera
     }
 
     @Override
-    public ParameterCollection getPictureSizeParameterCollection()
+    public ParameterCollection getPictureSizeLayer()
     {
-        return pictureSizeParameterCollection;
+        return pictureSizeLayer;
     }
 
     @Override
     public CameraActions getCameraActions()
     {
         return lowLevelCameraActions;
+    }
+
+    @Override
+    public void restartCamera() throws MessageException, IOException
+    {
+        synchronized (lock)
+        {
+            Camera.Parameters backup = cameraExtension.get().getCameraDevice().getParameters();
+            close();
+            ICameraExtension cameraExtension = IntelCameraExtensionLoader.extendedOpenCamera(cameraContext);
+            //re setup raw buffers
+            setupMutableState(cameraExtension);
+            cameraExtension.getCameraDevice().setParameters(backup);
+            lowLevelCameraActions.startPreview();
+        }
     }
 }

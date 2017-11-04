@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+import com.fkeglevich.rawdumper.util.Mutable;
 
 /**
  * TODO: Add class header
@@ -29,45 +30,45 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 
 public class MutableParameterCollection extends ParameterCollection
 {
-    private ParameterCollection parameterCollection;
+    //Mutable state fields
+    private final Mutable<ParameterCollection> mutable = Mutable.createInvalid();
 
-    public MutableParameterCollection(@NonNull ParameterCollection parameterCollection)
+    public static MutableParameterCollection createInvalid()
+    {
+        return new MutableParameterCollection();
+    }
+
+    protected MutableParameterCollection()
     {
         super(null);
-        this.setParameterCollection(parameterCollection);
+    }
+
+    public void setupMutableState(@NonNull ParameterCollection mutableCollection)
+    {
+        mutable.setupMutableState(mutableCollection);
     }
 
     @Override
     public <T> void remove(final Parameter<T> parameter)
     {
-        getParameterCollection().remove(parameter);
+        mutable.get().remove(parameter);
     }
 
     @Override
     public <T> boolean has(Parameter<T> parameter)
     {
-        return getParameterCollection().has(parameter);
+        return mutable.get().has(parameter);
     }
 
     @Override
     public <T> T get(Parameter<T> parameter)
     {
-        return getParameterCollection().get(parameter);
+        return mutable.get().get(parameter);
     }
 
     @Override
     public <T> void set(Parameter<T> parameter, T value)
     {
-        getParameterCollection().set(parameter, value);
-    }
-
-    public ParameterCollection getParameterCollection()
-    {
-        return parameterCollection;
-    }
-
-    public void setParameterCollection(ParameterCollection parameterCollection)
-    {
-        this.parameterCollection = parameterCollection;
+        mutable.get().set(parameter, value);
     }
 }

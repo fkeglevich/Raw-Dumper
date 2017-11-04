@@ -16,11 +16,14 @@
 
 package com.fkeglevich.rawdumper.camera.parameter;
 
+import android.support.annotation.NonNull;
+
 import com.fkeglevich.rawdumper.camera.async.direct.mutable.MutableParameterCollection;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.info.SensorInfo;
+import com.fkeglevich.rawdumper.util.Mutable;
 
 /**
  * TODO: Add class header
@@ -30,13 +33,41 @@ import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 
 public class PictureSizeLayer extends MutableParameterCollection
 {
-    private final RawImageSize[] rawImageSizes;
+    //Mutable state fields
+    private final Mutable<RawImageSize[]> rawImageSizes = Mutable.createInvalid();
     private boolean rawMode = false;
 
-    public PictureSizeLayer(ParameterCollection parameterCollection, SensorInfo sensorInfo)
+    public static PictureSizeLayer createInvalid()
     {
-        super(parameterCollection);
-        rawImageSizes = sensorInfo.getRawImageSizes();
+        return new PictureSizeLayer();
+    }
+
+    private PictureSizeLayer()
+    {
+        super();
+    }
+
+    @Override
+    public void setupMutableState(@NonNull ParameterCollection mutableCollection)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setupMutableState(@NonNull ParameterCollection mutableCollection,
+                                  SensorInfo sensorInfo)
+    {
+        super.setupMutableState(mutableCollection);
+        this.rawImageSizes.setupMutableState(sensorInfo.getRawImageSizes());
+    }
+
+    public void enableRawMode()
+    {
+        rawMode = true;
+    }
+
+    public void disableRawMode()
+    {
+        rawMode = false;
     }
 
     @Override
@@ -60,19 +91,9 @@ public class PictureSizeLayer extends MutableParameterCollection
             super.set(parameter, value);
     }
 
-    public void enableRawMode()
-    {
-        rawMode = true;
-    }
-
-    public void disableRawMode()
-    {
-        rawMode = false;
-    }
-
     private CaptureSize pictureSizeToRawSize(CaptureSize toFix)
     {
-        for (RawImageSize rawImageSize : rawImageSizes)
+        for (RawImageSize rawImageSize : rawImageSizes.get())
             if (rawImageSize.getWidth() == toFix.getWidth() && rawImageSize.getHeight() == toFix.getHeight())
                 return new CaptureSize(rawImageSize.getPaddedWidth(), rawImageSize.getPaddedHeight());
 
@@ -81,7 +102,7 @@ public class PictureSizeLayer extends MutableParameterCollection
 
     private CaptureSize rawSizeToPictureSize(CaptureSize toFix)
     {
-        for (RawImageSize rawImageSize : rawImageSizes)
+        for (RawImageSize rawImageSize : rawImageSizes.get())
             if (rawImageSize.getPaddedWidth() == toFix.getWidth() && rawImageSize.getPaddedHeight() == toFix.getHeight())
                 return new CaptureSize(rawImageSize.getWidth(), rawImageSize.getHeight());
 
