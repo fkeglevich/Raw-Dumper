@@ -21,7 +21,8 @@ import android.hardware.Camera;
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.direct.mutable.MutableParameterCollection;
-import com.fkeglevich.rawdumper.camera.async.pipeline.NoPipelineManager;
+import com.fkeglevich.rawdumper.camera.async.pipeline.PipelineManager;
+import com.fkeglevich.rawdumper.camera.async.pipeline.StandardPipelineManager;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.IntelCameraExtensionLoader;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
@@ -47,7 +48,8 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
     private final Mutable<ICameraExtension>  cameraExtension        = Mutable.createInvalid();
     private final MutableParameterCollection parameterCollection    = MutableParameterCollection.createInvalid();
     private final PictureSizeLayer           pictureSizeLayer       = PictureSizeLayer.createInvalid();
-    private final LowLevelCameraActions      lowLevelCameraActions  = LowLevelCameraActions.createInvalid(cameraExtension, lock, pictureSizeLayer, new NoPipelineManager());
+    private final PipelineManager            pipelineManager        = new StandardPipelineManager(cameraExtension, lock);
+    private final LowLevelCameraActions      lowLevelCameraActions  = LowLevelCameraActions.createInvalid(cameraExtension, lock, pictureSizeLayer, pipelineManager);
 
     public LowLevelCameraImpl(CameraContext cameraContext, ICameraExtension extension) throws IOException
     {
