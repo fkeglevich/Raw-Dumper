@@ -172,6 +172,12 @@ public class FeatureControllerFactory
         };
     }
 
+    TakePictureController createCaptureButtonController(ActivityReference reference, FeatureControllerManager controllerManager)
+    {
+        View captureButton = reference.weaklyGet().findViewById(R.id.captureButton);
+        return new TakePictureController(captureButton, controllerManager);
+    }
+
     private ButtonController createButtonController(ActivityReference reference,
                                                            @IdRes int buttonId,
                                                            DisplayableFeatureUi adapter,

@@ -51,11 +51,24 @@ class FeatureControllerManager
         controllersList.add(controllerFactory.createIsoMeteringController(reference));
         controllersList.add(controllerFactory.createSSMeteringController(reference));
         controllersList.add(controllerFactory.createEvMeteringController(reference));
+        controllersList.add(controllerFactory.createCaptureButtonController(reference, this));
     }
 
     void setupControllers(TurboCamera camera, EventDispatcher<Nothing> onCameraClose)
     {
         for (FeatureController featureController : controllersList)
             featureController.setupFeature(camera, onCameraClose);
+    }
+
+    void enableControllers()
+    {
+        for (FeatureController featureController : controllersList)
+            featureController.enable();
+    }
+
+    void disableControllers()
+    {
+        for (FeatureController featureController : controllersList)
+            featureController.enable();
     }
 }

@@ -29,7 +29,7 @@ import com.fkeglevich.rawdumper.util.event.EventListener;
 
 public abstract class FeatureController
 {
-    public void setupFeature(TurboCamera camera, final EventDispatcher<Nothing> onCameraClose)
+    void setupFeature(TurboCamera camera, final EventDispatcher<Nothing> onCameraClose)
     {
         setup(camera);
         onCameraClose.addListener(new EventListener<Nothing>()
@@ -44,4 +44,7 @@ public abstract class FeatureController
 
     protected abstract void setup(TurboCamera camera);
     protected abstract void reset();
+
+    protected abstract void disable();
+    protected abstract void enable();
 }

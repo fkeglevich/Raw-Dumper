@@ -105,6 +105,18 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
         updateViewFromMetering();
     }
 
+    @Override
+    protected void disable()
+    {
+        //no op
+    }
+
+    @Override
+    protected void enable()
+    {
+        //no op
+    }
+
     private void setViewText(T value, boolean isAuto)
     {
         meteringView.setTextColor(isAuto ? AUTO_VALUE_TEXT_COLOR : MANUAL_VALUE_TEXT_COLOR);

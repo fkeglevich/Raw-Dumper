@@ -52,7 +52,7 @@ public abstract class DisplayableFeatureController<T extends Displayable> extend
         }
     };
 
-    public DisplayableFeatureController(DisplayableFeatureUi featureUi)
+    DisplayableFeatureController(DisplayableFeatureUi featureUi)
     {
         this.featureUi = featureUi;
         this.feature = null;
@@ -85,6 +85,18 @@ public abstract class DisplayableFeatureController<T extends Displayable> extend
         feature = null;
         featureUi.setListener(null);
         featureUi.disable();
+    }
+
+    @Override
+    protected void disable()
+    {
+        featureUi.disable();
+    }
+
+    @Override
+    protected void enable()
+    {
+        featureUi.enable();
     }
 
     private void setupFeatureUi(List<String> displayableValueList)

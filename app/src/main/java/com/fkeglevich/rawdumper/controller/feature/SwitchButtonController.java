@@ -66,4 +66,16 @@ public class SwitchButtonController extends FeatureController
     {
         disabledStateController.disableAnimated();
     }
+
+    @Override
+    protected void disable()
+    {
+        disabledStateController.disableAnimated();
+    }
+
+    @Override
+    protected void enable()
+    {
+        disabledStateController.enableAnimated();
+    }
 }

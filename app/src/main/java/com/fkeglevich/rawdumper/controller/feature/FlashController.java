@@ -153,4 +153,16 @@ public class FlashController extends FeatureController
 
         flashFeature = null;
     }
+
+    @Override
+    protected void disable()
+    {
+        buttonDisabledStateController.disableAnimated();
+    }
+
+    @Override
+    protected void enable()
+    {
+        buttonDisabledStateController.enableAnimated();
+    }
 }

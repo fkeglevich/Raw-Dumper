@@ -33,6 +33,7 @@ import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 public class TouchFocusController extends FeatureController
 {
     private FocusFeature focusFeature;
+    private boolean enabled = true;
 
     private final AutoFocusResult autoFocusResult = new AutoFocusResult()
     {
@@ -51,7 +52,7 @@ public class TouchFocusController extends FeatureController
             @Override
             public boolean onTouch(View v, MotionEvent event)
             {
-                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                if(enabled && event.getAction() == MotionEvent.ACTION_DOWN)
                 {
                     if (focusFeature != null && focusFeature.getValue().canAutoFocus())
                         focusFeature.startAutoFocus(PreviewArea.createTouchArea(v, event), autoFocusResult);
@@ -75,5 +76,17 @@ public class TouchFocusController extends FeatureController
     protected void reset()
     {
         focusFeature = null;
+    }
+
+    @Override
+    protected void disable()
+    {
+        enabled = false;
+    }
+
+    @Override
+    protected void enable()
+    {
+        enabled = true;
     }
 }
