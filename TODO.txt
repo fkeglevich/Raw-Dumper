@@ -20,9 +20,9 @@ TODO list:
 
  - Add the ~recoveryng photos~ if the app crash use case
 
- - Use checsums to validate the existence of patches
+ - Implement YuvPipeline and both raw pipelines
 
- - DON'T forget to require root access BEFORE presenting the app
+ - Use checksums to validate the existence of patches
 
  - Create the picture pipelines
    - (DONE!) Jpeg
@@ -98,3 +98,4 @@ Done:
  - Add the extra logic for differenciating the zen2 camera blobs's version
  - Test Brightness metering (result: it's not obsviously useful)
  - Don't use displayValue for getting parameter values (especially for FocusMode!)
+ - Create BufferFactory and use the maximum buffer size for all YUV/RAW picture captures
