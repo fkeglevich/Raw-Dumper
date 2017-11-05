@@ -16,65 +16,72 @@
 
 package com.fkeglevich.rawdumper.io.async.function;
 
-import com.fkeglevich.rawdumper.async.Locked;
+import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
+import com.fkeglevich.rawdumper.dng.DngWriter;
+import com.fkeglevich.rawdumper.dng.writer.ScanlineImageWriter;
+import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
+import com.fkeglevich.rawdumper.raw.data.buffer.ArrayRawImageData;
+import com.fkeglevich.rawdumper.raw.data.buffer.FileRawImageData;
+import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
+import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
+
+import java.io.IOException;
 
 /**
  * Created by Flávio Keglevich on 24/08/2017.
  * TODO: Add a class header comment!
  */
 
-public class SaveDngFunction extends FileFunction<Locked<CaptureInfo>>
+public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Nothing, MessageException>
 {
-    public SaveDngFunction(String destinationFilePath)
-    {
-        super(destinationFilePath);
-    }
-
     @Override
-    protected Void call(Locked<CaptureInfo> argument) throws MessageException
+    protected Nothing call(CaptureInfo captureInfo) throws MessageException
     {
-        /*DngWriter writer = DngWriter.open(getDestinationFilePath());
+        if (!captureInfo.isValid()) throw new IllegalArgumentException("Invalid capture info!");
+
+        DngWriter writer = DngWriter.open(captureInfo.destinationRawFilename);
         if (writer != null)
         {
-            synchronized (argument.getLock())
+            RawImageData rawImageData = null;
+            try
             {
-                CaptureInfo captureInfo = argument.get();
-
-
-
-
-                writer.writeMetadata(captureInfo);
-
-                writer.writeImageData(new ScanlineImageWriter(), i3av4RAFile);
-                writer.writeExifInfo(captureInfo);
-                writer.close();
+                rawImageData = buildRawImageData(captureInfo);
+                writer.write(captureInfo, new ScanlineImageWriter(), rawImageData);
             }
-
+            catch (IOException ioe)
+            {
+                throw new SaveFileException();
+            }
+            finally
+            {
+                if (rawImageData != null)
+                    closeRawImageData(rawImageData);
+            }
         }
         else
         {
-            i3av4RAFile.close();
+            throw new SaveFileException();
         }
+        return Nothing.NOTHING;
+    }
 
-        return null;*/
-        return null;
+    private void closeRawImageData(RawImageData rawImageData)
+    {
+        try
+        {
+            rawImageData.close();
+        }
+        catch (IOException ignored)
+        {   }
+    }
+
+    private RawImageData buildRawImageData(CaptureInfo captureInfo) throws IOException
+    {
+        if (captureInfo.rawDataBytes != null)
+            return new ArrayRawImageData(captureInfo.imageSize, captureInfo.rawDataBytes);
+        else
+            return new FileRawImageData(captureInfo.imageSize, captureInfo.relatedI3av4File.getAbsolutePath());
     }
 }
-
-/*DngWriter writer = DngWriter.open(destFilePath);
-
-        if (writer != null)
-        {
-            writer.writeMetadata(ioLock.getApplicationContext(), captureInfo);
-            writer.writeImageData(new ScanlineImageWriter(), i3av4RAFile);
-            writer.writeExifInfo(captureInfo);
-            writer.close();
-            resultCallback.onResult(true);
-        }
-        else
-        {
-            i3av4RAFile.close();
-            resultCallback.onResult(false);
-        }*/
