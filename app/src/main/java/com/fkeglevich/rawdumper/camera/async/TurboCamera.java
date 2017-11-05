@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.async;
 
+import com.fkeglevich.rawdumper.camera.action.TakePictureAction;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Flash;
@@ -37,7 +38,7 @@ import java.util.List;
  * Created by Flávio Keglevich on 02/10/17.
  */
 
-public interface TurboCamera
+public interface TurboCamera extends TakePictureAction
 {
     WritableFeature<Iso, List<Iso>> getIsoFeature();
     Feature<Nullable<Iso>> getIsoMeteringFeature();

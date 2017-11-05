@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.async.impl;
 
+import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
+import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.Closeable;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCamera;
@@ -199,5 +201,11 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         recyclerFactory.cleanUpAllFeatures();
         virtualRecyclerFactory.cleanUpAllFeatures();
         lowLevelCamera.close();
+    }
+
+    @Override
+    public void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
+    {
+        lowLevelCamera.getCameraActions().takePicture(pictureCallback, exceptionCallback);
     }
 }
