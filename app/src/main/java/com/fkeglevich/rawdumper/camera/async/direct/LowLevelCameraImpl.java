@@ -48,12 +48,14 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
     private final Mutable<ICameraExtension>  cameraExtension        = Mutable.createInvalid();
     private final MutableParameterCollection parameterCollection    = MutableParameterCollection.createInvalid();
     private final PictureSizeLayer           pictureSizeLayer       = PictureSizeLayer.createInvalid();
-    private final PipelineManager            pipelineManager        = new StandardPipelineManager(cameraExtension, lock);
-    private final LowLevelCameraActions      lowLevelCameraActions  = LowLevelCameraActions.createInvalid(cameraExtension, lock, pictureSizeLayer, pipelineManager);
+    private final LowLevelCameraActions      lowLevelCameraActions;
 
     public LowLevelCameraImpl(CameraContext cameraContext, ICameraExtension extension) throws IOException
     {
         this.cameraContext = cameraContext;
+        PipelineManager pipelineManager = new StandardPipelineManager(cameraExtension, lock, cameraContext);
+        this.lowLevelCameraActions = LowLevelCameraActions.createInvalid(cameraExtension, lock, pictureSizeLayer, pipelineManager);
+
         setupMutableState(extension);
     }
 
@@ -114,7 +116,6 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
             Camera.Parameters backup = cameraExtension.get().getCameraDevice().getParameters();
             close();
             ICameraExtension cameraExtension = IntelCameraExtensionLoader.extendedOpenCamera(cameraContext);
-            //re setup raw buffers
             setupMutableState(cameraExtension);
             cameraExtension.getCameraDevice().setParameters(backup);
             lowLevelCameraActions.startPreview();
