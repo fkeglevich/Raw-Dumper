@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.data.buffer;
 
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 /**
@@ -26,7 +27,7 @@ import java.io.IOException;
  * Created by Flávio Keglevich on 26/08/2017.
  */
 
-public abstract class RawImageData
+public abstract class RawImageData implements Closeable
 {
     private final RawImageSize size;
     private int offset = 0;

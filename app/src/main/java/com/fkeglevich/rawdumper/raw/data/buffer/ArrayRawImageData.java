@@ -18,6 +18,8 @@ package com.fkeglevich.rawdumper.raw.data.buffer;
 
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 
+import java.io.IOException;
+
 /**
  * Represents the data of a raw picture that originated from a byte array.
  *
@@ -49,5 +51,19 @@ public class ArrayRawImageData extends RawImageData
     public void copyAllImageDataToBuffer(byte[] buffer, int start)
     {
         System.arraycopy(array, getOffset(), buffer, start, getSize().getBufferLength());
+    }
+
+    /**
+     * Closes the object and release any system resources it holds.
+     * <p>
+     * <p>Although only the first call has any effect, it is safe to call close
+     * multiple times on the same object. This is more lenient than the
+     * overridden {@code AutoCloseable.close()}, which may be called at most
+     * once.
+     */
+    @Override
+    public void close() throws IOException
+    {
+        //no op
     }
 }
