@@ -20,6 +20,8 @@ import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.util.Mutable;
 
 /**
  * TODO: Add class header
@@ -29,9 +31,9 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 
 public class RawPipeline extends PicturePipelineBase
 {
-    RawPipeline(Camera lowLevelCamera, Object lock)
+    RawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock)
     {
-        super(lowLevelCamera, lock);
+        super(cameraExtension, lock);
     }
 
     @Override

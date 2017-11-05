@@ -16,15 +16,15 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
-import android.hardware.Camera;
-
 import com.fkeglevich.rawdumper.async.Locked;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
+import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.io.async.IOThread;
+import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
@@ -35,9 +35,9 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 public class JpegPipeline extends StandardPipeline
 {
-    public JpegPipeline(Camera camera, Object lock, CameraActions cameraActions)
+    public JpegPipeline(Mutable<ICameraExtension> cameraExtension, Object lock)
     {
-        super(camera, lock, cameraActions, FileFormat.JPEG);
+        super(cameraExtension, lock, FileFormat.JPEG);
     }
 
     @Override

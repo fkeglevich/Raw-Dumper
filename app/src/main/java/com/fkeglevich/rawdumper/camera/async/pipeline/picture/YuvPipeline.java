@@ -16,12 +16,12 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
-import android.hardware.Camera;
-
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
+import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.util.Mutable;
 
 /**
  * TODO: Add class header
@@ -33,9 +33,9 @@ public class YuvPipeline extends StandardPipeline
 {
     private final FileFormat fileFormat;
 
-    YuvPipeline(Camera lowLevelCamera, Object lock, CameraActions cameraActions, FileFormat fileFormat)
+    public YuvPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, FileFormat fileFormat)
     {
-        super(lowLevelCamera, lock, cameraActions, fileFormat);
+        super(cameraExtension, lock, fileFormat);
         this.fileFormat = fileFormat;
     }
 

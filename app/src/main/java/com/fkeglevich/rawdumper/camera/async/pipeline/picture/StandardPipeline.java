@@ -16,15 +16,15 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
-import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.pipeline.filename.FilenameBuilder;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
+import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.util.Mutable;
 
 import java.util.Calendar;
 
@@ -36,14 +36,12 @@ import java.util.Calendar;
 
 abstract class StandardPipeline extends PicturePipelineBase
 {
-    private final CameraActions cameraActions;
     private final Handler uiHandler;
     private final FilenameBuilder filenameBuilder;
 
-    StandardPipeline(Camera lowLevelCamera, Object lock, CameraActions cameraActions, FileFormat fileFormat)
+    StandardPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, FileFormat fileFormat)
     {
-        super(lowLevelCamera, lock);
-        this.cameraActions      = cameraActions;
+        super(cameraExtension, lock);
         this.filenameBuilder    = new FilenameBuilder().isPicture().useFileFormat(fileFormat);
         this.uiHandler          = new Handler(Looper.getMainLooper());
     }
@@ -53,7 +51,7 @@ abstract class StandardPipeline extends PicturePipelineBase
     {
         String filename = filenameBuilder.useCalendar(Calendar.getInstance()).build();
         saveImage(pipelineData, pictureCallback, exceptionCallback, filename);
-        cameraActions.startPreview();
+        startPreview();
         uiHandler.post(new Runnable()
         {
             @Override

@@ -16,12 +16,12 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
-import android.hardware.Camera;
-
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
+import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.util.Mutable;
 
 /**
  * TODO: Add class header
@@ -31,9 +31,9 @@ import com.fkeglevich.rawdumper.camera.data.FileFormat;
 
 public class DefaultRawPipeline extends StandardPipeline
 {
-    DefaultRawPipeline(Camera lowLevelCamera, Object lock, CameraActions cameraActions)
+    DefaultRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock)
     {
-        super(lowLevelCamera, lock, cameraActions, FileFormat.DNG);
+        super(cameraExtension, lock, FileFormat.DNG);
     }
 
     @Override

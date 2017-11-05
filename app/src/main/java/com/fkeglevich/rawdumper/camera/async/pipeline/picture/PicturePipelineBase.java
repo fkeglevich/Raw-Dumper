@@ -20,6 +20,8 @@ import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.util.Mutable;
 
 /**
  * TODO: Add class header
@@ -29,12 +31,12 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 
 public abstract class PicturePipelineBase implements PicturePipeline
 {
-    private final Camera lowLevelCamera;
+    private final Mutable<ICameraExtension> cameraExtension;
     private final Object lock;
 
-    PicturePipelineBase(Camera lowLevelCamera, Object lock)
+    PicturePipelineBase(Mutable<ICameraExtension> cameraExtension, Object lock)
     {
-        this.lowLevelCamera = lowLevelCamera;
+        this.cameraExtension = cameraExtension;
         this.lock = lock;
     }
 
@@ -44,8 +46,9 @@ public abstract class PicturePipelineBase implements PicturePipeline
         synchronized (lock)
         {
             final PipelineData pipelineData = new PipelineData();
+            Camera camera = cameraExtension.get().getCameraDevice();
 
-            lowLevelCamera.takePicture(null, new Camera.PictureCallback()
+            camera.takePicture(null, new Camera.PictureCallback()
             {
                 @Override
                 public void onPictureTaken(byte[] data, Camera camera)
@@ -63,6 +66,11 @@ public abstract class PicturePipelineBase implements PicturePipeline
                 }
             });
         }
+    }
+
+    protected void startPreview()
+    {
+        cameraExtension.get().getCameraDevice().startPreview();
     }
 
     protected abstract void processPipeline(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback);
