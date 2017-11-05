@@ -32,16 +32,19 @@ public class RawImageCallbackAccess
 {
     private static final String METHOD_NAME = "addRawImageCallbackBuffer";
 
-    private final Method addRawBufferMethod;
-    private final Camera camera;
-
-    public RawImageCallbackAccess(Camera camera)
+    private static Method findMethod()
     {
-        this.addRawBufferMethod = findMethod();
-        this.camera = camera;
+        Method[] methods = Camera.class.getMethods();
+        for (Method method : methods)
+            if (method.getName().equals(METHOD_NAME))
+                return method;
+
+        throw new RawCallbackBufferMethodException();
     }
 
-    public void addRawImageCallbackBuffer(byte[] buffer)
+    private static final Method addRawBufferMethod = findMethod();
+
+    public static void addRawImageCallbackBuffer(Camera camera, byte[] buffer)
     {
         try
         {
@@ -51,15 +54,5 @@ public class RawImageCallbackAccess
         {
             throw new RawCallbackBufferException(e);
         }
-    }
-
-    private Method findMethod()
-    {
-        Method[] methods = Camera.class.getMethods();
-        for (Method method : methods)
-            if (method.getName().equals(METHOD_NAME))
-                return method;
-
-        throw new RawCallbackBufferMethodException();
     }
 }
