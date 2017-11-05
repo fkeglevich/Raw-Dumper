@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
-import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
