@@ -32,7 +32,6 @@ import java.io.IOException;
 
 public class CameraRestartFunction extends ThrowingAsyncFunction<RestartableCamera, Nothing, MessageException>
 {
-
     @Override
     protected Nothing call(RestartableCamera camera) throws MessageException
     {
