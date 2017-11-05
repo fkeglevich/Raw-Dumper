@@ -57,7 +57,7 @@ public abstract class RawPipelineOld2
         ACaptureInfoBuilder captureInfoBuilder = new FromRawAndJpegBuilder(cameraContext, parameters, raw, jpeg);
         CaptureInfo captureInfo = captureInfoBuilder.build();
 
-        DngWriter dngWriter = DngWriter.open("asda.dng");
+        DngWriter dngWriter = DngWriter.open(captureInfo.destinationRawFilename);
         if (dngWriter != null)
         {
             dngWriter.write(captureInfo, new ScanlineImageWriter(), new ArrayRawImageData(captureInfo.imageSize, captureInfo.rawDataBytes));
