@@ -169,7 +169,6 @@ public class LowLevelCameraActions implements CameraActions
     {
         synchronized (lock)
         {
-            isPreviewing = false;
             pipelineManager.getPicturePipeline().takePicture(pictureCallback, exceptionCallback);
         }
     }
