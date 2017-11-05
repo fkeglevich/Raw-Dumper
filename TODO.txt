@@ -24,6 +24,8 @@ TODO list:
 
  - Use checksums to validate the existence of patches
 
+ - Play animation when taking pictures
+
  - Create the picture pipelines
    - (DONE!) Jpeg
    - Raw (NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
@@ -53,8 +55,6 @@ TODO list:
 	  - (SOLVED) Mismatched number of cameras in the json
  
  - Better handling of SU shell commands
- - Create a better camera "reopening" for the MM Z00A front camera case 
-   (and other cases where the camera crashes)
 
 Next features:
  - PictureSizeFeature
@@ -99,3 +99,5 @@ Done:
  - Test Brightness metering (result: it's not obsviously useful)
  - Don't use displayValue for getting parameter values (especially for FocusMode!)
  - Create BufferFactory and use the maximum buffer size for all YUV/RAW picture captures
+ - Create a better camera "reopening" for the MM Z00A front camera case 
+   (and other cases where the camera crashes)
