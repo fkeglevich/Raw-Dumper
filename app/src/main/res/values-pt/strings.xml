@@ -79,4 +79,6 @@
     <string name="ev_changed_notification">EV mudou para <xliff:g id="newValue">%s</xliff:g></string>
     <string name="iso_changed_notification">ISO mudou para <xliff:g id="newValue">%s</xliff:g></string>
     <string name="ss_changed_notification">Tempo de exposição mudou para <xliff:g id="newValue">%s</xliff:g></string>
+    <string name="picture_saved">Foto salva</string>
+    <string name="error_saving_picture">Erro ao salvar a foto</string>
 </resources>

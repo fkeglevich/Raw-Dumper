@@ -86,5 +86,7 @@
     <string name="iso_changed_notification">ISO changed to <xliff:g id="newValue">%s</xliff:g></string>
     <string name="ss_changed_notification">Shutter speed changed to <xliff:g id="newValue">%s</xliff:g></string>
     <string name="ev_changed_notification">EV changed to <xliff:g id="newValue">%s</xliff:g></string>
+    <string name="picture_saved">Picture saved</string>
+    <string name="error_saving_picture">Error when saving the picture</string>
 
 </resources>
