@@ -16,10 +16,16 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
+import android.hardware.Camera;
+
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.camera.extension.RawImageCallbackAccess;
+import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 import com.fkeglevich.rawdumper.util.Mutable;
 
 /**
@@ -28,15 +34,25 @@ import com.fkeglevich.rawdumper.util.Mutable;
  * Created by Flávio Keglevich on 03/11/17.
  */
 
-public class DefaultRawPipeline extends StandardPipeline
+public class DefaultRawPipeline extends PicturePipelineBase
 {
-    DefaultRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock)
+    private final byte[] buffer;
+
+    DefaultRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, byte[] buffer)
     {
-        super(cameraExtension, lock, FileFormat.DNG);
+        super(cameraExtension, lock);
+        this.buffer = buffer;
     }
 
     @Override
-    void saveImage(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback, String filename)
+    protected void setupCameraBefore(Camera camera)
+    {
+        super.setupCameraBefore(camera);
+        RawImageCallbackAccess.addRawImageCallbackBuffer(camera, buffer);
+    }
+
+    @Override
+    protected void processPipeline(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
     {
 
     }

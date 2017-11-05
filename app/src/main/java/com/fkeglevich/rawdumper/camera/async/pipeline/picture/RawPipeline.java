@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.util.Mutable;
 
@@ -27,16 +28,26 @@ import com.fkeglevich.rawdumper.util.Mutable;
  * Created by Flávio Keglevich on 03/11/17.
  */
 
-public class RawPipeline extends PicturePipelineBase
+public class RawPipeline implements PicturePipeline
 {
-    RawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock)
+    private final PicturePipeline actualPipeline;
+
+    public RawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, byte[] buffer)
     {
-        super(cameraExtension, lock);
+        actualPipeline = chooseRawPipeline(cameraExtension, lock, cameraContext, buffer);
+    }
+
+    private PicturePipeline chooseRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, byte[] buffer)
+    {
+        if (cameraContext.getCameraInfo().isRetryOnError())
+            return null;
+        else
+            return new DefaultRawPipeline(cameraExtension, lock, buffer);
     }
 
     @Override
-    protected void processPipeline(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
+    public void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
     {
-
+        actualPipeline.takePicture(pictureCallback, exceptionCallback);
     }
 }

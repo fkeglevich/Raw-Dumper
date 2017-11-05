@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.camera.async.pipeline;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.pipeline.picture.JpegPipeline;
-import com.fkeglevich.rawdumper.camera.async.pipeline.picture.NoPipeline;
 import com.fkeglevich.rawdumper.camera.async.pipeline.picture.PicturePipeline;
 import com.fkeglevich.rawdumper.camera.async.pipeline.picture.RawPipeline;
 import com.fkeglevich.rawdumper.camera.async.pipeline.picture.YuvPipeline;
@@ -42,10 +41,12 @@ public class StandardPipelineManager implements PipelineManager
 
     public StandardPipelineManager(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext)
     {
+        byte[] buffer = BufferFactory.createLargestImageCallbackBuffer(cameraExtension, cameraContext);
+
         PicturePipeline jpegPipeline    = new JpegPipeline(cameraExtension, lock);
-        PicturePipeline pngPipeline     = new YuvPipeline (cameraExtension, lock, FileFormat.PNG);
-        PicturePipeline webpPipeline    = new YuvPipeline (cameraExtension, lock, FileFormat.WEBP);
-        PicturePipeline dngPipeline     = new RawPipeline (cameraExtension, lock, cameraContext);
+        PicturePipeline pngPipeline     = new YuvPipeline (cameraExtension, lock, FileFormat.PNG, buffer);
+        PicturePipeline webpPipeline    = new YuvPipeline (cameraExtension, lock, FileFormat.WEBP, buffer);
+        PicturePipeline dngPipeline     = new RawPipeline (cameraExtension, lock, cameraContext, buffer);
 
         pipelineMap = new HashMap<>();
         pipelineMap.put(FileFormat.JPEG, jpegPipeline);

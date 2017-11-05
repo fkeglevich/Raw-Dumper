@@ -47,7 +47,7 @@ public abstract class PicturePipelineBase implements PicturePipeline
         {
             final PipelineData pipelineData = new PipelineData();
             Camera camera = cameraExtension.get().getCameraDevice();
-
+            setupCameraBefore(camera);
             camera.takePicture(null, new Camera.PictureCallback()
             {
                 @Override
@@ -62,10 +62,18 @@ public abstract class PicturePipelineBase implements PicturePipeline
                 public void onPictureTaken(byte[] data, Camera camera)
                 {
                     pipelineData.jpegData = data;
-                    processPipeline(pipelineData, pictureCallback, exceptionCallback);
+                    synchronized (lock)
+                    {
+                        processPipeline(pipelineData, pictureCallback, exceptionCallback);
+                    }
                 }
             });
         }
+    }
+
+    protected void setupCameraBefore(Camera camera)
+    {
+        //no op
     }
 
     protected void startPreview()
