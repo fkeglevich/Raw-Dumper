@@ -42,7 +42,7 @@ public class RawPipeline implements PicturePipeline
         if (cameraContext.getCameraInfo().isRetryOnError())
             return new NoPipeline();
         else
-            return new DefaultRawPipeline(cameraExtension, lock, buffer);
+            return new DefaultRawPipeline(cameraExtension, lock, cameraContext, buffer);
     }
 
     @Override
