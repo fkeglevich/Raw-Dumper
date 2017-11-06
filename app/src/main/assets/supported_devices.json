@@ -5,6 +5,10 @@
             "deviceModel": "Android SDK built for x86"
         },
         {
+            "deviceInfoFile": "emulator",
+            "deviceModel": "Android SDK built for x86_64"
+        },
+        {
             "deviceInfoFile": "z00x",
             "deviceModel": "ASUS_Z00A"
         },
