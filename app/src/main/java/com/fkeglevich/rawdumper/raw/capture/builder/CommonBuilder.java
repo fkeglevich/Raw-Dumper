@@ -18,18 +18,21 @@ package com.fkeglevich.rawdumper.raw.capture.builder;
 
 import com.fkeglevich.rawdumper.camera.async.pipeline.filename.FilenameBuilder;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
+import com.fkeglevich.rawdumper.io.Directories;
 import com.fkeglevich.rawdumper.raw.capture.DateInfo;
+
+import java.io.File;
 
 /**
  * Created by Flávio Keglevich on 25/08/2017.
  * TODO: Add a class header comment!
  */
 
-public abstract class BaseDateBuilder extends ACaptureInfoBuilder
+public abstract class CommonBuilder extends ACaptureInfoBuilder
 {
     DateInfo dateInfo;
 
-    BaseDateBuilder()
+    CommonBuilder()
     {
         super();
         initDateInfo();
@@ -46,7 +49,7 @@ public abstract class BaseDateBuilder extends ACaptureInfoBuilder
     @Override
     public void buildDestinationRawFilename()
     {
-        captureInfo.destinationRawFilename = generateRawFilename();
+        captureInfo.destinationRawFilename = new File(Directories.getPicturesDirectory(), generateRawFilename()).getAbsolutePath();
     }
 
     String generateRawFilename()

@@ -38,7 +38,7 @@ import java.io.File;
  * Created by Flávio Keglevich on 25/08/2017.
  */
 
-public class FromI3av4FileBuilder extends BaseDateBuilder
+public class FromI3av4FileBuilder extends CommonBuilder
 {
     private final DeviceInfo device;
     private final File relatedI3av4File;

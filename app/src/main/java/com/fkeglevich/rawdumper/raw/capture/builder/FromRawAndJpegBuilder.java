@@ -34,7 +34,7 @@ import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
  * TODO: Add a class header comment!
  */
 
-public class FromRawAndJpegBuilder extends BaseDateBuilder
+public class FromRawAndJpegBuilder extends CommonBuilder
 {
     private final DeviceInfo device;
     private final CameraSizePair pair;

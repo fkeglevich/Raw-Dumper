@@ -57,6 +57,7 @@ public class CameraSetup
         this.setupStageLink = new SetupStageLinkImpl(textureView, activityReference, permissionManager, cameraSelector, this);
         this.setupStages = new LinkedList<>(Arrays.asList(  new DeviceInfoStage(),
                                                             new PermissionsStage(),
+                                                            new DirectoryStage(),
                                                             new WorkaroundStage(),
                                                             new SurfaceTextureStage(),
                                                             new CameraOpenStage()));
