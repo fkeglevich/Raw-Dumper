@@ -25,6 +25,7 @@ import com.fkeglevich.rawdumper.camera.setup.CameraSetup;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryRootModule;
+import com.fkeglevich.rawdumper.debug.DebugFlags;
 import com.fkeglevich.rawdumper.util.Assert;
 import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
@@ -63,7 +64,10 @@ public class CameraManager
     public CameraManager(ActivityReference activityReference, TextureView textureView)
     {
         orientationModule = new OrientationModule(activityReference);
-        permissionModule = new MandatoryRootModule(activityReference);
+        permissionModule = DebugFlags.isDisableMandatoryRoot()
+                            ? new MandatoryPermissionModule(activityReference)
+                            : new MandatoryRootModule(activityReference);
+
         cameraSelector = new CameraSelectorImpl();
         cameraSetup = new CameraSetup(textureView,
                 activityReference, permissionModule.getPermissionManager(), cameraSelector);
