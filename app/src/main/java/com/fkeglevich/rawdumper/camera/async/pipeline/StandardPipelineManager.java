@@ -36,10 +36,18 @@ import java.util.Map;
 
 public class StandardPipelineManager implements PipelineManager
 {
-    private final Map<FileFormat, PicturePipeline> pipelineMap;
+    private final Map<FileFormat, PicturePipeline> pipelineMap = new HashMap<>();
     private final Mutable<FileFormat> fileFormatMutable = Mutable.createInvalid();
 
-    public StandardPipelineManager(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext)
+    public static StandardPipelineManager createInvalid()
+    {
+        return new StandardPipelineManager();
+    }
+
+    private StandardPipelineManager()
+    {   }
+
+    public void setupMutableState(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext)
     {
         byte[] buffer = BufferFactory.createLargestImageCallbackBuffer(cameraExtension, cameraContext);
 
@@ -48,7 +56,6 @@ public class StandardPipelineManager implements PipelineManager
         PicturePipeline webpPipeline    = new YuvPipeline (cameraExtension, lock, FileFormat.WEBP, buffer);
         PicturePipeline dngPipeline     = new RawPipeline (cameraExtension, lock, cameraContext, buffer);
 
-        pipelineMap = new HashMap<>();
         pipelineMap.put(FileFormat.JPEG, jpegPipeline);
         pipelineMap.put(FileFormat.PNG,  pngPipeline);
         pipelineMap.put(FileFormat.WEBP, webpPipeline);

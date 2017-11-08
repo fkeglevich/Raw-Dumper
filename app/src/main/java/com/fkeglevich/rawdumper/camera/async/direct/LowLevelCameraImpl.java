@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.async.direct;
 
 import android.hardware.Camera;
+import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
@@ -49,13 +50,13 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
     private final MutableParameterCollection parameterCollection    = MutableParameterCollection.createInvalid();
     private final PictureSizeLayer           pictureSizeLayer       = PictureSizeLayer.createInvalid();
     private final LowLevelCameraActions      lowLevelCameraActions;
+    private final StandardPipelineManager    pipelineManager;
 
     public LowLevelCameraImpl(CameraContext cameraContext, ICameraExtension extension) throws IOException
     {
         this.cameraContext = cameraContext;
-        PipelineManager pipelineManager = new StandardPipelineManager(cameraExtension, lock, cameraContext);
+        this.pipelineManager = StandardPipelineManager.createInvalid();
         this.lowLevelCameraActions = LowLevelCameraActions.createInvalid(cameraExtension, lock, pictureSizeLayer, pipelineManager);
-
         setupMutableState(extension);
     }
 
@@ -68,9 +69,13 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
             LowLevelParameterInterfaceImpl parameterInterface = new LowLevelParameterInterfaceImpl(camera, lock);
             ParameterCollection parameters = new ParameterCollection(parameterInterface);
 
+            if (cameraContext.getCameraInfo().canDisableShutterSound())
+                extension.getCameraDevice().enableShutterSound(false);
+
             cameraExtension.setupMutableState(extension);
             parameterCollection.setupMutableState(parameters);
             pictureSizeLayer.setupMutableState(parameters, cameraContext.getSensorInfo());
+            pipelineManager.setupMutableState(cameraExtension, lock, cameraContext);
             lowLevelCameraActions.setupMutableState(displayRotation);
         }
     }
