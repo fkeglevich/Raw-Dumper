@@ -22,7 +22,6 @@ import android.view.View;
 import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.controller.feature.CameraLifetimeController;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
-import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 
 /**
  * Created by Flávio Keglevich on 29/08/2017.
@@ -32,8 +31,6 @@ import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 @SuppressWarnings("unused")
 public class MainActivity extends ModularActivity
 {
-    private FullscreenManager fullscreenManager = new FullscreenManager(reference);
-
     private ModesInterface modesInterface;
     private CameraLifetimeController cameraLifetimeController;
 
