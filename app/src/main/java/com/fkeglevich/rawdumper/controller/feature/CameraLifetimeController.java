@@ -16,14 +16,18 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
+import android.content.DialogInterface;
 import android.view.View;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.CameraManager;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.exception.RawIsUnavailableException;
 import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
+import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 import com.fkeglevich.rawdumper.ui.dialog.FatalErrorDialog;
+import com.fkeglevich.rawdumper.ui.dialog.OkDialog;
 import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -47,6 +51,7 @@ public class CameraLifetimeController
     };
 
     private final ActivityReference reference;
+    private final FullscreenManager fullscreenManager;
     private final FeatureControllerManager featureControllerManager;
     private final CameraPreviewTexture textureView;
     private final CameraManager cameraManager;
@@ -56,6 +61,7 @@ public class CameraLifetimeController
     {
         this.reference = reference;
         setupActivityListeners();
+        this.fullscreenManager          = new FullscreenManager(reference);
         this.featureControllerManager   = new FeatureControllerManager();
         featureControllerManager.createControllers(reference);
         this.textureView                = getTextureView(reference);
@@ -90,13 +96,27 @@ public class CameraLifetimeController
             @Override
             public void onEvent(MessageException eventData)
             {
-                FatalErrorDialog.show(reference, eventData);
+                if (eventData instanceof RawIsUnavailableException)
+                    OkDialog.show(reference, eventData,
+                            new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+                                    cameraManager.selectNextCamera();
+                                    cameraManager.openCamera();
+                                }
+                            });
+                else
+                    FatalErrorDialog.show(reference, eventData);
             }
         });
     }
 
     private void onCameraOpened(TurboCamera turboCamera)
     {
+        fullscreenManager.goToFullscreenMode();
+
         reference.onPause.removeListener(pauseListener);
         reference.onPause.addListener(pauseListener);
 
