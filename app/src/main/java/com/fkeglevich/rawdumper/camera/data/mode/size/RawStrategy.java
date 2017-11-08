@@ -42,6 +42,6 @@ public class RawStrategy extends CameraInfoStrategy<RawImageSize>
     @Override
     CaptureSize toCaptureSize(RawImageSize size)
     {
-        return new CaptureSize(size.getWidth(), size.getHeight());
+        return new CaptureSize(size.getPaddedWidth(), size.getPaddedHeight());
     }
 }
