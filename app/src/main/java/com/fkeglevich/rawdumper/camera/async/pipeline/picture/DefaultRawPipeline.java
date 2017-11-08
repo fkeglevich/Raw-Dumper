@@ -24,20 +24,17 @@ import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
-import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.RawImageCallbackAccess;
-import com.fkeglevich.rawdumper.dng.DngWriter;
+import com.fkeglevich.rawdumper.debug.DebugFlags;
 import com.fkeglevich.rawdumper.io.async.IOThread;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
-import com.fkeglevich.rawdumper.raw.capture.builder.FromI3av4FileBuilder;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromRawAndJpegBuilder;
-import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 import com.fkeglevich.rawdumper.su.ShellManager;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.Nothing;
+import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -96,25 +93,37 @@ public class DefaultRawPipeline extends PicturePipelineBase
 
         startPreview();
         String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
-        ShellManager.getInstance().addSingleCommand("rm " + dumpDirectory + "/*.i3av4", new Shell.OnCommandLineListener()
+
+        if (!DebugFlags.isDisableMandatoryRoot())
+        {
+            ShellManager.getInstance().addSingleCommand("rm " + dumpDirectory + "/*.i3av4", new Shell.OnCommandLineListener()
+            {
+                @Override
+                public void onCommandResult(int commandCode, int exitCode)
+                {
+                    postOnPictureTaken(pictureCallback);
+                }
+
+                @Override
+                public void onLine(String line)
+                {
+                    //no op
+                }
+            });
+        }
+        else
+            postOnPictureTaken(pictureCallback);
+    }
+
+    private void postOnPictureTaken(final PictureListener pictureCallback)
+    {
+        ThreadUtil.simpleDelay(120);
+        uiHandler.post(new Runnable()
         {
             @Override
-            public void onCommandResult(int commandCode, int exitCode)
+            public void run()
             {
-                uiHandler.post(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        pictureCallback.onPictureTaken();
-                    }
-                });
-            }
-
-            @Override
-            public void onLine(String line)
-            {
-                //no op
+                pictureCallback.onPictureTaken();
             }
         });
     }
