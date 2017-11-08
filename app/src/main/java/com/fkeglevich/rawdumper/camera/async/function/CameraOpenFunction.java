@@ -23,6 +23,7 @@ import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCamera;
 import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCameraImpl;
 import com.fkeglevich.rawdumper.camera.async.impl.TurboCameraImpl;
 import com.fkeglevich.rawdumper.camera.exception.CameraOpenException;
+import com.fkeglevich.rawdumper.camera.exception.RawIsUnavailableException;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.IntelCameraExtensionLoader;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -40,6 +41,9 @@ public class CameraOpenFunction extends ThrowingAsyncFunction<CameraContext, Tur
     @Override
     protected TurboCamera call(CameraContext context) throws MessageException
     {
+        if (context.getSensorInfo().getRawImageSizes().length == 0)
+            throw new RawIsUnavailableException();
+
         ICameraExtension cameraExtension = IntelCameraExtensionLoader.extendedOpenCamera(context);
 
         try

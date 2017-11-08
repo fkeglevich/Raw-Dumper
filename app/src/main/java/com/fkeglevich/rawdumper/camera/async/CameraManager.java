@@ -91,6 +91,15 @@ public class CameraManager
                     onCameraOpened.dispatchEvent(eventData);
             }
         });
+
+        cameraSetup.onException.addListener(new EventListener<MessageException>()
+        {
+            @Override
+            public void onEvent(MessageException eventData)
+            {
+                currentState = State.IDLE;
+            }
+        });
     }
 
     public void openCamera()
@@ -143,6 +152,11 @@ public class CameraManager
     public boolean canSwitchCamera()
     {
         return cameraSelector.hasMultipleCameras();
+    }
+
+    public void selectNextCamera()
+    {
+        cameraSelector.selectNextCamera();
     }
 
     private void dispatchCameraClose()

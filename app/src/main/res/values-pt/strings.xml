@@ -81,4 +81,11 @@
     <string name="ss_changed_notification">Tempo de exposição mudou para <xliff:g id="newValue">%s</xliff:g></string>
     <string name="picture_saved">Foto salva</string>
     <string name="error_saving_picture">Erro ao salvar a foto</string>
+    <string name="lib_patch_is_needed">
+        Infelizmente, existe um bug conhecido no driver da câmera que impede a captura de fotos no formato RAW :(
+        \n
+        \nÉ necessário aplicar um patch no driver para habilitar este formato.
+        \nO aplicativo tentará abrir outra câmera.
+    </string>
+
 </resources>

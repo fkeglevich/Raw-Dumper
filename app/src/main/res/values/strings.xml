@@ -88,5 +88,11 @@
     <string name="ev_changed_notification">EV changed to <xliff:g id="newValue">%s</xliff:g></string>
     <string name="picture_saved">Picture saved</string>
     <string name="error_saving_picture">Error when saving the picture</string>
+    <string name="lib_patch_is_needed">
+        Unfortunately, there\'s a known bug in the camera driver that prevents taking raw pictures with this camera :(
+        \n
+        \nA patched camera driver is needed in order to take raw pictures.
+        \nThe app will try to switch to another camera now.
+    </string>
 
 </resources>

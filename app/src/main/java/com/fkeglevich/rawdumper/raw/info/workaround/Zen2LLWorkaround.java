@@ -17,12 +17,17 @@
 package com.fkeglevich.rawdumper.raw.info.workaround;
 
 import android.hardware.Camera;
+import android.util.Log;
 
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+import com.fkeglevich.rawdumper.util.MD5;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -33,7 +38,12 @@ import java.util.List;
 
 class Zen2LLWorkaround implements DeviceWorkaround
 {
+    private static final String TAG = "Zen2LLWorkaround";
+
     private static final File M10MO_SO_FILE = new File("/system/lib/hw/m10mo/camera.m10mo.so");
+
+    private static final String CAMERA_LIB_PATH  = "/system/lib/hw/camera.vendor.mofd_v1.so";
+    private static final String CAMERA_PATCH_MD5 = "601cffed1dd2c6129587fc7a21f0b4c4";
 
     @Override
     public void applyWorkaroundIfNeeded(DeviceInfo deviceInfo)
@@ -44,6 +54,9 @@ class Zen2LLWorkaround implements DeviceWorkaround
 
     private void apply(DeviceInfo deviceInfo)
     {
+        boolean isLibNotPatched = !isCameraLibPatched();
+        Log.i("ASD", "isLibNotPatched: " + isLibNotPatched);
+
         ExposureInfo exposureInfo;
         ExtraCameraInfo[] extraCameraInfos = deviceInfo.getCameras();
         for (ExtraCameraInfo cameraInfo : extraCameraInfos)
@@ -51,9 +64,15 @@ class Zen2LLWorkaround implements DeviceWorkaround
             cameraInfo.setRetryOnError(false);
             exposureInfo = cameraInfo.getExposure();
             removeLongExposureValues(exposureInfo.getShutterSpeedValues());
-            if (cameraInfo.getFacing() == Camera.CameraInfo.CAMERA_FACING_BACK)
-                cameraInfo.getSensor().disableRaw();
+            disableRawIfNeeded(cameraInfo, isLibNotPatched);
         }
+    }
+
+    private void disableRawIfNeeded(ExtraCameraInfo cameraInfo, boolean isLibNotPatched)
+    {
+        boolean isRearCamera = cameraInfo.getFacing() == Camera.CameraInfo.CAMERA_FACING_BACK;
+        if (isRearCamera && isLibNotPatched)
+            cameraInfo.getSensor().disableRaw();
     }
 
     private void removeLongExposureValues(List<String> exposureList)
@@ -68,5 +87,40 @@ class Zen2LLWorkaround implements DeviceWorkaround
             else
                 i++;
         }
+    }
+
+    private boolean isCameraLibPatched()
+    {
+        FileInputStream fi = null;
+        try
+        {
+            fi = new FileInputStream(CAMERA_LIB_PATH);
+            String base16 = MD5.calculateAsBase16(fi);
+            Log.i("asda", base16);
+            return CAMERA_PATCH_MD5.equals(base16);
+        }
+        catch (FileNotFoundException e)
+        {
+            Log.e(TAG, "FileNotFoundException: " + e.getMessage());
+        }
+        catch (IOException e)
+        {
+            Log.e(TAG, "IOException: " + e.getMessage());
+        }
+        finally
+        {
+            if (fi != null)
+            {
+                try
+                {
+                    fi.close();
+                }
+                catch (IOException e)
+                {
+                    Log.e(TAG, "IOException during close: " + e.getMessage());
+                }
+            }
+        }
+        return false;
     }
 }

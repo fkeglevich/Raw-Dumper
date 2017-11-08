@@ -89,6 +89,9 @@ public class CameraSetup
     void sendException(MessageException exception)
     {
         onException.dispatchEvent(exception);
+        stageQueue.clear();
+        turboCamera = null;
+        setupIsRunning = false;
     }
 
     <T> void removeAllStagesOfType(Class<T> typeClass)
