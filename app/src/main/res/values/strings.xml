@@ -93,5 +93,10 @@
         \nA patched camera driver is needed in order to take raw pictures.
         \nThe app will try to switch to another camera now.
     </string>
+    <string name="raw_is_unavailable">
+        Unfortunately, this camera is not able to take raw pictures :(
+        \n
+        \nThe app will try to switch to another camera now.
+    </string>
 
 </resources>

@@ -86,5 +86,10 @@
         \nÉ necessário aplicar um patch no driver para habilitar este formato.
         \nO aplicativo tentará abrir outra câmera.
     </string>
+    <string name="raw_is_unavailable">
+        Infelizmente, essa câmera não suporta o formato RAW :(
+        \n
+        \nO aplicativo tentará abrir outra câmera.
+    </string>
 
 </resources>

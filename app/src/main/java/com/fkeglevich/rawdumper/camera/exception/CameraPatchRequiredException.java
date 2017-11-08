@@ -24,14 +24,14 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
 /**
  * TODO: Add class header
  * <p>
- * Created by Flávio Keglevich on 07/11/17.
+ * Created by Flávio Keglevich on 08/11/17.
  */
 
-public class RawIsUnavailableException extends MessageException
+public class CameraPatchRequiredException extends MessageException
 {
     @Override
     public String getMessageResource(Context context)
     {
-        return context.getResources().getString(R.string.raw_is_unavailable);
+        return context.getResources().getString(R.string.lib_patch_is_needed);
     }
 }

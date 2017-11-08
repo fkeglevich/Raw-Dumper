@@ -23,6 +23,7 @@ import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.CameraManager;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.exception.CameraPatchRequiredException;
 import com.fkeglevich.rawdumper.camera.exception.RawIsUnavailableException;
 import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
@@ -96,7 +97,7 @@ public class CameraLifetimeController
             @Override
             public void onEvent(MessageException eventData)
             {
-                if (eventData instanceof RawIsUnavailableException)
+                if (eventData instanceof RawIsUnavailableException || eventData instanceof CameraPatchRequiredException)
                     OkDialog.show(reference, eventData,
                             new DialogInterface.OnClickListener()
                             {
