@@ -26,6 +26,7 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
+import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
@@ -38,16 +39,18 @@ public class TakePictureController extends FeatureController
 {
     private final View captureButton;
     private final ButtonDisabledStateController buttonDisabledStateController;
-    private final FeatureControllerManager controllerManager;
     private final Toast toast;
+    private final View pictureLayer;
+    private final CameraPreviewTexture previewTexture;
 
     @SuppressLint("ShowToast")
-    TakePictureController(View captureButton, FeatureControllerManager controllerManager)
+    TakePictureController(View captureButton, View pictureLayer, CameraPreviewTexture previewTexture)
     {
         this.captureButton = captureButton;
-        this.controllerManager = controllerManager;
         this.buttonDisabledStateController = new ButtonDisabledStateController(captureButton, false);
         this.toast = Toast.makeText(captureButton.getContext(), "", Toast.LENGTH_LONG);
+        this.pictureLayer = pictureLayer;
+        this.previewTexture = previewTexture;
     }
 
     @Override
@@ -59,9 +62,8 @@ public class TakePictureController extends FeatureController
             @Override
             public void onClick(View v)
             {
-                //play aimation
-
-                controllerManager.disableControllers();
+                //play animation
+                disableUi();
                 camera.takePicture(new PictureListener()
                 {
                     @Override
@@ -74,7 +76,7 @@ public class TakePictureController extends FeatureController
                     public void onPictureSaved()
                     {
                         showToast(R.string.picture_saved);
-                        controllerManager.enableControllers();
+                        enableUi();
                     }
                 }, new PictureExceptionListener()
                 {
@@ -82,11 +84,23 @@ public class TakePictureController extends FeatureController
                     public void onException(MessageException exception)
                     {
                         showToast(R.string.error_saving_picture);
-                        controllerManager.enableControllers();
+                        enableUi();
                     }
                 });
             }
         });
+    }
+
+    private void disableUi()
+    {
+        previewTexture.pauseUpdating();
+        pictureLayer.setVisibility(View.VISIBLE);
+    }
+
+    private void enableUi()
+    {
+        pictureLayer.setVisibility(View.INVISIBLE);
+        previewTexture.resumeUpdating();
     }
 
     private void showToast(@StringRes int id)

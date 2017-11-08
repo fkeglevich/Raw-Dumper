@@ -34,6 +34,7 @@ import com.fkeglevich.rawdumper.controller.adapter.ButtonController;
 import com.fkeglevich.rawdumper.controller.adapter.DismissibleManagerAdapter;
 import com.fkeglevich.rawdumper.controller.adapter.ToastNotificationController;
 import com.fkeglevich.rawdumper.controller.adapter.WheelViewAdapter;
+import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.lantouzi.wheelview.WheelView;
 
@@ -172,10 +173,12 @@ public class FeatureControllerFactory
         };
     }
 
-    TakePictureController createCaptureButtonController(ActivityReference reference, FeatureControllerManager controllerManager)
+    TakePictureController createCaptureButtonController(ActivityReference reference)
     {
         View captureButton = reference.weaklyGet().findViewById(R.id.captureButton);
-        return new TakePictureController(captureButton, controllerManager);
+        View pictureLayer = reference.weaklyGet().findViewById(R.id.captureLayer);
+        CameraPreviewTexture previewTexture = (CameraPreviewTexture) reference.weaklyGet().findViewById(R.id.textureView);
+        return new TakePictureController(captureButton, pictureLayer, previewTexture);
     }
 
     private ButtonController createButtonController(ActivityReference reference,
