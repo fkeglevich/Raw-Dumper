@@ -17,12 +17,10 @@
 package com.fkeglevich.rawdumper.camera.async.direct;
 
 import android.hardware.Camera;
-import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.direct.mutable.MutableParameterCollection;
-import com.fkeglevich.rawdumper.camera.async.pipeline.PipelineManager;
 import com.fkeglevich.rawdumper.camera.async.pipeline.StandardPipelineManager;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.IntelCameraExtensionLoader;

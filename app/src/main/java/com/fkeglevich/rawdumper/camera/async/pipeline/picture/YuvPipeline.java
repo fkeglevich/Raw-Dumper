@@ -25,8 +25,6 @@ import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.RawImageCallbackAccess;
 import com.fkeglevich.rawdumper.util.Mutable;
 
-import java.util.List;
-
 /**
  * TODO: Add class header
  * <p>
