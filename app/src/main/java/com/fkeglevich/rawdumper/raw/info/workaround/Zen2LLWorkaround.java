@@ -55,7 +55,6 @@ class Zen2LLWorkaround implements DeviceWorkaround
     private void apply(DeviceInfo deviceInfo)
     {
         boolean isLibNotPatched = !isCameraLibPatched();
-        Log.i("ASD", "isLibNotPatched: " + isLibNotPatched);
 
         ExposureInfo exposureInfo;
         ExtraCameraInfo[] extraCameraInfos = deviceInfo.getCameras();
@@ -96,7 +95,6 @@ class Zen2LLWorkaround implements DeviceWorkaround
         {
             fi = new FileInputStream(CAMERA_LIB_PATH);
             String base16 = MD5.calculateAsBase16(fi);
-            Log.i("asda", base16);
             return CAMERA_PATCH_MD5.equals(base16);
         }
         catch (FileNotFoundException e)
