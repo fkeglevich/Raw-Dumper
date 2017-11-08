@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.async.function;
 
+import android.util.Log;
+
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
@@ -38,6 +40,8 @@ import java.io.IOException;
 
 public class CameraOpenFunction extends ThrowingAsyncFunction<CameraContext, TurboCamera, MessageException>
 {
+    private static final String TAG = "CameraOpenFunction";
+
     @Override
     protected TurboCamera call(CameraContext context) throws MessageException
     {
@@ -54,6 +58,11 @@ public class CameraOpenFunction extends ThrowingAsyncFunction<CameraContext, Tur
         catch (IOException ioe)
         {
             throw new CameraOpenException();
+        }
+        catch (IllegalStateException ise)
+        {
+            Log.e(TAG, "IllegalStateException: " + ise.getMessage());
+            throw ise;
         }
     }
 }
