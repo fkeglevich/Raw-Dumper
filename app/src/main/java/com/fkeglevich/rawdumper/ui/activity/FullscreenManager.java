@@ -50,7 +50,7 @@ public class FullscreenManager
     /**
      * Hides the action bar and the system UI.
      */
-    private void goToFullscreenMode()
+    public void goToFullscreenMode()
     {
         AppCompatActivity activityLocal = activityReference.weaklyGet();
         if (activityLocal != null)
