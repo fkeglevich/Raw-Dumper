@@ -18,11 +18,13 @@ TODO list:
 
  - Visual feedback for touch focus/exposure region
 
+ - Resume preview on postview callback
+
  - Disable Circular Reveal animations in Android 4.4.2
 
  - Add the ~recoveryng photos~ if the app crash use case
 
- - Implement YuvPipeline and both raw pipelines
+ - Try a better WB algorithm
 
  - Play animation when taking pictures (it also can be the old school circular progress bar)
 
@@ -103,3 +105,4 @@ Done:
  - Use checksums to validate the existence of patches
  - Visual feedback when a patch is required
  - Create a proper isAvailable() (that works with non-patched LL Zen2) when choosing the raw picture format
+ - Better handling of cameras without raw
