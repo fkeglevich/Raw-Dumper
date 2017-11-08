@@ -17,7 +17,6 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Raw Dumper</string>
-    <string name="about_dismiss_button">OK</string>
     <string name="about_title">Sobre</string>
     <string name="app_name_with_version">Raw Dumper v<xliff:g id="app_version">%s</xliff:g></string>
     <string name="error_opening_camera">A câmera não pode ser iniciada. Reinicie seu dispositivo e tente novamente.</string>

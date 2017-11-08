@@ -64,7 +64,7 @@ public class AboutDialog
         builder.setTitle(context.getResources().getString(R.string.about_title));
 
         builder.setPositiveButton(
-                context.getResources().getString(R.string.about_dismiss_button),
+                context.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();

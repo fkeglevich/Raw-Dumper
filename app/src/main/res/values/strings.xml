@@ -33,7 +33,6 @@
     <string name="terminating_dialog_button">Exit</string>
 
     <string name="about_title">About</string>
-    <string name="about_dismiss_button">OK</string>
     <string name="about_message">
         Raw Dumper v<xliff:g id="app_version">%s</xliff:g>
         \n
