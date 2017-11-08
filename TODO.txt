@@ -18,21 +18,18 @@ TODO list:
 
  - Visual feedback for touch focus/exposure region
 
+ - Disable Circular Reveal animations in Android 4.4.2
+
  - Add the ~recoveryng photos~ if the app crash use case
 
  - Implement YuvPipeline and both raw pipelines
 
- - Use checksums to validate the existence of patches
-
- - Play animation when taking pictures
+ - Play animation when taking pictures (it also can be the old school circular progress bar)
 
  - Create the picture pipelines
    - (DONE!) Jpeg
-   - Raw (NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
+   - Raw ((DONE!)NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
    - YUV 
-
- - Create a proper isAvailable() (that works with non-patched LL Zen2) when choosing the raw picture format
-   update: we are going to use a workaround manager to solve these, and we'll be using checksums
 
  - Collect adjusted white balance for many CCTs and create a polynomial function between them
 
@@ -101,3 +98,8 @@ Done:
  - Create BufferFactory and use the maximum buffer size for all YUV/RAW picture captures
  - Create a better camera "reopening" for the MM Z00A front camera case 
    (and other cases where the camera crashes)
+ - Added basic directory handling
+ - Fix new enable/disable bug when taking pictures
+ - Use checksums to validate the existence of patches
+ - Visual feedback when a patch is required
+ - Create a proper isAvailable() (that works with non-patched LL Zen2) when choosing the raw picture format
