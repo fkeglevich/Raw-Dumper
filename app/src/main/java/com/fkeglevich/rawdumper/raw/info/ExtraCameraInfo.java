@@ -51,6 +51,7 @@ public class ExtraCameraInfo
 
     private boolean hasKnownMakernote;
     private boolean retryOnError;
+    private boolean canBePatched;
 
     private transient int facing;
     private transient int orientation;
@@ -142,5 +143,10 @@ public class ExtraCameraInfo
     public CaptureSize[] getBinningSizes()
     {
         return binningSizes;
+    }
+
+    public boolean isCanBePatched()
+    {
+        return canBePatched;
     }
 }

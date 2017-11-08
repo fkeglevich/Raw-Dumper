@@ -9,6 +9,7 @@
                     "width": 2048
                 }
             ],
+            "canBePatched": true,
             "color": {
                 "calibrationIlluminant1": "D55",
                 "cameraCalibration1": [
@@ -166,6 +167,7 @@
                     "width": 1280
                 }
             ],
+            "canBePatched": false,
             "color": {
                 "calibrationIlluminant1": "D55",
                 "cameraCalibration1": [

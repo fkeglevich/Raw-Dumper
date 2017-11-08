@@ -2,6 +2,7 @@
     "cameras": [
         {
             "binningSizes": [],
+            "canBePatched": false,
             "color": {
                 "calibrationIlluminant1": "D55",
                 "cameraCalibration1": [
@@ -97,6 +98,7 @@
         },
         {
             "binningSizes": [],
+            "canBePatched": false,
             "color": {
                 "calibrationIlluminant1": "D55",
                 "cameraCalibration1": [
