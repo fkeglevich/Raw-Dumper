@@ -17,15 +17,20 @@
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
 import android.hardware.Camera;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.RawImageCallbackAccess;
+import com.fkeglevich.rawdumper.io.Directories;
 import com.fkeglevich.rawdumper.io.async.IOThread;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
+import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromI3av4FileBuilder;
 import com.fkeglevich.rawdumper.su.ShellManager;
 import com.fkeglevich.rawdumper.util.Mutable;
@@ -34,6 +39,9 @@ import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.File;
+import java.io.IOException;
+
+import eu.chainfire.libsuperuser.Shell;
 
 /**
  * TODO: Add class header
@@ -41,73 +49,112 @@ import java.io.File;
  * Created by Flávio Keglevich on 05/11/17.
  */
 
-public class RetryingRawPipeline extends PicturePipelineBase
+public class RetryingRawPipeline implements PicturePipeline
 {
-    private final CameraContext cameraContext;
-    private final byte[] buffer;
-    private Camera.Parameters parameters = null;
-    private boolean ignoreError = false;
+    private final Mutable<ICameraExtension> cameraExtension;
+    private final Object                    lock;
+    private final CameraContext             cameraContext;
+    private final RestartableCamera         restartableCamera;
+    private final Handler                   uiHandler;
 
-    RetryingRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, byte[] buffer)
+    private Camera.Parameters               parameters = null;
+    private boolean                         ignoreError = false;
+
+    private final Camera.ErrorCallback      errorCallback = new Camera.ErrorCallback()
     {
-        super(cameraExtension, lock);
-        this.cameraContext = cameraContext;
-        this.buffer = buffer;
+        @Override
+        public void onError(int error, Camera camera)
+        {
+            if (ignoreError)
+            {
+                ThreadUtil.simpleDelay(2000);
+                ignoreError = false;
+                String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
+                String partialPath = Directories.getPartialPicturesDirectory().getAbsolutePath();
+                ShellManager.getInstance().addSingleCommand("mv " + dumpDirectory + "/*.i3av4" + " " + partialPath, new Shell.OnCommandLineListener()
+                {
+                    @Override
+                    public void onCommandResult(int commandCode, int exitCode)
+                    {
+                        processPicture();
+                    }
+
+                    @Override
+                    public void onLine(String line)
+                    {
+
+                    }
+                });
+            }
+        }
+    };
+    private PictureListener nextPictureCallback;
+    private PictureExceptionListener nextExceptionCallback;
+
+    RetryingRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, RestartableCamera restartableCamera)
+    {
+        this.cameraExtension    = cameraExtension;
+        this.lock               = lock;
+        this.cameraContext      = cameraContext;
+        this.restartableCamera  = restartableCamera;
+        this.uiHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
-    protected void setupCameraBefore(Camera camera)
+    public void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
     {
-        super.setupCameraBefore(camera);
-        parameters = camera.getParameters();
-        RawImageCallbackAccess.addRawImageCallbackBuffer(camera, buffer);
-        camera.setErrorCallback(new Camera.ErrorCallback()
+        synchronized (lock)
+        {
+            nextPictureCallback = pictureCallback;
+            nextExceptionCallback = exceptionCallback;
+            Camera camera = cameraExtension.get().getCameraDevice();
+            parameters = camera.getParameters();
+            ignoreError = true;
+            camera.setErrorCallback(errorCallback);
+            camera.takePicture(null, null, null);
+        }
+    }
+
+    private void processPicture()
+    {
+        File i3av4File = Directories.getPartialPicturesDirectory().listFiles()[0];
+        ACaptureInfoBuilder captureInfoBuilder = new FromI3av4FileBuilder(cameraContext, i3av4File, parameters);
+        CaptureInfo captureInfo = captureInfoBuilder.build();
+
+        IOThread.getIOAccess().saveDng(captureInfo, new AsyncOperation<Nothing>()
         {
             @Override
-            public void onError(int error, Camera camera)
+            protected void execute(Nothing argument)
             {
-                if (ignoreError)
-                {
-                    ThreadUtil.simpleDelay(2000);
-                    //ShellManager.getInstance().addCommand(); //move image to directory
-                    //File i3av4;
-                    //FromI3av4FileBuilder captureInfoBuilder = new FromI3av4FileBuilder(cameraContext, i3av4, parameters);
-                    //CaptureInfo captureInfo = captureInfoBuilder.build();
-
-                    /*IOThread.getIOAccess().saveDng(captureInfo, new AsyncOperation<Nothing>()
-                    {
-                        @Override
-                        protected void execute(Nothing argument)
-                        {
-                            pictureCallback.onPictureSaved();
-                        }
-                    }, new AsyncOperation<MessageException>()
-                    {
-                        @Override
-                        protected void execute(MessageException argument)
-                        {
-                            exceptionCallback.onException(argument);
-                        }
-                    });
-
-                    restartCamera();
-                    uiHandler.post(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            pictureCallback.onPictureTaken();
-                        }
-                    });*/
-                    ignoreError = false;
-                }
+                nextPictureCallback.onPictureSaved();
+            }
+        }, new AsyncOperation<MessageException>()
+        {
+            @Override
+            protected void execute(MessageException argument)
+            {
+                nextExceptionCallback.onException(argument);
             }
         });
-    }
 
-    @Override
-    protected void processPipeline(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
-    {
-        //won't be called
+        try
+        {
+            restartableCamera.restartCamera();
+        } catch (MessageException e)
+        {
+            e.printStackTrace();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        uiHandler.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                nextPictureCallback.onPictureTaken();
+            }
+        });
     }
 }
