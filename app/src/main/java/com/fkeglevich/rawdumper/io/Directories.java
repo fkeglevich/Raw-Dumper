@@ -31,10 +31,16 @@ import static android.os.Environment.DIRECTORY_DCIM;
 public class Directories
 {
     private static final String RAW_DUMPER_DIR = "RawDumper";
+    private static final String PARTIAL_DIR = ".partial";
 
     public static File getPicturesDirectory()
     {
         return new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM), RAW_DUMPER_DIR);
+    }
+
+    public static File getPartialPicturesDirectory()
+    {
+        return new File(getPicturesDirectory(), PARTIAL_DIR);
     }
 
     public static File getVideosDirectory()

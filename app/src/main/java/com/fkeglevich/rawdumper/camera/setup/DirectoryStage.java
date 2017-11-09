@@ -30,6 +30,7 @@ public class DirectoryStage implements SetupStage
     public void executeStage(SetupStageLink setupBase)
     {
         Directories.getPicturesDirectory().mkdirs();
+        Directories.getPartialPicturesDirectory().mkdirs();
         setupBase.processNextStage();
     }
 }
