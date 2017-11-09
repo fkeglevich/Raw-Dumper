@@ -26,7 +26,7 @@ import com.fkeglevich.rawdumper.BuildConfig;
 
 public class DebugFlags
 {
-    private static final boolean DISABLE_MANDATORY_ROOT = true;
+    private static final boolean DISABLE_MANDATORY_ROOT = false;
 
     public static boolean isDisableMandatoryRoot()
     {
