@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.async.pipeline;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.async.pipeline.picture.JpegPipeline;
 import com.fkeglevich.rawdumper.camera.async.pipeline.picture.PicturePipeline;
 import com.fkeglevich.rawdumper.camera.async.pipeline.picture.RawPipeline;
@@ -47,14 +48,14 @@ public class StandardPipelineManager implements PipelineManager
     private StandardPipelineManager()
     {   }
 
-    public void setupMutableState(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext)
+    public void setupMutableState(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, RestartableCamera restartableCamera)
     {
         byte[] buffer = BufferFactory.createLargestImageCallbackBuffer(cameraExtension, cameraContext);
 
         PicturePipeline jpegPipeline    = new JpegPipeline(cameraExtension, lock);
         PicturePipeline pngPipeline     = new YuvPipeline (cameraExtension, lock, FileFormat.PNG, buffer);
         PicturePipeline webpPipeline    = new YuvPipeline (cameraExtension, lock, FileFormat.WEBP, buffer);
-        PicturePipeline dngPipeline     = new RawPipeline (cameraExtension, lock, cameraContext, buffer);
+        PicturePipeline dngPipeline     = new RawPipeline (cameraExtension, lock, cameraContext, buffer, restartableCamera);
 
         pipelineMap.put(FileFormat.JPEG, jpegPipeline);
         pipelineMap.put(FileFormat.PNG,  pngPipeline);
