@@ -6,13 +6,15 @@ TODO list:
    
  - Better handling of known devices
    - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
-      - Trying to use the red and blue gains
+      - Trying to use the red and blue gains (they're absent on Zen2 with LL blobs)
 
- - (IMPORTANT - IN PROGRESS) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
+ - (DONE!) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
     raw pictures among different devices with different workarounds.
 
  - Test if 1/2 shutter speed on the front camera works on the Zen2 with LL blobs
  - Test if 1s long expo works on the Zen2 with LL blobs
+
+ - Test camera restart function
 
  - Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
 
@@ -22,18 +24,16 @@ TODO list:
 
  - Disable Circular Reveal animations in Android 4.4.2
 
- - Add the ~recoveryng photos~ if the app crash use case
+ - Add the ~recovering photos~ if the app crash use case
 
- - Try a better WB algorithm
+ - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
 
  - Play animation when taking pictures (it also can be the old school circular progress bar)
 
  - Create the picture pipelines
    - (DONE!) Jpeg
    - Raw ((DONE!)NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
-   - YUV 
-
- - Collect adjusted white balance for many CCTs and create a polynomial function between them
+   - YUV
 
  - Improve compatibility of generated DNG files for desktop apps like Darktable
    - Compatibility still needs to improve, because Darktable only recognize uncompressed files with stripes
