@@ -22,7 +22,7 @@ TODO list:
 
  - Resume preview on postview callback
 
- - Disable Circular Reveal animations in Android 4.4.2
+ - Disable Circular Reveal animations in Android 4.4.4
 
  - Add the ~recovering photos~ if the app crash use case
 
@@ -32,11 +32,10 @@ TODO list:
 
  - Create the picture pipelines
    - (DONE!) Jpeg
-   - Raw ((DONE!)NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
+   - (ALMOST DONE!) Raw ((DONE!)NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
    - YUV
 
- - Improve compatibility of generated DNG files for desktop apps like Darktable
-   - Compatibility still needs to improve, because Darktable only recognize uncompressed files with stripes
+ - Improve compatibility of generated DNG files for desktop apps like Darktable (only recognize uncompressed files with stripes)
  
  - (IN PROGRESS) Reduce overdraw
  
