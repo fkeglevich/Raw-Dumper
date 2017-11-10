@@ -24,15 +24,24 @@ import com.fkeglevich.rawdumper.BuildConfig;
  * Created by Flávio Keglevich on 06/11/17.
  */
 
+@SuppressWarnings("SimplifiableConditionalExpression")
 public class DebugFlags
 {
     private static final boolean DISABLE_MANDATORY_ROOT = false;
+    private static final boolean OPEN_FRONT_CAMERA_FIRST = true;
 
     public static boolean isDisableMandatoryRoot()
     {
-        if (BuildConfig.DEBUG)
-            return DISABLE_MANDATORY_ROOT;
-        else
-            return false;
+        return returnFlagIfDebugging(DISABLE_MANDATORY_ROOT, false);
+    }
+
+    public static boolean shouldOpenFrontCameraFirst()
+    {
+        return returnFlagIfDebugging(OPEN_FRONT_CAMERA_FIRST, false);
+    }
+
+    private static boolean returnFlagIfDebugging(boolean flagValue, boolean defaultValue)
+    {
+        return BuildConfig.DEBUG ? flagValue : defaultValue;
     }
 }
