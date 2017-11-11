@@ -27,8 +27,10 @@ import com.fkeglevich.rawdumper.BuildConfig;
 @SuppressWarnings("SimplifiableConditionalExpression")
 public class DebugFlags
 {
-    private static final boolean DISABLE_MANDATORY_ROOT = false;
-    private static final boolean OPEN_FRONT_CAMERA_FIRST = true;
+    private static final boolean DISABLE_MANDATORY_ROOT             = false;
+    private static final boolean OPEN_FRONT_CAMERA_FIRST            = true;
+    private static final boolean USE_RETRYING_PIPELINE_SIMULATOR    = false;
+    private static final boolean FORCE_RETRYING_PIPELINE            = false;
 
     public static boolean isDisableMandatoryRoot()
     {
@@ -40,6 +42,17 @@ public class DebugFlags
         return returnFlagIfDebugging(OPEN_FRONT_CAMERA_FIRST, false);
     }
 
+    public static boolean isUseRetryingPipelineSimulator()
+    {
+        return returnFlagIfDebugging(USE_RETRYING_PIPELINE_SIMULATOR, false);
+    }
+
+    public static boolean isForceRetryingPipeline()
+    {
+        return returnFlagIfDebugging(FORCE_RETRYING_PIPELINE, false);
+    }
+
+    @SuppressWarnings("SameParameterValue")
     private static boolean returnFlagIfDebugging(boolean flagValue, boolean defaultValue)
     {
         return BuildConfig.DEBUG ? flagValue : defaultValue;
