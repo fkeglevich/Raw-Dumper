@@ -13,14 +13,10 @@ TODO list:
 
  - Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
 
- - Visual feedback for touch focus/exposure region
-
  - Add the ~recovering photos~ if the app crash use case
 
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
    - Create function tint-temperature function for Zen2 rear camera
-
- - Execute a small su test on unknown devices for avoiding loss of data (specially for Zen5 and Razr I)
 
  - Create the picture pipelines
    - (DONE!) Jpeg
@@ -103,3 +99,4 @@ Done:
  - (DONE!) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
     raw pictures among different devices with different workarounds.
  - Play animation when taking pictures (it also can be the old school circular progress bar)
+ - Visual feedback for touch focus/exposure region
