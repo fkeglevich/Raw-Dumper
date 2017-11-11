@@ -65,6 +65,7 @@ public class FromI3av4FileBuilder extends CommonBuilder
         this.parameters = parameters;
         this.orientation = orientation;
         this.whiteBalanceExtractor = new WhiteBalanceInfoExtractor();
+        initDateInfo();
         initMakerNoteInfo();
     }
 

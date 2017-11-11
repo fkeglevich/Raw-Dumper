@@ -35,7 +35,6 @@ public abstract class CommonBuilder extends ACaptureInfoBuilder
     CommonBuilder()
     {
         super();
-        initDateInfo();
     }
 
     abstract void initDateInfo();

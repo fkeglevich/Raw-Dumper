@@ -67,6 +67,7 @@ public class FromRawAndJpegBuilder extends CommonBuilder
         this.rawDataBytes = rawDataBytes;
         this.extraJpegBytes = extraJpegBytes;
         this.whiteBalanceExtractor = new WhiteBalanceInfoExtractor();
+        initDateInfo();
         initMakerNoteInfo();
     }
 
