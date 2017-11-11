@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
 import android.hardware.Camera;
+import android.support.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
@@ -41,34 +42,73 @@ public abstract class PicturePipelineBase implements PicturePipeline
     }
 
     @Override
-    public void takePicture(final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback)
+    public void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
     {
         synchronized (lock)
         {
             final PipelineData pipelineData = new PipelineData();
             Camera camera = cameraExtension.get().getCameraDevice();
             setupCameraBefore(camera);
-            camera.takePicture(null, new Camera.PictureCallback()
-            {
-                @Override
-                public void onPictureTaken(byte[] data, Camera camera)
+            camera.takePicture(null, createRawCB(pipelineData), createJpegCB(pictureCallback, exceptionCallback, pipelineData));
+        }
+    }
+
+    @NonNull
+    private Camera.PictureCallback createRawCB(final PipelineData pipelineData)
+    {
+        return new Camera.PictureCallback()
                 {
-                    pipelineData.rawData = data;
+                    @Override
+                    public void onPictureTaken(byte[] data, Camera camera)
+                    {
+                        pipelineData.rawData = data;
+                    }
+                };
+    }
+
+    @NonNull
+    private Camera.PictureCallback createJpegCB(final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback, final PipelineData pipelineData)
+    {
+        return new Camera.PictureCallback()
+        {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera)
+            {
+                pipelineData.jpegData = data;
+                synchronized (lock)
+                {
+                    processPipeline(pipelineData, pictureCallback, exceptionCallback);
                 }
             }
-            , new Camera.PictureCallback()
+        };
+    }
+
+    private Camera.PictureCallback createJpegCB(final PipelineData pipelineData)
+    {
+        return new Camera.PictureCallback()
+        {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera)
             {
-                @Override
-                public void onPictureTaken(byte[] data, Camera camera)
+                pipelineData.jpegData = data;
+            }
+        };
+    }
+
+    @NonNull
+    private Camera.PictureCallback createPostViewCB(final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback, final PipelineData pipelineData)
+    {
+        return new Camera.PictureCallback()
+        {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera)
+            {
+                synchronized (lock)
                 {
-                    pipelineData.jpegData = data;
-                    synchronized (lock)
-                    {
-                        processPipeline(pipelineData, pictureCallback, exceptionCallback);
-                    }
+                    processPipeline(pipelineData, pictureCallback, exceptionCallback);
                 }
-            });
-        }
+            }
+        };
     }
 
     protected void setupCameraBefore(Camera camera)
@@ -76,7 +116,7 @@ public abstract class PicturePipelineBase implements PicturePipeline
         //no op
     }
 
-    protected void startPreview()
+    void startPreview()
     {
         cameraExtension.get().getCameraDevice().startPreview();
     }
