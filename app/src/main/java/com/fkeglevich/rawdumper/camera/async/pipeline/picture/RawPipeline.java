@@ -21,6 +21,7 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.debug.DebugFlags;
 import com.fkeglevich.rawdumper.util.Mutable;
 
 /**
@@ -40,10 +41,10 @@ public class RawPipeline implements PicturePipeline
 
     private PicturePipeline chooseRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, byte[] buffer, RestartableCamera restartableCamera)
     {
-        if (cameraContext.getCameraInfo().isRetryOnError())
+        if (cameraContext.getCameraInfo().isRetryOnError() || DebugFlags.isForceRetryingPipeline())
             return new RetryingRawPipeline(cameraExtension, lock, cameraContext, restartableCamera);
         else
-            return new DefaultRawPipeline(cameraExtension, lock, cameraContext, buffer);
+            return new StandardRawPipeline(cameraExtension, lock, cameraContext, buffer);
     }
 
     @Override
