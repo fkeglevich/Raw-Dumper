@@ -76,7 +76,7 @@ public class FromRawAndJpegBuilder extends CommonBuilder
         byte[] mknBytes = MakerNoteUtil.readFromJpegBytes(extraJpegBytes);
 
         if (pair.getExtraCameraInfo().hasKnownMakernote())
-            makerNoteInfo = new MakerNoteInfoExtractor(pair.getExtraCameraInfo().getSensor().getBaseISO()).extractFrom(mknBytes);
+            makerNoteInfo = new MakerNoteInfoExtractor(pair.getExtraCameraInfo().getSensor().getBaseISO()).extractFrom(mknBytes, pair.getExtraCameraInfo().getColor());
         else
             makerNoteInfo = new MakerNoteInfo(mknBytes);
     }

@@ -20,6 +20,7 @@ import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.util.ColorUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -90,7 +91,7 @@ public class MakerNoteInfoExtractor
         this.baseISO = baseISO;
     }
 
-    public MakerNoteInfo extractFrom(byte[] mknBytes)
+    public MakerNoteInfo extractFrom(byte[] mknBytes, ColorInfo colorInfo)
     {
         MakerNoteInfo result = new MakerNoteInfo(mknBytes);
         String mknStringBytes;
@@ -98,7 +99,7 @@ public class MakerNoteInfoExtractor
         {
             mknStringBytes = new String(mknBytes, "ISO-8859-1");
             extractExposureTimeAndIso(result, mknBytes);
-            extractColorMatrixAndWB(result, mknStringBytes);
+            extractColorMatrixAndWB(result, mknStringBytes, colorInfo);
         }
         catch (UnsupportedEncodingException e)
         {
@@ -123,7 +124,7 @@ public class MakerNoteInfoExtractor
         return true;
     }
 
-    private boolean extractColorMatrixAndWB(MakerNoteInfo info, String mknStringBytes)
+    private boolean extractColorMatrixAndWB(MakerNoteInfo info, String mknStringBytes, ColorInfo colorInfo)
     {
         int start = findLastOccurrence(colorMatrixWBPattern, mknStringBytes);
         if (start != -1)
@@ -140,7 +141,7 @@ public class MakerNoteInfoExtractor
                     {
                         info.colorMatrix = getColorMatrix(lines[0] + " " + lines[1] + " " + lines[2]);
                         info.wbTemperature = getMeanTemperature(lines[3]);
-                        info.wbCoordinatesXY = ColorUtil.getXYFromCCT(info.wbTemperature);
+                        info.wbCoordinatesXY = ColorUtil.getXYFromCCT(info.wbTemperature, colorInfo);
                         return true;
                     }
                 }

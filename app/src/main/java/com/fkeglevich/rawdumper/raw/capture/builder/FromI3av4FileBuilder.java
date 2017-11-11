@@ -84,7 +84,7 @@ public class FromI3av4FileBuilder extends CommonBuilder
         byte[] mknBytes = MakerNoteUtil.readFromI3av4File(relatedI3av4File, pair.getRawImageSize());
 
         if (pair.getExtraCameraInfo().hasKnownMakernote())
-            makerNoteInfo = new MakerNoteInfoExtractor(pair.getExtraCameraInfo().getSensor().getBaseISO()).extractFrom(mknBytes);
+            makerNoteInfo = new MakerNoteInfoExtractor(pair.getExtraCameraInfo().getSensor().getBaseISO()).extractFrom(mknBytes, pair.getExtraCameraInfo().getColor());
         else
             makerNoteInfo = new MakerNoteInfo(mknBytes);
     }

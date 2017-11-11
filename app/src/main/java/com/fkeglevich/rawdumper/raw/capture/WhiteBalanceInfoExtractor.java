@@ -46,7 +46,7 @@ public class WhiteBalanceInfoExtractor
 
     public WhiteBalanceInfo extractFrom(ColorInfo colorInfo)
     {
-        float[] xy = ColorUtil.getXYFromCCT(DAYLIGHT_TEMPERATURE);
+        float[] xy = ColorUtil.getXYFromCCT(DAYLIGHT_TEMPERATURE, colorInfo);
         return extractFrom(xy[0], xy[1], colorInfo);
     }
 }
