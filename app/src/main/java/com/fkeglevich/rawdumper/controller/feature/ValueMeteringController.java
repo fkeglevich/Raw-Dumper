@@ -53,7 +53,8 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
         @Override
         public void run()
         {
-            updateViewFromMetering();
+            if (enabled)
+                updateViewFromMetering();
             if (fallbackFeature != null)
                 handler.postDelayed(meteringRunnable, METERING_DELAY_MILLIS);
         }
@@ -65,6 +66,7 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
 
     private Feature<Nullable<T>> meteringFeature = null;
     private Feature<T> fallbackFeature = null;
+    private boolean enabled = true;
 
     ValueMeteringController(TextView meteringView, T defaultValue)
     {
@@ -108,13 +110,13 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
     @Override
     protected void disable()
     {
-        //no op
+        enabled = false;
     }
 
     @Override
     protected void enable()
     {
-        //no op
+        enabled = true;
     }
 
     private void setViewText(T value, boolean isAuto)
