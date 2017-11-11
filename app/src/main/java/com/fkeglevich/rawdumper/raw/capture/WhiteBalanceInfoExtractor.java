@@ -38,7 +38,10 @@ public class WhiteBalanceInfoExtractor
 
     public WhiteBalanceInfo extractFrom(MakerNoteInfo makerNoteInfo, ColorInfo colorInfo)
     {
-        return extractFrom(makerNoteInfo.wbCoordinatesXY[0], makerNoteInfo.wbCoordinatesXY[1], colorInfo);
+        if (makerNoteInfo.wbCoordinatesXY != null)
+            return extractFrom(makerNoteInfo.wbCoordinatesXY[0], makerNoteInfo.wbCoordinatesXY[1], colorInfo);
+        else
+            return extractFrom(colorInfo);
     }
 
     public WhiteBalanceInfo extractFrom(ColorInfo colorInfo)
