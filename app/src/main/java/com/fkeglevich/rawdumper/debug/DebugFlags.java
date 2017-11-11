@@ -28,7 +28,7 @@ import com.fkeglevich.rawdumper.BuildConfig;
 public class DebugFlags
 {
     private static final boolean DISABLE_MANDATORY_ROOT             = false;
-    private static final boolean OPEN_FRONT_CAMERA_FIRST            = true;
+    private static final boolean OPEN_FRONT_CAMERA_FIRST            = false;
     private static final boolean USE_RETRYING_PIPELINE_SIMULATOR    = false;
     private static final boolean FORCE_RETRYING_PIPELINE            = false;
 
