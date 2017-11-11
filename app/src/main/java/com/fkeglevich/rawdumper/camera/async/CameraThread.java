@@ -23,8 +23,10 @@ import android.support.annotation.NonNull;
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunctionContext;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.async.operation.WrappingOperation;
+import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.async.function.CameraCloseFunction;
 import com.fkeglevich.rawdumper.camera.async.function.CameraOpenFunction;
+import com.fkeglevich.rawdumper.camera.async.function.CameraRestartFunction;
 import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
@@ -74,6 +76,12 @@ public class CameraThread
     {
         assertCameraWasOpened();
         functionContext.call(new CameraCloseFunction(), getCurrentCamera(), wrapCloseCallback(callback));
+    }
+
+    public void restartCamera(RestartableCamera camera, AsyncOperation<Nothing> callback,
+                              AsyncOperation<MessageException> exception)
+    {
+        functionContext.call(new CameraRestartFunction(), camera, callback, exception);
     }
 
     public TurboCamera getCurrentCamera()
