@@ -8,31 +8,23 @@ TODO list:
    - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
       - Trying to use the red and blue gains (they're absent on Zen2 with LL blobs)
 
- - (DONE!) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
-    raw pictures among different devices with different workarounds.
-
  - Test if 1/2 shutter speed on the front camera works on the Zen2 with LL blobs
  - Test if 1s long expo works on the Zen2 with LL blobs
-
- - Test camera restart function
 
  - Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
 
  - Visual feedback for touch focus/exposure region
 
- - Resume preview on postview callback
-
- - Disable Circular Reveal animations in Android 4.4.4
-
  - Add the ~recovering photos~ if the app crash use case
 
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
+   - Create function tint-temperature function for Zen2 rear camera
 
- - Play animation when taking pictures (it also can be the old school circular progress bar)
+ - Execute a small su test on unknown devices for avoiding loss of data (specially for Zen5 and Razr I)
 
  - Create the picture pipelines
    - (DONE!) Jpeg
-   - (ALMOST DONE!) Raw ((DONE!)NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
+   - (DONE!) Raw ((DONE!)NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
    - YUV
 
  - Improve compatibility of generated DNG files for desktop apps like Darktable (only recognize uncompressed files with stripes)
@@ -46,7 +38,7 @@ TODO list:
  - (IMPORTANT - IN PROGRESS) Make the app work on more devices:
 	- Razr I
 	- Zenfone 5
-	- Zenfone 2 with LL blobs
+	- (DONE!) Zenfone 2 with LL blobs
 	
 	- Possible problems:
 	  - (ALMOST SOLVED) Avaliability of the Shutter Speed feature
@@ -105,3 +97,9 @@ Done:
  - Visual feedback when a patch is required
  - Create a proper isAvailable() (that works with non-patched LL Zen2) when choosing the raw picture format
  - Better handling of cameras without raw
+ - (Not done because it's useless) Resume preview on postview callback
+ - Test camera restart function
+ - (DONE!) Disable Circular Reveal animations in Android 4.4.4
+ - (DONE!) Create the concept of Capture Context, that represents the many scenarios that can occur when taking
+    raw pictures among different devices with different workarounds.
+ - Play animation when taking pictures (it also can be the old school circular progress bar)
