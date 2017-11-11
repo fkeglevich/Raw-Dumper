@@ -34,7 +34,6 @@ import com.fkeglevich.rawdumper.raw.capture.builder.FromRawAndJpegBuilder;
 import com.fkeglevich.rawdumper.su.ShellManager;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.Nothing;
-import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -45,7 +44,7 @@ import eu.chainfire.libsuperuser.Shell;
  * Created by Flávio Keglevich on 03/11/17.
  */
 
-public class DefaultRawPipeline extends PicturePipelineBase
+public class StandardRawPipeline extends PicturePipelineBase
 {
     private final CameraContext cameraContext;
     private final byte[] buffer;
@@ -53,7 +52,7 @@ public class DefaultRawPipeline extends PicturePipelineBase
 
     private Camera.Parameters parameters = null;
 
-    DefaultRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, byte[] buffer)
+    StandardRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, byte[] buffer)
     {
         super(cameraExtension, lock);
         this.cameraContext = cameraContext;
@@ -72,6 +71,13 @@ public class DefaultRawPipeline extends PicturePipelineBase
     @Override
     protected void processPipeline(PipelineData pipelineData, final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback)
     {
+        startPreview();
+        saveDngPicture(pipelineData, pictureCallback, exceptionCallback);
+        postOnPictureTaken(pictureCallback);
+    }
+
+    private void saveDngPicture(PipelineData pipelineData, final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback)
+    {
         ACaptureInfoBuilder captureInfoBuilder = new FromRawAndJpegBuilder(cameraContext, parameters, pipelineData.rawData, pipelineData.jpegData);
         CaptureInfo captureInfo = captureInfoBuilder.build();
 
@@ -80,7 +86,7 @@ public class DefaultRawPipeline extends PicturePipelineBase
             @Override
             protected void execute(Nothing argument)
             {
-                pictureCallback.onPictureSaved();
+                removeI3av4File(pictureCallback);
             }
         }, new AsyncOperation<MessageException>()
         {
@@ -90,10 +96,11 @@ public class DefaultRawPipeline extends PicturePipelineBase
                 exceptionCallback.onException(argument);
             }
         });
+    }
 
-        startPreview();
+    private void removeI3av4File(final PictureListener pictureCallback)
+    {
         String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
-
         if (!DebugFlags.isDisableMandatoryRoot())
         {
             ShellManager.getInstance().addSingleCommand("rm " + dumpDirectory + "/*.i3av4", new Shell.OnCommandLineListener()
@@ -101,7 +108,7 @@ public class DefaultRawPipeline extends PicturePipelineBase
                 @Override
                 public void onCommandResult(int commandCode, int exitCode)
                 {
-                    postOnPictureTaken(pictureCallback);
+                    postOnPictureSaved(pictureCallback);
                 }
 
                 @Override
@@ -112,12 +119,11 @@ public class DefaultRawPipeline extends PicturePipelineBase
             });
         }
         else
-            postOnPictureTaken(pictureCallback);
+            postOnPictureSaved(pictureCallback);
     }
 
     private void postOnPictureTaken(final PictureListener pictureCallback)
     {
-        ThreadUtil.simpleDelay(120);
         uiHandler.post(new Runnable()
         {
             @Override
@@ -126,5 +132,17 @@ public class DefaultRawPipeline extends PicturePipelineBase
                 pictureCallback.onPictureTaken();
             }
         });
+    }
+
+    private void postOnPictureSaved(final PictureListener pictureCallback)
+    {
+        uiHandler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                pictureCallback.onPictureSaved();
+            }
+        }, 120);
     }
 }
