@@ -35,6 +35,7 @@ import com.fkeglevich.rawdumper.controller.adapter.DismissibleManagerAdapter;
 import com.fkeglevich.rawdumper.controller.adapter.ToastNotificationController;
 import com.fkeglevich.rawdumper.controller.adapter.WheelViewAdapter;
 import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
+import com.fkeglevich.rawdumper.ui.TouchFocusView;
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.lantouzi.wheelview.WheelView;
 
@@ -115,7 +116,8 @@ public class FeatureControllerFactory
     TouchFocusController createTouchFocusController(ActivityReference reference)
     {
         View textureView = reference.weaklyGet().findViewById(R.id.textureView);
-        return new TouchFocusController(textureView);
+        TouchFocusView focusView = (TouchFocusView) reference.weaklyGet().findViewById(R.id.focusView);
+        return new TouchFocusController(textureView, focusView);
     }
 
     ValueMeteringController<Iso> createIsoMeteringController(ActivityReference reference)

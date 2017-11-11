@@ -34,6 +34,11 @@
 	    android:visibility="invisible"
             android:background="#00CCCCCC"/>
 
+	<com.fkeglevich.rawdumper.ui.TouchFocusView
+	    android:id="@+id/focusView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
     </io.codetail.widget.RevealFrameLayout>
 
     <ImageButton
