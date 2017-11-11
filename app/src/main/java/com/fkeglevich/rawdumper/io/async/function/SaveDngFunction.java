@@ -51,6 +51,8 @@ public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Nothing,
                 rawImageData = buildRawImageData(captureInfo);
                 writer.write(captureInfo, new ScanlineImageWriter(), rawImageData);
                 IOUtil.scanFileWithMediaScanner(captureInfo.destinationRawFilename);
+                if (captureInfo.relatedI3av4File != null)
+                    captureInfo.relatedI3av4File.delete();
             }
             catch (IOException ioe)
             {
