@@ -73,6 +73,12 @@
         \nCopyright © 2017 Google
         \nLink: https://material.io/icons
         \nLicença: https://github.com/google/material-design-icons/blob/master/LICENSE
+        \n
+        \nO código para transformar CCT e tint para coordenadas CIE xy foi portado para Java a partir do DNG SDK da Adobe.
+        \n
+        \nAdobe DNG Software Development Kit (SDK) 1.4
+        \nCopyright © 2017 Adobe
+        \nLink e Licença: http://supportdownloads.adobe.com/detail.jsp?ftpID=5474
     </string>
     <string name="error_saving_file">Erro ao salvar o arquivo</string>
     <string name="ev_changed_notification">EV mudou para <xliff:g id="newValue">%s</xliff:g></string>

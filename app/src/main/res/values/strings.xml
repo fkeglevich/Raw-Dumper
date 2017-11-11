@@ -79,6 +79,12 @@
         \nCopyright © 2017 Google
         \nLink: https://material.io/icons
         \nLicense: https://github.com/google/material-design-icons/blob/master/LICENSE
+        \n
+        \nThe code used to transform CCT and tint to CIE xy coordinates was ported to Java from Adobe's DNG SDK
+        \n
+        \nAdobe DNG Software Development Kit (SDK) 1.4
+        \nCopyright © 2017 Adobe
+        \nLink and license: http://supportdownloads.adobe.com/detail.jsp?ftpID=5474
     </string>
     <string name="error_saving_file">Error saving file</string>
 
