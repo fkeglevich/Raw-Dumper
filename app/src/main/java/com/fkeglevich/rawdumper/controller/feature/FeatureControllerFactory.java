@@ -179,8 +179,9 @@ public class FeatureControllerFactory
     {
         View captureButton = reference.weaklyGet().findViewById(R.id.captureButton);
         View pictureLayer = reference.weaklyGet().findViewById(R.id.captureLayer);
+        View progressBar = reference.weaklyGet().findViewById(R.id.progressBar);
         CameraPreviewTexture previewTexture = (CameraPreviewTexture) reference.weaklyGet().findViewById(R.id.textureView);
-        return new TakePictureController(captureButton, pictureLayer, previewTexture, meteringControllers);
+        return new TakePictureController(captureButton, pictureLayer, previewTexture, meteringControllers, progressBar);
     }
 
     private ButtonController createButtonController(ActivityReference reference,

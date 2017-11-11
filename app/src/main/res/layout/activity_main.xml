@@ -36,17 +36,6 @@
 
     </io.codetail.widget.RevealFrameLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:padding="12dp"
-        android:visibility="invisible"/>
-
     <ImageButton
         android:id="@+id/captureButton"
         android:layout_width="wrap_content"
@@ -57,6 +46,17 @@
         android:background="@drawable/round_button"
         android:padding="12dp"
         app:srcCompat="@drawable/ic_camera_alt_black_36dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:padding="12dp"
+        android:visibility="invisible"/>
 
     <ImageButton
         android:id="@+id/flashButton"
