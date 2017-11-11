@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.extension;
 
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
@@ -30,5 +30,5 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
 public class VirtualParameters
 {
     public static final Parameter<Mode>         PICTURE_MODE    = ParameterFactory.createCodecless("picture-mode");
-    public static final Parameter<PicFormat>    PICTURE_FORMAT  = ParameterFactory.createCodecless("picture-format");
+    public static final Parameter<PictureFormat>    PICTURE_FORMAT  = ParameterFactory.createCodecless("picture-format");
 }

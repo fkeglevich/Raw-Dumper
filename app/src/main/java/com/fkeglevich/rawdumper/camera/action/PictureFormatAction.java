@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.action;
 
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 
 /**
  * TODO: Add class header
@@ -26,5 +26,5 @@ import com.fkeglevich.rawdumper.camera.data.PicFormat;
 
 public interface PictureFormatAction
 {
-    void setPictureFormat(PicFormat pictureFormat);
+    void setPictureFormat(PictureFormat pictureFormat);
 }

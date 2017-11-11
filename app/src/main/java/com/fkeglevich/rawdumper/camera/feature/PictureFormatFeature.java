@@ -17,7 +17,7 @@
 package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
 
@@ -31,13 +31,13 @@ import static com.fkeglevich.rawdumper.camera.extension.VirtualParameters.PICTUR
  * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class PictureFormatFeature extends WritableFeature<PicFormat, List<PicFormat>> implements VirtualFeature
+public class PictureFormatFeature extends WritableFeature<PictureFormat, List<PictureFormat>> implements VirtualFeature
 {
     private final CameraActions cameraActions;
 
     PictureFormatFeature(ParameterCollection parameterCollection, CameraActions cameraActions)
     {
-        super(PICTURE_FORMAT, parameterCollection, ListValidator.<PicFormat>createInvalid(), true);
+        super(PICTURE_FORMAT, parameterCollection, ListValidator.<PictureFormat>createInvalid(), true);
         this.cameraActions = cameraActions;
     }
 

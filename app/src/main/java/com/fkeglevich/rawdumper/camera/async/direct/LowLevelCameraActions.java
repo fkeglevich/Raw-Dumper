@@ -24,7 +24,7 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.pipeline.PipelineManager;
 import com.fkeglevich.rawdumper.camera.data.DataFormat;
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
@@ -147,7 +147,7 @@ public class LowLevelCameraActions implements CameraActions
     }
 
     @Override
-    public void setPictureFormat(PicFormat pictureFormat)
+    public void setPictureFormat(PictureFormat pictureFormat)
     {
         synchronized (lock)
         {

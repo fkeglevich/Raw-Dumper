@@ -25,7 +25,7 @@ import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.Iso;
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.data.mode.ModeList;
@@ -179,7 +179,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     }
 
     @Override
-    public WritableFeature<PicFormat, List<PicFormat>> getPictureFormatFeature()
+    public WritableFeature<PictureFormat, List<PictureFormat>> getPictureFormatFeature()
     {
         return pictureFormatFeature;
     }

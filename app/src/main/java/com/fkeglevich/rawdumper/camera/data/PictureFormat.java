@@ -24,12 +24,12 @@ import java.util.List;
  * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class PicFormat implements DataContainer<CaptureSize>
+public class PictureFormat implements DataContainer<CaptureSize>
 {
     private final FileFormat fileFormat;
     private final List<CaptureSize> availableSizes;
 
-    public PicFormat(FileFormat fileFormat, List<CaptureSize> availableSizes)
+    public PictureFormat(FileFormat fileFormat, List<CaptureSize> availableSizes)
     {
         this.fileFormat = fileFormat;
         this.availableSizes = availableSizes;

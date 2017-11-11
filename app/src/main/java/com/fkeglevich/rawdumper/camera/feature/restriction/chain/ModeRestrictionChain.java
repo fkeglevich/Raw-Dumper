@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.camera.feature.restriction.chain;
 
 import com.fkeglevich.rawdumper.camera.action.PreviewActions;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.feature.PictureFormatFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureModeFeature;
@@ -49,12 +49,12 @@ public class ModeRestrictionChain extends RestrictionChain
     {
         this.previewActions = previewActions;
 
-        ChainNode<Mode, PicFormat, List<PicFormat>> modeNode
-                = new ChainNode<>(modeFeature, new DataContainerVF<Mode, PicFormat>(), new PictureFormatFixer(), formatFeature);
+        ChainNode<Mode, PictureFormat, List<PictureFormat>> modeNode
+                = new ChainNode<>(modeFeature, new DataContainerVF<Mode, PictureFormat>(), new PictureFormatFixer(), formatFeature);
         addChainNode(modeNode);
 
-        ChainNode<PicFormat, CaptureSize, List<CaptureSize>> formatNode
-                = new ChainNode<>(formatFeature, new DataContainerVF<PicFormat, CaptureSize>(), new PictureSizeFixer(), pictureSizeFeature);
+        ChainNode<PictureFormat, CaptureSize, List<CaptureSize>> formatNode
+                = new ChainNode<>(formatFeature, new DataContainerVF<PictureFormat, CaptureSize>(), new PictureSizeFixer(), pictureSizeFeature);
         addChainNode(formatNode);
 
         ChainNode<CaptureSize, CaptureSize, List<CaptureSize>> pictureSizeNode

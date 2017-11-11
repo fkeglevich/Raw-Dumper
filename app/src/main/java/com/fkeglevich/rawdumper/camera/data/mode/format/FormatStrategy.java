@@ -17,7 +17,7 @@
 package com.fkeglevich.rawdumper.camera.data.mode.format;
 
 import com.fkeglevich.rawdumper.camera.data.DataContainer;
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 
 /**
  * TODO: Add class header
@@ -25,7 +25,7 @@ import com.fkeglevich.rawdumper.camera.data.PicFormat;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public abstract class FormatStrategy implements DataContainer<PicFormat>
+public abstract class FormatStrategy implements DataContainer<PictureFormat>
 {
     public boolean isAvailable()
     {

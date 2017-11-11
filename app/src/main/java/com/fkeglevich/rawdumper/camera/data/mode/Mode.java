@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.camera.data.mode;
 
 import com.fkeglevich.rawdumper.camera.data.DataContainer;
 import com.fkeglevich.rawdumper.camera.data.ParameterValue;
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.format.FormatStrategy;
 
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public abstract class Mode implements DataContainer<PicFormat>, ParameterValue
+public abstract class Mode implements DataContainer<PictureFormat>, ParameterValue
 {
     private final String modeParameterValue;
     private final boolean useUltraPixels;
@@ -43,7 +43,7 @@ public abstract class Mode implements DataContainer<PicFormat>, ParameterValue
     }
 
     @Override
-    public List<PicFormat> getAvailableValues()
+    public List<PictureFormat> getAvailableValues()
     {
         return formatStrategy.getAvailableValues();
     }

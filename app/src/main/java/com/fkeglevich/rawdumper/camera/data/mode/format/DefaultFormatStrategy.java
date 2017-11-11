@@ -17,7 +17,7 @@
 package com.fkeglevich.rawdumper.camera.data.mode.format;
 
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
-import com.fkeglevich.rawdumper.camera.data.PicFormat;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.size.PictureSizeStrategy;
 
 import java.util.ArrayList;
@@ -32,16 +32,16 @@ import java.util.List;
 
 public class DefaultFormatStrategy extends FormatStrategy
 {
-    private final List<PicFormat> pictureFormats;
+    private final List<PictureFormat> pictureFormats;
 
     public DefaultFormatStrategy(PictureSizeStrategy jpegStrategy, PictureSizeStrategy yuvStrategy, PictureSizeStrategy rawStrategy)
     {
         pictureFormats = initFormats(jpegStrategy, yuvStrategy, rawStrategy);
     }
 
-    private List<PicFormat> initFormats(PictureSizeStrategy jpegStrategy, PictureSizeStrategy yuvStrategy, PictureSizeStrategy rawStrategy)
+    private List<PictureFormat> initFormats(PictureSizeStrategy jpegStrategy, PictureSizeStrategy yuvStrategy, PictureSizeStrategy rawStrategy)
     {
-        List<PicFormat> formatList = new ArrayList<>();
+        List<PictureFormat> formatList = new ArrayList<>();
 
         addIfAvailable(jpegStrategy, FileFormat.JPEG, formatList);
         addIfAvailable(rawStrategy, FileFormat.DNG, formatList);
@@ -51,14 +51,14 @@ public class DefaultFormatStrategy extends FormatStrategy
         return Collections.unmodifiableList(formatList);
     }
 
-    private void addIfAvailable(PictureSizeStrategy sizeStrategy, FileFormat fileFormat, List<PicFormat> formatList)
+    private void addIfAvailable(PictureSizeStrategy sizeStrategy, FileFormat fileFormat, List<PictureFormat> formatList)
     {
         if (sizeStrategy.isAvailable())
-            formatList.add(new PicFormat(fileFormat, sizeStrategy.getAvailableSizes()));
+            formatList.add(new PictureFormat(fileFormat, sizeStrategy.getAvailableSizes()));
     }
 
     @Override
-    public List<PicFormat> getAvailableValues()
+    public List<PictureFormat> getAvailableValues()
     {
         return pictureFormats;
     }
