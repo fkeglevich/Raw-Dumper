@@ -43,6 +43,8 @@ public class ColorInfo
     private float[] cameraCalibration1;
     private float[] cameraCalibration2;
 
+    private double[] tintTemperatureFunction;
+
     private CalibrationIlluminant calibrationIlluminant1;
     private CalibrationIlluminant calibrationIlluminant2;
 
@@ -76,5 +78,13 @@ public class ColorInfo
         double[] xyz = new double[] {(x*Y)/y, Y, ((1-x-y)*Y)/y};
         double[] dColorMatrix1 = MathUtil.floatArrayToDouble(colorMatrix1);
         return MathUtil.multiply3x3MatrixToVector3(dColorMatrix1, xyz);
+    }
+
+    public double[] getTintTemperatureFunction()
+    {
+        if (tintTemperatureFunction == null)
+            return new double[] {0, 0};
+
+        return tintTemperatureFunction;
     }
 }
