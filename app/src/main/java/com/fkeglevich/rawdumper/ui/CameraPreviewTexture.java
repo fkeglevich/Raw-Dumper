@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.ui;
 
 import android.content.Context;
 import android.graphics.Matrix;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -96,6 +97,16 @@ public class CameraPreviewTexture extends PausingTextureView
 
     private void startCircularAnimation(final boolean openingAnimation)
     {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+        {
+            if (openingAnimation)
+                show();
+            else
+                hide();
+
+            return;
+        }
+
         SupportAnimator animator = createAnimator(openingAnimation);
         animator.addListener(new SupportAnimator.AnimatorListener()
         {
