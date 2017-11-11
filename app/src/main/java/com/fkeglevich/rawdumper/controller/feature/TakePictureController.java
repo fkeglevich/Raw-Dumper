@@ -29,6 +29,8 @@ import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateControll
 import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
+import java.util.List;
+
 /**
  * TODO: Add class header
  * <p>
@@ -42,15 +44,18 @@ public class TakePictureController extends FeatureController
     private final Toast toast;
     private final View pictureLayer;
     private final CameraPreviewTexture previewTexture;
+    private final List<ValueMeteringController> meteringControllers;
 
     @SuppressLint("ShowToast")
-    TakePictureController(View captureButton, View pictureLayer, CameraPreviewTexture previewTexture)
+    TakePictureController(View captureButton, View pictureLayer, CameraPreviewTexture previewTexture,
+                          List<ValueMeteringController> meteringControllers)
     {
         this.captureButton = captureButton;
         this.buttonDisabledStateController = new ButtonDisabledStateController(captureButton, false);
         this.toast = Toast.makeText(captureButton.getContext(), "", Toast.LENGTH_LONG);
         this.pictureLayer = pictureLayer;
         this.previewTexture = previewTexture;
+        this.meteringControllers = meteringControllers;
     }
 
     @Override
@@ -93,6 +98,8 @@ public class TakePictureController extends FeatureController
 
     private void disableUi()
     {
+        for (ValueMeteringController meteringController : meteringControllers)
+            meteringController.disable();
         previewTexture.pauseUpdating();
         pictureLayer.setVisibility(View.VISIBLE);
     }
@@ -101,6 +108,8 @@ public class TakePictureController extends FeatureController
     {
         pictureLayer.setVisibility(View.INVISIBLE);
         previewTexture.resumeUpdating();
+        for (ValueMeteringController meteringController : meteringControllers)
+            meteringController.enable();
     }
 
     private void showToast(@StringRes int id)

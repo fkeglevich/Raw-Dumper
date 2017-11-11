@@ -38,6 +38,8 @@ import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.lantouzi.wheelview.WheelView;
 
+import java.util.List;
+
 /**
  * TODO: Add class header
  * <p>
@@ -173,12 +175,12 @@ public class FeatureControllerFactory
         };
     }
 
-    TakePictureController createCaptureButtonController(ActivityReference reference)
+    TakePictureController createCaptureButtonController(ActivityReference reference, List<ValueMeteringController> meteringControllers)
     {
         View captureButton = reference.weaklyGet().findViewById(R.id.captureButton);
         View pictureLayer = reference.weaklyGet().findViewById(R.id.captureLayer);
         CameraPreviewTexture previewTexture = (CameraPreviewTexture) reference.weaklyGet().findViewById(R.id.textureView);
-        return new TakePictureController(captureButton, pictureLayer, previewTexture);
+        return new TakePictureController(captureButton, pictureLayer, previewTexture, meteringControllers);
     }
 
     private ButtonController createButtonController(ActivityReference reference,

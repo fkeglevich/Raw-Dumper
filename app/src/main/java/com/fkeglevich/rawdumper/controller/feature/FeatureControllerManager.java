@@ -48,10 +48,20 @@ class FeatureControllerManager
         controllersList.add(controllerFactory.createEVController(reference));
         controllersList.add(controllerFactory.createFlashController(reference));
         controllersList.add(controllerFactory.createTouchFocusController(reference));
-        controllersList.add(controllerFactory.createIsoMeteringController(reference));
-        controllersList.add(controllerFactory.createSSMeteringController(reference));
-        controllersList.add(controllerFactory.createEvMeteringController(reference));
-        controllersList.add(controllerFactory.createCaptureButtonController(reference));
+        List<ValueMeteringController> meteringControllers = createMeteringControllers(reference);
+        controllersList.add(controllerFactory.createCaptureButtonController(reference, meteringControllers));
+    }
+
+    private List<ValueMeteringController> createMeteringControllers(ActivityReference reference)
+    {
+        List<ValueMeteringController> meteringControllers = new ArrayList<>();
+
+        meteringControllers.add(controllerFactory.createIsoMeteringController(reference));
+        meteringControllers.add(controllerFactory.createSSMeteringController(reference));
+        meteringControllers.add(controllerFactory.createEvMeteringController(reference));
+
+        controllersList.addAll(meteringControllers);
+        return meteringControllers;
     }
 
     void setupControllers(TurboCamera camera, EventDispatcher<Nothing> onCameraClose)
