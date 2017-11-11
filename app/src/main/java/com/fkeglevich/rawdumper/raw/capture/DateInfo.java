@@ -39,6 +39,10 @@ public class DateInfo
      */
     public static DateInfo createFromFilename(String filename)
     {
+        //If it doesn't have enough chars, just return a valid value
+        if (filename.length() < 19)
+            return createFromCurrentTime();
+
         int year = Integer.parseInt(filename.substring(4, 8));
         int month = Integer.parseInt(filename.substring(8, 10));
         int day = Integer.parseInt(filename.substring(10, 12));
