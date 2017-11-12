@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.io.async.function;
 
+import android.util.Log;
+
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;
@@ -31,6 +33,14 @@ public class LoadDeviceInfoFunction extends ThrowingAsyncFunction<Void, DeviceIn
     @Override
     protected DeviceInfo call(Void argument) throws MessageException
     {
-        return new DeviceInfoLoader().loadDeviceInfo();
+        try
+        {
+            return new DeviceInfoLoader().loadDeviceInfo();
+        }
+        catch (RuntimeException re)
+        {
+            Log.e("LoadDeviceInfoFunction", "RuntimeException: " + re.getMessage());
+            throw re;
+        }
     }
 }
