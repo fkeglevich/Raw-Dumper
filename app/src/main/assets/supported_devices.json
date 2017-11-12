@@ -50,9 +50,17 @@
         },
         {
             "deviceInfoFile": "t00x",
+            "deviceModel": "ASUS_T00F-D"
+        },
+        {
+            "deviceInfoFile": "t00x",
+            "deviceModel": "ASUS_T00J-D"
+        },
+        {
+            "deviceInfoFile": "t00x",
             "deviceModel": "ASUS_T00F"
         },
-		{
+        {
             "deviceInfoFile": "xt890",
             "deviceModel": "XT890"
         }
