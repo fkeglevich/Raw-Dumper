@@ -37,6 +37,8 @@ public class SensorInfo
 {
     private static final short[] DEFAULT_CFA_REPEAT_PATTERN_DIM = new short[] {2, 2};
     private static final short[] DEFAULT_BLACK_LEVEL_REPEAT_DIM = new short[] {2, 2};
+    private static final byte[]  DEFAULT_CFA_PLANE_COLOR        = new byte[]  {0, 1, 2};
+    private static final short   DEFAULT_CFA_LAYOUT             = 1;
 
     private int bitsPerPixel;
     private int storageBitsPerPixel;
@@ -74,6 +76,8 @@ public class SensorInfo
         tiffWriter.setField(TiffTag.TIFFTAG_BITSPERSAMPLE,          storageBitsPerPixel);
         tiffWriter.setField(TiffTag.TIFFTAG_CFAREPEATPATTERNDIM,    DEFAULT_CFA_REPEAT_PATTERN_DIM, false);
         tiffWriter.setField(TiffTag.TIFFTAG_CFAPATTERN,             bayerPattern.getBytePattern(), false);
+        tiffWriter.setField(TiffTag.TIFFTAG_CFAPLANECOLOR,          DEFAULT_CFA_PLANE_COLOR, true);
+        tiffWriter.setField(TiffTag.TIFFTAG_CFALAYOUT,              DEFAULT_CFA_LAYOUT);
         tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL,             new long[] { whiteLevel }, true);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVELREPEATDIM,    DEFAULT_BLACK_LEVEL_REPEAT_DIM, false);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVEL,             blackLevel, true);
