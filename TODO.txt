@@ -22,8 +22,6 @@ TODO list:
    - (DONE!) Jpeg
    - (DONE!) Raw ((DONE!)NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
    - YUV
-
- - Improve compatibility of generated DNG files for desktop apps like Darktable (only recognize uncompressed files with stripes)
  
  - (IN PROGRESS) Reduce overdraw
  
@@ -100,3 +98,4 @@ Done:
     raw pictures among different devices with different workarounds.
  - Play animation when taking pictures (it also can be the old school circular progress bar)
  - Visual feedback for touch focus/exposure region
+ - Improve compatibility of generated DNG files for desktop apps like Darktable (only recognize uncompressed files with stripes)
