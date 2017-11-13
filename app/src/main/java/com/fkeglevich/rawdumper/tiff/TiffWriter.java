@@ -62,6 +62,7 @@ public class TiffWriter
     private native int setDirectoryNative(long pointer, short directory);
 
     private native long writeRawTileNative(long pointer, int tile, byte[] data, long dataSize);
+    private native long writeRawStripNative(long pointer, int strip, byte[] data, long dataSize);
 
     private long pointer = 0;
 
@@ -222,5 +223,10 @@ public class TiffWriter
     public long writeRawTile(int tile, byte[] data, long dataSize)
     {
         return writeRawTileNative(pointer, tile, data, dataSize);
+    }
+
+    public long writeRawStrip(int strip, byte[] data, long dataSize)
+    {
+        return writeRawStripNative(pointer, strip, data, dataSize);
     }
 }

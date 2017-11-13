@@ -213,4 +213,13 @@ JNIEXPORT jlong JNICALL
         env->ReleaseByteArrayElements(data, dataArr, 0);
         return result;
     }
+
+    JNIEXPORT jlong JNICALL
+    Java_com_fkeglevich_rawdumper_tiff_TiffWriter_writeRawStripNative(JNIEnv *env, jobject instance, jlong pointer, jint strip, jbyteArray data, jlong size)
+    {
+        jbyte* dataArr = env->GetByteArrayElements(data, 0);
+        tmsize_t result = TIFFWriteRawStrip((TIFF*)pointer, (uint32)strip, (void*)dataArr, size);
+        env->ReleaseByteArrayElements(data, dataArr, 0);
+        return result;
+    }
 };

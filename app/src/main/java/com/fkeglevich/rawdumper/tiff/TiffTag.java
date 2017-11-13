@@ -104,4 +104,6 @@ public class TiffTag
 
     public static final int TIFFTAG_TILEWIDTH               = 322;
     public static final int TIFFTAG_TILELENGTH              = 323;
+
+    public static final int TIFFTAG_ROWSPERSTRIP            = 278;
 }
