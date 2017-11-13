@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.io.async.function;
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.dng.DngWriter;
 import com.fkeglevich.rawdumper.dng.writer.ScanlineImageWriter;
+import com.fkeglevich.rawdumper.dng.writer.StripImageWriter;
 import com.fkeglevich.rawdumper.io.async.IOUtil;
 import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
@@ -49,7 +50,7 @@ public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Nothing,
             try
             {
                 rawImageData = buildRawImageData(captureInfo);
-                writer.write(captureInfo, new ScanlineImageWriter(), rawImageData);
+                writer.write(captureInfo, new StripImageWriter(), rawImageData);
                 IOUtil.scanFileWithMediaScanner(captureInfo.destinationRawFilename);
                 if (captureInfo.relatedI3av4File != null)
                     captureInfo.relatedI3av4File.delete();
