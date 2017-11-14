@@ -44,8 +44,7 @@ public class DeviceInfo
     void runtimeInit(String deviceFileName)
     {
         this.deviceFileName = deviceFileName;
-        for (ExtraCameraInfo cameraInfo : getCameras())
-            cameraInfo.runtimeInit();
+        cameras = new ExtraCameraInfoInitializer().initializeCameras(cameras);
     }
 
     public ExtraCameraInfo[] getCameras()

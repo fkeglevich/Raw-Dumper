@@ -149,4 +149,9 @@ public class ExtraCameraInfo
     {
         return canBePatched;
     }
+
+    void fixId(int newId)
+    {
+        this.id = newId;
+    }
 }
