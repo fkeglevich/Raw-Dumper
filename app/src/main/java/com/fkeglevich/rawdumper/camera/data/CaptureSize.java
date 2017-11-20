@@ -26,7 +26,7 @@ import com.fkeglevich.rawdumper.util.MathUtil;
  * Created by Flávio Keglevich on 22/04/2017.
  */
 
-public class CaptureSize implements Comparable<CaptureSize>
+public class CaptureSize implements Comparable<CaptureSize>, Displayable
 {
     private final int width;
     private final int height;
@@ -102,5 +102,11 @@ public class CaptureSize implements Comparable<CaptureSize>
         int result = width;
         result = 31 * result + height;
         return result;
+    }
+
+    @Override
+    public String displayValue()
+    {
+        return getWidth() + "x" + getHeight();
     }
 }
