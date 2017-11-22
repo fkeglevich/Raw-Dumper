@@ -23,10 +23,13 @@ import android.view.View;
 
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
 import com.fkeglevich.rawdumper.ui.TouchFocusView;
 import com.fkeglevich.rawdumper.ui.UiUtil;
+import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * TODO: Add class header
@@ -93,14 +96,27 @@ public class TouchFocusController extends FeatureController
     {
         focusFeature = camera.getFocusFeature();
         if (!focusFeature.isAvailable())
+        {
             reset();
+            return;
+        }
+
+        focusFeature.getOnChanged().addListener(new EventListener<ParameterChangeEvent<FocusMode>>()
+        {
+            @Override
+            public void onEvent(ParameterChangeEvent<FocusMode> eventData)
+            {
+                if (!eventData.parameterValue.canAutoFocus())
+                    cleanFocus();
+            }
+        });
     }
 
     @Override
     protected void reset()
     {
         focusFeature = null;
-        focusView.setMeteringArea(null, TouchFocusView.FOCUS_METERING);
+        cleanFocus();
     }
 
     @Override
@@ -113,5 +129,10 @@ public class TouchFocusController extends FeatureController
     protected void enable()
     {
         enabled = true;
+    }
+
+    private void cleanFocus()
+    {
+        focusView.setMeteringArea(null, TouchFocusView.FOCUS_METERING);
     }
 }
