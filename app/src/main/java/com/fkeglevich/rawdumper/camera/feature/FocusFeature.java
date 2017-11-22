@@ -45,7 +45,10 @@ public class FocusFeature extends WritableFeature<FocusMode, List<FocusMode>> im
     @Override
     public boolean isAvailable()
     {
-        return getAvailableValues().size() > 1;
+        List<FocusMode> values = getAvailableValues();
+        boolean isUnavailable = values.size() == 1 && values.get(0).equals(FocusMode.FIXED);
+
+        return !isUnavailable;
     }
 
     @Override
