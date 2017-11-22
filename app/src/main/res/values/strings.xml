@@ -104,5 +104,12 @@
         \n
         \nThe app will try to switch to another camera now.
     </string>
+    <string name="focus_auto">AUTO</string>
+    <string name="focus_continuous">CF</string>
+    <string name="focus_macro">MACRO</string>
+    <string name="focus_infinity">∞</string>
+    <string name="focus_fixed">FIXED</string>
+    <string name="focus_edof">EDOF</string>
+    <string name="focus_manual">MANUAL</string>
 
 </resources>
