@@ -273,6 +273,15 @@
                 "name": "OV5670",
                 "rawImageSizes": [
                     {
+                        "height": 1440,
+                        "bytesPerLine": 5376,
+                        "paddedHeight": 1458,
+                        "bufferLength": 7838208,
+                        "paddedWidth": 2592,
+                        "paddedWidthBytes": 5184,
+                        "width": 2560
+                    },
+                    {
                         "height": 1920,
                         "bytesPerLine": 5376,
                         "paddedHeight": 1944,
