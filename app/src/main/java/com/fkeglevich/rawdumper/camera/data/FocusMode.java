@@ -16,6 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
+import android.support.annotation.StringRes;
+
+import com.fkeglevich.rawdumper.R;
+import com.fkeglevich.rawdumper.controller.context.ContextManager;
+
 import static android.hardware.Camera.Parameters.FOCUS_MODE_AUTO;
 import static android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE;
 import static android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO;
@@ -30,23 +35,25 @@ import static android.hardware.Camera.Parameters.FOCUS_MODE_MACRO;
  * Created by Flávio Keglevich on 25/10/17.
  */
 
-public enum FocusMode implements ParameterValue
+public enum FocusMode implements ParameterValue, Displayable
 {
-    AUTO(FOCUS_MODE_AUTO, true),
-    CONTINUOUS_PICTURE(FOCUS_MODE_CONTINUOUS_PICTURE, true),
-    CONTINUOUS_VIDEO(FOCUS_MODE_CONTINUOUS_VIDEO, true),
-    MACRO(FOCUS_MODE_MACRO, true),
-    INFINITY(FOCUS_MODE_INFINITY, false),
-    FIXED(FOCUS_MODE_FIXED, false),
-    EDOF(FOCUS_MODE_EDOF, false);
+    AUTO(FOCUS_MODE_AUTO,                               true, R.string.focus_auto),
+    CONTINUOUS_PICTURE(FOCUS_MODE_CONTINUOUS_PICTURE,   true, R.string.focus_continuous),
+    CONTINUOUS_VIDEO(FOCUS_MODE_CONTINUOUS_VIDEO,       true, R.string.focus_continuous),
+    MACRO(FOCUS_MODE_MACRO,                             true, R.string.focus_macro),
+    INFINITY(FOCUS_MODE_INFINITY,                       false, R.string.focus_infinity),
+    FIXED(FOCUS_MODE_FIXED,                             false, R.string.focus_fixed),
+    EDOF(FOCUS_MODE_EDOF,                               false, R.string.focus_edof);
 
     private final String parameterValue;
     private final boolean canAutoFocus;
+    private final int stringValueId;
 
-    FocusMode(String parameterValue, boolean canAutoFocus)
+    FocusMode(String parameterValue, boolean canAutoFocus, @StringRes int stringValueId)
     {
         this.parameterValue = parameterValue;
         this.canAutoFocus = canAutoFocus;
+        this.stringValueId = stringValueId;
     }
 
     @Override
@@ -58,5 +65,10 @@ public enum FocusMode implements ParameterValue
     public boolean canAutoFocus()
     {
         return canAutoFocus;
+    }
+
+    public String displayValue()
+    {
+        return ContextManager.getApplicationContext().getResources().getString(stringValueId);
     }
 }
