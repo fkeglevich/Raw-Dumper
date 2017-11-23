@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -25,10 +26,12 @@ import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
 
 /**
+ * ModularActivity is an activity that has modularized events and has a ActivityReference.
+ *
  * Created by Flávio Keglevich on 16/09/2017.
- * TODO: Add a class header comment!
  */
 
+@SuppressLint("Registered")
 public class ModularActivity extends AppCompatActivity
 {
     protected final ActivityReference reference = new ActivityReference();

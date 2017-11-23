@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.activity;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 
 import com.fkeglevich.rawdumper.controller.permission.PermissionRequest;
@@ -28,10 +29,15 @@ import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 import java.lang.ref.WeakReference;
 
 /**
+ * Represents a "safe" reference to an activity that can be stored and passed freely
+ * without the risk of memory leaks.
+ *
+ * It also expose the activity events using EventDispatchers.
+ *
  * Created by Flávio Keglevich on 16/09/2017.
- * TODO: Add a class header comment!
  */
 
+@SuppressWarnings("WeakerAccess")
 public class ActivityReference
 {
     private WeakReference<AppCompatActivity> actualReference;
@@ -41,9 +47,27 @@ public class ActivityReference
         return new SimpleDispatcher<>();
     }
 
+    /**
+     * Gets the actual activity. Don't store it!
+     *
+     * @return An AppCompatActivity or null, if the activity was destroyed
+     */
     public AppCompatActivity weaklyGet()
     {
         return actualReference.get();
+    }
+
+    /**
+     * Utility method for retrieving a view by its id.
+     *
+     * @param id    The view's id
+     * @param <T>   The type of the view
+     * @return      A T view object
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T findViewById(@IdRes int id)
+    {
+        return (T) weaklyGet().findViewById(id);
     }
 
     void setActualReference(AppCompatActivity activity)
