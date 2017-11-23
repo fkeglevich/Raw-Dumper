@@ -17,12 +17,19 @@
 package com.fkeglevich.rawdumper.async.function;
 
 /**
- * Represents a function that is executed asynchronously.
+ * Represents a function that will be executed asynchronously.
  *
  * Created by Flávio Keglevich on 02/08/2017.
  */
 
 public abstract class AsyncFunction<I, O>
 {
+    /**
+     * Contains the code to be executed asynchronously.
+     * Can only be called by a proper AsyncFunctionContext.
+     *
+     * @param argument  The argument (input) of the function
+     * @return          The result (output) of the function
+     */
     abstract protected O call(I argument);
 }

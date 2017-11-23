@@ -17,12 +17,20 @@
 package com.fkeglevich.rawdumper.async.function;
 
 /**
- * Represents a function that is executed asynchronously and can throw an exception.
+ * Represents a function that will be executed asynchronously and can throw an exception.
  *
  * Created by Flávio Keglevich on 06/08/2017.
  */
 
 public abstract class ThrowingAsyncFunction<I, O, E extends Exception>
 {
+    /**
+     * Contains the code to be executed asynchronously.
+     * Can only be called by a proper AsyncFunctionContext.
+     *
+     * @param argument  The argument (input) of the function
+     * @return          The result (output) of the function
+     * @throws E        An exception that can be raised by the function
+     */
     abstract protected O call(I argument) throws E;
 }
