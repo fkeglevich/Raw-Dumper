@@ -17,7 +17,9 @@
 package com.fkeglevich.rawdumper.camera.setup;
 
 import android.graphics.SurfaceTexture;
-import android.view.TextureView;
+
+import com.fkeglevich.rawdumper.camera.data.SurfaceTextureSource;
+import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * TODO: Add class header
@@ -30,34 +32,15 @@ public class SurfaceTextureStage implements SetupStage
     @Override
     public void executeStage(final SetupStageLink setupBase)
     {
-        TextureView textureView = setupBase.getTextureView();
-        if (textureView.getSurfaceTexture() != null)
-            endStage(textureView.getSurfaceTexture(), setupBase);
-        else
+        SurfaceTextureSource textureSource = setupBase.getSurfaceTextureSource();
+        textureSource.requestSurfaceTexture(new EventListener<SurfaceTexture>()
         {
-            textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener()
+            @Override
+            public void onEvent(SurfaceTexture surface)
             {
-                @Override
-                public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
-                {
-                    endStage(surface, setupBase);
-                    setupBase.getTextureView().setSurfaceTextureListener(null);
-                }
-
-                @Override
-                public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {    }
-
-                @Override
-                public boolean onSurfaceTextureDestroyed(SurfaceTexture surface)
-                {
-                    return true;
-                }
-
-                @Override
-                public void onSurfaceTextureUpdated(SurfaceTexture surface) {   }
-            });
-        }
-
+                endStage(surface, setupBase);
+            }
+        });
     }
 
     private void endStage(SurfaceTexture surfaceTexture, SetupStageLink setupBase)

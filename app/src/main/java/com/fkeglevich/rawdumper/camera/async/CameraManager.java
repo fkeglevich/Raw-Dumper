@@ -16,11 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.async;
 
-import android.view.TextureView;
-
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.async.impl.CameraSelectorImpl;
+import com.fkeglevich.rawdumper.camera.data.SurfaceTextureSource;
 import com.fkeglevich.rawdumper.camera.setup.CameraSetup;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
@@ -61,7 +60,7 @@ public class CameraManager
 
     private State currentState = State.IDLE;
 
-    public CameraManager(ActivityReference activityReference, TextureView textureView)
+    public CameraManager(ActivityReference activityReference, SurfaceTextureSource textureSource)
     {
         orientationModule = new OrientationModule(activityReference);
         permissionModule = DebugFlags.isDisableMandatoryRoot()
@@ -69,7 +68,7 @@ public class CameraManager
                             : new MandatoryRootModule(activityReference);
 
         cameraSelector = new CameraSelectorImpl();
-        cameraSetup = new CameraSetup(textureView,
+        cameraSetup = new CameraSetup(textureSource,
                 activityReference, permissionModule.getPermissionManager(), cameraSelector);
 
         onCameraOpened = new SimpleDispatcher<>();

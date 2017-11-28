@@ -17,12 +17,12 @@
 package com.fkeglevich.rawdumper.camera.setup;
 
 import android.graphics.SurfaceTexture;
-import android.view.TextureView;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.SurfaceTextureSource;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.util.Assert;
@@ -39,19 +39,19 @@ class SetupStageLinkImpl implements SetupStageLink
     private DeviceInfo deviceInfo           = null;
     private SurfaceTexture surfaceTexture   = null;
 
-    private final TextureView textureView;
+    private final SurfaceTextureSource textureSource;
     private final ActivityReference activityReference;
     private final MandatoryPermissionManager permissionManager;
     private final CameraSelector cameraSelector;
     private final CameraSetup setupReference;
 
-    SetupStageLinkImpl(TextureView textureView,
+    SetupStageLinkImpl(SurfaceTextureSource textureSource,
                        ActivityReference activityReference,
                        MandatoryPermissionManager permissionManager,
                        CameraSelector cameraSelector,
                        CameraSetup setupReference)
     {
-        this.textureView = textureView;
+        this.textureSource = textureSource;
         this.activityReference = activityReference;
         this.permissionManager = permissionManager;
         this.cameraSelector = cameraSelector;
@@ -78,9 +78,9 @@ class SetupStageLinkImpl implements SetupStageLink
     }
 
     @Override
-    public TextureView getTextureView()
+    public SurfaceTextureSource getSurfaceTextureSource()
     {
-        return textureView;
+        return textureSource;
     }
 
     @Override

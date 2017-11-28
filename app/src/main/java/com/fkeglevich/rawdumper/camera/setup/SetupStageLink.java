@@ -17,12 +17,12 @@
 package com.fkeglevich.rawdumper.camera.setup;
 
 import android.graphics.SurfaceTexture;
-import android.view.TextureView;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.SurfaceTextureSource;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -39,7 +39,7 @@ interface SetupStageLink
     DeviceInfo getDeviceInfo();
     void setSurfaceTexture(SurfaceTexture surfaceTexture);
 
-    TextureView getTextureView();
+    SurfaceTextureSource getSurfaceTextureSource();
     ActivityReference getActivity();
     MandatoryPermissionManager getPermissionManager();
     CameraSelector getCameraSelector();
