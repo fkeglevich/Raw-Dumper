@@ -32,13 +32,13 @@ import java.nio.charset.Charset;
 
 public class AssetUtil
 {
-    public static byte[] getAssetBytes(String fileName) throws IOException
+    public synchronized static byte[] getAssetBytes(String fileName) throws IOException
     {
         Context context = ContextManager.getApplicationContext();
         return readInputStream(context.getAssets().open(fileName, AssetManager.ACCESS_BUFFER));
     }
 
-    public static String getAssetAsString(String fileName) throws IOException
+    public synchronized static String getAssetAsString(String fileName) throws IOException
     {
         return new String(getAssetBytes(fileName), Charset.defaultCharset());
     }
