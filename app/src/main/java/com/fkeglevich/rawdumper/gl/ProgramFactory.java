@@ -17,6 +17,9 @@
 package com.fkeglevich.rawdumper.gl;
 
 import com.fkeglevich.rawdumper.gl.exception.GLException;
+import com.fkeglevich.rawdumper.util.AssetUtil;
+
+import java.io.IOException;
 
 /**
  * A factory class for creating OpenGL ES programs
@@ -26,7 +29,12 @@ import com.fkeglevich.rawdumper.gl.exception.GLException;
 
 public class ProgramFactory
 {
-    public Program create(String vertexShaderCode, String fragmentShaderCode) throws GLException
+    public static Program createFromAssets(String vertexShaderAsset, String fragmentShaderAsset) throws GLException, IOException
+    {
+        return create(AssetUtil.getAssetAsString(vertexShaderAsset), AssetUtil.getAssetAsString(fragmentShaderAsset));
+    }
+
+    public static Program create(String vertexShaderCode, String fragmentShaderCode) throws GLException
     {
         Shader vertexShader = Shader.create(ShaderType.VERTEX);
         vertexShader.compile(vertexShaderCode);
@@ -37,7 +45,7 @@ public class ProgramFactory
         return create(vertexShader, fragmentShader);
     }
 
-    public Program create(Shader vertexShader, Shader fragmentShader) throws GLException
+    public static Program create(Shader vertexShader, Shader fragmentShader) throws GLException
     {
         Program program = Program.create();
         program.attachShader(vertexShader);
