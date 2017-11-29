@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.gl;
 
 import android.opengl.GLES20;
 
+import com.fkeglevich.rawdumper.BuildConfig;
 import com.fkeglevich.rawdumper.gl.exception.GLException;
 
 /**
@@ -40,7 +41,7 @@ public class Shader
         throw new GLException("Error creating shader!");
     }
 
-    private Shader(int handle, ShaderType type)
+    protected Shader(int handle, ShaderType type)
     {
         this.handle = handle;
         this.type = type;
@@ -56,14 +57,17 @@ public class Shader
         GLES20.glShaderSource(getHandle(), code);
         GLES20.glCompileShader(getHandle());
 
-        int[] compileStatus = new int[1];
-        GLES20.glGetShaderiv(getHandle(), GLES20.GL_COMPILE_STATUS, compileStatus, 0);
-
-        if (compileStatus[0] == GLES20.GL_FALSE)
+        if (BuildConfig.DEBUG)
         {
-            String message = GLES20.glGetShaderInfoLog(getHandle());
-            delete();
-            throw new GLException(message);
+            int[] compileStatus = new int[1];
+            GLES20.glGetShaderiv(getHandle(), GLES20.GL_COMPILE_STATUS, compileStatus, 0);
+
+            if (compileStatus[0] == GLES20.GL_FALSE)
+            {
+                String message = GLES20.glGetShaderInfoLog(getHandle());
+                delete();
+                throw new GLException(message);
+            }
         }
     }
 
