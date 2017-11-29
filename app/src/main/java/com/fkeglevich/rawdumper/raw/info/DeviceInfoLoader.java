@@ -60,11 +60,12 @@ public class DeviceInfoLoader
         }
         catch (IOException ioe)
         {
+            Log.e("DeviceInfoLoader", "IOException: " + ioe.getMessage());
             throw new DeviceLoadException();
         }
         catch (IllegalArgumentException iae)
         {
-            Log.i("ueh", iae.getMessage());
+            Log.e("DeviceInfoLoader", "IllegalArgumentException: " + iae.getMessage());
             throw new RuntimeException();
         }
     }
