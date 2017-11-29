@@ -58,5 +58,14 @@ dependencies {
     compile 'com.lantouzi.wheelview:library:1.1.2'
     compile 'com.drewnoakes:metadata-extractor:2.9.1'
     compile 'com.squareup.moshi:moshi:1.5.0'
+
+    implementation("com.mikepenz:materialdrawer:6.0.2@aar") {
+        transitive = true
     }
+
+    //required support lib modules
+    implementation "com.android.support:appcompat-v7:25.4.0"
+    implementation "com.android.support:recyclerview-v7:25.4.0"
+    implementation "com.android.support:support-annotations:27.0.1"
+    implementation "com.android.support:design:25.4.0"
 }
