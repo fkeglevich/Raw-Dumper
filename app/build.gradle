@@ -58,7 +58,5 @@ dependencies {
     compile 'com.lantouzi.wheelview:library:1.1.2'
     compile 'com.drewnoakes:metadata-extractor:2.9.1'
     compile 'com.squareup.moshi:moshi:1.5.0'
-    compile ('com.github.ozodrukh:CircularReveal:1.1.1@aar') {
-        transitive = true;
     }
 }
