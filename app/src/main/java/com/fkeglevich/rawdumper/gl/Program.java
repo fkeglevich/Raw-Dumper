@@ -18,7 +18,9 @@ package com.fkeglevich.rawdumper.gl;
 
 import android.opengl.GLES20;
 
+import com.fkeglevich.rawdumper.BuildConfig;
 import com.fkeglevich.rawdumper.gl.exception.GLException;
+import com.fkeglevich.rawdumper.gl.exception.GLUncheckedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +47,7 @@ public class Program
         throw new GLException("Error creating program!");
     }
 
-    private Program(int handle)
+    protected Program(int handle)
     {
         this.handle = handle;
     }
@@ -64,14 +66,17 @@ public class Program
     {
         GLES20.glLinkProgram(getHandle());
 
-        final int[] linkStatus = new int[1];
-        GLES20.glGetProgramiv(getHandle(), GLES20.GL_LINK_STATUS, linkStatus, 0);
-
-        if (linkStatus[0] == GLES20.GL_FALSE)
+        if (BuildConfig.DEBUG)
         {
-            String message = GLES20.glGetProgramInfoLog(getHandle());
-            delete();
-            throw new GLException(message);
+            final int[] linkStatus = new int[1];
+            GLES20.glGetProgramiv(getHandle(), GLES20.GL_LINK_STATUS, linkStatus, 0);
+
+            if (linkStatus[0] == GLES20.GL_FALSE)
+            {
+                String message = GLES20.glGetProgramInfoLog(getHandle());
+                delete();
+                throw new GLException(message);
+            }
         }
     }
 
@@ -90,27 +95,23 @@ public class Program
         return handle;
     }
 
-    public int getUniformHandle(String name) throws GLException
+    public int getUniformHandle(String name) throws GLUncheckedException
     {
         if (uniformCache.containsKey(name))
             return uniformCache.get(name);
 
         int result = GLES20.glGetUniformLocation(handle, name);
-        if (result == -1)
-            throw new GLException("Uniform not found!");
 
         uniformCache.put(name, result);
         return result;
     }
 
-    public int getAttribHandle(String name) throws GLException
+    public int getAttribHandle(String name) throws GLUncheckedException
     {
         if (attribCache.containsKey(name))
             return attribCache.get(name);
 
         int result = GLES20.glGetAttribLocation(handle, name);
-        if (result == -1)
-            throw new GLException("Attribute not found!");
 
         attribCache.put(name, result);
         return result;
