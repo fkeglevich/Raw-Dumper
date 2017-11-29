@@ -18,15 +18,20 @@ package com.fkeglevich.rawdumper.camera.data;
 
 import android.graphics.SurfaceTexture;
 
+import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
- * Represents an object that can create surface textures and send them asynchronously
+ * Represents the preview of the camera
  *
  * Created by Flávio Keglevich on 27/11/17.
  */
 
-public interface SurfaceTextureSource
+public interface CameraPreview
 {
     void requestSurfaceTexture(EventListener<SurfaceTexture> surfaceTextureListener);
+
+    void setupCamera(TurboCamera turboCamera);
+
+    void pausePreview();
 }

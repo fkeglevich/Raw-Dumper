@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.camera.setup;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import com.fkeglevich.rawdumper.camera.data.SurfaceTextureSource;
+import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
 import com.fkeglevich.rawdumper.util.Assert;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
@@ -50,7 +50,7 @@ public class CameraSetup
     public final EventDispatcher<MessageException> onException = new SimpleDispatcher<>();
     public final EventDispatcher<TurboCamera> onComplete = new SimpleDispatcher<>();
 
-    public CameraSetup(SurfaceTextureSource textureSource, ActivityReference activityReference,
+    public CameraSetup(CameraPreview textureSource, ActivityReference activityReference,
                        MandatoryPermissionManager permissionManager, CameraSelector cameraSelector)
     {
         this.setupStageLink = new SetupStageLinkImpl(textureSource, activityReference, permissionManager, cameraSelector, this);

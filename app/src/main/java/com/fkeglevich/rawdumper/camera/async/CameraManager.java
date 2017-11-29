@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.camera.async;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.async.impl.CameraSelectorImpl;
-import com.fkeglevich.rawdumper.camera.data.SurfaceTextureSource;
+import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.setup.CameraSetup;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
@@ -60,7 +60,7 @@ public class CameraManager
 
     private State currentState = State.IDLE;
 
-    public CameraManager(ActivityReference activityReference, SurfaceTextureSource textureSource)
+    public CameraManager(ActivityReference activityReference, CameraPreview textureSource)
     {
         orientationModule = new OrientationModule(activityReference);
         permissionModule = DebugFlags.isDisableMandatoryRoot()

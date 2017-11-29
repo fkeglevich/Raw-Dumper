@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.camera.setup;
 
 import android.graphics.SurfaceTexture;
 
-import com.fkeglevich.rawdumper.camera.data.SurfaceTextureSource;
+import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
@@ -32,7 +32,7 @@ public class SurfaceTextureStage implements SetupStage
     @Override
     public void executeStage(final SetupStageLink setupBase)
     {
-        SurfaceTextureSource textureSource = setupBase.getSurfaceTextureSource();
+        CameraPreview textureSource = setupBase.getSurfaceTextureSource();
         textureSource.requestSurfaceTexture(new EventListener<SurfaceTexture>()
         {
             @Override

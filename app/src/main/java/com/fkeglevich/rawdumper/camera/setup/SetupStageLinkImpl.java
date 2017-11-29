@@ -22,7 +22,7 @@ import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import com.fkeglevich.rawdumper.camera.data.SurfaceTextureSource;
+import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.util.Assert;
@@ -39,13 +39,13 @@ class SetupStageLinkImpl implements SetupStageLink
     private DeviceInfo deviceInfo           = null;
     private SurfaceTexture surfaceTexture   = null;
 
-    private final SurfaceTextureSource textureSource;
+    private final CameraPreview textureSource;
     private final ActivityReference activityReference;
     private final MandatoryPermissionManager permissionManager;
     private final CameraSelector cameraSelector;
     private final CameraSetup setupReference;
 
-    SetupStageLinkImpl(SurfaceTextureSource textureSource,
+    SetupStageLinkImpl(CameraPreview textureSource,
                        ActivityReference activityReference,
                        MandatoryPermissionManager permissionManager,
                        CameraSelector cameraSelector,
@@ -78,7 +78,7 @@ class SetupStageLinkImpl implements SetupStageLink
     }
 
     @Override
-    public SurfaceTextureSource getSurfaceTextureSource()
+    public CameraPreview getSurfaceTextureSource()
     {
         return textureSource;
     }
