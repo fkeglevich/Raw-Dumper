@@ -20,8 +20,8 @@ import android.view.View;
 
 import com.fkeglevich.rawdumper.camera.async.CameraManager;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
-import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 
 /**
  * TODO: Add class header
@@ -34,14 +34,14 @@ public class SwitchButtonController extends FeatureController
     private final ButtonDisabledStateController disabledStateController;
     private final CameraManager cameraManager;
 
-    public SwitchButtonController(View switchButton, final CameraManager cameraManager, final CameraPreviewTexture previewTexture)
+    public SwitchButtonController(View switchButton, final CameraManager cameraManager, final CameraPreview cameraPreview)
     {
         switchButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                previewTexture.startCloseCameraAnimation();
+                //cameraPreview.startCloseCameraAnimation();
                 cameraManager.switchCamera();
             }
         });

@@ -23,9 +23,9 @@ import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.CameraManager;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.exception.CameraPatchRequiredException;
 import com.fkeglevich.rawdumper.camera.exception.RawIsUnavailableException;
-import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 import com.fkeglevich.rawdumper.ui.dialog.FatalErrorDialog;
 import com.fkeglevich.rawdumper.ui.dialog.OkDialog;
@@ -47,14 +47,14 @@ public class CameraLifetimeController
         public void onEvent(Nothing eventData)
         {
             cameraManager.closeCamera();
-            textureView.setAlpha(0);
+            cameraPreview.pausePreview();
         }
     };
 
     private final ActivityReference reference;
     private final FullscreenManager fullscreenManager;
     private final FeatureControllerManager featureControllerManager;
-    private final CameraPreviewTexture textureView;
+    private final CameraPreview cameraPreview;
     private final CameraManager cameraManager;
     private final SwitchButtonController switchButtonController;
 
@@ -65,8 +65,8 @@ public class CameraLifetimeController
         this.fullscreenManager          = new FullscreenManager(reference);
         this.featureControllerManager   = new FeatureControllerManager();
         featureControllerManager.createControllers(reference);
-        this.textureView                = getTextureView(reference);
-        this.cameraManager              = new CameraManager(reference, textureView);
+        this.cameraPreview = getTextureView(reference);
+        this.cameraManager              = new CameraManager(reference, cameraPreview);
         setupCameraManager();
         this.switchButtonController     = createSwitchButtonController();
     }
@@ -121,22 +121,21 @@ public class CameraLifetimeController
         reference.onPause.removeListener(pauseListener);
         reference.onPause.addListener(pauseListener);
 
-        textureView.setupPreview(turboCamera);
-        textureView.startOpenCameraAnimation();
+        cameraPreview.setupCamera(turboCamera);
 
         featureControllerManager.setupControllers(turboCamera, cameraManager.onCameraClosed);
         switchButtonController.setupFeature(turboCamera, cameraManager.onCameraClosed);
     }
 
-    private CameraPreviewTexture getTextureView(ActivityReference reference)
+    private CameraPreview getTextureView(ActivityReference reference)
     {
-        return (CameraPreviewTexture) reference.weaklyGet().findViewById(R.id.textureView);
+        return (CameraPreview) reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
     }
 
     private SwitchButtonController createSwitchButtonController()
     {
         View switchButton = reference.weaklyGet().findViewById(R.id.camSwitchButton);
-        CameraPreviewTexture textureView = (CameraPreviewTexture) reference.weaklyGet().findViewById(R.id.textureView);
+        CameraPreview textureView = (CameraPreview) reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
         return new SwitchButtonController(switchButton, cameraManager, textureView);
     }
 }

@@ -25,8 +25,8 @@ import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
-import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.util.List;
@@ -43,19 +43,19 @@ public class TakePictureController extends FeatureController
     private final ButtonDisabledStateController buttonDisabledStateController;
     private final Toast toast;
     private final View pictureLayer;
-    private final CameraPreviewTexture previewTexture;
+    private final CameraPreview cameraPreview;
     private final List<ValueMeteringController> meteringControllers;
     private final View progressBar;
 
     @SuppressLint("ShowToast")
-    TakePictureController(View captureButton, View pictureLayer, CameraPreviewTexture previewTexture,
+    TakePictureController(View captureButton, View pictureLayer, CameraPreview cameraPreview,
                           List<ValueMeteringController> meteringControllers, View progressBar)
     {
         this.captureButton = captureButton;
         this.buttonDisabledStateController = new ButtonDisabledStateController(captureButton, false);
         this.toast = Toast.makeText(captureButton.getContext(), "", Toast.LENGTH_LONG);
         this.pictureLayer = pictureLayer;
-        this.previewTexture = previewTexture;
+        this.cameraPreview = cameraPreview;
         this.meteringControllers = meteringControllers;
         this.progressBar = progressBar;
     }
@@ -102,7 +102,7 @@ public class TakePictureController extends FeatureController
     {
         for (ValueMeteringController meteringController : meteringControllers)
             meteringController.disable();
-        previewTexture.pauseUpdating();
+        //cameraPreview.pauseUpdating();
         pictureLayer.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         captureButton.setAlpha(0);
@@ -113,7 +113,7 @@ public class TakePictureController extends FeatureController
         captureButton.setAlpha(1f);
         progressBar.setVisibility(View.INVISIBLE);
         pictureLayer.setVisibility(View.INVISIBLE);
-        previewTexture.resumeUpdating();
+        //cameraPreview.resumeUpdating();
         for (ValueMeteringController meteringController : meteringControllers)
             meteringController.enable();
     }

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
@@ -34,7 +35,6 @@ import com.fkeglevich.rawdumper.controller.adapter.ButtonController;
 import com.fkeglevich.rawdumper.controller.adapter.DismissibleManagerAdapter;
 import com.fkeglevich.rawdumper.controller.adapter.ToastNotificationController;
 import com.fkeglevich.rawdumper.controller.adapter.WheelViewAdapter;
-import com.fkeglevich.rawdumper.ui.CameraPreviewTexture;
 import com.fkeglevich.rawdumper.ui.TouchFocusView;
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.lantouzi.wheelview.WheelView;
@@ -115,9 +115,9 @@ public class FeatureControllerFactory
 
     TouchFocusController createTouchFocusController(ActivityReference reference)
     {
-        View textureView = reference.weaklyGet().findViewById(R.id.textureView);
+        View cameraSurfaceView = reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
         TouchFocusView focusView = (TouchFocusView) reference.weaklyGet().findViewById(R.id.focusView);
-        return new TouchFocusController(textureView, focusView);
+        return new TouchFocusController(cameraSurfaceView, focusView);
     }
 
     ValueMeteringController<Iso> createIsoMeteringController(ActivityReference reference)
@@ -177,13 +177,26 @@ public class FeatureControllerFactory
         };
     }
 
+    FocusMeteringController createFocusMeteringController(ActivityReference reference)
+    {
+        TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.focusText);
+        return new FocusMeteringController(textView);
+    }
+
     TakePictureController createCaptureButtonController(ActivityReference reference, List<ValueMeteringController> meteringControllers)
     {
         View captureButton = reference.weaklyGet().findViewById(R.id.captureButton);
         View pictureLayer = reference.weaklyGet().findViewById(R.id.captureLayer);
         View progressBar = reference.weaklyGet().findViewById(R.id.progressBar);
-        CameraPreviewTexture previewTexture = (CameraPreviewTexture) reference.weaklyGet().findViewById(R.id.textureView);
-        return new TakePictureController(captureButton, pictureLayer, previewTexture, meteringControllers, progressBar);
+        CameraPreview cameraPreview = (CameraPreview) reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
+        return new TakePictureController(captureButton, pictureLayer, cameraPreview, meteringControllers, progressBar);
+    }
+
+    FocusController createFocusController(ActivityReference reference)
+    {
+        FocusController result = new FocusController(reference, dismissibleManager);
+        dismissibleManager.addDismissible(result);
+        return result;
     }
 
     private ButtonController createButtonController(ActivityReference reference,
