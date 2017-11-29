@@ -19,6 +19,10 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.os.Build;
 import android.util.Log;
 
+import com.fkeglevich.rawdumper.raw.data.BayerPattern;
+import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
+import com.fkeglevich.rawdumper.raw.data.ExifFlash;
+import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.util.AssetUtil;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -40,6 +44,11 @@ public class DeviceInfoLoader
 
     public DeviceInfoLoader()
     {
+        CalibrationIlluminant.values();
+        BayerPattern.values();
+        ExifFlash.values();
+        ImageOrientation.values();
+
         moshi = new Moshi.Builder().build();
     }
 
