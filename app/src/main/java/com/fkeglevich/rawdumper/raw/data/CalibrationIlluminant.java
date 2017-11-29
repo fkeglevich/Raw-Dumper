@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.data;
 
+import android.support.annotation.Keep;
+
 /**
  * A simple enum for listing all supported calibration illuminants.
  * They're used in the CalibrationIlluminant1 and CalibrationIlluminant2 DNG tags and for the
@@ -24,6 +26,7 @@ package com.fkeglevich.rawdumper.raw.data;
  * Created by Flávio Keglevich on 16/04/2017.
  */
 
+@Keep
 public enum CalibrationIlluminant
 {
     UNKNOWN(0,                  "Unknown"),

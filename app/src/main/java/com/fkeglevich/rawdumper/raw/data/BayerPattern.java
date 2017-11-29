@@ -16,12 +16,15 @@
 
 package com.fkeglevich.rawdumper.raw.data;
 
+import android.support.annotation.Keep;
+
 /**
  * A simple enum for listing all supported sensor Bayer patterns.
  *
  * Created by Flávio Keglevich on 25/12/2016.
  */
 
+@Keep
 public enum BayerPattern
 {
     /*

@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.data;
 
+import android.support.annotation.Keep;
+
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 
 /**
@@ -24,6 +26,7 @@ import com.fkeglevich.rawdumper.tiff.TiffTag;
  * Created by Flávio Keglevich on 16/04/2017.
  */
 
+@Keep
 public enum ImageOrientation
 {
     TOPLEFT(TiffTag.ORIENTATION_TOPLEFT,    "Top left"),

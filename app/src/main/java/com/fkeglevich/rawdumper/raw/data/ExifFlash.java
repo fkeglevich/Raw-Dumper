@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.data;
 
+import android.support.annotation.Keep;
+
 import com.drew.metadata.Directory;
 import com.drew.metadata.MetadataException;
 import com.drew.metadata.exif.ExifIFD0Directory;
@@ -26,6 +28,7 @@ import com.drew.metadata.exif.ExifIFD0Directory;
  * Created by Flávio Keglevich on 27/05/2017.
  */
 
+@Keep
 public enum ExifFlash
 {
     DID_NOT_FIRE((short)0),
