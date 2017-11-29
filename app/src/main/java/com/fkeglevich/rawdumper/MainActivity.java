@@ -32,6 +32,7 @@ import com.fkeglevich.rawdumper.ui.ModesInterface;
 public class MainActivity extends ModularActivity
 {
     private ModesInterface modesInterface;
+    //private DrawerController drawerController;
     private CameraLifetimeController cameraLifetimeController;
 
     protected void onCreate(Bundle savedInstanceState)
@@ -40,10 +41,12 @@ public class MainActivity extends ModularActivity
         getWindow().setBackgroundDrawable(null);
         setContentView(R.layout.activity_main);
         modesInterface = new ModesInterface(reference);
+
+        //drawerController = new DrawerController(reference);
         cameraLifetimeController = new CameraLifetimeController(reference);
 
-        disable(findViewById(R.id.focusBt));
-        disable(findViewById(R.id.focusText));
+        //disable(findViewById(R.id.focusBt));
+        //disable(findViewById(R.id.focusText));
         disable(findViewById(R.id.wbBt));
         disable(findViewById(R.id.wbText));
     }
