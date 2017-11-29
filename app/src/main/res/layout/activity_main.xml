@@ -6,40 +6,25 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
     tools:context="com.fkeglevich.rawdumper.MainActivity">
 
-    <io.codetail.widget.RevealFrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.fkeglevich.rawdumper.gl.camera.CameraSurfaceView
+        android:id="@+id/cameraSurfaceView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-        <ImageView
-            android:id="@+id/extra_background"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            app:srcCompat="@drawable/extra_background"/>
+    <View
+        android:id="@+id/captureLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="invisible"
+        android:background="#00CCCCCC"/>
 
-        <com.fkeglevich.rawdumper.ui.CameraPreviewTexture
-            android:id="@+id/textureView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-	<View
-            android:id="@+id/captureLayer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-	    android:clickable="true"
-	    android:visibility="invisible"
-            android:background="#00CCCCCC"/>
-
-	<com.fkeglevich.rawdumper.ui.TouchFocusView
-	    android:id="@+id/focusView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </io.codetail.widget.RevealFrameLayout>
+    <com.fkeglevich.rawdumper.ui.TouchFocusView
+        android:id="@+id/focusView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <ImageButton
         android:id="@+id/captureButton"
@@ -100,14 +85,14 @@
 	    android:clipChildren="false"
 	    android:clipToPadding="false"
         android:visibility="visible"
+        android:showDividers="middle"
+        android:divider="@drawable/controls_divider"
         android:id="@+id/linearLayout2">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/manual_controls_max_width"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginStart="@dimen/manual_controls_spacing"
-            android:layout_marginEnd="@dimen/manual_controls_spacing"
             android:orientation="vertical">
 
             <Button
@@ -129,10 +114,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/manual_controls_max_width"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/manual_controls_spacing"
             android:orientation="vertical">
 
             <ImageButton
@@ -155,10 +139,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/manual_controls_max_width"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/manual_controls_spacing"
             android:orientation="vertical">
 
             <Button
@@ -180,10 +163,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/manual_controls_max_width"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/manual_controls_spacing"
             android:orientation="vertical">
 
             <ImageButton
@@ -206,10 +188,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/manual_controls_max_width"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/manual_controls_spacing"
             android:orientation="vertical">
 
             <Button
@@ -238,6 +219,7 @@
         android:background="@color/adjustBarBackground"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
+        android:clickable="true"
         android:layout_above="@+id/linearLayout2">
 
         <view
@@ -255,6 +237,7 @@
         android:background="@color/adjustBarBackground"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
+        android:clickable="true"
         android:layout_above="@+id/linearLayout2">
 
 	<view
@@ -264,6 +247,122 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/linearLayout2" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/focusChooser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/adjustBarBackground"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:visibility="visible"
+        android:clickable="true"
+        android:layout_above="@+id/linearLayout2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/focus_divider"
+            android:gravity="center"
+            android:showDividers="middle">
+
+            <Button
+                android:id="@+id/autoFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:text="AF"/>
+
+            <Button
+                android:id="@+id/continuousFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:text="CF"/>
+
+            <ImageButton
+                android:id="@+id/macroFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:padding="8dp"
+                app:srcCompat="@drawable/ic_local_florist_black_24dp"/>
+
+            <Button
+                android:id="@+id/infinityFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:text="∞"/>
+
+            <Button
+                android:id="@+id/fixedFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:text="f"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/edofFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:text="ED"/>
+
+            <Button
+                android:id="@+id/manualFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:text="MF"
+                android:visibility="visible"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/manualFocusChooser"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/manualFocusBackBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginEnd="13dp"
+                android:background="@drawable/round_button"
+                android:padding="8dp"
+                app:srcCompat="@drawable/ic_arrow_back_black_24dp"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_local_florist_white_24dp"/>
+
+            <SeekBar
+                android:id="@+id/manualFocusBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="50"
+                android:layout_weight="1"
+                android:progressDrawable="@drawable/seek_bar_background"/>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="13dp"
+                app:srcCompat="@drawable/ic_landscape_white_24dp"/>
+
+        </LinearLayout>
+
     </FrameLayout>
 
     <FrameLayout
