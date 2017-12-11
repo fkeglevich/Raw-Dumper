@@ -136,8 +136,16 @@ public class ExposureParameterFactory
             @Override
             public Nullable<ShutterSpeed> decode(String value)
             {
-                int numeric = Integer.parseInt(value);
-                return Nullable.of(numeric == 0 ? null : ShutterSpeed.decodeIntegerExposureTime(numeric));
+                if (value.contains("."))
+                {
+                    double numeric = Double.parseDouble(value);
+                    return Nullable.of(numeric < 0.00001 ? null : ShutterSpeed.create(numeric));
+                }
+                else
+                {
+                    int numeric = Integer.parseInt(value);
+                    return Nullable.of(numeric == 0 ? null : ShutterSpeed.decodeIntegerExposureTime(numeric));
+                }
             }
         });
     }
