@@ -17,6 +17,8 @@
 package com.fkeglevich.rawdumper.gl.camera;
 
 import android.graphics.SurfaceTexture;
+import android.opengl.GLES11Ext;
+import android.opengl.GLES20;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -47,6 +49,17 @@ public class SurfaceTextureManager
 
         surfaceTexture = new SurfaceTexture(texture.getHandle());
         dispatchSurfaceTextureAvailable();
+    }
+
+    void activateSurfaceTexture()
+    {
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, texture.getHandle());
+    }
+
+    void updateTexImage()
+    {
+        surfaceTexture.updateTexImage();
     }
 
     SurfaceTexture getSurfaceTexture()
