@@ -1,13 +1,9 @@
-precision mediump float;
+uniform mediump mat4 surfaceMatrix;
+uniform mediump vec2 previewScale;
 
-uniform mat4 surfaceMatrix;
+attribute mediump vec2 vertexPosition;
 
-uniform vec2 surfaceSize;
-uniform vec2 previewScale;
-
-attribute vec2 vertexPosition;
-
-varying vec2 textureCoord;
+varying mediump vec2 textureCoord;
 
 void main()
 {

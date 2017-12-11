@@ -1,10 +1,10 @@
 #extension GL_OES_EGL_image_external : require
 
-precision lowp float;
+precision mediump float;
 
-uniform samplerExternalOES texture;
+uniform mediump samplerExternalOES texture;
 
-varying vec2 textureCoord;
+varying mediump vec2 textureCoord;
 
 void main()
 {
