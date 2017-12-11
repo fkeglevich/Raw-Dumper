@@ -52,7 +52,8 @@ class ProgramData
 
     void updatePreviewScale()
     {
-        previewScale[1] =  (previewHeight*1.0f / previewWidth);
+        double matchScale = ((double) surfaceSize[1]) / previewWidth;
+        previewScale[1] = (float)(surfaceSize[0] / (previewHeight * matchScale));
     }
 
     void writeData(PreviewProgram program)
