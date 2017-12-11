@@ -17,12 +17,10 @@
 package com.fkeglevich.rawdumper.camera.action;
 
 /**
- * TODO: Add class header
- * <p>
- * Created by Flávio Keglevich on 28/10/17.
+ * Created by flavio on 11/12/17.
  */
 
-public interface CameraActions extends AutoFocusAction, PreviewActions, PictureModeAction,
-        PictureFormatAction, TakePictureAction, DumpParametersAction
+public interface DumpParametersAction
 {
+    public String dumpParameters();
 }

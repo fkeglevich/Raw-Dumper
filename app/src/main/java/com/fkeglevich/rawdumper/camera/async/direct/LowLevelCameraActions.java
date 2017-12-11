@@ -173,6 +173,15 @@ public class LowLevelCameraActions implements CameraActions
         }
     }
 
+    @Override
+    public String dumpParameters()
+    {
+        synchronized (lock)
+        {
+            return getCamera().getParameters().flatten();
+        }
+    }
+
     private Camera getCamera()
     {
         return cameraExtension.get().getCameraDevice();
