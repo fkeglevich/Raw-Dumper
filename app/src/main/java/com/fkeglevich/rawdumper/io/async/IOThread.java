@@ -32,15 +32,11 @@ public class IOThread
 
     private static IOThread instance = null;
 
-    public static IOThread getInstance()
-    {
-        if (instance == null) instance = new IOThread();
-        return instance;
-    }
-
     public static IOAccess getIOAccess()
     {
-        return getInstance().ioAccess;
+        if (instance == null) instance = new IOThread();
+
+        return instance.ioAccess;
     }
 
     private IOAccess ioAccess;
