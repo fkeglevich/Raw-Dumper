@@ -20,7 +20,6 @@ import android.opengl.GLES20;
 
 import com.fkeglevich.rawdumper.BuildConfig;
 import com.fkeglevich.rawdumper.gl.exception.GLException;
-import com.fkeglevich.rawdumper.gl.exception.GLUncheckedException;
 
 import java.util.HashMap;
 import java.util.Map;

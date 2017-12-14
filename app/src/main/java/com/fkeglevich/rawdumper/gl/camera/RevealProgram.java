@@ -20,8 +20,6 @@ import android.opengl.GLES20;
 
 import com.fkeglevich.rawdumper.gl.Program;
 
-import java.util.Arrays;
-
 /**
  * Created by flavio on 29/11/17.
  */
