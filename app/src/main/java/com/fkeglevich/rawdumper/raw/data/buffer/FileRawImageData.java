@@ -31,13 +31,6 @@ public class FileRawImageData extends RawImageData
 {
     private final RandomAccessFile file;
 
-    public FileRawImageData(RawImageSize size, RandomAccessFile file) throws IOException
-    {
-        super(size);
-        this.file = file;
-        setOffset((int)file.getFilePointer());
-    }
-
     public FileRawImageData(RawImageSize size, String filepath) throws IOException
     {
         super(size);
