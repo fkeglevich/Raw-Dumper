@@ -24,7 +24,7 @@ import com.fkeglevich.rawdumper.raw.capture.DateInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
-import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfoExtractor;
+import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfo;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
@@ -42,7 +42,6 @@ public class FromRawAndJpegBuilder extends CommonBuilder
     private final ImageOrientation orientation;
     private final byte[] rawDataBytes;
     private final byte[] extraJpegBytes;
-    private final WhiteBalanceInfoExtractor whiteBalanceExtractor;
 
     private MakerNoteInfo makerNoteInfo;
 
@@ -66,7 +65,6 @@ public class FromRawAndJpegBuilder extends CommonBuilder
         this.orientation = orientation;
         this.rawDataBytes = rawDataBytes;
         this.extraJpegBytes = extraJpegBytes;
-        this.whiteBalanceExtractor = new WhiteBalanceInfoExtractor();
         initDateInfo();
         initMakerNoteInfo();
     }
@@ -105,9 +103,9 @@ public class FromRawAndJpegBuilder extends CommonBuilder
         ColorInfo colorInfo = pair.getExtraCameraInfo().getColor();
 
         if (pair.getExtraCameraInfo().hasKnownMakernote())
-            captureInfo.whiteBalanceInfo = whiteBalanceExtractor.extractFrom(makerNoteInfo, colorInfo);
+            captureInfo.whiteBalanceInfo = WhiteBalanceInfo.createFromMakerNote(makerNoteInfo, colorInfo);
         else
-            captureInfo.whiteBalanceInfo = whiteBalanceExtractor.extractFrom(colorInfo);
+            captureInfo.whiteBalanceInfo = WhiteBalanceInfo.createFromDaylightTemperature(colorInfo);
     }
 
     @Override

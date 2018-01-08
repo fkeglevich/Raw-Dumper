@@ -16,8 +16,11 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
+import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
+import com.fkeglevich.rawdumper.util.ColorUtil;
+import com.fkeglevich.rawdumper.util.MathUtil;
 
 /**
  * Created by Flávio Keglevich on 14/06/2017.
@@ -26,7 +29,34 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 public class WhiteBalanceInfo
 {
-    public float[] asShotNeutral = new float[] {1f, 1f, 1f};
+    private static final int DAYLIGHT_TEMPERATURE = 5503;
+
+    private static WhiteBalanceInfo createFromXYCoords(double x, double y, ColorInfo colorInfo)
+    {
+        float[] neutralValues = MathUtil.doubleArrayToFloat(colorInfo.calculateSimpleAsShotNeutral(x, y));
+        return new WhiteBalanceInfo(neutralValues);
+    }
+
+    public static WhiteBalanceInfo createFromMakerNote(MakerNoteInfo makerNoteInfo, ColorInfo colorInfo)
+    {
+        if (makerNoteInfo.wbCoordinatesXY != null)
+            return createFromXYCoords(makerNoteInfo.wbCoordinatesXY[0], makerNoteInfo.wbCoordinatesXY[1], colorInfo);
+        else
+            return createFromDaylightTemperature(colorInfo);
+    }
+
+    public static WhiteBalanceInfo createFromDaylightTemperature(ColorInfo colorInfo)
+    {
+        float[] xy = ColorUtil.getXYFromCCT(DAYLIGHT_TEMPERATURE, colorInfo);
+        return createFromXYCoords(xy[0], xy[1], colorInfo);
+    }
+
+    private final float[] asShotNeutral;
+
+    private WhiteBalanceInfo(float[] asShotNeutral)
+    {
+        this.asShotNeutral = asShotNeutral;
+    }
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
