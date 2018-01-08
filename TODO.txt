@@ -18,6 +18,10 @@ TODO list:
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
    - Create function tint-temperature function for Zen2 rear camera
 
+ - Handle different types of makernotes
+
+ - Create proper temperature-tint handling in MakerNoteInfoExtractor
+
  - Create the picture pipelines
    - (DONE!) Jpeg
    - (DONE!) Raw ((DONE!)NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
