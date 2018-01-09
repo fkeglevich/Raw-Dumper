@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.gl.camera;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.opengl.GLSurfaceView;
@@ -35,6 +36,8 @@ import com.fkeglevich.rawdumper.util.event.EventListener;
 public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
 {
     private PreviewRenderer previewRenderer = new PreviewRenderer();
+
+    private ValueAnimator openingAnimation = null;
 
     public CameraSurfaceView(Context context)
     {
@@ -83,18 +86,53 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
             @Override
             public void onFrameAvailable(SurfaceTexture surfaceTexture)
             {
-                previewRenderer.startRender();
-                requestRender();
+                if (openingAnimation != null && !openingAnimation.isRunning())
+                {
+                    previewRenderer.startRender();
+                    requestRender();
+                }
             }
         });
+        setVisibility(VISIBLE);
         onResume();
         previewRenderer.startRender();
+
+        //if (openingAnimation == null)
+        //{
+            openingAnimation = ValueAnimator.ofFloat(0f, (float) (Math.hypot( (getWidth()) / 2.0, (getHeight() / (getWidth() * 1.0 / getHeight())) / 2.0) ));
+            openingAnimation.setDuration(1000);
+            openingAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+            {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation)
+                {
+                    previewRenderer.revealRadius = (float) animation.getAnimatedValue();
+                    previewRenderer.startRender();
+                    requestRender();
+                }
+            });
+        //}
+        openingAnimation.start();
     }
 
     @Override
-    public void pausePreview()
+    public void clearCamera()
     {
         previewRenderer.stopRender();
         onPause();
+        setVisibility(INVISIBLE);
+    }
+
+    @Override
+    public void startOpeningAnimation()
+    {
+
+    }
+
+    @Override
+    public void startClosingAnimation()
+    {
+        if (openingAnimation != null)
+            openingAnimation.reverse();
     }
 }

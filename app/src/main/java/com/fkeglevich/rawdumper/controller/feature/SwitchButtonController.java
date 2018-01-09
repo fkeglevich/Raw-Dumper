@@ -41,7 +41,7 @@ public class SwitchButtonController extends FeatureController
             @Override
             public void onClick(View v)
             {
-                //cameraPreview.startCloseCameraAnimation();
+                cameraPreview.startClosingAnimation();
                 cameraManager.switchCamera();
             }
         });

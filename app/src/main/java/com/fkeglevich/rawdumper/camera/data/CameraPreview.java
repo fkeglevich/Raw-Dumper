@@ -33,5 +33,9 @@ public interface CameraPreview
 
     void setupCamera(TurboCamera turboCamera);
 
-    void pausePreview();
+    void clearCamera();
+
+    void startOpeningAnimation();
+
+    void startClosingAnimation();
 }

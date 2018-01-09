@@ -47,7 +47,7 @@ public class CameraLifetimeController
         public void onEvent(Nothing eventData)
         {
             cameraManager.closeCamera();
-            cameraPreview.pausePreview();
+            cameraPreview.clearCamera();
         }
     };
 
