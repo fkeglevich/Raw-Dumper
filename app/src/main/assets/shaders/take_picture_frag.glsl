@@ -18,6 +18,6 @@ void main()
     float dist = distance(position, vec2(0.0, 1.0 - previewScale.y));
 
     gl_FragColor = mix( texture2D(texture, textureCoord),
-                        vec4(0.10, 0.10, 0.10, 1.0),
+                        vec4(0.20, 0.20, 0.20, 1.0),
                         step(outerRadius, dist) * 0.9);
 }
