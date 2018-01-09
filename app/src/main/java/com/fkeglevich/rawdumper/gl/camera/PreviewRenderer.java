@@ -17,22 +17,11 @@
 package com.fkeglevich.rawdumper.gl.camera;
 
 import android.graphics.SurfaceTexture;
-import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.gl.Program;
-import com.fkeglevich.rawdumper.gl.ProgramFactory;
-import com.fkeglevich.rawdumper.gl.Shader;
-import com.fkeglevich.rawdumper.gl.ShaderType;
-import com.fkeglevich.rawdumper.gl.exception.GLException;
-import com.fkeglevich.rawdumper.util.AssetUtil;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -43,24 +32,14 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class PreviewRenderer implements GLSurfaceView.Renderer
 {
-    private static final byte[] vertices = {
-            -1,  1,
-            -1, -1,
-             1,  1,
-             1, -1
-    };
-
-    private final ByteBuffer vertexBuffer = ByteBuffer.allocateDirect(vertices.length);
+    private static final String TAG = "PreviewRenderer";
 
     private SurfaceTextureManager surfaceTextureManager = new SurfaceTextureManager();
-    private ProgramData programData = new ProgramData();
     private volatile boolean rendering = false;
-    private PreviewProgram program = null;
+    private ProgramData programData = new ProgramData();
+    volatile float revealRadius = 0;
 
-    PreviewRenderer()
-    {
-        vertexBuffer.put(vertices).position(0);
-    }
+    private PreviewProgramManager previewProgramManager = new PreviewProgramManager();
 
     SurfaceTexture getSurfaceTexture()
     {
@@ -87,44 +66,15 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
         rendering = false;
     }
 
-    void setProgram(PreviewProgram program)
-    {
-        this.program = program;
-    }
-
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
         surfaceTextureManager.createSurfaceTexture();
+        surfaceTextureManager.activateSurfaceTexture();
 
-        if (program != null)
-            program.delete();
-
-        try
-        {
-            Shader vertexShader = Shader.create(ShaderType.VERTEX);
-            String vertexShaderCode = AssetUtil.getAssetAsString("shaders/preview_vertex.glsl");
-            vertexShader.compile(vertexShaderCode);
-
-            Shader fragmentShader = Shader.create(ShaderType.FRAGMENT);
-            //String fragmentShaderCode = AssetUtil.getAssetAsString("shaders/reveal_preview_frag.glsl");
-            String fragmentShaderCode = AssetUtil.getAssetAsString("shaders/preview_frag.glsl");
-            fragmentShader.compile(fragmentShaderCode);
-
-            //Program program = ProgramFactory.createFromAssets("shaders/preview_frag.glsl", "shaders/preview_vertex.glsl");
-            Program program2 = ProgramFactory.create(vertexShader, fragmentShader);
-            setProgram(PreviewProgram.create(program2));
-        }
-        catch (GLException e)
-        {
-            Log.e("ASDA", e.getMessage());
-            throw new RuntimeException();
-        }
-        catch (IOException e)
-        {
-            Log.e("ASDA", e.getMessage());
-            throw new RuntimeException();
-        }
+        previewProgramManager.deletePrograms();
+        previewProgramManager.setupPrograms();
+        previewProgramManager.setCurrentProgram(previewProgramManager.revealProgram);
     }
 
     @Override
@@ -140,19 +90,15 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
         if (rendering)
         {
             rendering = false;
+
             clearFrame();
-            SurfaceTexture surfaceTexture = surfaceTextureManager.getSurfaceTexture();
-            surfaceTexture.updateTexImage();
+            surfaceTextureManager.updateTexImage();
 
-            program.use();
-            programData.updateSurfaceMatrix(surfaceTexture);
+            programData.updateSurfaceMatrix(surfaceTextureManager.getSurfaceTexture());
             programData.updatePreviewScale();
-            programData.writeData(program);
+            programData.writeData(previewProgramManager.getCurrentProgram());
+            previewProgramManager.getCurrentProgram().setRevealRadius(revealRadius);
 
-            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-            GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, surfaceTextureManager.getTexture().getHandle());
-
-            program.setupVertices(vertexBuffer);
             GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
         }
     }

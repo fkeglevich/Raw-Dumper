@@ -34,20 +34,23 @@ public class PreviewProgram extends Program
     private float[] surfaceMatrixCache = new float[16];
     private float[] surfaceSizeCache   = new float[2];
     private float[] previewScaleCache  = new float[2];
+    private float revealRadiusCache;
+    private final boolean hasRevealFeature;
 
-    public static PreviewProgram create() throws GLException
+    public static PreviewProgram create(boolean hasRevealFeature) throws GLException
     {
-        return new PreviewProgram(Program.create().getHandle());
+        return new PreviewProgram(Program.create().getHandle(), hasRevealFeature);
     }
 
-    public static PreviewProgram create(Program program)
+    public static PreviewProgram create(Program program, boolean hasRevealFeature)
     {
-        return new PreviewProgram(program.getHandle());
+        return new PreviewProgram(program.getHandle(), hasRevealFeature);
     }
 
-    PreviewProgram(int handle)
+    private PreviewProgram(int handle, boolean hasRevealFeature)
     {
         super(handle);
+        this.hasRevealFeature = hasRevealFeature;
     }
 
     void setSurfaceMatrix(float[] surfaceMatrix)
@@ -83,6 +86,21 @@ public class PreviewProgram extends Program
         {
             GLES20.glUniform2fv(handle, 1, previewScale, 0);
             System.arraycopy(previewScale, 0, previewScaleCache, 0, previewScale.length);
+        }
+    }
+
+    void setRevealRadius(float revealRadius)
+    {
+        if (!hasRevealFeature)
+            return; //silently fails
+
+        if (Float.compare(revealRadius, revealRadiusCache) == 0) return;
+
+        int handle = getUniformHandle("revealRadius");
+        if (handle != -1)
+        {
+            GLES20.glUniform1f(handle, revealRadius);
+            revealRadiusCache = revealRadius;
         }
     }
 
