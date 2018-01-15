@@ -27,7 +27,7 @@ import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
-import com.fkeglevich.rawdumper.util.Assert;
+import com.fkeglevich.rawdumper.util.Assertion;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,7 +110,7 @@ public class FlashController extends FeatureController
         valueList.remove(Flash.TORCH);
         valueList.remove(Flash.RED_EYE);
 
-        Assert.isTrue(valueList.contains(Flash.OFF));
+        Assertion.isTrue(valueList.contains(Flash.OFF));
         valueList.remove(Flash.OFF);
         valueList.add(0, Flash.OFF);
 

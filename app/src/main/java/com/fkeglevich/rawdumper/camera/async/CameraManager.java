@@ -25,7 +25,7 @@ import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryRootModule;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
-import com.fkeglevich.rawdumper.util.Assert;
+import com.fkeglevich.rawdumper.util.Assertion;
 import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.EventListener;
@@ -113,15 +113,15 @@ public class CameraManager
         if (currentState == State.CAMERA_READY)
             return;
 
-        Assert.state(currentState, State.IDLE);
+        Assertion.state(currentState, State.IDLE);
         cameraSetup.setupCamera();
         currentState = State.PERFORMING_OPERATION;
     }
 
     public void switchCamera()
     {
-        Assert.state(currentState, State.CAMERA_READY);
-        Assert.isTrue(canSwitchCamera());
+        Assertion.state(currentState, State.CAMERA_READY);
+        Assertion.isTrue(canSwitchCamera());
         dispatchCameraClose();
         CameraThread.getInstance().closeCameraAsync(new AsyncOperation<Nothing>()
         {
@@ -141,7 +141,7 @@ public class CameraManager
             postponedClose = true;
         else
         {
-            Assert.state(currentState, State.CAMERA_READY);
+            Assertion.state(currentState, State.CAMERA_READY);
             CameraThread.getInstance().closeCamera();
             dispatchCameraClose();
             currentState = State.IDLE;

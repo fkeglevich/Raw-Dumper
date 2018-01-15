@@ -22,7 +22,7 @@ import android.support.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperationPoster;
-import com.fkeglevich.rawdumper.util.Assert;
+import com.fkeglevich.rawdumper.util.Assertion;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +43,7 @@ public class ConcurrentDispatcher<T> implements EventDispatcher<T>
     @Override
     public synchronized void addListener(@NonNull EventListener<T> listener)
     {
-        Assert.isNotNull(Looper.myLooper());
+        Assertion.isNotNull(Looper.myLooper());
 
         EventData eventData = new EventData();
         eventData.listener = listener;

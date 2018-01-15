@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
-import com.fkeglevich.rawdumper.util.Assert;
+import com.fkeglevich.rawdumper.util.Assertion;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class PictureFormatFixer implements FeatureValueFixer<Mode, PictureFormat
     @Override
     public PictureFormat fixValue(ValueValidator<PictureFormat, List<PictureFormat>> newValidator, PictureFormat ignoredFormat, Mode ignoredMode)
     {
-        Assert.isTrue(!newValidator.getAvailableValues().isEmpty());
+        Assertion.isTrue(!newValidator.getAvailableValues().isEmpty());
         return newValidator.getAvailableValues().get(0);
     }
 }

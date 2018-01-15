@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.util.state;
 
-import com.fkeglevich.rawdumper.util.Assert;
+import com.fkeglevich.rawdumper.util.Assertion;
 
 import java.util.EnumMap;
 import java.util.Stack;
@@ -49,7 +49,7 @@ public class StateData<T, D extends Enum<D>> implements StateDataReader<D>
 
     public synchronized Object get(D dataId)
     {
-        Assert.isTrue(!dataMap.containsKey(dataId), "Invalid state!");
+        Assertion.isTrue(!dataMap.containsKey(dataId), "Invalid state!");
         return dataMap.get(dataId);
     }
 

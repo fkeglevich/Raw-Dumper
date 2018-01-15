@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.camera.parameter;
 
 import android.util.Log;
 
-import com.fkeglevich.rawdumper.util.Assert;
+import com.fkeglevich.rawdumper.util.Assertion;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 
@@ -52,9 +52,9 @@ class RuntimeParameter<T> extends Parameter<T>
                 decoder = eventData.getDecoder();
                 encoder = eventData.getEncoder();
 
-                Assert.isNotNull(key);
-                Assert.isNotNull(decoder);
-                Assert.isNotNull(encoder);
+                Assertion.isNotNull(key);
+                Assertion.isNotNull(decoder);
+                Assertion.isNotNull(encoder);
             }
         });
     }

@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.util.event;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.fkeglevich.rawdumper.util.Assert;
+import com.fkeglevich.rawdumper.util.Assertion;
 
 /**
  * Created by Flávio Keglevich on 16/09/2017.
@@ -32,7 +32,7 @@ public class HandlerDispatcher<T> extends SimpleDispatcher<T>
 
     public HandlerDispatcher(Looper threadLooper)
     {
-        Assert.isNotNull(threadLooper);
+        Assertion.isNotNull(threadLooper);
         handler = new Handler(threadLooper);
     }
 

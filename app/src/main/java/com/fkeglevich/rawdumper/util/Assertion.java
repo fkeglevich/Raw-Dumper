@@ -27,7 +27,7 @@ import com.fkeglevich.rawdumper.BuildConfig;
  * Created by Flávio Keglevich on 30/08/2017.
  */
 
-public class Assert
+public class Assertion
 {
     public static void isTrue(boolean condition, @Nullable String message)
     {
