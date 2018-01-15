@@ -61,6 +61,14 @@
             "deviceModel": "ASUS_T00F"
         },
         {
+            "deviceInfoFile": "z00x_zoom",
+            "deviceModel": "ASUS_Z00X"
+        },
+        {
+            "deviceInfoFile": "z00x_zoom",
+            "deviceModel": "ASUS_Z00XS"
+        },
+        {
             "deviceInfoFile": "xt890",
             "deviceModel": "XT890"
         }

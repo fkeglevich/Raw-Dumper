@@ -34,6 +34,7 @@ public class WorkaroundManager
     public WorkaroundManager()
     {
         workaroundMap.put("z00x", new Zen2LLWorkaround());
+        workaroundMap.put("z00x_zoom", new ZenZoomWorkaround());
     }
 
     public void applyWorkaroundIfNeeded(DeviceInfo deviceInfo)
