@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.camera.async.impl;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
-import com.fkeglevich.rawdumper.debug.DebugFlags;
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 
 /**
  * TODO: Add class header
@@ -63,6 +63,6 @@ public class CameraSelectorImpl extends CameraSelector
 
     private int initCameraId()
     {
-        return DebugFlags.shouldOpenFrontCameraFirst() ? 1 : 0;
+        return DebugFlag.shouldOpenFrontCameraFirst() ? 1 : 0;
     }
 }

@@ -26,7 +26,7 @@ import com.fkeglevich.rawdumper.camera.async.CameraThread;
 import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.async.pipeline.picture.dummy.RetryingPipelineSimulator;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
-import com.fkeglevich.rawdumper.debug.DebugFlags;
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.io.Directories;
 import com.fkeglevich.rawdumper.io.async.IOThread;
 import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
@@ -105,7 +105,7 @@ public class RetryingRawPipeline implements PicturePipeline
             Camera camera = cameraExtension.get().getCameraDevice();
             parameters = camera.getParameters();
 
-            if (DebugFlags.isUseRetryingPipelineSimulator())
+            if (DebugFlag.usingRetryPipelineSimulator())
                 RetryingPipelineSimulator.simulate(cameraContext, errorCallback);
             else
             {

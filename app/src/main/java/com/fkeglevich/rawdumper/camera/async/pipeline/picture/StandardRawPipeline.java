@@ -26,7 +26,7 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.RawImageCallbackAccess;
-import com.fkeglevich.rawdumper.debug.DebugFlags;
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.io.async.IOThread;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
@@ -101,7 +101,7 @@ public class StandardRawPipeline extends PicturePipelineBase
     private void removeI3av4File(final PictureListener pictureCallback)
     {
         String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
-        if (!DebugFlags.isDisableMandatoryRoot())
+        if (!DebugFlag.isDisableMandatoryRoot())
         {
             ShellManager.getInstance().addSingleCommand("rm " + dumpDirectory + "/*.i3av4", new Shell.OnCommandLineListener()
             {
