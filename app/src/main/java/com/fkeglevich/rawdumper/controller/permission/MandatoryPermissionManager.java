@@ -24,7 +24,7 @@ import android.support.v4.app.ActivityCompat;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.controller.permission.exception.PermissionException;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.PermissionUtil;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.HandlerDispatcher;
@@ -48,7 +48,7 @@ public class MandatoryPermissionManager
     private static final int REQUEST_CODE = 1;
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
-    public final EventDispatcher<Nothing> onAllPermissionsGranted       = createDispatcher();
+    public final EventDispatcher<Void> onAllPermissionsGranted       = createDispatcher();
     public final EventDispatcher<MessageException> onMissingPermissions = createDispatcher();
 
     public void requestAllPermissions(ActivityReference activityReference)

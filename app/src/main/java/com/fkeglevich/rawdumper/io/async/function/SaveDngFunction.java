@@ -25,7 +25,7 @@ import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.buffer.ArrayRawImageData;
 import com.fkeglevich.rawdumper.raw.data.buffer.FileRawImageData;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;
@@ -35,10 +35,10 @@ import java.io.IOException;
  * TODO: Add a class header comment!
  */
 
-public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Nothing, MessageException>
+public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Void, MessageException>
 {
     @Override
-    protected Nothing call(CaptureInfo captureInfo) throws MessageException
+    protected Void call(CaptureInfo captureInfo) throws MessageException
     {
         if (!captureInfo.isValid()) throw new IllegalArgumentException("Invalid capture info!");
 

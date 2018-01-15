@@ -26,7 +26,7 @@ import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryRootModule;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.util.Assertion;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
@@ -53,7 +53,7 @@ public class CameraManager
     private final CameraSetup cameraSetup;
 
     public final EventDispatcher<TurboCamera> onCameraOpened;
-    public final EventDispatcher<Nothing> onCameraClosed;
+    public final EventDispatcher<Void> onCameraClosed;
     public final EventDispatcher<MessageException> onCameraException;
 
     private boolean postponedClose = false;
@@ -123,10 +123,10 @@ public class CameraManager
         Assertion.state(currentState, State.CAMERA_READY);
         Assertion.isTrue(canSwitchCamera());
         dispatchCameraClose();
-        CameraThread.getInstance().closeCameraAsync(new AsyncOperation<Nothing>()
+        CameraThread.getInstance().closeCameraAsync(new AsyncOperation<Void>()
         {
             @Override
-            protected void execute(Nothing argument)
+            protected void execute(Void argument)
             {
                 cameraSelector.selectNextCamera();
                 cameraSetup.setupCamera();

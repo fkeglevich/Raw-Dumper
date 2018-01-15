@@ -33,7 +33,7 @@ import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromRawAndJpegBuilder;
 import com.fkeglevich.rawdumper.su.ShellManager;
 import com.fkeglevich.rawdumper.util.Mutable;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -81,10 +81,10 @@ public class StandardRawPipeline extends PicturePipelineBase
         ACaptureInfoBuilder captureInfoBuilder = new FromRawAndJpegBuilder(cameraContext, parameters, pipelineData.rawData, pipelineData.jpegData);
         CaptureInfo captureInfo = captureInfoBuilder.build();
 
-        IOThread.getIOAccess().saveDng(captureInfo, new AsyncOperation<Nothing>()
+        IOThread.getIOAccess().saveDng(captureInfo, new AsyncOperation<Void>()
         {
             @Override
-            protected void execute(Nothing argument)
+            protected void execute(Void argument)
             {
                 removeI3av4File(pictureCallback);
             }

@@ -22,7 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
@@ -37,10 +37,10 @@ public class FullscreenManager
     public FullscreenManager(ActivityReference activityReference)
     {
         this.activityReference = activityReference;
-        this.activityReference.onResume.addListener(new EventListener<Nothing>()
+        this.activityReference.onResume.addListener(new EventListener<Void>()
         {
             @Override
-            public void onEvent(Nothing eventData)
+            public void onEvent(Void eventData)
             {
                 goToFullscreenMode();
             }

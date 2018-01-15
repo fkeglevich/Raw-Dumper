@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.controller.feature;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ class FeatureControllerManager
         return meteringControllers;
     }
 
-    void setupControllers(TurboCamera camera, EventDispatcher<Nothing> onCameraClose)
+    void setupControllers(TurboCamera camera, EventDispatcher<Void> onCameraClose)
     {
         for (FeatureController featureController : controllersList)
             featureController.setupFeature(camera, onCameraClose);

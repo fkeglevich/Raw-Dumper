@@ -21,7 +21,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 
 import com.fkeglevich.rawdumper.controller.permission.PermissionRequest;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
@@ -76,13 +76,13 @@ public class ActivityReference
     }
 
     //Event dispatchers
-    public final EventDispatcher<Bundle>    onCreate        = createDispatcher();
-    public final EventDispatcher<Bundle>    onPostCreate    = createDispatcher();
-    public final EventDispatcher<Nothing>   onDestroy       = createDispatcher();
-    public final EventDispatcher<Nothing>   onResume        = createDispatcher();
-    public final EventDispatcher<Nothing>   onPause         = createDispatcher();
+    public final EventDispatcher<Bundle> onCreate        = createDispatcher();
+    public final EventDispatcher<Bundle> onPostCreate    = createDispatcher();
+    public final EventDispatcher<Void>   onDestroy       = createDispatcher();
+    public final EventDispatcher<Void>   onResume        = createDispatcher();
+    public final EventDispatcher<Void>   onPause         = createDispatcher();
 
-    public final EventDispatcher<Boolean>   onWindowFocusChanged = createDispatcher();
-    public final EventDispatcher<DefaultPreventer> onBackPressed = createDispatcher();
+    public final EventDispatcher<Boolean> onWindowFocusChanged = createDispatcher();
+    public final EventDispatcher<DefaultPreventer>  onBackPressed = createDispatcher();
     public final EventDispatcher<PermissionRequest> onRequestPermissionsResult = createDispatcher();
 }

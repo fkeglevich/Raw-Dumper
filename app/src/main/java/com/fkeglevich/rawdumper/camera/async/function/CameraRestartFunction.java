@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.camera.async.function;
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.exception.CameraOpenException;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;
@@ -30,10 +30,10 @@ import java.io.IOException;
  * Created by Flávio Keglevich on 04/11/17.
  */
 
-public class CameraRestartFunction extends ThrowingAsyncFunction<RestartableCamera, Nothing, MessageException>
+public class CameraRestartFunction extends ThrowingAsyncFunction<RestartableCamera, Void, MessageException>
 {
     @Override
-    protected Nothing call(RestartableCamera camera) throws MessageException
+    protected Void call(RestartableCamera camera) throws MessageException
     {
         try
         {

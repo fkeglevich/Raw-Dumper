@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.camera.async.function;
 import com.fkeglevich.rawdumper.async.function.AsyncFunction;
 import com.fkeglevich.rawdumper.camera.async.Closeable;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 
 /**
  * TODO: Add class header
@@ -27,10 +27,10 @@ import com.fkeglevich.rawdumper.util.Nothing;
  * Created by Flávio Keglevich on 19/10/17.
  */
 
-public class CameraCloseFunction extends AsyncFunction<TurboCamera, Nothing>
+public class CameraCloseFunction extends AsyncFunction<TurboCamera, Void>
 {
     @Override
-    protected Nothing call(TurboCamera argument)
+    protected Void call(TurboCamera argument)
     {
         ((Closeable) argument).close();
         return null;

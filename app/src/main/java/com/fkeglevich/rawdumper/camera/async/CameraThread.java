@@ -27,7 +27,7 @@ import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.async.function.CameraCloseFunction;
 import com.fkeglevich.rawdumper.camera.async.function.CameraOpenFunction;
 import com.fkeglevich.rawdumper.camera.async.function.CameraRestartFunction;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
@@ -72,13 +72,13 @@ public class CameraThread
         openedCamera = null;
     }
 
-    public void closeCameraAsync(AsyncOperation<Nothing> callback)
+    public void closeCameraAsync(AsyncOperation<Void> callback)
     {
         assertCameraWasOpened();
         functionContext.call(new CameraCloseFunction(), getCurrentCamera(), wrapCloseCallback(callback));
     }
 
-    public void restartCamera(RestartableCamera camera, AsyncOperation<Nothing> callback,
+    public void restartCamera(RestartableCamera camera, AsyncOperation<Void> callback,
                               AsyncOperation<MessageException> exception)
     {
         functionContext.call(new CameraRestartFunction(), camera, callback, exception);
@@ -104,12 +104,12 @@ public class CameraThread
     }
 
     @NonNull
-    private WrappingOperation<Nothing> wrapCloseCallback(final AsyncOperation<Nothing> callback)
+    private WrappingOperation<Void> wrapCloseCallback(final AsyncOperation<Void> callback)
     {
-        return new WrappingOperation<Nothing>(callback)
+        return new WrappingOperation<Void>(callback)
         {
             @Override
-            protected void execute(Nothing argument)
+            protected void execute(Void argument)
             {
                 openedCamera = null;
                 executeWrapped(argument);

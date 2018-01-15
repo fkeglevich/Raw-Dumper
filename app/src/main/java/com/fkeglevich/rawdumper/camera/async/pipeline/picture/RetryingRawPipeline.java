@@ -35,7 +35,7 @@ import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromI3av4FileBuilder;
 import com.fkeglevich.rawdumper.su.ShellManager;
 import com.fkeglevich.rawdumper.util.Mutable;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
@@ -146,10 +146,10 @@ public class RetryingRawPipeline implements PicturePipeline
         ACaptureInfoBuilder captureInfoBuilder = new FromI3av4FileBuilder(cameraContext, i3av4File, parameters);
         CaptureInfo captureInfo = captureInfoBuilder.build();
 
-        IOThread.getIOAccess().saveDng(captureInfo, new AsyncOperation<Nothing>()
+        IOThread.getIOAccess().saveDng(captureInfo, new AsyncOperation<Void>()
         {
             @Override
-            protected void execute(Nothing argument)
+            protected void execute(Void argument)
             {
                 nextPictureCallback.onPictureSaved();
             }
@@ -165,10 +165,10 @@ public class RetryingRawPipeline implements PicturePipeline
 
     private void restartCamera()
     {
-        CameraThread.getInstance().restartCamera(restartableCamera, new AsyncOperation<Nothing>()
+        CameraThread.getInstance().restartCamera(restartableCamera, new AsyncOperation<Void>()
         {
             @Override
-            protected void execute(Nothing argument)
+            protected void execute(Void argument)
             {
                 movePictures();
                 nextPictureCallback.onPictureTaken();

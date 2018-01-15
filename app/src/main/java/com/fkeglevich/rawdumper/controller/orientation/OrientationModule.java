@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.controller.orientation;
 import android.os.Bundle;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
@@ -53,10 +53,10 @@ public class OrientationModule
 
     private void setupOnResumeEvent()
     {
-        reference.onResume.addListener(new EventListener<Nothing>()
+        reference.onResume.addListener(new EventListener<Void>()
         {
             @Override
-            public void onEvent(Nothing eventData)
+            public void onEvent(Void eventData)
             {
                 OrientationManager.getInstance().enable();
             }
@@ -65,10 +65,10 @@ public class OrientationModule
 
     private void setupOnPauseEvent()
     {
-        reference.onPause.addListener(new EventListener<Nothing>()
+        reference.onPause.addListener(new EventListener<Void>()
         {
             @Override
-            public void onEvent(Nothing eventData)
+            public void onEvent(Void eventData)
             {
                 OrientationManager.getInstance().disable();
             }

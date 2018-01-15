@@ -29,7 +29,7 @@ import com.fkeglevich.rawdumper.camera.exception.RawIsUnavailableException;
 import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 import com.fkeglevich.rawdumper.ui.dialog.FatalErrorDialog;
 import com.fkeglevich.rawdumper.ui.dialog.OkDialog;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
@@ -41,10 +41,10 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 public class CameraLifetimeController
 {
-    private final EventListener<Nothing> pauseListener = new EventListener<Nothing>()
+    private final EventListener<Void> pauseListener = new EventListener<Void>()
     {
         @Override
-        public void onEvent(Nothing eventData)
+        public void onEvent(Void eventData)
         {
             cameraManager.closeCamera();
             cameraPreview.clearCamera();
@@ -73,10 +73,10 @@ public class CameraLifetimeController
 
     private void setupActivityListeners()
     {
-        reference.onResume.addListener(new EventListener<Nothing>()
+        reference.onResume.addListener(new EventListener<Void>()
         {
             @Override
-            public void onEvent(Nothing eventData)
+            public void onEvent(Void eventData)
             {
                 cameraManager.openCamera();
             }

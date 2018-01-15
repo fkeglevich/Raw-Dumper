@@ -17,7 +17,7 @@
 package com.fkeglevich.rawdumper.camera.setup;
 
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
@@ -34,10 +34,10 @@ public class PermissionsStage implements SetupStage
     {
         final MandatoryPermissionManager permissionManager = setupBase.getPermissionManager();
 
-        permissionManager.onAllPermissionsGranted.addListener(new EventListener<Nothing>()
+        permissionManager.onAllPermissionsGranted.addListener(new EventListener<Void>()
         {
             @Override
-            public void onEvent(Nothing eventData)
+            public void onEvent(Void eventData)
             {
                 setupBase.setPermissionToken();
                 setupBase.processNextStage();

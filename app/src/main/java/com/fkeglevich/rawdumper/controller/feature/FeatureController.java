@@ -17,7 +17,7 @@
 package com.fkeglevich.rawdumper.controller.feature;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import com.fkeglevich.rawdumper.util.Nothing;
+import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 
@@ -29,13 +29,13 @@ import com.fkeglevich.rawdumper.util.event.EventListener;
 
 public abstract class FeatureController
 {
-    void setupFeature(TurboCamera camera, final EventDispatcher<Nothing> onCameraClose)
+    void setupFeature(TurboCamera camera, final EventDispatcher<Void> onCameraClose)
     {
         setup(camera);
-        onCameraClose.addListener(new EventListener<Nothing>()
+        onCameraClose.addListener(new EventListener<Void>()
         {
             @Override
-            public void onEvent(Nothing eventData)
+            public void onEvent(Void eventData)
             {
                 reset();
             }
