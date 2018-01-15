@@ -75,6 +75,7 @@ public class ActivityReference
         actualReference = new WeakReference<>(activity);
     }
 
+    //Event dispatchers
     public final EventDispatcher<Bundle>    onCreate        = createDispatcher();
     public final EventDispatcher<Bundle>    onPostCreate    = createDispatcher();
     public final EventDispatcher<Nothing>   onDestroy       = createDispatcher();
