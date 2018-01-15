@@ -36,10 +36,12 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
 
     private SurfaceTextureManager surfaceTextureManager = new SurfaceTextureManager();
     private volatile boolean rendering = false;
+    private volatile boolean updatingPreview = true;
     private ProgramData programData = new ProgramData();
     volatile float revealRadius = 0;
 
-    private PreviewProgramManager previewProgramManager = new PreviewProgramManager();
+    private final Object programLock = new Object();
+    private PreviewProgramManager previewProgramManager = new PreviewProgramManager(programLock);
 
     SurfaceTexture getSurfaceTexture()
     {
@@ -64,6 +66,31 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
     void stopRender()
     {
         rendering = false;
+    }
+
+    void pauseUpdatingPreview()
+    {
+        updatingPreview = false;
+    }
+
+    void resumeUpdatingPreview()
+    {
+        updatingPreview = true;
+    }
+
+    void useDefaultProgram()
+    {
+        previewProgramManager.setCurrentProgram(previewProgramManager.defaultProgram);
+    }
+
+    void useTakePictureProgram()
+    {
+        previewProgramManager.setCurrentProgram(previewProgramManager.takePictureProgram);
+    }
+
+    void useRevealProgram()
+    {
+        previewProgramManager.setCurrentProgram(previewProgramManager.revealProgram);
     }
 
     @Override
@@ -92,12 +119,17 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
             rendering = false;
 
             clearFrame();
-            surfaceTextureManager.updateTexImage();
+            if (updatingPreview)
+                surfaceTextureManager.updateTexImage();
 
             programData.updateSurfaceMatrix(surfaceTextureManager.getSurfaceTexture());
             programData.updatePreviewScale();
-            programData.writeData(previewProgramManager.getCurrentProgram());
-            previewProgramManager.getCurrentProgram().setRevealRadius(revealRadius);
+            synchronized (programLock)
+            {
+                previewProgramManager.useCurrentProgram();
+                programData.writeData(previewProgramManager.getCurrentProgram());
+                previewProgramManager.getCurrentProgram().setRevealRadius(revealRadius);
+            }
 
             GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
         }

@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.gl.camera;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -36,8 +38,8 @@ import com.fkeglevich.rawdumper.util.event.EventListener;
 public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
 {
     private PreviewRenderer previewRenderer = new PreviewRenderer();
-
     private ValueAnimator openingAnimation = null;
+    private ValueAnimator takePictureAnimation = null;
 
     public CameraSurfaceView(Context context)
     {
@@ -134,5 +136,50 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
     {
         if (openingAnimation != null)
             openingAnimation.reverse();
+    }
+
+    boolean takePictureAnimationIsEnding = false;
+
+    @Override
+    public void pauseUpdating()
+    {
+        previewRenderer.pauseUpdatingPreview();
+        previewRenderer.useTakePictureProgram();
+
+        takePictureAnimation = ValueAnimator.ofFloat(0f, (float) (Math.hypot( (getWidth()) / 2.0, (getHeight() / (getWidth() * 1.0 / getHeight())) / 2.0) ));
+        takePictureAnimation.setDuration(400);
+        takePictureAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+        {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation)
+            {
+                previewRenderer.revealRadius = (float) animation.getAnimatedValue();
+                previewRenderer.startRender();
+                requestRender();
+            }
+        });
+        takePictureAnimation.addListener(new AnimatorListenerAdapter()
+        {
+            @Override
+            public void onAnimationEnd(Animator animation)
+            {
+                if (takePictureAnimationIsEnding)
+                {
+                    previewRenderer.useRevealProgram();
+                    takePictureAnimationIsEnding = false;
+                }
+            }
+        });
+        takePictureAnimation.reverse();
+    }
+
+    @Override
+    public void resumeUpdating()
+    {
+        previewRenderer.resumeUpdatingPreview();
+        //previewRenderer.startRender();
+        //requestRender();
+        takePictureAnimationIsEnding = true;
+        takePictureAnimation.start();
     }
 }

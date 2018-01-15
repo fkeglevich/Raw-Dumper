@@ -38,4 +38,8 @@ public interface CameraPreview
     void startOpeningAnimation();
 
     void startClosingAnimation();
+
+    void pauseUpdating();
+
+    void resumeUpdating();
 }

@@ -38,54 +38,80 @@ public class PreviewProgramManager
     };
 
     private final ByteBuffer vertexBuffer = ByteBuffer.allocateDirect(vertices.length);
+    private final Object programLock;
 
     PreviewProgram defaultProgram = null;
     PreviewProgram revealProgram = null;
     PreviewProgram takePictureProgram = null;
 
     private PreviewProgram currentProgram = null;
+    private volatile boolean currentProgramIsBeingUsed = false;
 
-    PreviewProgramManager()
+    PreviewProgramManager(Object programLock)
     {
+        this.programLock = programLock;
         vertexBuffer.put(vertices).position(0);
     }
 
     void setupPrograms()
     {
-        try
+        synchronized (programLock)
         {
-            defaultProgram = PreviewProgramFactory.createDefaultProgram();
-            revealProgram = PreviewProgramFactory.createRevealProgram();
-            takePictureProgram = PreviewProgramFactory.createTakePictureProgram();
-        }
-        catch (IOException | GLException e)
-        {
-            Log.e(TAG, e.getMessage());
-            throw new RuntimeException(e);
+            try
+            {
+                defaultProgram = PreviewProgramFactory.createDefaultProgram();
+                revealProgram = PreviewProgramFactory.createRevealProgram();
+                takePictureProgram = PreviewProgramFactory.createTakePictureProgram();
+            } catch (IOException | GLException e)
+            {
+                Log.e(TAG, e.getMessage());
+                throw new RuntimeException(e);
+            }
         }
     }
 
     void deletePrograms()
     {
-        deleteProgram(defaultProgram);
-        deleteProgram(revealProgram);
-        deleteProgram(takePictureProgram);
+        synchronized (programLock)
+        {
+            deleteProgram(defaultProgram);
+            deleteProgram(revealProgram);
+            deleteProgram(takePictureProgram);
+        }
+    }
+
+    PreviewProgram getCurrentProgram()
+    {
+        synchronized (programLock)
+        {
+            return currentProgram;
+        }
+    }
+
+    void setCurrentProgram(PreviewProgram program)
+    {
+        synchronized (programLock)
+        {
+            this.currentProgram = program;
+            currentProgramIsBeingUsed = false;
+        }
+    }
+
+    void useCurrentProgram()
+    {
+        if (!currentProgramIsBeingUsed)
+        {
+            synchronized (programLock)
+            {
+                this.currentProgram.use();
+                this.currentProgram.setupVertices(vertexBuffer);
+                currentProgramIsBeingUsed = true;
+            }
+        }
     }
 
     private void deleteProgram(PreviewProgram program)
     {
         if (program != null) program.delete();
-    }
-
-    PreviewProgram getCurrentProgram()
-    {
-        return currentProgram;
-    }
-
-    void setCurrentProgram(PreviewProgram currentProgram)
-    {
-        this.currentProgram = currentProgram;
-        this.currentProgram.use();
-        this.currentProgram.setupVertices(vertexBuffer);
     }
 }

@@ -102,7 +102,7 @@ public class TakePictureController extends FeatureController
     {
         for (ValueMeteringController meteringController : meteringControllers)
             meteringController.disable();
-        //cameraPreview.pauseUpdating();
+        cameraPreview.pauseUpdating();
         pictureLayer.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         captureButton.setAlpha(0);
@@ -113,7 +113,7 @@ public class TakePictureController extends FeatureController
         captureButton.setAlpha(1f);
         progressBar.setVisibility(View.INVISIBLE);
         pictureLayer.setVisibility(View.INVISIBLE);
-        //cameraPreview.resumeUpdating();
+        cameraPreview.resumeUpdating();
         for (ValueMeteringController meteringController : meteringControllers)
             meteringController.enable();
     }
