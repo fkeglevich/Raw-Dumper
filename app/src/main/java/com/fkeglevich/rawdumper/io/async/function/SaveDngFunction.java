@@ -68,7 +68,7 @@ public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Nothing,
         {
             throw new SaveFileException();
         }
-        return Nothing.NOTHING;
+        return null;
     }
 
     private void closeRawImageData(RawImageData rawImageData)

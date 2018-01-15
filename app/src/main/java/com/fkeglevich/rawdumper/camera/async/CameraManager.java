@@ -160,7 +160,7 @@ public class CameraManager
 
     private void dispatchCameraClose()
     {
-        onCameraClosed.dispatchEvent(Nothing.NOTHING);
+        onCameraClosed.dispatchEvent(null);
         onCameraClosed.removeAllListeners();
     }
 }

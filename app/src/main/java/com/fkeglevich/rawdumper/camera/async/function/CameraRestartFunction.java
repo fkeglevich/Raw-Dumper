@@ -44,6 +44,6 @@ public class CameraRestartFunction extends ThrowingAsyncFunction<RestartableCame
             throw new CameraOpenException();
         }
 
-        return Nothing.NOTHING;
+        return null;
     }
 }

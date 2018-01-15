@@ -33,6 +33,6 @@ public class CameraCloseFunction extends AsyncFunction<TurboCamera, Nothing>
     protected Nothing call(TurboCamera argument)
     {
         ((Closeable) argument).close();
-        return Nothing.NOTHING;
+        return null;
     }
 }

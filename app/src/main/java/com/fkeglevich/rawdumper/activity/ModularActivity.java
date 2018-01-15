@@ -21,7 +21,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.fkeglevich.rawdumper.controller.permission.PermissionRequest;
-import com.fkeglevich.rawdumper.util.Nothing;
 import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
 
 /**
@@ -53,21 +52,21 @@ public abstract class ModularActivity extends AppCompatActivity
     protected void onDestroy()
     {
         super.onDestroy();
-        reference.onDestroy.dispatchEvent(Nothing.NOTHING);
+        reference.onDestroy.dispatchEvent(null);
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
-        reference.onResume.dispatchEvent(Nothing.NOTHING);
+        reference.onResume.dispatchEvent(null);
     }
 
     @Override
     public void onPause()
     {
         super.onPause();
-        reference.onPause.dispatchEvent(Nothing.NOTHING);
+        reference.onPause.dispatchEvent(null);
     }
 
     @Override

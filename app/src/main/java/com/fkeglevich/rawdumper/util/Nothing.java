@@ -23,7 +23,6 @@ package com.fkeglevich.rawdumper.util;
 
 public class Nothing
 {
-    public static final Nothing NOTHING = new Nothing();
 
     private Nothing()
     {

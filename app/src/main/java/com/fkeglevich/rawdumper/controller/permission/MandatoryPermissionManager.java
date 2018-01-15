@@ -33,8 +33,6 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.util.List;
 
-import static com.fkeglevich.rawdumper.util.Nothing.NOTHING;
-
 /**
  * Created by Flávio Keglevich on 09/08/2017.
  * TODO: Add a class header comment!
@@ -87,6 +85,6 @@ public class MandatoryPermissionManager
 
     void dispatchPermissionsGranted()
     {
-        onAllPermissionsGranted.dispatchEvent(NOTHING);
+        onAllPermissionsGranted.dispatchEvent(null);
     }
 }
