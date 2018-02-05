@@ -35,7 +35,7 @@ public class NoiseInfo
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
-        if (noiseProfile != null)
+        if (noiseProfile != null && noiseProfile.length > 0)
             tiffWriter.setField(TiffTag.TIFFTAG_NOISEPROFILE, noiseProfile, true);
     }
 }
