@@ -56,14 +56,7 @@
             },
             "model": "%s (back camera)",
             "noise": {
-                "noiseProfile": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
+                "noiseProfile": null
             },
             "uniqueCameraModel": "%s (back camera)",
             "opcodes": [],
@@ -152,14 +145,7 @@
             },
             "model": "%s (front camera)",
             "noise": {
-                "noiseProfile": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
+                "noiseProfile": null
             },
             "uniqueCameraModel": "%s (front camera)",
             "opcodes": [],

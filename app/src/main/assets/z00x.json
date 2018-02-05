@@ -308,14 +308,7 @@
             },
             "model": "%s (front camera)",
             "noise": {
-                "noiseProfile": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
+                "noiseProfile": null
             },
             "uniqueCameraModel": "Asus ZenFone 2 %s (front camera)",
             "opcodes": [

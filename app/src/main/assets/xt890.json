@@ -71,14 +71,7 @@
             },
             "model": "%s (back camera)",
             "noise": {
-                "noiseProfile": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
+                "noiseProfile": null
             },
             "uniqueCameraModel": "Motorola Razr I %s (back camera)",
             "opcodes": [],
@@ -166,14 +159,7 @@
             },
             "model": "%s (front camera)",
             "noise": {
-                "noiseProfile": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
+                "noiseProfile": null
             },
             "uniqueCameraModel": "Motorola Razr I %s (front camera)",
             "opcodes": [],
