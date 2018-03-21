@@ -49,6 +49,16 @@ public class ManualFocusRange
         if (value.equals(ManualFocus.DISABLED))
             return true;
 
-        return value.compareTo(lower) >= 0 && value.compareTo(upper)  <= 0;
+        return value.compareTo(getLower()) >= 0 && value.compareTo(getUpper())  <= 0;
+    }
+
+    public ManualFocus getLower()
+    {
+        return lower;
+    }
+
+    public ManualFocus getUpper()
+    {
+        return upper;
     }
 }
