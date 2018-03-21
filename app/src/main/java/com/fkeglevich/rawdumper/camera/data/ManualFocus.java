@@ -24,7 +24,7 @@ import android.support.annotation.NonNull;
  * Created by Flávio Keglevich on 26/10/17.
  */
 
-public class ManualFocus implements Comparable<ManualFocus>
+public class ManualFocus implements Comparable<ManualFocus>, ParameterValue
 {
     private static final int INVALID_NUMERIC_VALUE = 0;
 
@@ -97,5 +97,11 @@ public class ManualFocus implements Comparable<ManualFocus>
         int myNumeric = equals(DISABLED) ? Integer.MIN_VALUE : getNumericValue();
         int anotherNumeric = another.equals(DISABLED) ? Integer.MIN_VALUE : another.getNumericValue();
         return myNumeric - anotherNumeric;
+    }
+
+    @Override
+    public String getParameterValue()
+    {
+        return equals(DISABLED) ? "0" : String.valueOf(getNumericValue());
     }
 }
