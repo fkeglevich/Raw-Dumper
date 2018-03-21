@@ -17,6 +17,7 @@ TODO list:
 
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
    - Create function tint-temperature function for Zen2 rear camera
+   - IDEA: instead, use a illuminant case-by-case basis for the tint too
 
  - Handle different types of makernotes
 
@@ -45,6 +46,7 @@ TODO list:
  - Better handling of SU shell commands
 
 Next features:
+ - Proper transitions when taking pictures/opening/closing camera
  - PictureSizeFeature
  - Take actual pictures in the 2.0 version
  - Selection of focus mode and manual focus
