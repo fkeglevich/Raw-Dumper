@@ -57,4 +57,11 @@ public class FocusFeature extends WritableFeature<FocusMode, List<FocusMode>> im
         checkFeatureAvailability(this);
         autoFocusAction.startAutoFocus(focusArea, callback);
     }
+
+    @Override
+    public void cancelAutoFocus()
+    {
+        checkFeatureAvailability(this);
+        autoFocusAction.cancelAutoFocus();
+    }
 }

@@ -28,4 +28,6 @@ import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 public interface AutoFocusAction
 {
     void startAutoFocus(PreviewArea focusArea, AutoFocusResult callback);
+
+    void cancelAutoFocus();
 }

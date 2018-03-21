@@ -93,6 +93,16 @@ public class LowLevelCameraActions implements CameraActions
         }
     }
 
+    @Override
+    public void cancelAutoFocus()
+    {
+        synchronized (lock)
+        {
+            Camera camera = getCamera();
+            camera.cancelAutoFocus();
+        }
+    }
+
     private void setAreasParameters(List<Camera.Area> areas, Camera camera)
     {
         Camera.Parameters parameters = camera.getParameters();
