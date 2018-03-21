@@ -55,5 +55,3 @@ freeline/
 freeline_project_description.json
 
 app/release/
-
-app/src/main/java/com/fkeglevich/rawdumper/debug/DebugFlag\.java
