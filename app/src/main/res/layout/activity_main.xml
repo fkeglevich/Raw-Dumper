@@ -261,6 +261,7 @@
         android:layout_above="@+id/linearLayout2">
 
         <LinearLayout
+            android:id="@+id/stdFocusChooser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@drawable/focus_divider"
