@@ -32,14 +32,7 @@ public abstract class FeatureController
     void setupFeature(TurboCamera camera, final EventDispatcher<Void> onCameraClose)
     {
         setup(camera);
-        onCameraClose.addListener(new EventListener<Void>()
-        {
-            @Override
-            public void onEvent(Void eventData)
-            {
-                reset();
-            }
-        });
+        onCameraClose.addListener(eventData -> reset());
     }
 
     protected abstract void setup(TurboCamera camera);

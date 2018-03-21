@@ -36,14 +36,10 @@ public class SwitchButtonController extends FeatureController
 
     public SwitchButtonController(View switchButton, final CameraManager cameraManager, final CameraPreview cameraPreview)
     {
-        switchButton.setOnClickListener(new View.OnClickListener()
+        switchButton.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v)
-            {
-                cameraPreview.startClosingAnimation();
-                cameraManager.switchCamera();
-            }
+            cameraPreview.startClosingAnimation();
+            cameraManager.switchCamera();
         });
 
         this.disabledStateController = new ButtonDisabledStateController(switchButton, false);

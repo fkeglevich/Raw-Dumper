@@ -65,11 +65,7 @@ public class AboutDialog
 
         builder.setPositiveButton(
                 context.getResources().getString(android.R.string.ok),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
+                (dialog, id) -> dialog.dismiss());
         builder.setView(messageView);
 
         alertDialog = builder.create();

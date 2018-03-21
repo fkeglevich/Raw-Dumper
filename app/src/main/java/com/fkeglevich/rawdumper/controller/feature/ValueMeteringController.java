@@ -39,14 +39,7 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
     static final int MANUAL_VALUE_TEXT_COLOR    = 0xFFFFFF00;
     static final int METERING_DELAY_MILLIS      = 100;
 
-    private final EventListener<ParameterChangeEvent<T>> fallbackChangedListener = new EventListener<ParameterChangeEvent<T>>()
-    {
-        @Override
-        public void onEvent(ParameterChangeEvent<T> eventData)
-        {
-            updateViewFromMetering();
-        }
-    };
+    private final EventListener<ParameterChangeEvent<T>> fallbackChangedListener = eventData -> updateViewFromMetering();
 
     private final Runnable meteringRunnable = new Runnable()
     {

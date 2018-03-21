@@ -29,14 +29,7 @@ public class MandatoryPermissionModule
 
     public MandatoryPermissionModule(final ActivityReference activityReference)
     {
-        activityReference.onRequestPermissionsResult.addListener(new com.fkeglevich.rawdumper.util.event.EventListener<PermissionRequest>()
-        {
-            @Override
-            public void onEvent(PermissionRequest request)
-            {
-                getPermissionManager().sendRequestPermissionsResult(request);
-            }
-        });
+        activityReference.onRequestPermissionsResult.addListener(request -> getPermissionManager().sendRequestPermissionsResult(request));
     }
 
     MandatoryPermissionManager initPermissionManager()

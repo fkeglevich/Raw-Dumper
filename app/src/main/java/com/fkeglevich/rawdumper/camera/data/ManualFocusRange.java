@@ -28,9 +28,11 @@ public class ManualFocusRange
     private final ManualFocus upper;
 
     //focus_range_values: 5~100,1
-    public static ManualFocusRange parseRange(String range)
+    public static ManualFocusRange parse(String value)
     {
-         String[] bounds = range.split(",")[0].split("~");
+        if (value == null) return null;
+
+         String[] bounds = value.split(",")[0].split("~");
          ManualFocus lower = ManualFocus.create(Integer.parseInt(bounds[0]));
          ManualFocus upper = ManualFocus.create(Integer.parseInt(bounds[1]));
          return new ManualFocusRange(lower, upper);

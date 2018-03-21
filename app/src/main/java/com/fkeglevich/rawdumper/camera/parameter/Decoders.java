@@ -39,57 +39,14 @@ class Decoders
 
     static
     {
-        dispatcher.put(String.class, new ValueDecoder<String>() {
-            @Override
-            public String decode(String value) {
-                return value;
-            }
-        });
-        dispatcher.put(Integer.TYPE, new ValueDecoder<Integer>() {
-            @Override
-            public Integer decode(String value) {return Integer.parseInt(value); }
-        });
-        dispatcher.put(Float.TYPE, new ValueDecoder<Float>() {
-            @Override
-            public Float decode(String value) {return Float.parseFloat(value); }
-        });
-        dispatcher.put(CaptureSize.class, new ValueDecoder<CaptureSize>()
-        {
-            @Override
-            public CaptureSize decode(String value)
-            {
-                int xPos = value.indexOf('x');
-                if (xPos != -1)
-                {
-                    int width  = Integer.parseInt(value.substring(0, xPos));
-                    int height = Integer.parseInt(value.substring(xPos + 1));
-                    return new CaptureSize(width, height);
-                }
-                return null;
-            }
-        });
-        dispatcher.put(Flash.class, createParameterValueDecoder(Flash.values(), Flash.OFF));
-        dispatcher.put(FocusMode.class, createParameterValueDecoder(FocusMode.values(), FocusMode.AUTO));
-        dispatcher.put(ManualFocus.class, new ValueDecoder<ManualFocus>()
-        {
-            @Override
-            public ManualFocus decode(String value)
-            {
-                int numeric = value != null ? Integer.parseInt(value) : 0;
-                if (numeric == 0)
-                    return ManualFocus.DISABLED;
-
-                return ManualFocus.create(numeric);
-            }
-        });
-        dispatcher.put(ManualFocusRange.class, new ValueDecoder<ManualFocusRange>()
-        {
-            @Override
-            public ManualFocusRange decode(String value)
-            {
-                return value != null ? ManualFocusRange.parseRange(value) : null;
-            }
-        });
+        dispatcher.put(String.class,            String::toString);
+        dispatcher.put(Integer.TYPE,            Integer::parseInt);
+        dispatcher.put(Float.TYPE,              Float::parseFloat);
+        dispatcher.put(CaptureSize.class,       CaptureSize::parse);
+        dispatcher.put(Flash.class,             createParameterValueDecoder(Flash.values(), Flash.OFF));
+        dispatcher.put(FocusMode.class,         createParameterValueDecoder(FocusMode.values(), FocusMode.AUTO));
+        dispatcher.put(ManualFocus.class,       ManualFocus::parse);
+        dispatcher.put(ManualFocusRange.class,  ManualFocusRange::parse);
     }
 
     @SuppressWarnings("unchecked")
@@ -108,19 +65,29 @@ class Decoders
 
     private static <T extends ParameterValue> ValueDecoder<T> createParameterValueDecoder(final T[] enumValues, final T nullValue)
     {
-        return new ValueDecoder<T>()
+        return value ->
         {
-            @Override
-            public T decode(String value)
-            {
-                if (value == null) return nullValue;
+            if (value == null) return nullValue;
 
-                for (T item : enumValues)
-                    if (item.getParameterValue().equals(value))
-                        return item;
+            for (T item : enumValues)
+                if (item.getParameterValue().equals(value))
+                    return item;
 
-                return null;
-            }
+            return null;
+        };
+    }
+
+    private static <T extends Enum<T> & ParameterValue> ValueDecoder<T> createEnumValueDecoder(T nullValue)
+    {
+        return value ->
+        {
+            if (value == null) return nullValue;
+
+            for (T item : nullValue.getDeclaringClass().getEnumConstants())
+                if (item.getParameterValue().equals(value))
+                    return item;
+
+            return null;
         };
     }
 }

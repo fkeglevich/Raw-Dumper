@@ -53,28 +53,17 @@ public class DrawerController
         AppCompatActivity activity = reference.weaklyGet();
 
         ImageButton modesButton = (ImageButton)activity.findViewById(R.id.modesButton);
-        modesButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                drawer.openDrawer();
-            }
-        });
+        modesButton.setOnClickListener(v -> drawer.openDrawer());
     }
 
     private void setupEvents()
     {
-        reference.onBackPressed.addListener(new EventListener<DefaultPreventer>()
+        reference.onBackPressed.addListener(eventData ->
         {
-            @Override
-            public void onEvent(DefaultPreventer eventData)
+            if (drawer.isDrawerOpen())
             {
-                if (drawer.isDrawerOpen())
-                {
-                    eventData.preventDefault();
-                    drawer.closeDrawer();
-                }
+                eventData.preventDefault();
+                drawer.closeDrawer();
             }
         });
     }

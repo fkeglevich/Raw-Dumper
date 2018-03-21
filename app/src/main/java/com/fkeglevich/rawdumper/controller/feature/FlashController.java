@@ -76,18 +76,14 @@ public class FlashController extends FeatureController
 
         buttonDisabledStateController.enableAnimated();
 
-        flashButton.setOnClickListener(new View.OnClickListener()
+        flashButton.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v)
-            {
-                selectedFlashIndex++;
-                if (selectedFlashIndex >= flashList.size())
-                    selectedFlashIndex = 0;
+            selectedFlashIndex++;
+            if (selectedFlashIndex >= flashList.size())
+                selectedFlashIndex = 0;
 
-                flashFeature.setValue(flashList.get(selectedFlashIndex));
-                updateButtonUi();
-            }
+            flashFeature.setValue(flashList.get(selectedFlashIndex));
+            updateButtonUi();
         });
     }
 

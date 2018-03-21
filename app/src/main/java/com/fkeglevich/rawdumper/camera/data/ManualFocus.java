@@ -40,6 +40,15 @@ public class ManualFocus implements Comparable<ManualFocus>
 
     private final int numericValue;
 
+    public static ManualFocus parse(String value)
+    {
+        int numeric = value != null ? Integer.parseInt(value) : 0;
+        if (numeric == 0)
+            return ManualFocus.DISABLED;
+
+        return ManualFocus.create(numeric);
+    }
+
     private ManualFocus(int numericValue)
     {
         this.numericValue = numericValue;

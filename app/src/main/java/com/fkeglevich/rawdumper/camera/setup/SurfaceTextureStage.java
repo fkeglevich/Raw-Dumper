@@ -33,14 +33,7 @@ public class SurfaceTextureStage implements SetupStage
     public void executeStage(final SetupStageLink setupBase)
     {
         CameraPreview textureSource = setupBase.getSurfaceTextureSource();
-        textureSource.requestSurfaceTexture(new EventListener<SurfaceTexture>()
-        {
-            @Override
-            public void onEvent(SurfaceTexture surface)
-            {
-                endStage(surface, setupBase);
-            }
-        });
+        textureSource.requestSurfaceTexture(surface -> endStage(surface, setupBase));
     }
 
     private void endStage(SurfaceTexture surfaceTexture, SetupStageLink setupBase)

@@ -73,44 +73,23 @@ public class CameraLifetimeController
 
     private void setupActivityListeners()
     {
-        reference.onResume.addListener(new EventListener<Void>()
-        {
-            @Override
-            public void onEvent(Void eventData)
-            {
-                cameraManager.openCamera();
-            }
-        });
+        reference.onResume.addListener(eventData -> cameraManager.openCamera());
     }
 
     private void setupCameraManager()
     {
-        cameraManager.onCameraOpened.addListener(new EventListener<TurboCamera>()
+        cameraManager.onCameraOpened.addListener(eventData -> onCameraOpened(eventData));
+        cameraManager.onCameraException.addListener(eventData ->
         {
-            @Override
-            public void onEvent(TurboCamera eventData)
-            {
-                onCameraOpened(eventData);
-            }
-        });
-        cameraManager.onCameraException.addListener(new EventListener<MessageException>() {
-            @Override
-            public void onEvent(MessageException eventData)
-            {
-                if (eventData instanceof RawIsUnavailableException || eventData instanceof CameraPatchRequiredException)
-                    OkDialog.show(reference, eventData,
-                            new DialogInterface.OnClickListener()
-                            {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which)
-                                {
-                                    cameraManager.selectNextCamera();
-                                    cameraManager.openCamera();
-                                }
-                            });
-                else
-                    FatalErrorDialog.show(reference, eventData);
-            }
+            if (eventData instanceof RawIsUnavailableException || eventData instanceof CameraPatchRequiredException)
+                OkDialog.show(reference, eventData,
+                        (dialog, which) ->
+                        {
+                            cameraManager.selectNextCamera();
+                            cameraManager.openCamera();
+                        });
+            else
+                FatalErrorDialog.show(reference, eventData);
         });
     }
 

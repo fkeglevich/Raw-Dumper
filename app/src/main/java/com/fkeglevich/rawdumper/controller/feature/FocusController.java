@@ -88,30 +88,22 @@ public class FocusController extends FeatureController implements Dismissible
 
             button = focusButtonMap.get(mode);
             button.setVisibility(View.VISIBLE);
-            button.setOnClickListener(new View.OnClickListener()
+            button.setOnClickListener(button1 ->
             {
-                @Override
-                public void onClick(View button)
-                {
-                    focusFeature.setValue(mode);
-                    unToggleLastButton();
-                    toggleButton(button);
-                }
+                focusFeature.setValue(mode);
+                unToggleLastButton();
+                toggleButton(button1);
             });
         }
 
-        focusButton.setOnClickListener(new View.OnClickListener()
+        focusButton.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v)
+            if (chooser.getVisibility() == View.VISIBLE)
+                hideChooser();
+            else
             {
-                if (chooser.getVisibility() == View.VISIBLE)
-                    hideChooser();
-                else
-                {
-                    clickNotifier.notifyOnClick();
-                    showChooser();
-                }
+                clickNotifier.notifyOnClick();
+                showChooser();
             }
         });
 

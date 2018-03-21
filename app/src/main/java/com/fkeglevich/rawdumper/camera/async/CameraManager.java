@@ -77,30 +77,19 @@ public class CameraManager
         onCameraClosed = new SimpleDispatcher<>();
         onCameraException = cameraSetup.onException;
 
-        cameraSetup.onComplete.addListener(new EventListener<TurboCamera>()
+        cameraSetup.onComplete.addListener(eventData ->
         {
-            @Override
-            public void onEvent(TurboCamera eventData)
+            currentState = State.CAMERA_READY;
+            if (postponedClose)
             {
-                currentState = State.CAMERA_READY;
-                if (postponedClose)
-                {
-                    closeCamera();
-                    postponedClose = false;
-                }
-                else
-                    onCameraOpened.dispatchEvent(eventData);
+                closeCamera();
+                postponedClose = false;
             }
+            else
+                onCameraOpened.dispatchEvent(eventData);
         });
 
-        cameraSetup.onException.addListener(new EventListener<MessageException>()
-        {
-            @Override
-            public void onEvent(MessageException eventData)
-            {
-                currentState = State.IDLE;
-            }
-        });
+        cameraSetup.onException.addListener(eventData -> currentState = State.IDLE);
     }
 
     public void openCamera()

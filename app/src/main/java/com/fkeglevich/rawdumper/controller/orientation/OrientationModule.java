@@ -41,37 +41,16 @@ public class OrientationModule
 
     private void setupOnCreateEvent()
     {
-        reference.onCreate.addListener(new EventListener<Bundle>()
-        {
-            @Override
-            public void onEvent(Bundle eventData)
-            {
-                OrientationManager.getInstance().setup(reference.weaklyGet());
-            }
-        });
+        reference.onCreate.addListener(eventData -> OrientationManager.getInstance().setup(reference.weaklyGet()));
     }
 
     private void setupOnResumeEvent()
     {
-        reference.onResume.addListener(new EventListener<Void>()
-        {
-            @Override
-            public void onEvent(Void eventData)
-            {
-                OrientationManager.getInstance().enable();
-            }
-        });
+        reference.onResume.addListener(eventData -> OrientationManager.getInstance().enable());
     }
 
     private void setupOnPauseEvent()
     {
-        reference.onPause.addListener(new EventListener<Void>()
-        {
-            @Override
-            public void onEvent(Void eventData)
-            {
-                OrientationManager.getInstance().disable();
-            }
-        });
+        reference.onPause.addListener(eventData -> OrientationManager.getInstance().disable());
     }
 }

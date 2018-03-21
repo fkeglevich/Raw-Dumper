@@ -59,17 +59,13 @@ public class RetryingRawPipeline implements PicturePipeline
     private Camera.Parameters               parameters = null;
     private boolean                         ignoreError = false;
 
-    private final Camera.ErrorCallback      errorCallback = new Camera.ErrorCallback()
+    private final Camera.ErrorCallback      errorCallback = (error, camera) ->
     {
-        @Override
-        public void onError(int error, Camera camera)
+        if (ignoreError)
         {
-            if (ignoreError)
-            {
-                ThreadUtil.simpleDelay(2000);
-                restartCamera();
-                ignoreError = false;
-            }
+            ThreadUtil.simpleDelay(2000);
+            restartCamera();
+            ignoreError = false;
         }
     };
 

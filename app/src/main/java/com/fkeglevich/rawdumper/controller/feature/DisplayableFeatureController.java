@@ -103,14 +103,10 @@ public abstract class DisplayableFeatureController<T extends Displayable> extend
     {
         feature.getOnChanged().addListener(featureChangedListener);
         featureUi.setItems(displayableValueList);
-        featureUi.setListener(new ItemSelectedListener()
+        featureUi.setListener(index ->
         {
-            @Override
-            public void onSelected(int index)
-            {
-                ignoreOnChangedListener = true;
-                updateFeatureValueFromUi(index);
-            }
+            ignoreOnChangedListener = true;
+            updateFeatureValueFromUi(index);
         });
         updateUiFromFeatureValue();
         featureUi.enable();

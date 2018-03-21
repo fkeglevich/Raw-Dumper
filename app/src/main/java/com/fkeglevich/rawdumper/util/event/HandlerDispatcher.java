@@ -39,13 +39,6 @@ public class HandlerDispatcher<T> extends SimpleDispatcher<T>
     @Override
     public void dispatchEvent(final T data)
     {
-        handler.post(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                HandlerDispatcher.super.dispatchEvent(data);
-            }
-        });
+        handler.post(() -> HandlerDispatcher.super.dispatchEvent(data));
     }
 }

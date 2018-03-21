@@ -49,11 +49,7 @@ public class FatalErrorDialog
 
         builder.setPositiveButton(
                 context.getResources().getString(R.string.terminating_dialog_button),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        System.exit(0);
-                    }
-                });
+                (dialog, id) -> System.exit(0));
 
         return builder.create();
     }

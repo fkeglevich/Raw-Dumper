@@ -50,16 +50,8 @@ public class TouchFocusController extends FeatureController
         @Override
         public void autoFocusDone(final boolean success)
         {
-            uiHandler.post(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    focusView.setMeteringArea(lastTouchArea,
-                            success ? TouchFocusView.FOCUS_METERING_SUCCESS : TouchFocusView.FOCUS_METERING_FAIL);
-
-                };
-            });
+            uiHandler.post(() -> focusView.setMeteringArea(lastTouchArea,
+                    success ? TouchFocusView.FOCUS_METERING_SUCCESS : TouchFocusView.FOCUS_METERING_FAIL));
         }
     };
 
@@ -69,25 +61,21 @@ public class TouchFocusController extends FeatureController
         this.uiHandler = new Handler(Looper.getMainLooper());
         this.focusFeature = null;
 
-        clickArea.setOnTouchListener(new View.OnTouchListener()
+        clickArea.setOnTouchListener((v, event) ->
         {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
+            if(enabled && event.getAction() == MotionEvent.ACTION_DOWN)
             {
-                if(enabled && event.getAction() == MotionEvent.ACTION_DOWN)
+                if (focusFeature != null && focusFeature.getValue().canAutoFocus())
                 {
-                    if (focusFeature != null && focusFeature.getValue().canAutoFocus())
-                    {
-                        int touchSize = UiUtil.dpToPixels(36, TouchFocusController.this.focusView.getContext());
-                        lastTouchArea = PreviewArea.createTouchArea(v, event, touchSize);
-                        TouchFocusController.this.focusView.setMeteringArea(lastTouchArea, TouchFocusView.FOCUS_METERING);
-                        focusFeature.startAutoFocus(lastTouchArea, autoFocusResult);
-                    }
-
-                    v.performClick();
+                    int touchSize = UiUtil.dpToPixels(36, TouchFocusController.this.focusView.getContext());
+                    lastTouchArea = PreviewArea.createTouchArea(v, event, touchSize);
+                    TouchFocusController.this.focusView.setMeteringArea(lastTouchArea, TouchFocusView.FOCUS_METERING);
+                    focusFeature.startAutoFocus(lastTouchArea, autoFocusResult);
                 }
-                return false;
+
+                v.performClick();
             }
+            return false;
         });
     }
 
@@ -101,14 +89,10 @@ public class TouchFocusController extends FeatureController
             return;
         }
 
-        focusFeature.getOnChanged().addListener(new EventListener<ParameterChangeEvent<FocusMode>>()
+        focusFeature.getOnChanged().addListener(eventData ->
         {
-            @Override
-            public void onEvent(ParameterChangeEvent<FocusMode> eventData)
-            {
-                if (!eventData.parameterValue.canAutoFocus())
-                    cleanFocus();
-            }
+            if (!eventData.parameterValue.canAutoFocus())
+                cleanFocus();
         });
     }
 

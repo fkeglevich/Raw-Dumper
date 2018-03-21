@@ -35,16 +35,12 @@ public class MandatoryRootManager extends MandatoryPermissionManager
     {
         if (!ShellManager.getInstance().isRunning())
         {
-            ShellManager.getInstance().open(new Shell.OnCommandResultListener()
+            ShellManager.getInstance().open((commandCode, exitCode, output) ->
             {
-                @Override
-                public void onCommandResult(int commandCode, int exitCode, List<String> output)
-                {
-                    if (exitCode == Shell.OnCommandResultListener.SHELL_RUNNING)
-                        MandatoryRootManager.super.dispatchPermissionsGranted();
-                    else
-                        dispatchMissingPermissions(new RootAccessException());
-                }
+                if (exitCode == Shell.OnCommandResultListener.SHELL_RUNNING)
+                    MandatoryRootManager.super.dispatchPermissionsGranted();
+                else
+                    dispatchMissingPermissions(new RootAccessException());
             });
         }
         else

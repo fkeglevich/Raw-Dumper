@@ -26,13 +26,6 @@ public class EventDispatcherUtil
 {
     public static <T> void propagate(EventDispatcher<T> source, final EventDispatcher<T> target)
     {
-        source.addListener(new EventListener<T>()
-        {
-            @Override
-            public void onEvent(T eventData)
-            {
-                target.dispatchEvent(eventData);
-            }
-        });
+        source.addListener(eventData -> target.dispatchEvent(eventData));
     }
 }

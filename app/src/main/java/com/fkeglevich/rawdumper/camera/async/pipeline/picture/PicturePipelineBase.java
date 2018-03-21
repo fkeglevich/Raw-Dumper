@@ -56,57 +56,35 @@ public abstract class PicturePipelineBase implements PicturePipeline
     @NonNull
     private Camera.PictureCallback createRawCB(final PipelineData pipelineData)
     {
-        return new Camera.PictureCallback()
-                {
-                    @Override
-                    public void onPictureTaken(byte[] data, Camera camera)
-                    {
-                        pipelineData.rawData = data;
-                    }
-                };
+        return (data, camera) -> pipelineData.rawData = data;
     }
 
     @NonNull
     private Camera.PictureCallback createJpegCB(final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback, final PipelineData pipelineData)
     {
-        return new Camera.PictureCallback()
+        return (data, camera) ->
         {
-            @Override
-            public void onPictureTaken(byte[] data, Camera camera)
+            pipelineData.jpegData = data;
+            synchronized (lock)
             {
-                pipelineData.jpegData = data;
-                synchronized (lock)
-                {
-                    processPipeline(pipelineData, pictureCallback, exceptionCallback);
-                }
+                processPipeline(pipelineData, pictureCallback, exceptionCallback);
             }
         };
     }
 
     private Camera.PictureCallback createJpegCB(final PipelineData pipelineData)
     {
-        return new Camera.PictureCallback()
-        {
-            @Override
-            public void onPictureTaken(byte[] data, Camera camera)
-            {
-                pipelineData.jpegData = data;
-            }
-        };
+        return (data, camera) -> pipelineData.jpegData = data;
     }
 
     @NonNull
     private Camera.PictureCallback createPostViewCB(final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback, final PipelineData pipelineData)
     {
-        return new Camera.PictureCallback()
+        return (data, camera) ->
         {
-            @Override
-            public void onPictureTaken(byte[] data, Camera camera)
+            synchronized (lock)
             {
-                synchronized (lock)
-                {
-                    processPipeline(pipelineData, pictureCallback, exceptionCallback);
-                }
+                processPipeline(pipelineData, pictureCallback, exceptionCallback);
             }
         };
     }

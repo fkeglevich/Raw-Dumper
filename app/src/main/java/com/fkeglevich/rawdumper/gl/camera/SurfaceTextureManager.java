@@ -74,13 +74,6 @@ public class SurfaceTextureManager
 
     private void dispatchSurfaceTextureAvailable()
     {
-        uiHandler.post(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                onSurfaceTextureAvailable.dispatchEvent(surfaceTexture);
-            }
-        });
+        uiHandler.post(() -> onSurfaceTextureAvailable.dispatchEvent(surfaceTexture));
     }
 }

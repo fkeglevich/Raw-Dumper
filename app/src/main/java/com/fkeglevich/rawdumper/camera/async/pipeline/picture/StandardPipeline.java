@@ -54,14 +54,7 @@ abstract class StandardPipeline extends PicturePipelineBase
         String filename = new File(Directories.getPicturesDirectory(), filenameBuilder.useCalendar(Calendar.getInstance()).build()).getAbsolutePath();
         saveImage(pipelineData, pictureCallback, exceptionCallback, filename);
         startPreview();
-        uiHandler.post(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                pictureCallback.onPictureTaken();
-            }
-        });
+        uiHandler.post(() -> pictureCallback.onPictureTaken());
     }
 
     abstract void saveImage(PipelineData pipelineData,

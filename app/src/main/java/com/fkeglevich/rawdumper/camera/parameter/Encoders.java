@@ -38,12 +38,7 @@ class Encoders
 
     static
     {
-        dispatcher.put(String.class, new ValueEncoder<String>() {
-            @Override
-            public String encode(String value) {
-                return value;
-            }
-        });
+        dispatcher.put(String.class, Object::toString);
         dispatcher.put(Integer.TYPE, new ValueEncoder<Integer>() {
             @Override
             public String encode(Integer value) {return value.toString();
@@ -88,13 +83,6 @@ class Encoders
 
     private static <T extends ParameterValue> ValueEncoder<T> createParameterValueDecoder()
     {
-        return new ValueEncoder<T>()
-        {
-            @Override
-            public String encode(T value)
-            {
-                return value.getParameterValue();
-            }
-        };
+        return ParameterValue::getParameterValue;
     }
 }

@@ -38,14 +38,7 @@ class LowLevelParameterInterfaceImpl implements LowLevelParameterInterface
     @Override
     public void remove(final String key)
     {
-        update(new UpdateFunction()
-        {
-            @Override
-            public void update(Camera.Parameters parameters)
-            {
-                parameters.remove(key);
-            }
-        });
+        update(parameters -> parameters.remove(key));
     }
 
     @Override
@@ -60,14 +53,7 @@ class LowLevelParameterInterfaceImpl implements LowLevelParameterInterface
     @Override
     public void set(final String key, final String value)
     {
-        update(new UpdateFunction()
-        {
-            @Override
-            public void update(Camera.Parameters parameters)
-            {
-                parameters.set(key, value);
-            }
-        });
+        update(parameters -> parameters.set(key, value));
     }
 
     @Override

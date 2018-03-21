@@ -66,19 +66,15 @@ public abstract class ItemFeatureController<T> extends FeatureController
         for (T value : values)
         {
             optionItem = new FeatureOptionItem<>(displayValue(value), value);
-            optionItem.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener()
+            optionItem.withOnDrawerItemClickListener((view, position, drawerItem) ->
             {
-                @Override
-                public boolean onItemClick(View view, int position, IDrawerItem drawerItem)
-                {
-                    if (lastSelection != null)
-                        drawer.deselect(lastSelection.getIdentifier());
+                if (lastSelection != null)
+                    drawer.deselect(lastSelection.getIdentifier());
 
-                    lastSelection = drawerItem;
-                    FeatureOptionItem<T> item = (FeatureOptionItem<T>) drawerItem;
-                    feature.setValue(item.getData());
-                    return true;
-                }
+                lastSelection = drawerItem;
+                FeatureOptionItem<T> item = (FeatureOptionItem<T>) drawerItem;
+                feature.setValue(item.getData());
+                return true;
             });
             subItems.add(optionItem);
         }

@@ -52,14 +52,7 @@ public class ButtonController implements DisplayableFeatureUi, Dismissible
                             OnClickNotifier clickNotifier)
     {
         this.button = button;
-        button.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                toggleChooser();
-            }
-        });
+        button.setOnClickListener(v -> toggleChooser());
 
         this.adapter = adapter;
         this.chooser = chooser;

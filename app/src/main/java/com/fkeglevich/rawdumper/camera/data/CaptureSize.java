@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.data;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.fkeglevich.rawdumper.util.MathUtil;
 
@@ -33,6 +34,19 @@ public class CaptureSize implements Comparable<CaptureSize>, Displayable
 
     private final int aspectRatioX;
     private final int aspectRatioY;
+
+    @Nullable
+    public static CaptureSize parse(String value)
+    {
+        int xPos = value.indexOf('x');
+        if (xPos != -1)
+        {
+            int width  = Integer.parseInt(value.substring(0, xPos));
+            int height = Integer.parseInt(value.substring(xPos + 1));
+            return new CaptureSize(width, height);
+        }
+        return null;
+    }
 
     public CaptureSize(int width, int height)
     {

@@ -32,23 +32,9 @@ import com.fkeglevich.rawdumper.util.Nullable;
 
 public class ExposureParameterFactory
 {
-    private static final ValueDecoder<Iso> BASIC_ISO_DECODER = new ValueDecoder<Iso>()
-    {
-        @Override
-        public Iso decode(String value)
-        {
-            return Iso.create(Integer.parseInt(value));
-        }
-    };
+    private static final ValueDecoder<Iso> BASIC_ISO_DECODER = value -> Iso.create(Integer.parseInt(value));
 
-    private static final ValueEncoder<Iso> BASIC_ISO_ENCODER = new ValueEncoder<Iso>()
-    {
-        @Override
-        public String encode(Iso value)
-        {
-            return "" + value.getNumericValue();
-        }
-    };
+    private static final ValueEncoder<Iso> BASIC_ISO_ENCODER = value -> "" + value.getNumericValue();
 
     public static Parameter<Iso> createIsoParameter(ExposureInfo exposureInfo)
     {
@@ -59,33 +45,25 @@ public class ExposureParameterFactory
 
     public static Parameter<ShutterSpeed> createSSParameter(ExposureInfo exposureInfo)
     {
-        ValueDecoder<ShutterSpeed> ssDecoder = createExposureParameterDecoder(ShutterSpeed.AUTO, exposureInfo.getShutterSpeedAutoValue(), new ValueDecoder<ShutterSpeed>()
+        ValueDecoder<ShutterSpeed> ssDecoder = createExposureParameterDecoder(ShutterSpeed.AUTO, exposureInfo.getShutterSpeedAutoValue(), value ->
         {
-            @Override
-            public ShutterSpeed decode(String value)
-            {
-                if (value.endsWith("s"))
-                    return ShutterSpeed.create(Double.parseDouble(value.replace("s", "")));
+            if (value.endsWith("s"))
+                return ShutterSpeed.create(Double.parseDouble(value.replace("s", "")));
 
-                return ShutterSpeed.create(1d / Double.parseDouble(value));
-            }
+            return ShutterSpeed.create(1d / Double.parseDouble(value));
         });
 
         final boolean isUsingOneWithoutS = exposureInfo.getShutterSpeedValues().contains("1");
 
-        ValueEncoder<ShutterSpeed> ssEncoder = createExposureParameterEncoder(ShutterSpeed.AUTO, exposureInfo.getShutterSpeedAutoValue(), new ValueEncoder<ShutterSpeed>()
+        ValueEncoder<ShutterSpeed> ssEncoder = createExposureParameterEncoder(ShutterSpeed.AUTO, exposureInfo.getShutterSpeedAutoValue(), value ->
         {
-            @Override
-            public String encode(ShutterSpeed value)
-            {
-                double exposure = value.getExposureInSeconds();
-                int comparing = Double.compare(exposure, 1d);
+            double exposure = value.getExposureInSeconds();
+            int comparing = Double.compare(exposure, 1d);
 
-                if (comparing > 0) return exposure + "s";
-                if (comparing < 0) return "" + Math.round(1d / exposure);
+            if (comparing > 0) return exposure + "s";
+            if (comparing < 0) return "" + Math.round(1d / exposure);
 
-                return isUsingOneWithoutS ? "1" : "1s";
-            }
+            return isUsingOneWithoutS ? "1" : "1s";
         });
 
         return StaticParameter.create(exposureInfo.getShutterSpeedParameter(), ssDecoder, ssEncoder);
@@ -95,57 +73,35 @@ public class ExposureParameterFactory
     {
         final float step = parameterCollection.get(Parameters.EXPOSURE_COMPENSATION_STEP);
 
-        ValueDecoder<Ev> evDecoder = new ValueDecoder<Ev>()
-        {
-            @Override
-            public Ev decode(String value)
-            {
-                return Ev.create(step * Float.parseFloat(value));
-            }
-        };
+        ValueDecoder<Ev> evDecoder = value -> Ev.create(step * Float.parseFloat(value));
 
-        ValueEncoder<Ev> evEncoder = new ValueEncoder<Ev>()
-        {
-            @Override
-            public String encode(Ev value)
-            {
-                return "" + Math.round(value.getValue() / step);
-            }
-        };
+        ValueEncoder<Ev> evEncoder = value -> "" + Math.round(value.getValue() / step);
 
         return StaticParameter.create("exposure-compensation", evDecoder, evEncoder);
     }
 
     public static Parameter<Nullable<Iso>> createIsoMeteringParameter()
     {
-        return StaticParameter.createReadOnly(AsusParameters.ASUS_XENON_ISO, new ValueDecoder<Nullable<Iso>>()
+        return StaticParameter.createReadOnly(AsusParameters.ASUS_XENON_ISO, value ->
         {
-            @Override
-            public Nullable<Iso> decode(String value)
-            {
-                int numeric = Integer.parseInt(value);
-                return Nullable.of(numeric == 0 ? null : Iso.create(numeric));
-            }
+            int numeric = Integer.parseInt(value);
+            return Nullable.of(numeric == 0 ? null : Iso.create(numeric));
         });
     }
 
     public static Parameter<Nullable<ShutterSpeed>> createSSMeteringParameter()
     {
-        return StaticParameter.createReadOnly(AsusParameters.ASUS_XENON_EXPOSURE_TIME, new ValueDecoder<Nullable<ShutterSpeed>>()
+        return StaticParameter.createReadOnly(AsusParameters.ASUS_XENON_EXPOSURE_TIME, value ->
         {
-            @Override
-            public Nullable<ShutterSpeed> decode(String value)
+            if (value.contains("."))
             {
-                if (value.contains("."))
-                {
-                    double numeric = Double.parseDouble(value);
-                    return Nullable.of(numeric < 0.00001 ? null : ShutterSpeed.create(numeric));
-                }
-                else
-                {
-                    int numeric = Integer.parseInt(value);
-                    return Nullable.of(numeric == 0 ? null : ShutterSpeed.decodeIntegerExposureTime(numeric));
-                }
+                double numeric = Double.parseDouble(value);
+                return Nullable.of(numeric < 0.00001 ? null : ShutterSpeed.create(numeric));
+            }
+            else
+            {
+                int numeric = Integer.parseInt(value);
+                return Nullable.of(numeric == 0 ? null : ShutterSpeed.decodeIntegerExposureTime(numeric));
             }
         });
     }
@@ -154,16 +110,12 @@ public class ExposureParameterFactory
                                                                       final String encodedAuto,
                                                                       final ValueDecoder<T> actualDecoder)
     {
-        return new ValueDecoder<T>()
+        return value ->
         {
-            @Override
-            public T decode(String value)
-            {
-                if (value == null || encodedAuto == null || encodedAuto.equals(value))
-                    return auto;
+            if (value == null || encodedAuto == null || encodedAuto.equals(value))
+                return auto;
 
-                return actualDecoder.decode(value);
-            }
+            return actualDecoder.decode(value);
         };
     }
 
@@ -171,16 +123,12 @@ public class ExposureParameterFactory
                                                                       final String encodedAuto,
                                                                       final ValueEncoder<T> actualEncoder)
     {
-        return new ValueEncoder<T>()
+        return value ->
         {
-            @Override
-            public String encode(T value)
-            {
-                if (value == auto)
-                    return encodedAuto;
+            if (value == auto)
+                return encodedAuto;
 
-                return actualEncoder.encode(value);
-            }
+            return actualEncoder.encode(value);
         };
     }
 

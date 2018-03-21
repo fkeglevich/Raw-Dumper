@@ -33,14 +33,10 @@ public class FocusRestriction
 {
     public FocusRestriction(FocusFeature focusFeature, final ManualFocusFeature manualFocusFeature)
     {
-        focusFeature.getOnChanging().addListener(new EventListener<ParameterChangeEvent<FocusMode>>()
+        focusFeature.getOnChanging().addListener(eventData ->
         {
-            @Override
-            public void onEvent(ParameterChangeEvent<FocusMode> eventData)
-            {
-                if (manualFocusFeature.isAvailable())
-                    manualFocusFeature.setValue(ManualFocus.DISABLED);
-            }
+            if (manualFocusFeature.isAvailable())
+                manualFocusFeature.setValue(ManualFocus.DISABLED);
         });
     }
 }

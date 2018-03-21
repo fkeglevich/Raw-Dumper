@@ -34,36 +34,18 @@ public abstract class RestrictionChain
     protected  <M, S, L> void addChainNode(final ChainNode<M, S, L> node)
     {
         Feature<M> master = (Feature<M>) node.getMaster();
-        master.getOnChanged().addListener(new EventListener<ParameterChangeEvent<M>>()
+        master.getOnChanged().addListener(eventData ->
         {
-            @Override
-            public void onEvent(ParameterChangeEvent<M> eventData)
-            {
-                dispatchOnBeforeChainIfNeeded();
-                node.propagateChange(eventData.parameterValue);
-            }
+            dispatchOnBeforeChainIfNeeded();
+            node.propagateChange(eventData.parameterValue);
         });
     }
 
     protected  <M, S, L> void setupLatestSlave(Feature<S> slave)
     {
-        slave.getOnChanging().addListener(new EventListener<ParameterChangeEvent<S>>()
-        {
-            @Override
-            public void onEvent(ParameterChangeEvent<S> eventData)
-            {
-                dispatchOnBeforeChainIfNeeded();
-            }
-        });
+        slave.getOnChanging().addListener(eventData -> dispatchOnBeforeChainIfNeeded());
 
-        slave.getOnChanged().addListener(new EventListener<ParameterChangeEvent<S>>()
-        {
-            @Override
-            public void onEvent(ParameterChangeEvent<S> eventData)
-            {
-                dispatchOnAfterChainIfNeeded();
-            }
-        });
+        slave.getOnChanged().addListener(eventData -> dispatchOnAfterChainIfNeeded());
     }
 
     protected abstract void onBeforeChain();

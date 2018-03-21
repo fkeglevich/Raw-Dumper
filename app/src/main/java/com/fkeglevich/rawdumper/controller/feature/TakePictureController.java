@@ -64,37 +64,29 @@ public class TakePictureController extends FeatureController
     protected void setup(final TurboCamera camera)
     {
         buttonDisabledStateController.enableAnimated();
-        captureButton.setOnClickListener(new View.OnClickListener()
+        captureButton.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v)
+            //play animation
+            disableUi();
+            camera.takePicture(new PictureListener()
             {
-                //play animation
-                disableUi();
-                camera.takePicture(new PictureListener()
+                @Override
+                public void onPictureTaken()
                 {
-                    @Override
-                    public void onPictureTaken()
-                    {
-                        //Reserved for future versions
-                    }
+                    //Reserved for future versions
+                }
 
-                    @Override
-                    public void onPictureSaved()
-                    {
-                        showToast(R.string.picture_saved);
-                        enableUi();
-                    }
-                }, new PictureExceptionListener()
+                @Override
+                public void onPictureSaved()
                 {
-                    @Override
-                    public void onException(MessageException exception)
-                    {
-                        showToast(R.string.error_saving_picture);
-                        enableUi();
-                    }
-                });
-            }
+                    showToast(R.string.picture_saved);
+                    enableUi();
+                }
+            }, exception ->
+            {
+                showToast(R.string.error_saving_picture);
+                enableUi();
+            });
         });
     }
 

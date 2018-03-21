@@ -42,21 +42,17 @@ class RuntimeParameter<T> extends Parameter<T>
 
     RuntimeParameter(EventDispatcher<Parameter<T>> parameterImplementor)
     {
-        parameterImplementor.addListener(new EventListener<Parameter<T>>()
+        parameterImplementor.addListener(eventData ->
         {
-            @Override
-            public void onEvent(Parameter<T> eventData)
-            {
-                Log.i("AYE", "AYE " + eventData.getKey());
+            Log.i("AYE", "AYE " + eventData.getKey());
 
-                key = eventData.getKey();
-                decoder = eventData.getDecoder();
-                encoder = eventData.getEncoder();
+            key = eventData.getKey();
+            decoder = eventData.getDecoder();
+            encoder = eventData.getEncoder();
 
-                Assert.assertNotNull(key);
-                Assert.assertNotNull(decoder);
-                Assert.assertNotNull(encoder);
-            }
+            Assert.assertNotNull(key);
+            Assert.assertNotNull(decoder);
+            Assert.assertNotNull(encoder);
         });
     }
 

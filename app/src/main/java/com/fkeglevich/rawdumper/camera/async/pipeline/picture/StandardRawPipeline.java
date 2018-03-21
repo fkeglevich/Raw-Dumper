@@ -124,25 +124,11 @@ public class StandardRawPipeline extends PicturePipelineBase
 
     private void postOnPictureTaken(final PictureListener pictureCallback)
     {
-        uiHandler.post(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                pictureCallback.onPictureTaken();
-            }
-        });
+        uiHandler.post(() -> pictureCallback.onPictureTaken());
     }
 
     private void postOnPictureSaved(final PictureListener pictureCallback)
     {
-        uiHandler.postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                pictureCallback.onPictureSaved();
-            }
-        }, 120);
+        uiHandler.postDelayed(() -> pictureCallback.onPictureSaved(), 120);
     }
 }

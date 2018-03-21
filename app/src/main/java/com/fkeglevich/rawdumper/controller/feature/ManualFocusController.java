@@ -52,13 +52,9 @@ public class ManualFocusController extends FeatureController
         }
 
         manualButton.setVisibility(View.VISIBLE);
-        manualButton.setOnClickListener(new View.OnClickListener()
+        manualButton.setOnClickListener(v ->
         {
-            @Override
-            public void onClick(View v)
-            {
 
-            }
         });
     }
 

@@ -74,25 +74,14 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
     public void setupCamera(TurboCamera turboCamera)
     {
         Feature<CaptureSize> previewFeature = turboCamera.getPreviewFeature();
-        previewFeature.getOnChanged().addListener(new EventListener<ParameterChangeEvent<CaptureSize>>()
-        {
-            @Override
-            public void onEvent(ParameterChangeEvent<CaptureSize> eventData)
-            {
-                previewRenderer.updatePreviewSize(eventData.parameterValue);
-            }
-        });
+        previewFeature.getOnChanged().addListener(eventData -> previewRenderer.updatePreviewSize(eventData.parameterValue));
         previewRenderer.updatePreviewSize(previewFeature.getValue());
-        previewRenderer.getSurfaceTexture().setOnFrameAvailableListener(new SurfaceTexture.OnFrameAvailableListener()
+        previewRenderer.getSurfaceTexture().setOnFrameAvailableListener(surfaceTexture ->
         {
-            @Override
-            public void onFrameAvailable(SurfaceTexture surfaceTexture)
+            if (openingAnimation != null && !openingAnimation.isRunning())
             {
-                if (openingAnimation != null && !openingAnimation.isRunning())
-                {
-                    previewRenderer.startRender();
-                    requestRender();
-                }
+                previewRenderer.startRender();
+                requestRender();
             }
         });
         setVisibility(VISIBLE);
@@ -103,15 +92,11 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
         //{
             openingAnimation = ValueAnimator.ofFloat(0f, (float) (Math.hypot( (getWidth()) / 2.0, (getHeight() / (getWidth() * 1.0 / getHeight())) / 2.0) ));
             openingAnimation.setDuration(1000);
-            openingAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+            openingAnimation.addUpdateListener(animation ->
             {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation)
-                {
-                    previewRenderer.revealRadius = (float) animation.getAnimatedValue();
-                    previewRenderer.startRender();
-                    requestRender();
-                }
+                previewRenderer.revealRadius = (float) animation.getAnimatedValue();
+                previewRenderer.startRender();
+                requestRender();
             });
         //}
         openingAnimation.start();
@@ -148,15 +133,11 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
 
         takePictureAnimation = ValueAnimator.ofFloat(0f, (float) (Math.hypot( (getWidth()) / 2.0, (getHeight() / (getWidth() * 1.0 / getHeight())) / 2.0) ));
         takePictureAnimation.setDuration(400);
-        takePictureAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+        takePictureAnimation.addUpdateListener(animation ->
         {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation)
-            {
-                previewRenderer.revealRadius = (float) animation.getAnimatedValue();
-                previewRenderer.startRender();
-                requestRender();
-            }
+            previewRenderer.revealRadius = (float) animation.getAnimatedValue();
+            previewRenderer.startRender();
+            requestRender();
         });
         takePictureAnimation.addListener(new AnimatorListenerAdapter()
         {

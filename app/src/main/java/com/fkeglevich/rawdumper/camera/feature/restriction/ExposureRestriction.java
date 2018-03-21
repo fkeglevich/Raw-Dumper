@@ -74,16 +74,11 @@ public class ExposureRestriction
 
     private <T> EventListener<ParameterChangeEvent<T>> createEventListener(final ExposureType type)
     {
-        return new EventListener<ParameterChangeEvent<T>>()
+        return eventData ->
         {
-            @SuppressWarnings({"ConstantConditions","unchecked"})
-            @Override
-            public void onEvent(ParameterChangeEvent<T> eventData)
-            {
-                addExposureToHistory(type, eventData.parameterValue);
-                if (hasInvalidExposureSequence())
-                    changeOldestChangedParameter();
-            }
+            addExposureToHistory(type, eventData.parameterValue);
+            if (hasInvalidExposureSequence())
+                changeOldestChangedParameter();
         };
     }
 

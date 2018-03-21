@@ -37,14 +37,7 @@ public class FullscreenManager
     public FullscreenManager(ActivityReference activityReference)
     {
         this.activityReference = activityReference;
-        this.activityReference.onResume.addListener(new EventListener<Void>()
-        {
-            @Override
-            public void onEvent(Void eventData)
-            {
-                goToFullscreenMode();
-            }
-        });
+        this.activityReference.onResume.addListener(eventData -> goToFullscreenMode());
     }
 
     /**

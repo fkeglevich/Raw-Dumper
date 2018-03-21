@@ -40,23 +40,9 @@ public class FocusMeteringController extends FeatureController
     private FocusFeature focusFeature;
     private ManualFocusFeature manualFocusFeature;
 
-    private EventListener<ParameterChangeEvent<ManualFocus>> manualFocusListener = new EventListener<ParameterChangeEvent<ManualFocus>>()
-    {
-        @Override
-        public void onEvent(ParameterChangeEvent<ManualFocus> eventData)
-        {
-            updateText(false);
-        }
-    };
+    private EventListener<ParameterChangeEvent<ManualFocus>> manualFocusListener = eventData -> updateText(false);
 
-    private EventListener<ParameterChangeEvent<FocusMode>> focusListener = new EventListener<ParameterChangeEvent<FocusMode>>()
-    {
-        @Override
-        public void onEvent(ParameterChangeEvent<FocusMode> eventData)
-        {
-            updateText(false);
-        }
-    };
+    private EventListener<ParameterChangeEvent<FocusMode>> focusListener = eventData -> updateText(false);
 
     public FocusMeteringController(TextView focusText)
     {

@@ -89,14 +89,7 @@ public class LowLevelCameraActions implements CameraActions
         {
             Camera camera = getCamera();
             setAreasParameters(areas, camera);
-            camera.autoFocus(new Camera.AutoFocusCallback()
-            {
-                @Override
-                public void onAutoFocus(boolean success, Camera camera)
-                {
-                    callback.autoFocusDone(success);
-                }
-            });
+            camera.autoFocus((success, camera1) -> callback.autoFocusDone(success));
         }
     }
 

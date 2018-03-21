@@ -69,46 +69,23 @@ public class ModesInterface
         AppCompatActivity compatActivity = activityReference.weaklyGet();
 
         ImageButton modesButton = (ImageButton)compatActivity.findViewById(R.id.modesButton);
-        modesButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                setIsVisible(true);
-            }
-        });
+        modesButton.setOnClickListener(v -> setIsVisible(true));
 
         ImageButton backButton = (ImageButton)compatActivity.findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                setIsVisible(false);
-            }
-        });
+        backButton.setOnClickListener(v -> setIsVisible(false));
 
         ImageButton infoButton = (ImageButton)compatActivity.findViewById(R.id.infoButton);
-        infoButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {aboutDialog.showDialog(activityReference.weaklyGet());}
-        });
+        infoButton.setOnClickListener(v -> aboutDialog.showDialog(activityReference.weaklyGet()));
     }
 
     private void setupEvents(ActivityReference activityReference)
     {
-        activityReference.onBackPressed.addListener(new EventListener<DefaultPreventer>()
+        activityReference.onBackPressed.addListener(eventData ->
         {
-            @Override
-            public void onEvent(DefaultPreventer eventData)
+            if (isVisible())
             {
-                if (isVisible())
-                {
-                    eventData.preventDefault();
-                    setIsVisible(false);
-                }
+                eventData.preventDefault();
+                setIsVisible(false);
             }
         });
     }
