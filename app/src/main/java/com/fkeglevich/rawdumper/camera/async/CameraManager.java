@@ -25,12 +25,14 @@ import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryRootModule;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
-import com.fkeglevich.rawdumper.util.Assertion;
+
 import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
+
+import junit.framework.Assert;
 
 /**
  * TODO: Add class header
@@ -113,15 +115,15 @@ public class CameraManager
         if (currentState == State.CAMERA_READY)
             return;
 
-        Assertion.state(currentState, State.IDLE);
+        Assert.assertEquals(State.IDLE, currentState);
         cameraSetup.setupCamera();
         currentState = State.PERFORMING_OPERATION;
     }
 
     public void switchCamera()
     {
-        Assertion.state(currentState, State.CAMERA_READY);
-        Assertion.isTrue(canSwitchCamera());
+        Assert.assertEquals(State.CAMERA_READY, currentState);
+        Assert.assertTrue(canSwitchCamera());
         dispatchCameraClose();
         CameraThread.getInstance().closeCameraAsync(new AsyncOperation<Void>()
         {
@@ -141,7 +143,7 @@ public class CameraManager
             postponedClose = true;
         else
         {
-            Assertion.state(currentState, State.CAMERA_READY);
+            Assert.assertEquals(State.CAMERA_READY, currentState);
             CameraThread.getInstance().closeCamera();
             dispatchCameraClose();
             currentState = State.IDLE;

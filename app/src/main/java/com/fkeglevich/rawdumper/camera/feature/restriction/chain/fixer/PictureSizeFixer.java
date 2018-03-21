@@ -19,7 +19,8 @@ package com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
-import com.fkeglevich.rawdumper.util.Assertion;
+
+import junit.framework.Assert;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class PictureSizeFixer implements FeatureValueFixer<PictureFormat, Captur
     @Override
     public CaptureSize fixValue(ValueValidator<CaptureSize, List<CaptureSize>> newValidator, CaptureSize toBeFixed, PictureFormat ignored)
     {
-        Assertion.isTrue(!newValidator.getAvailableValues().isEmpty());
+        Assert.assertTrue(!newValidator.getAvailableValues().isEmpty());
 
         int smallestDifference = Integer.MAX_VALUE, difference;
         CaptureSize selected = null;
@@ -48,7 +49,7 @@ public class PictureSizeFixer implements FeatureValueFixer<PictureFormat, Captur
             }
         }
 
-        Assertion.isNotNull(selected);
+        Assert.assertNotNull(selected);
         return selected;
     }
 }

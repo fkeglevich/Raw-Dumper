@@ -18,7 +18,8 @@ package com.fkeglevich.rawdumper.camera.feature.restriction.chain.fixer;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
-import com.fkeglevich.rawdumper.util.Assertion;
+
+import junit.framework.Assert;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +37,7 @@ public class PreviewSizeFixer implements FeatureValueFixer<CaptureSize, CaptureS
     public CaptureSize fixValue(ValueValidator<CaptureSize, List<CaptureSize>> newValidator,
                                 CaptureSize ignored, CaptureSize pictureSize)
     {
-        Assertion.isTrue(!newValidator.getAvailableValues().isEmpty());
+        Assert.assertTrue(!newValidator.getAvailableValues().isEmpty());
 
         List<CaptureSize> previewCandidates = new ArrayList<>();
         for (CaptureSize preview : newValidator.getAvailableValues())

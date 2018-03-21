@@ -25,8 +25,9 @@ import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
-import com.fkeglevich.rawdumper.util.Assertion;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
+
+import junit.framework.Assert;
 
 /**
  * TODO: Add class header
@@ -104,8 +105,8 @@ class SetupStageLinkImpl implements SetupStageLink
     @Override
     public CameraContext buildCameraContext()
     {
-        Assertion.isNotNull(deviceInfo);
-        Assertion.isNotNull(surfaceTexture);
+        Assert.assertNotNull(deviceInfo);
+        Assert.assertNotNull(surfaceTexture);
         return new SetupStageCameraContext(deviceInfo, surfaceTexture, cameraSelector);
     }
 

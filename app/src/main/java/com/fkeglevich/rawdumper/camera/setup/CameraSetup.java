@@ -21,10 +21,11 @@ import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
-import com.fkeglevich.rawdumper.util.Assertion;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
+
+import junit.framework.Assert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,7 +79,7 @@ public class CameraSetup
             stageQueue.remove(0).executeStage(setupStageLink);
         else
         {
-            Assertion.isNotNull(turboCamera);
+            Assert.assertNotNull(turboCamera);
             onComplete.dispatchEvent(turboCamera);
             turboCamera = null;
             setupIsRunning = false;
