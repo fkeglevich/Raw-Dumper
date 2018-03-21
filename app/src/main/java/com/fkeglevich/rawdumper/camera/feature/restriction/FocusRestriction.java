@@ -19,6 +19,8 @@ package com.fkeglevich.rawdumper.camera.feature.restriction;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
+import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * TODO: Add class header
@@ -28,12 +30,18 @@ import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
 
 public class FocusRestriction
 {
-    public FocusRestriction(FocusFeature focusFeature, final ManualFocusFeature manualFocusFeature)
+    public FocusRestriction(FocusFeature focusFeature, ManualFocusFeature manualFocusFeature)
     {
         focusFeature.getOnChanging().addListener(eventData ->
         {
             if (manualFocusFeature.isAvailable())
                 manualFocusFeature.setValue(ManualFocus.DISABLED);
+        });
+
+        manualFocusFeature.getOnChanging().addListener(eventData ->
+        {
+            if (!eventData.parameterValue.equals(ManualFocus.DISABLED))
+                focusFeature.cancelAutoFocus();
         });
     }
 }
