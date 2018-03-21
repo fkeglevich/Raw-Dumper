@@ -23,10 +23,14 @@ import android.view.View;
 
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
+import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
+import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
 import com.fkeglevich.rawdumper.ui.TouchFocusView;
 import com.fkeglevich.rawdumper.ui.UiUtil;
+import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * TODO: Add class header
@@ -83,6 +87,7 @@ public class TouchFocusController extends FeatureController
     protected void setup(TurboCamera camera)
     {
         focusFeature = camera.getFocusFeature();
+        ManualFocusFeature manualFocusFeature = camera.getManualFocusFeature();
         if (!focusFeature.isAvailable())
         {
             reset();
@@ -94,6 +99,13 @@ public class TouchFocusController extends FeatureController
             cleanFocus();
             focusFeature.cancelAutoFocus();
         });
+
+        if (manualFocusFeature.isAvailable())
+            manualFocusFeature.getOnChanging().addListener(eventData ->
+            {
+                if (!eventData.parameterValue.equals(ManualFocus.DISABLED))
+                    cleanFocus();
+            });
     }
 
     @Override

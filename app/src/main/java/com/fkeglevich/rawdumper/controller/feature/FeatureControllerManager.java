@@ -48,6 +48,7 @@ class FeatureControllerManager
         controllersList.add(controllerFactory.createFlashController(reference));
         controllersList.add(controllerFactory.createTouchFocusController(reference));
         controllersList.add(controllerFactory.createFocusController(reference));
+        controllersList.add(controllerFactory.createManualFocusController(reference));
         controllersList.add(controllerFactory.createFocusMeteringController(reference));
         List<ValueMeteringController> meteringControllers = createMeteringControllers(reference);
         controllersList.add(controllerFactory.createCaptureButtonController(reference, meteringControllers));

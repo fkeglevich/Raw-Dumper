@@ -20,6 +20,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
@@ -196,6 +197,19 @@ public class FeatureControllerFactory
     {
         FocusController result = new FocusController(reference, dismissibleManager);
         dismissibleManager.addDismissible(result);
+        return result;
+    }
+
+    ManualFocusController createManualFocusController(ActivityReference reference)
+    {
+        View manualButton = reference.weaklyGet().findViewById(R.id.manualFocusBt);
+        View backButton = reference.weaklyGet().findViewById(R.id.manualFocusBackBt);
+        SeekBar seekBar = (SeekBar) reference.weaklyGet().findViewById(R.id.manualFocusBar);
+        View chooser = reference.weaklyGet().findViewById(R.id.manualFocusChooser);
+        View stdFocusChooser = reference.weaklyGet().findViewById(R.id.stdFocusChooser);
+
+        ManualFocusController result = new ManualFocusController(manualButton, backButton, seekBar, chooser, stdFocusChooser);
+        //dismissibleManager.addDismissible(result);
         return result;
     }
 

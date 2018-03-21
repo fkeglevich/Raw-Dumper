@@ -17,10 +17,15 @@
 package com.fkeglevich.rawdumper.controller.feature;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
+import com.transitionseverywhere.Fade;
+import com.transitionseverywhere.TransitionManager;
+import com.transitionseverywhere.Visibility;
 
 /**
  * Created by flavio on 22/11/17.
@@ -31,14 +36,32 @@ public class ManualFocusController extends FeatureController
     private final View manualButton;
     private final View backButton;
     private final SeekBar focusSlider;
+    private final View manualFocusChooser;
+    private final View stdFocusChooser;
+    private final Visibility manualChooserTransition;
+    private final Visibility stdChooserTransition;
     private ManualFocusFeature manualFocusFeature;
 
-    public ManualFocusController(View manualButton, View backButton, SeekBar focusSlider)
+    public ManualFocusController(View manualButton,
+                                 View backButton,
+                                 SeekBar focusSlider,
+                                 View manualFocusChooser,
+                                 View stdFocusChooser)
     {
         this.manualButton = manualButton;
         this.backButton = backButton;
         this.focusSlider = focusSlider;
-        manualButton.setVisibility(View.GONE);
+        this.manualFocusChooser = manualFocusChooser;
+        this.stdFocusChooser = stdFocusChooser;
+
+        manualChooserTransition = new Fade();//new Slide(Gravity.END);
+
+        manualChooserTransition.setDuration(300L);
+
+        stdChooserTransition = new Fade();//new Slide(Gravity.START);
+        stdChooserTransition.setDuration(300L);
+
+        disable();
     }
 
     @Override
@@ -51,28 +74,74 @@ public class ManualFocusController extends FeatureController
             return;
         }
 
-        manualButton.setVisibility(View.VISIBLE);
-        manualButton.setOnClickListener(v ->
-        {
+        enable();
+        manualButton.setOnClickListener(v -> showChooser());
+        backButton.setOnClickListener(v -> hideChooser());
 
+        focusSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+            {
+                updateManualFocus(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar)
+            {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar)
+            {
+
+            }
         });
+    }
+
+    private void updateManualFocus(int progress)
+    {
+        double proportion = progress / (double)focusSlider.getMax();
+        manualFocusFeature.setValueAsProportion(proportion);
     }
 
     @Override
     protected void reset()
     {
-
+        hideChooser();
     }
 
     @Override
     protected void disable()
     {
-
+        manualButton.setVisibility(View.GONE);
     }
 
     @Override
     protected void enable()
     {
+        manualButton.setVisibility(View.VISIBLE);
+    }
 
+    private void hideChooser()
+    {
+        TransitionManager.beginDelayedTransition((ViewGroup) manualFocusChooser, manualChooserTransition);
+        manualFocusChooser.setVisibility(View.INVISIBLE);
+        TransitionManager.beginDelayedTransition((ViewGroup) stdFocusChooser, stdChooserTransition);
+        stdFocusChooser.setVisibility(View.VISIBLE);
+
+        if (manualFocusFeature != null && manualFocusFeature.isAvailable())
+            manualFocusFeature.setValue(ManualFocus.DISABLED);
+    }
+
+    private void showChooser()
+    {
+        TransitionManager.beginDelayedTransition((ViewGroup) manualFocusChooser, manualChooserTransition);
+        manualFocusChooser.setVisibility(View.VISIBLE);
+        TransitionManager.beginDelayedTransition((ViewGroup) stdFocusChooser, stdChooserTransition);
+        stdFocusChooser.setVisibility(View.INVISIBLE);
+
+        updateManualFocus(focusSlider.getProgress());
     }
 }
