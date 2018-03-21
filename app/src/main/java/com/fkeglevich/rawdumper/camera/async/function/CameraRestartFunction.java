@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.camera.async.function;
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.exception.CameraOpenException;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;

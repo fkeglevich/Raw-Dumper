@@ -21,7 +21,6 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 
 import com.fkeglevich.rawdumper.controller.permission.PermissionRequest;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;

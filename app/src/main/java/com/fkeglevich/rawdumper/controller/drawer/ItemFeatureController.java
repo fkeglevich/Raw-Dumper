@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.controller.drawer;
 
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
-import android.view.View;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;

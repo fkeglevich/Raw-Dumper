@@ -24,7 +24,6 @@ import android.support.v4.app.ActivityCompat;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.controller.permission.exception.PermissionException;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.PermissionUtil;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.HandlerDispatcher;

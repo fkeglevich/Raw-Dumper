@@ -17,9 +17,7 @@
 package com.fkeglevich.rawdumper.controller.feature;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * TODO: Add class header

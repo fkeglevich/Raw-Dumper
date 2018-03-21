@@ -33,7 +33,6 @@ import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromRawAndJpegBuilder;
 import com.fkeglevich.rawdumper.su.ShellManager;
 import com.fkeglevich.rawdumper.util.Mutable;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import eu.chainfire.libsuperuser.Shell;

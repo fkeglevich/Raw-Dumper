@@ -25,7 +25,6 @@ import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.buffer.ArrayRawImageData;
 import com.fkeglevich.rawdumper.raw.data.buffer.FileRawImageData;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;

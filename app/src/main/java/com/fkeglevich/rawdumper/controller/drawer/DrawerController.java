@@ -18,13 +18,10 @@ package com.fkeglevich.rawdumper.controller.drawer;
 
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ImageButton;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
-import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;

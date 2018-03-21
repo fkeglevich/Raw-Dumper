@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.camera.parameter;
 import android.util.Log;
 
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 
 import junit.framework.Assert;
 

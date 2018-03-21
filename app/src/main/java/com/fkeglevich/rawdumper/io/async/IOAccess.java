@@ -24,7 +24,6 @@ import com.fkeglevich.rawdumper.io.async.function.SaveDngFunction;
 import com.fkeglevich.rawdumper.io.async.function.SaveFileFunction;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**

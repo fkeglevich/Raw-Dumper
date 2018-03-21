@@ -27,7 +27,6 @@ import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.async.function.CameraCloseFunction;
 import com.fkeglevich.rawdumper.camera.async.function.CameraOpenFunction;
 import com.fkeglevich.rawdumper.camera.async.function.CameraRestartFunction;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**

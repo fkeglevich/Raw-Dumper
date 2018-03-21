@@ -35,7 +35,6 @@ import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromI3av4FileBuilder;
 import com.fkeglevich.rawdumper.su.ShellManager;
 import com.fkeglevich.rawdumper.util.Mutable;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 

@@ -28,7 +28,6 @@ import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**

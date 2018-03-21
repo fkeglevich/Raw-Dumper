@@ -23,13 +23,10 @@ import android.view.View;
 
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
 import com.fkeglevich.rawdumper.ui.TouchFocusView;
 import com.fkeglevich.rawdumper.ui.UiUtil;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * TODO: Add class header

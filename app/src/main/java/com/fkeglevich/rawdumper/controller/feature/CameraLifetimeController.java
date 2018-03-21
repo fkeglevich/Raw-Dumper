@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
-import android.content.DialogInterface;
 import android.view.View;
 
 import com.fkeglevich.rawdumper.R;
@@ -29,9 +28,7 @@ import com.fkeglevich.rawdumper.camera.exception.RawIsUnavailableException;
 import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 import com.fkeglevich.rawdumper.ui.dialog.FatalErrorDialog;
 import com.fkeglevich.rawdumper.ui.dialog.OkDialog;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventListener;
-import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 /**
  * TODO: Add class header

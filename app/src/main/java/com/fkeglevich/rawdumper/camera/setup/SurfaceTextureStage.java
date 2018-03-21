@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.camera.setup;
 import android.graphics.SurfaceTexture;
 
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * TODO: Add class header

@@ -22,8 +22,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
-import java.lang.Void;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * Created by Flávio Keglevich on 29/08/2017.

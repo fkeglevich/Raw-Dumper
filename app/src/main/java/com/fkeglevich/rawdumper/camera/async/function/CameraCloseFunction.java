@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.camera.async.function;
 import com.fkeglevich.rawdumper.async.function.AsyncFunction;
 import com.fkeglevich.rawdumper.camera.async.Closeable;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import java.lang.Void;
 
 /**
  * TODO: Add class header

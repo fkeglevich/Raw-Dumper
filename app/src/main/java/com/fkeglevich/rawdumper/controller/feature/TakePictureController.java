@@ -22,12 +22,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.R;
-import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
-import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.util.List;
 

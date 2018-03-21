@@ -25,10 +25,7 @@ import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryRootModule;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
-
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 

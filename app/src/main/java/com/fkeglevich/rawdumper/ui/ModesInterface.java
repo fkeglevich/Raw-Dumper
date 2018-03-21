@@ -24,8 +24,6 @@ import android.widget.RelativeLayout;
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.ui.dialog.AboutDialog;
-import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
 

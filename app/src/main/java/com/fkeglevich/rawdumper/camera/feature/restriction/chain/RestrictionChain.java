@@ -17,8 +17,6 @@
 package com.fkeglevich.rawdumper.camera.feature.restriction.chain;
 
 import com.fkeglevich.rawdumper.camera.feature.Feature;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * TODO: Add class header

@@ -20,7 +20,6 @@ import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
-import com.fkeglevich.rawdumper.ui.listener.ItemSelectedListener;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 
 import java.util.ArrayList;

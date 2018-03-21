@@ -19,8 +19,6 @@ package com.fkeglevich.rawdumper.controller.permission;
 import com.fkeglevich.rawdumper.controller.permission.exception.RootAccessException;
 import com.fkeglevich.rawdumper.su.ShellManager;
 
-import java.util.List;
-
 import eu.chainfire.libsuperuser.Shell;
 
 /**

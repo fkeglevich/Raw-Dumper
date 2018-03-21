@@ -16,11 +16,7 @@
 
 package com.fkeglevich.rawdumper.controller.orientation;
 
-import android.os.Bundle;
-
 import com.fkeglevich.rawdumper.activity.ActivityReference;
-import java.lang.Void;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * Created by Flávio Keglevich on 30/08/2017.

@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.camera.setup;
 
 import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 

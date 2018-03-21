@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.controller.feature;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import java.lang.Void;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 
 import java.util.ArrayList;
