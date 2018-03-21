@@ -34,4 +34,15 @@ public class ManualFocusFeature extends WritableFeature<ManualFocus, ManualFocus
     {
         super(AsusParameters.MANUAL_FOCUS, parameterCollection, ManualFocusValidator.create(parameterCollection));
     }
+
+    public void setValueAsProportion(double proportion)
+    {
+        int lower = getAvailableValues().getLower().getNumericValue();
+        int upper = getAvailableValues().getUpper().getNumericValue();
+
+        double numericValue = (upper - lower) * proportion + lower;
+
+        ManualFocus manualFocus = ManualFocus.create((int) Math.round(numericValue));
+        setValue(manualFocus);
+    }
 }
