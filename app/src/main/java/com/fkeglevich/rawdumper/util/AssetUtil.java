@@ -21,13 +21,16 @@ import android.content.res.AssetManager;
 
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
 
+import junit.framework.Assert;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
 /**
+ * Helper class for dealing with assets
+ *
  * Created by Flávio Keglevich on 16/08/2017.
- * TODO: Add a class header comment!
  */
 
 public class AssetUtil
@@ -35,26 +38,17 @@ public class AssetUtil
     public synchronized static byte[] getAssetBytes(String fileName) throws IOException
     {
         Context context = ContextManager.getApplicationContext();
-        return readInputStream(context.getAssets().open(fileName, AssetManager.ACCESS_BUFFER));
+        try (InputStream stream = context.getAssets().open(fileName, AssetManager.ACCESS_BUFFER))
+        {
+            byte[] result = new byte[stream.available()];
+            int bytesRead = stream.read(result);
+            Assert.assertEquals(result.length, bytesRead);
+            return result;
+        }
     }
 
     public synchronized static String getAssetAsString(String fileName) throws IOException
     {
         return new String(getAssetBytes(fileName), Charset.defaultCharset());
-    }
-
-    private static byte[] readInputStream(InputStream input) throws IOException
-    {
-        byte[] result;
-        try
-        {
-            result = new byte[input.available()];
-            input.read(result);
-        }
-        finally
-        {
-            input.close();
-        }
-        return result;
     }
 }
