@@ -62,11 +62,14 @@ public class TouchFocusController extends FeatureController
         {
             if(enabled && event.getAction() == MotionEvent.ACTION_DOWN)
             {
-                if (focusFeature != null && focusFeature.getValue().canAutoFocus())
+                if (focusFeature != null
+                        && focusFeature.getValue().canAutoFocus()
+                        && !focusFeature.getValue().isContinuous())
                 {
                     int touchSize = UiUtil.dpToPixels(36, TouchFocusController.this.focusView.getContext());
                     lastTouchArea = PreviewArea.createTouchArea(v, event, touchSize);
                     TouchFocusController.this.focusView.setMeteringArea(lastTouchArea, TouchFocusView.FOCUS_METERING);
+                    focusFeature.cancelAutoFocus();
                     focusFeature.startAutoFocus(lastTouchArea, autoFocusResult);
                 }
 
@@ -86,10 +89,10 @@ public class TouchFocusController extends FeatureController
             return;
         }
 
-        focusFeature.getOnChanged().addListener(eventData ->
+        focusFeature.getOnChanging().addListener(eventData ->
         {
-            if (!eventData.parameterValue.canAutoFocus())
-                cleanFocus();
+            cleanFocus();
+            focusFeature.cancelAutoFocus();
         });
     }
 
@@ -115,5 +118,6 @@ public class TouchFocusController extends FeatureController
     private void cleanFocus()
     {
         focusView.setMeteringArea(null, TouchFocusView.FOCUS_METERING);
+        lastTouchArea = null;
     }
 }
