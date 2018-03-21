@@ -37,22 +37,24 @@ import static android.hardware.Camera.Parameters.FOCUS_MODE_MACRO;
 
 public enum FocusMode implements ParameterValue, Displayable
 {
-    AUTO(FOCUS_MODE_AUTO,                               true, R.string.focus_auto),
-    CONTINUOUS_PICTURE(FOCUS_MODE_CONTINUOUS_PICTURE,   true, R.string.focus_continuous),
-    CONTINUOUS_VIDEO(FOCUS_MODE_CONTINUOUS_VIDEO,       true, R.string.focus_continuous),
-    MACRO(FOCUS_MODE_MACRO,                             true, R.string.focus_macro),
-    INFINITY(FOCUS_MODE_INFINITY,                       false, R.string.focus_infinity),
-    FIXED(FOCUS_MODE_FIXED,                             false, R.string.focus_fixed),
-    EDOF(FOCUS_MODE_EDOF,                               false, R.string.focus_edof);
+    AUTO(FOCUS_MODE_AUTO,                               true,  false, R.string.focus_auto),
+    CONTINUOUS_PICTURE(FOCUS_MODE_CONTINUOUS_PICTURE,   true,  true, R.string.focus_continuous),
+    CONTINUOUS_VIDEO(FOCUS_MODE_CONTINUOUS_VIDEO,       true,  true, R.string.focus_continuous),
+    MACRO(FOCUS_MODE_MACRO,                             true,  false, R.string.focus_macro),
+    INFINITY(FOCUS_MODE_INFINITY,                       false, false, R.string.focus_infinity),
+    FIXED(FOCUS_MODE_FIXED,                             false, false, R.string.focus_fixed),
+    EDOF(FOCUS_MODE_EDOF,                               false, false, R.string.focus_edof);
 
     private final String parameterValue;
     private final boolean canAutoFocus;
+    private final boolean isContinuous;
     private final int stringValueId;
 
-    FocusMode(String parameterValue, boolean canAutoFocus, @StringRes int stringValueId)
+    FocusMode(String parameterValue, boolean canAutoFocus, boolean isContinuous, @StringRes int stringValueId)
     {
         this.parameterValue = parameterValue;
         this.canAutoFocus = canAutoFocus;
+        this.isContinuous = isContinuous;
         this.stringValueId = stringValueId;
     }
 
@@ -65,6 +67,11 @@ public enum FocusMode implements ParameterValue, Displayable
     public boolean canAutoFocus()
     {
         return canAutoFocus;
+    }
+
+    public boolean isContinuous()
+    {
+        return isContinuous;
     }
 
     public String displayValue()
