@@ -38,33 +38,13 @@ class Encoders
 
     static
     {
-        dispatcher.put(String.class, Object::toString);
-        dispatcher.put(Integer.TYPE, new ValueEncoder<Integer>() {
-            @Override
-            public String encode(Integer value) {return value.toString();
-            }
-        });
-        dispatcher.put(Float.TYPE, new ValueEncoder<Float>() {
-            @Override
-            public String encode(Float value) {return value.toString();
-            }
-        });
-        dispatcher.put(CaptureSize.class, new ValueEncoder<CaptureSize>() {
-            @Override
-            public String encode(CaptureSize value) {return value.getWidth() + "x" + value.getHeight(); }
-        });
-        dispatcher.put(Flash.class, createParameterValueDecoder());
-        dispatcher.put(FocusMode.class, createParameterValueDecoder());
-        dispatcher.put(ManualFocus.class, new ValueEncoder<ManualFocus>()
-        {
-            @Override
-            public String encode(ManualFocus value)
-            {
-                if (value == ManualFocus.DISABLED)
-                    return "0";
-                return String.valueOf(value.getNumericValue());
-            }
-        });
+        dispatcher.put(String.class,        Object::toString);
+        dispatcher.put(Integer.TYPE,        Object::toString);
+        dispatcher.put(Float.TYPE,          Object::toString);
+        dispatcher.put(CaptureSize.class,   value -> ((CaptureSize) value).displayValue());
+        dispatcher.put(Flash.class,         getParameterValueEncoder());
+        dispatcher.put(FocusMode.class,     getParameterValueEncoder());
+        dispatcher.put(ManualFocus.class,   getParameterValueEncoder());
     }
 
     @SuppressWarnings("unchecked")
@@ -81,7 +61,7 @@ class Encoders
         return new ListEncoder<>(selectEncoder(elementClass));
     }
 
-    private static <T extends ParameterValue> ValueEncoder<T> createParameterValueDecoder()
+    private static <T extends ParameterValue> ValueEncoder<T> getParameterValueEncoder()
     {
         return ParameterValue::getParameterValue;
     }
