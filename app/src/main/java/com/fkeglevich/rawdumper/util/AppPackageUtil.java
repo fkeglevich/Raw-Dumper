@@ -18,45 +18,55 @@ package com.fkeglevich.rawdumper.util;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.fkeglevich.rawdumper.util.exception.NameNotFoundFromItselfException;
+import com.fkeglevich.rawdumper.R;
+import com.fkeglevich.rawdumper.controller.context.ContextManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Flávio Keglevich on 31/08/2017.
- * TODO: Add a class header comment!
+ * Deals with miscellaneous stuff related to the application package.
+ *
+ * Created by Flávio Keglevich on 22/08/2017.
  */
 
-public class PermissionUtil
+public class AppPackageUtil
 {
-    public static String[] getPermissionsInManifest(Context context)
+    private static final String PACKAGE_NOT_FOUND_MESSAGE = "The PackageManager couldn't find the name of the own app. This should NOT HAPPEN!";
+
+    public static String getAppNameWithVersion()
     {
-        try
-        {
-            return context
-                    .getPackageManager()
-                    .getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS)
-                    .requestedPermissions;
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {
-            throw new NameNotFoundFromItselfException();
-        }
+        Context context = ContextManager.getApplicationContext();
+        String appVersion = getPackageInfo(context,0).versionName;
+        return context.getResources().getString(R.string.app_name_with_version, appVersion);
     }
 
     @TargetApi(Build.VERSION_CODES.M)
     public static List<String> getAllDeniedPermissions(Context context)
     {
         List<String> deniedPermissions = new ArrayList<>();
+        String[] requestedPermissions = getPackageInfo(context, PackageManager.GET_PERMISSIONS).requestedPermissions;
 
-        for (String permission : PermissionUtil.getPermissionsInManifest(context))
+        for (String permission : requestedPermissions)
             if (context.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)
                 deniedPermissions.add(permission);
 
         return deniedPermissions;
+    }
+
+    private static PackageInfo getPackageInfo(Context context, int flags)
+    {
+        try
+        {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), flags);
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            throw new RuntimeException(PACKAGE_NOT_FOUND_MESSAGE);
+        }
     }
 }

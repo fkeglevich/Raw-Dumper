@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.ui.UiUtil;
-import com.fkeglevich.rawdumper.util.PackageUtil;
+import com.fkeglevich.rawdumper.util.AppPackageUtil;
 
 /**
  * Represents the About this app dialog
@@ -46,7 +46,7 @@ public class AboutDialog
 
     public AboutDialog(Context context)
     {
-        String messageStr = context.getResources().getString(R.string.about_message, PackageUtil.getAppNameWithVersion());
+        String messageStr = context.getResources().getString(R.string.about_message, AppPackageUtil.getAppNameWithVersion());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final TextView messageView = new TextView(context);

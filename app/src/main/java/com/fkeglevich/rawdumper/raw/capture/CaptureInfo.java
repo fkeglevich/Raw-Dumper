@@ -24,7 +24,7 @@ import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
-import com.fkeglevich.rawdumper.util.PackageUtil;
+import com.fkeglevich.rawdumper.util.AppPackageUtil;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -69,6 +69,6 @@ public class CaptureInfo
     {
         tiffWriter.setField(TiffTag.TIFFTAG_ORIGINALRAWFILENAME, originalRawFilename.getBytes(Charset.forName("UTF-8")), true);
         tiffWriter.setField(TiffTag.TIFFTAG_ORIENTATION, orientation.getExifCode());
-        tiffWriter.setField(TiffTag.TIFFTAG_SOFTWARE, PackageUtil.getAppNameWithVersion());
+        tiffWriter.setField(TiffTag.TIFFTAG_SOFTWARE, AppPackageUtil.getAppNameWithVersion());
     }
 }

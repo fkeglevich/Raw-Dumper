@@ -24,7 +24,7 @@ import android.support.v4.app.ActivityCompat;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.controller.permission.exception.PermissionException;
-import com.fkeglevich.rawdumper.util.PermissionUtil;
+import com.fkeglevich.rawdumper.util.AppPackageUtil;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.HandlerDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
@@ -61,7 +61,7 @@ public class MandatoryPermissionManager
     @TargetApi(Build.VERSION_CODES.M)
     private void requestAllPermissionsMarshmallow(Activity activity)
     {
-        List<String> deniedPermissions = PermissionUtil.getAllDeniedPermissions(activity);
+        List<String> deniedPermissions = AppPackageUtil.getAllDeniedPermissions(activity);
 
         if (!deniedPermissions.isEmpty())
             ActivityCompat.requestPermissions(activity, deniedPermissions.toArray(EMPTY_STRING_ARRAY), REQUEST_CODE);
