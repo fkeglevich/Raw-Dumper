@@ -27,10 +27,8 @@ import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
 import com.fkeglevich.rawdumper.ui.TouchFocusView;
 import com.fkeglevich.rawdumper.ui.UiUtil;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
  * TODO: Add class header
