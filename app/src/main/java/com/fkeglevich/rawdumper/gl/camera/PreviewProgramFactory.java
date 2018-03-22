@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.gl.camera;
 
+import com.fkeglevich.rawdumper.gl.Extension;
 import com.fkeglevich.rawdumper.gl.Program;
 import com.fkeglevich.rawdumper.gl.ProgramFactory;
 import com.fkeglevich.rawdumper.gl.exception.GLException;
@@ -50,7 +51,12 @@ public class PreviewProgramFactory
 
     public static PreviewProgram createFocusPeakingProgram() throws IOException, GLException
     {
-        Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/focus_peak_frag.glsl");
-        return PreviewProgram.create(program, false);
+        if (Extension.hasExtension(Extension.GL_OES_STANDARD_DERIVATIVES))
+        {
+            Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/focus_peak_frag.glsl");
+            return PreviewProgram.create(program, false);
+        }
+        else
+            return createDefaultProgram();
     }
 }
