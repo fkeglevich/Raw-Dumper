@@ -47,4 +47,10 @@ public class PreviewProgramFactory
         Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/take_picture_frag.glsl");
         return PreviewProgram.create(program, true);
     }
+
+    public static PreviewProgram createFocusPeakingProgram() throws IOException, GLException
+    {
+        Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/focus_peak_frag.glsl");
+        return PreviewProgram.create(program, false);
+    }
 }
