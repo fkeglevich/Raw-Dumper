@@ -38,7 +38,9 @@ public class FocusRestriction
 
         manualFocusFeature.getOnChanging().addListener(eventData ->
         {
-            if (!eventData.parameterValue.equals(ManualFocus.DISABLED))
+            boolean manualFocusEnabled = !eventData.parameterValue.equals(ManualFocus.DISABLED);
+
+            if (manualFocusEnabled)
                 focusFeature.cancelAutoFocus();
         });
     }
