@@ -21,11 +21,14 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
 import com.transitionseverywhere.Visibility;
+
+import junit.framework.Assert;
 
 /**
  * Created by flavio on 22/11/17.
@@ -42,6 +45,8 @@ public class ManualFocusController extends FeatureController
     private final Visibility stdChooserTransition;
     private ManualFocusFeature manualFocusFeature;
 
+    private FocusMode lastFocusMode = FocusMode.AUTO;
+
     public ManualFocusController(View manualButton,
                                  View backButton,
                                  SeekBar focusSlider,
@@ -54,11 +59,10 @@ public class ManualFocusController extends FeatureController
         this.manualFocusChooser = manualFocusChooser;
         this.stdFocusChooser = stdFocusChooser;
 
-        manualChooserTransition = new Fade();//new Slide(Gravity.END);
-
+        manualChooserTransition = new Fade();
         manualChooserTransition.setDuration(300L);
 
-        stdChooserTransition = new Fade();//new Slide(Gravity.START);
+        stdChooserTransition = new Fade();
         stdChooserTransition.setDuration(300L);
 
         disable();
@@ -74,9 +78,25 @@ public class ManualFocusController extends FeatureController
             return;
         }
 
+        Assert.assertTrue(camera.getFocusFeature().isAvailable());
+        Assert.assertTrue(camera.getFocusFeature().getAvailableValues().contains(FocusMode.FIXED));
+
         enable();
-        manualButton.setOnClickListener(v -> showChooser());
-        backButton.setOnClickListener(v -> hideChooser());
+        manualButton.setOnClickListener(v ->
+        {
+            lastFocusMode = camera.getFocusFeature().getValue();
+            camera.getFocusFeature().setValue(FocusMode.FIXED);
+            showChooser();
+        });
+        backButton.setOnClickListener(v ->
+        {
+            hideChooser();
+            if (manualFocusFeature.isAvailable())
+            {
+                manualFocusFeature.setValue(ManualFocus.DISABLED);
+                camera.getFocusFeature().setValue(lastFocusMode);
+            }
+        });
 
         focusSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
         {
@@ -88,15 +108,11 @@ public class ManualFocusController extends FeatureController
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar)
-            {
-
-            }
+            {   }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar)
-            {
-
-            }
+            {   }
         });
     }
 
@@ -109,7 +125,9 @@ public class ManualFocusController extends FeatureController
     @Override
     protected void reset()
     {
-        hideChooser();
+        manualFocusChooser.setVisibility(View.INVISIBLE);
+        stdFocusChooser.setVisibility(View.VISIBLE);
+        disable();
     }
 
     @Override
@@ -130,9 +148,6 @@ public class ManualFocusController extends FeatureController
         manualFocusChooser.setVisibility(View.INVISIBLE);
         TransitionManager.beginDelayedTransition((ViewGroup) stdFocusChooser, stdChooserTransition);
         stdFocusChooser.setVisibility(View.VISIBLE);
-
-        if (manualFocusFeature != null && manualFocusFeature.isAvailable())
-            manualFocusFeature.setValue(ManualFocus.DISABLED);
     }
 
     private void showChooser()
