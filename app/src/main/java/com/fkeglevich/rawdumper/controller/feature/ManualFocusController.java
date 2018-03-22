@@ -72,13 +72,12 @@ public class ManualFocusController extends FeatureController
     protected void setup(TurboCamera camera)
     {
         manualFocusFeature = camera.getManualFocusFeature();
-        if (!manualFocusFeature.isAvailable())
+        if (!(manualFocusFeature.isAvailable() && !camera.getFocusFeature().isAvailable()))
         {
             reset();
             return;
         }
 
-        Assert.assertTrue(camera.getFocusFeature().isAvailable());
         Assert.assertTrue(camera.getFocusFeature().getAvailableValues().contains(FocusMode.FIXED));
 
         enable();
