@@ -8,9 +8,6 @@ TODO list:
    - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
       - Trying to use the red and blue gains (they're absent on Zen2 with LL blobs)
 
- - Test if 1/2 shutter speed on the front camera works on the Zen2 with LL blobs
- - Test if 1s long expo works on the Zen2 with LL blobs
-
  - Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
 
  - Add the ~recovering photos~ if the app crash use case
@@ -21,41 +18,28 @@ TODO list:
 
  - Handle different types of makernotes
 
- - Create proper temperature-tint handling in MakerNoteInfoExtractor
+ - Implement GPU-accelerated focus peaking
 
- - Create the picture pipelines
-   - (DONE!) Jpeg
-   - (DONE!) Raw ((DONE!)NOTE: don't just delete files inside that hidden folder! delete the ones ending with i3av4!)
-   - YUV
- 
+ - Create YUV picture pipelines
+
  - (IN PROGRESS) Reduce overdraw
  
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
-   - (DONE!) Create OrientationActivity class or similar
+   - (NEEDS FIX!) Create OrientationActivity class or similar
    - (ALMOST DONE) Needs to change the rotation parameter when shooting jpeg pictures
  
- - (IMPORTANT - IN PROGRESS) Make the app work on more devices:
+ - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
 	- Zenfone 5
-	- (DONE!) Zenfone 2 with LL blobs
-	
-	- Possible problems:
-	  - (ALMOST SOLVED) Avaliability of the Shutter Speed feature
-	  - (SOLVED) Mismatched number of cameras in the json
  
  - Better handling of SU shell commands
 
 Next features:
- - Proper transitions when taking pictures/opening/closing camera
  - PictureSizeFeature
- - Take actual pictures in the 2.0 version
- - Selection of focus mode and manual focus
  - Selection of white balance preset and manual white balance
- - Visual feedback when getting focus
  - Selection of picture size
  - Gain-basead white balance
  - Night Mode with raw pictures
- - Implement focus peaking
 
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
@@ -105,3 +89,5 @@ Done:
  - Play animation when taking pictures (it also can be the old school circular progress bar)
  - Visual feedback for touch focus/exposure region
  - Improve compatibility of generated DNG files for desktop apps like Darktable (only recognize uncompressed files with stripes)
+ - JPEG Pipeline done
+ - Raw pipelines done, including a proper retrying case (long-exposure-front-camera-MM-blobs, need to literally wait for the light entering the sensor)
