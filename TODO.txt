@@ -10,7 +10,7 @@ TODO list:
 
  - Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
 
- - Add the ~recovering photos~ if the app crash use case
+ - Add the ~recovering photos~ user case, if the app crashes
 
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
    - Create function tint-temperature function for Zen2 rear camera
@@ -18,7 +18,7 @@ TODO list:
 
  - Handle different types of makernotes
 
- - Implement GPU-accelerated focus peaking
+ - (IN PROGRESS) Implement GPU-accelerated focus peaking
 
  - Create YUV picture pipelines
 
@@ -38,13 +38,20 @@ Next features:
  - PictureSizeFeature
  - Selection of white balance preset and manual white balance
  - Selection of picture size
- - Gain-basead white balance
+ - Gain-based white balance
  - Night Mode with raw pictures
+ - Save pictures using the DNG SDK
+   - Advantages: compression and DNG files that-always-work
+ - Almost-perfect lens shading correction
+   - requires DNG SDK for working with low-level gain maps dng opcodes
 
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
     - Some changes were made to address this bug, should test again to see if it still happens
  - (MINOR) The space between the buttons is too small when the shutter is set to 1/10000
+ - (MINOR) The touch focus feedback sometimes appears in the wrong position
+ - (MINOR) The selector interface for ISO/shutter speed/EV is quite buggy sometimes
+ - (MINOR) Sometimes there is a small glitch in the lower portion of the screen when the app is starting
  
 Done:
 
