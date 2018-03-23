@@ -41,9 +41,6 @@ public class ZenZoomWorkaround implements DeviceWorkaround
         {
             if (!DebugFlag.isForceRawZenfoneZoom() && isRearCamera(cameraInfo))
                 cameraInfo.getSensor().disableRaw();
-
-            if (isFrontCamera(cameraInfo))
-                cameraInfo.getExposure().getShutterSpeedValues().clear();
         }
     }
 
