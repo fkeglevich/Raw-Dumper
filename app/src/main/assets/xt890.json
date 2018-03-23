@@ -76,6 +76,7 @@
             "uniqueCameraModel": "Motorola Razr I %s (back camera)",
             "opcodes": [],
             "retryOnError": false,
+            "retryPipelineDelay": 0,
             "sensor": {
                 "baseISO": 100,
                 "bayerPattern": "GRBG",
@@ -164,6 +165,7 @@
             "uniqueCameraModel": "Motorola Razr I %s (front camera)",
             "opcodes": [],
             "retryOnError": false,
+            "retryPipelineDelay": 0,
             "sensor": {
                 "baseISO": 100,
                 "bayerPattern": "UNKNOWN",

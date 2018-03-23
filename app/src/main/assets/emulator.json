@@ -61,6 +61,7 @@
             "uniqueCameraModel": "%s (back camera)",
             "opcodes": [],
             "retryOnError": false,
+            "retryPipelineDelay": 0,
             "sensor": {
                 "baseISO": 50,
                 "bayerPattern": "GRBG",
@@ -150,6 +151,7 @@
             "uniqueCameraModel": "%s (front camera)",
             "opcodes": [],
             "retryOnError": false,
+            "retryPipelineDelay": 0,
             "sensor": {
                 "baseISO": 50,
                 "bayerPattern": "BGGR",

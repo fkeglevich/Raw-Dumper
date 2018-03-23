@@ -139,6 +139,7 @@
                 }
             ],
             "retryOnError": false,
+            "retryPipelineDelay": 0,
             "sensor": {
                 "baseISO": 50,
                 "bayerPattern": "GRBG",
@@ -317,6 +318,7 @@
                 }
             ],
             "retryOnError": true,
+            "retryPipelineDelay": 2000,
             "sensor": {
                 "baseISO": 50,
                 "bayerPattern": "BGGR",

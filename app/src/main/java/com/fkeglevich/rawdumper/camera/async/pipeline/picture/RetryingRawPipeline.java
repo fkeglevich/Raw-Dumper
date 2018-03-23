@@ -50,6 +50,7 @@ import eu.chainfire.libsuperuser.Shell;
 
 public class RetryingRawPipeline implements PicturePipeline
 {
+    private final Camera.ErrorCallback      errorCallback;
     private final Mutable<ICameraExtension> cameraExtension;
     private final Object                    lock;
     private final CameraContext             cameraContext;
@@ -57,16 +58,6 @@ public class RetryingRawPipeline implements PicturePipeline
 
     private Camera.Parameters               parameters = null;
     private boolean                         ignoreError = false;
-
-    private final Camera.ErrorCallback      errorCallback = (error, camera) ->
-    {
-        if (ignoreError)
-        {
-            ThreadUtil.simpleDelay(2000);
-            restartCamera();
-            ignoreError = false;
-        }
-    };
 
     private final Camera.PictureCallback dummyJpegCallback = new Camera.PictureCallback()
     {
@@ -83,6 +74,7 @@ public class RetryingRawPipeline implements PicturePipeline
 
     RetryingRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, RestartableCamera restartableCamera)
     {
+        this.errorCallback      = createErrorCallback(cameraContext.getCameraInfo().getRetryPipelineDelay());
         this.cameraExtension    = cameraExtension;
         this.lock               = lock;
         this.cameraContext      = cameraContext;
@@ -178,5 +170,16 @@ public class RetryingRawPipeline implements PicturePipeline
         });
     }
 
-
+    private Camera.ErrorCallback createErrorCallback(int retryDelay)
+    {
+        return (error, camera) ->
+        {
+            if (ignoreError)
+            {
+                ThreadUtil.simpleDelay(retryDelay);
+                restartCamera();
+                ignoreError = false;
+            }
+        };
+    }
 }

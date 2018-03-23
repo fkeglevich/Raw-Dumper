@@ -51,6 +51,7 @@ public class ExtraCameraInfo
 
     private boolean hasKnownMakernote;
     private boolean retryOnError;
+    private int     retryPipelineDelay;
     private boolean canBePatched;
 
     private transient int facing;
@@ -133,6 +134,11 @@ public class ExtraCameraInfo
     public boolean isRetryOnError()
     {
         return retryOnError;
+    }
+
+    public int getRetryPipelineDelay()
+    {
+        return retryPipelineDelay;
     }
 
     public void setRetryOnError(boolean retryOnError)

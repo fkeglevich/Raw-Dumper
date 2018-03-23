@@ -68,6 +68,7 @@
             "uniqueCameraModel": "Asus ZenFone 5 %s (back camera)",
             "opcodes": [],
             "retryOnError": false,
+            "retryPipelineDelay": 0,
             "sensor": {
                 "baseISO": 50,
                 "bayerPattern": "GRBG",
@@ -176,6 +177,7 @@
             "uniqueCameraModel": "Asus ZenFone 5 %s (front camera)",
             "opcodes": [],
             "retryOnError": false,
+            "retryPipelineDelay": 0,
             "sensor": {
                 "baseISO": 50,
                 "bayerPattern": "GRBG",

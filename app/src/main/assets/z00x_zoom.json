@@ -133,6 +133,7 @@
             "uniqueCameraModel": "Asus ZenFone Zoom %s (back camera)",
             "opcodes": [],
             "retryOnError": false,
+            "retryPipelineDelay": 0,
             "sensor": {
                 "baseISO": 50,
                 "bayerPattern": "GRBG",
@@ -233,6 +234,7 @@
             "uniqueCameraModel": "Asus ZenFone Zoom %s (front camera)",
             "opcodes": [],
             "retryOnError": true,
+            "retryPipelineDelay": 350,
             "sensor": {
                 "baseISO": 50,
                 "bayerPattern": "BGGR",
