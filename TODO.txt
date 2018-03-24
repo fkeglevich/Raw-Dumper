@@ -18,8 +18,6 @@ TODO list:
 
  - Handle different types of makernotes
 
- - (IN PROGRESS) Implement GPU-accelerated focus peaking
-
  - Create YUV picture pipelines
 
  - (IN PROGRESS) Reduce overdraw
@@ -98,3 +96,4 @@ Done:
  - Improve compatibility of generated DNG files for desktop apps like Darktable (only recognize uncompressed files with stripes)
  - JPEG Pipeline done
  - Raw pipelines done, including a proper retrying case (long-exposure-front-camera-MM-blobs, need to literally wait for the light entering the sensor)
+ - Implement GPU-accelerated focus peaking
