@@ -195,7 +195,8 @@ public class FeatureControllerFactory
 
     FocusController createFocusController(ActivityReference reference)
     {
-        FocusController result = new FocusController(reference, dismissibleManager);
+        CameraPreview cameraPreview = (CameraPreview) reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
+        FocusController result = new FocusController(reference, dismissibleManager, cameraPreview);
         dismissibleManager.addDismissible(result);
         return result;
     }
@@ -207,8 +208,9 @@ public class FeatureControllerFactory
         SeekBar seekBar = (SeekBar) reference.weaklyGet().findViewById(R.id.manualFocusBar);
         View chooser = reference.weaklyGet().findViewById(R.id.manualFocusChooser);
         View stdFocusChooser = reference.weaklyGet().findViewById(R.id.stdFocusChooser);
+        CameraPreview cameraPreview = (CameraPreview) reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
 
-        ManualFocusController result = new ManualFocusController(manualButton, backButton, seekBar, chooser, stdFocusChooser);
+        ManualFocusController result = new ManualFocusController(manualButton, backButton, seekBar, chooser, stdFocusChooser, cameraPreview);
         //dismissibleManager.addDismissible(result);
         return result;
     }

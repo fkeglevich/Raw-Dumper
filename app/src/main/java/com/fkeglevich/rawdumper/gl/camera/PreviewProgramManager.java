@@ -43,6 +43,7 @@ public class PreviewProgramManager
     PreviewProgram defaultProgram = null;
     PreviewProgram revealProgram = null;
     PreviewProgram takePictureProgram = null;
+    PreviewProgram focusPeakProgram = null;
 
     private PreviewProgram currentProgram = null;
     private volatile boolean currentProgramIsBeingUsed = false;
@@ -62,7 +63,9 @@ public class PreviewProgramManager
                 defaultProgram = PreviewProgramFactory.createDefaultProgram();
                 revealProgram = PreviewProgramFactory.createRevealProgram();
                 takePictureProgram = PreviewProgramFactory.createTakePictureProgram();
-            } catch (IOException | GLException e)
+                focusPeakProgram = PreviewProgramFactory.createFocusPeakingProgram();
+            }
+            catch (IOException | GLException e)
             {
                 Log.e(TAG, e.getMessage());
                 throw new RuntimeException(e);
@@ -77,6 +80,7 @@ public class PreviewProgramManager
             deleteProgram(defaultProgram);
             deleteProgram(revealProgram);
             deleteProgram(takePictureProgram);
+            deleteProgram(focusPeakProgram);
         }
     }
 

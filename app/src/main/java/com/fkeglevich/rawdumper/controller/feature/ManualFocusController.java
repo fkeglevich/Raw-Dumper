@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
@@ -41,6 +42,7 @@ public class ManualFocusController extends FeatureController
     private final SeekBar focusSlider;
     private final View manualFocusChooser;
     private final View stdFocusChooser;
+    private final CameraPreview cameraPreview;
     private final Visibility manualChooserTransition;
     private final Visibility stdChooserTransition;
     private ManualFocusFeature manualFocusFeature;
@@ -51,13 +53,15 @@ public class ManualFocusController extends FeatureController
                                  View backButton,
                                  SeekBar focusSlider,
                                  View manualFocusChooser,
-                                 View stdFocusChooser)
+                                 View stdFocusChooser,
+                                 CameraPreview cameraPreview)
     {
         this.manualButton = manualButton;
         this.backButton = backButton;
         this.focusSlider = focusSlider;
         this.manualFocusChooser = manualFocusChooser;
         this.stdFocusChooser = stdFocusChooser;
+        this.cameraPreview = cameraPreview;
 
         manualChooserTransition = new Fade();
         manualChooserTransition.setDuration(300L);
@@ -147,6 +151,8 @@ public class ManualFocusController extends FeatureController
         manualFocusChooser.setVisibility(View.INVISIBLE);
         TransitionManager.beginDelayedTransition((ViewGroup) stdFocusChooser, stdChooserTransition);
         stdFocusChooser.setVisibility(View.VISIBLE);
+
+        cameraPreview.stopFocusPeaking();
     }
 
     private void showChooser()
@@ -157,5 +163,6 @@ public class ManualFocusController extends FeatureController
         stdFocusChooser.setVisibility(View.INVISIBLE);
 
         updateManualFocus(focusSlider.getProgress());
+        cameraPreview.startFocusPeaking();
     }
 }

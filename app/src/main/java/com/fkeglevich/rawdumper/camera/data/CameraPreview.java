@@ -42,4 +42,8 @@ public interface CameraPreview
     void pauseUpdating();
 
     void resumeUpdating();
+
+    void startFocusPeaking();
+
+    void stopFocusPeaking();
 }

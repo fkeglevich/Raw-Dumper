@@ -85,10 +85,12 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
         });
         setVisibility(VISIBLE);
         onResume();
+        previewRenderer.useRevealProgram();
         previewRenderer.startRender();
 
         //if (openingAnimation == null)
         //{
+
             openingAnimation = ValueAnimator.ofFloat(0f, (float) (Math.hypot( (getWidth()) / 2.0, (getHeight() / (getWidth() * 1.0 / getHeight())) / 2.0) ));
             openingAnimation.setDuration(1000);
             openingAnimation.addUpdateListener(animation ->
@@ -96,6 +98,15 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
                 previewRenderer.revealRadius = (float) animation.getAnimatedValue();
                 previewRenderer.startRender();
                 requestRender();
+            });
+            openingAnimation.addListener(new AnimatorListenerAdapter()
+            {
+                @Override
+                public void onAnimationEnd(Animator animation)
+                {
+                    previewRenderer.useDefaultProgram();
+                    openingAnimation.removeListener(this);
+                }
             });
         //}
         openingAnimation.start();
@@ -111,15 +122,16 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
 
     @Override
     public void startOpeningAnimation()
-    {
-
-    }
+    {   }
 
     @Override
     public void startClosingAnimation()
     {
         if (openingAnimation != null)
+        {
+            previewRenderer.useRevealProgram();
             openingAnimation.reverse();
+        }
     }
 
     boolean takePictureAnimationIsEnding = false;
@@ -145,7 +157,7 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
             {
                 if (takePictureAnimationIsEnding)
                 {
-                    previewRenderer.useRevealProgram();
+                    previewRenderer.useDefaultProgram();
                     takePictureAnimationIsEnding = false;
                 }
             }
@@ -161,5 +173,17 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
         //requestRender();
         takePictureAnimationIsEnding = true;
         takePictureAnimation.start();
+    }
+
+    @Override
+    public void startFocusPeaking()
+    {
+        previewRenderer.useFocusPeakProgram();
+    }
+
+    @Override
+    public void stopFocusPeaking()
+    {
+        previewRenderer.useDefaultProgram();
     }
 }

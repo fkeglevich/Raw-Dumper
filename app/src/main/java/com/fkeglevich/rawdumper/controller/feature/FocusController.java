@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
@@ -43,9 +44,11 @@ import java.util.Map;
 public class FocusController extends FeatureController implements Dismissible
 {
     private final OnClickNotifier clickNotifier;
+    private final CameraPreview cameraPreview;
     private final Map<FocusMode, View> focusButtonMap;
     private final View focusButton;
     private final View chooser;
+    private final View manualFocusChooser;
     private final Fade fadeTransition;
     private final ButtonDisabledStateController buttonDisabledStateController;
 
@@ -54,12 +57,15 @@ public class FocusController extends FeatureController implements Dismissible
 
     FocusController(
             ActivityReference reference,
-            OnClickNotifier clickNotifier)
+            OnClickNotifier clickNotifier,
+            CameraPreview cameraPreview)
     {
         this.clickNotifier = clickNotifier;
+        this.cameraPreview = cameraPreview;
         focusButtonMap = new HashMap<>();
         focusButton = reference.weaklyGet().findViewById(R.id.focusBt);
         chooser = reference.weaklyGet().findViewById(R.id.focusChooser);
+        manualFocusChooser = reference.weaklyGet().findViewById(R.id.manualFocusChooser);
         fadeTransition = new Fade();
         fadeTransition.setDuration(300L);
         buttonDisabledStateController = new ButtonDisabledStateController(focusButton, false);
@@ -99,11 +105,17 @@ public class FocusController extends FeatureController implements Dismissible
         focusButton.setOnClickListener(v ->
         {
             if (chooser.getVisibility() == View.VISIBLE)
+            {
                 hideChooser();
+                if (manualFocusChooser.getVisibility() == View.VISIBLE)
+                    cameraPreview.stopFocusPeaking();
+            }
             else
             {
                 clickNotifier.notifyOnClick();
                 showChooser();
+                if (manualFocusChooser.getVisibility() == View.VISIBLE)
+                    cameraPreview.startFocusPeaking();
             }
         });
 
