@@ -1,0 +1,15 @@
+Get last YUV preview frame
+Crop it to center
+Convert to RGB
+Calculate mean sRGB-space-RGB
+
+Grab raw image
+Crop it to center
+Linearize
+Calculate mean sensor-space-RGB
+
+convert sRGB-space-RGB to XYZ
+convert XYZ to sensor-space-RGB
+
+divide (one by another), getting AsShotNeutral
+Note: revise the AsShotNeutral algorithm

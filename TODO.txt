@@ -12,11 +12,13 @@ TODO list:
 
  - Add the ~recovering photos~ user case, if the app crashes
 
+ - (IN PROGRESS) Create code for mean-gain-map stacking
+
+ - (IN PROGRESS) Handle different types of makernotes
+
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
    - Create function tint-temperature function for Zen2 rear camera
    - IDEA: instead, use a illuminant case-by-case basis for the tint too
-
- - Handle different types of makernotes
 
  - Create YUV picture pipelines
 
@@ -41,7 +43,10 @@ Next features:
  - Save pictures using the DNG SDK
    - Advantages: compression and DNG files that-always-work
  - Almost-perfect lens shading correction
-   - requires DNG SDK for working with low-level gain maps dng opcodes
+   - (NOT ANYMORE!) requires DNG SDK for working with low-level gain maps dng opcodes
+   - Idea: while DNG SDK support is not ready, simply apply the gain directly to the raw data
+ - Almost-perfect white balance
+   - Needs some basic testing before. See WB-algorithm-idea.txt
 
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
@@ -96,4 +101,5 @@ Done:
  - Improve compatibility of generated DNG files for desktop apps like Darktable (only recognize uncompressed files with stripes)
  - JPEG Pipeline done
  - Raw pipelines done, including a proper retrying case (long-exposure-front-camera-MM-blobs, need to literally wait for the light entering the sensor)
+ - Faster retrying delay for ZenZoom front camera
  - Implement GPU-accelerated focus peaking
