@@ -111,7 +111,9 @@ public class ManualFocusController extends FeatureController
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar)
-            {   }
+            {
+                cameraPreview.startFocusPeaking();
+            }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar)
