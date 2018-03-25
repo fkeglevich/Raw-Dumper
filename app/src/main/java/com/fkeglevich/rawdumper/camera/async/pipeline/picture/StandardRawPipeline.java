@@ -112,9 +112,7 @@ public class StandardRawPipeline extends PicturePipelineBase
 
                 @Override
                 public void onLine(String line)
-                {
-                    //no op
-                }
+                {   }
             });
         }
         else
