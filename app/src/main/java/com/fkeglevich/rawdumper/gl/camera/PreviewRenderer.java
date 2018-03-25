@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.gl.camera;
 import android.graphics.SurfaceTexture;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
@@ -81,25 +80,21 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
 
     void useDefaultProgram()
     {
-        //Log.i("PreviewRenderer", "Using default program");
         previewProgramManager.setCurrentProgram(previewProgramManager.defaultProgram);
     }
 
     void useTakePictureProgram()
     {
-        //Log.i("PreviewRenderer", "Using take picture program");
         previewProgramManager.setCurrentProgram(previewProgramManager.takePictureProgram);
     }
 
     void useRevealProgram()
     {
-        //Log.i("PreviewRenderer", "Using reveal program");
         previewProgramManager.setCurrentProgram(previewProgramManager.revealProgram);
     }
 
     void useFocusPeakProgram()
     {
-        //Log.i("PreviewRenderer", "Using focus peak program");
         synchronized (programLock)
         {
             if (previewProgramManager.getCurrentProgram() == previewProgramManager.defaultProgram)
