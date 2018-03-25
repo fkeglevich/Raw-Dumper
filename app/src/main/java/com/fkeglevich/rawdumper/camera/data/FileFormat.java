@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
+import android.graphics.Bitmap;
+
 /**
  * TODO: Add class header
  * <p>
@@ -24,18 +26,20 @@ package com.fkeglevich.rawdumper.camera.data;
 
 public enum FileFormat
 {
-    JPEG(DataFormat.JPEG, ".jpeg"),
-    DNG(DataFormat.RAW, ".dng"),
-    PNG(DataFormat.YUV, ".png"),
-    WEBP(DataFormat.YUV, ".webp");
+    JPEG(DataFormat.JPEG, ".jpeg", Bitmap.CompressFormat.JPEG),
+    DNG(DataFormat.RAW, ".dng", null),
+    PNG(DataFormat.YUV, ".png", Bitmap.CompressFormat.PNG),
+    WEBP(DataFormat.YUV, ".webp", Bitmap.CompressFormat.WEBP);
 
     private final DataFormat dataFormat;
     private final String extension;
+    private final Bitmap.CompressFormat compressFormat;
 
-    FileFormat(DataFormat dataFormat, String extension)
+    FileFormat(DataFormat dataFormat, String extension, Bitmap.CompressFormat compressFormat)
     {
         this.dataFormat = dataFormat;
         this.extension = extension;
+        this.compressFormat = compressFormat;
     }
 
     public DataFormat getDataFormat()
@@ -46,5 +50,10 @@ public enum FileFormat
     public String getExtension()
     {
         return extension;
+    }
+
+    public Bitmap.CompressFormat getCompressFormat()
+    {
+        return compressFormat;
     }
 }
