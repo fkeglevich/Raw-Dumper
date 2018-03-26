@@ -111,6 +111,7 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
         previewProgramManager.deletePrograms();
         previewProgramManager.setupPrograms();
         previewProgramManager.setCurrentProgram(previewProgramManager.revealProgram);
+        clearFrame();
     }
 
     @Override
