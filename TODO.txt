@@ -3,6 +3,7 @@ TODO list:
  - A better handling of unknown devices
    - Automatic discovery of raw image sizes
    - Automatic discovery of raw bayer pattern
+   - Note: this would require a whole new realtime-logcat-analysis module
    
  - Better handling of known devices
    - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
@@ -10,7 +11,9 @@ TODO list:
 
  - Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
 
- - Add the ~recovering photos~ user case, if the app crashes
+ - (IN PROGRESS) (IMPORTANT) Add the ~recovering photos~ user case, if the app crashes
+   - Note:  temporarily save EVERY important information just before taking the pictures.
+            So in a case of crash, the photos can be automatically recovered later
 
  - (IN PROGRESS) Create code for mean-gain-map stacking
 
@@ -20,7 +23,7 @@ TODO list:
    - Create function tint-temperature function for Zen2 rear camera
    - IDEA: instead, use a illuminant case-by-case basis for the tint too
 
- - Create YUV picture pipelines
+ - (IN PROGRESS) Create YUV picture pipelines
 
  - (IN PROGRESS) Reduce overdraw
  
@@ -54,7 +57,6 @@ Known bugs:
  - (MINOR) The space between the buttons is too small when the shutter is set to 1/10000
  - (MINOR) The touch focus feedback sometimes appears in the wrong position
  - (MINOR) The selector interface for ISO/shutter speed/EV is quite buggy sometimes
- - (MINOR) Sometimes there is a small glitch in the lower portion of the screen when the app is starting
  
 Done:
 
@@ -103,3 +105,4 @@ Done:
  - Raw pipelines done, including a proper retrying case (long-exposure-front-camera-MM-blobs, need to literally wait for the light entering the sensor)
  - Faster retrying delay for ZenZoom front camera
  - Implement GPU-accelerated focus peaking
+ - (FIXED) Sometimes there is a small glitch in the lower portion of the screen when the app is starting
