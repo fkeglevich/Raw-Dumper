@@ -21,8 +21,11 @@ import android.media.MediaScannerConnection;
 
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -52,6 +55,17 @@ public class IOUtil
         {
             if (bos != null)
                 bos.close();
+        }
+    }
+
+    public static byte[] readBytes(String filePath) throws IOException
+    {
+        int length = (int) new File(filePath).length();
+        try (FileInputStream stream = new FileInputStream(filePath))
+        {
+            byte[] result = new byte[length];
+            stream.read(result);
+            return result;
         }
     }
 }
