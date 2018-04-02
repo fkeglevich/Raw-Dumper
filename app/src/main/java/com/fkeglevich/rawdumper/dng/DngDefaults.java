@@ -32,6 +32,6 @@ class DngDefaults
     static final int RAW_SAMPLES_PER_PIXEL   = 1;
     static final int RAW_PLANAR_CONFIG       = TiffTag.PLANARCONFIG_CONTIG;
 
-    static final byte[] DNG_VERSION          = new byte[] {1, 4, 0, 0};
-    static final byte[] DNG_BACKWARD_VERSION = new byte[] {1, 3, 0, 0};
+    static final DngVersion VERSION          = DngVersion.VERSION_1_4_0_0;
+    static final DngVersion BACKWARD_VERSION = DngVersion.VERSION_1_3_0_0;
 }
