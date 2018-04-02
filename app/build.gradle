@@ -8,8 +8,8 @@ android {
         testApplicationId "com.fkeglevich.rawdumper.tests"
         minSdkVersion 18
         targetSdkVersion 23
-        versionCode 3
-        versionName "2.2.1"
+        versionCode 4
+        versionName "2.3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
