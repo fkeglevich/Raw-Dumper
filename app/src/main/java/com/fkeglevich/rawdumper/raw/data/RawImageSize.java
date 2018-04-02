@@ -37,6 +37,27 @@ public class RawImageSize
     private int paddedHeight;
     private int bufferLength;
 
+    /**
+     * Creates a simple RawImageSize of a 16 bit per pixel raw image
+     * (no padded width/height, no processor-aligned bytesPerLine)
+     *
+     * @param width     The width of the image
+     * @param height    The height of the image
+     * @return          A RawImageSize
+     */
+    public static RawImageSize createSimple(int width, int height)
+    {
+        RawImageSize result = new RawImageSize();
+        result.width            = width;
+        result.paddedWidth      = width;
+        result.paddedWidthBytes = width * 2;
+        result.bytesPerLine     = width * 2;
+        result.height           = height;
+        result.paddedHeight     = height;
+        result.bufferLength     = width * 2 * height;
+        return result;
+    }
+
     private RawImageSize()
     {   }
 
