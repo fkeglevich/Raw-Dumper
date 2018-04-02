@@ -18,6 +18,8 @@ package com.fkeglevich.rawdumper.raw.data;
 
 import android.support.annotation.Keep;
 
+import static com.fkeglevich.rawdumper.util.DataSize.SHORT_SIZE;
+
 /**
  * Represents the size of a raw image. TODO: better explaining of this class
  *
@@ -50,11 +52,11 @@ public class RawImageSize
         RawImageSize result = new RawImageSize();
         result.width            = width;
         result.paddedWidth      = width;
-        result.paddedWidthBytes = width * 2;
-        result.bytesPerLine     = width * 2;
+        result.paddedWidthBytes = width * SHORT_SIZE;
+        result.bytesPerLine     = width * SHORT_SIZE;
         result.height           = height;
         result.paddedHeight     = height;
-        result.bufferLength     = width * 2 * height;
+        result.bufferLength     = width * SHORT_SIZE * height;
         return result;
     }
 
