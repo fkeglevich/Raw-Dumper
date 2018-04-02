@@ -106,3 +106,4 @@ Done:
  - Faster retrying delay for ZenZoom front camera
  - Implement GPU-accelerated focus peaking
  - (FIXED) Sometimes there is a small glitch in the lower portion of the screen when the app is starting
+ - (FIXED) Opcodes sometimes aren't written to the file
