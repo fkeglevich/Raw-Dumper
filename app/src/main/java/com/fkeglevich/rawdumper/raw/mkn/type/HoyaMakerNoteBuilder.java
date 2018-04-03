@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw.mkn;
+package com.fkeglevich.rawdumper.raw.mkn.type;
 
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+import com.fkeglevich.rawdumper.raw.mkn.MakerNoteInfo;
+import com.fkeglevich.rawdumper.raw.mkn.MakerNoteInfoBuilder;
 
 /**
  * Created by flavio on 24/03/18.
  */
 
-public class CcmMakerNoteBuilder implements MakerNoteInfoBuilder<String>
+public class HoyaMakerNoteBuilder implements MakerNoteInfoBuilder<String>
 {
     @Override
     public MakerNoteInfo build(String makerNoteData, ExtraCameraInfo cameraInfo)

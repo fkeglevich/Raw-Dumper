@@ -31,7 +31,7 @@ public class MakerNoteInfo
     public Iso iso                      = null;
     public ShutterSpeed exposureTime    = null;
 
-    //White Balance
+    //White Balance and color
     public Double temperature           = null;
     public Double tint                  = null;
     public float[] colorMatrix          = null;

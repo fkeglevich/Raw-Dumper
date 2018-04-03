@@ -17,6 +17,9 @@
 package com.fkeglevich.rawdumper.raw.mkn;
 
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+import com.fkeglevich.rawdumper.raw.mkn.type.CcmMakerNoteBuilder;
+import com.fkeglevich.rawdumper.raw.mkn.type.DummyMakerNoteBuilder;
+import com.fkeglevich.rawdumper.raw.mkn.type.HoyaMakerNoteBuilder;
 
 import java.io.UnsupportedEncodingException;
 
