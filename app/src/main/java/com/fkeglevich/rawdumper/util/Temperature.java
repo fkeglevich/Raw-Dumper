@@ -16,13 +16,16 @@
 
 package com.fkeglevich.rawdumper.util;
 
+import com.fkeglevich.rawdumper.raw.color.ColorTemperature;
+import com.fkeglevich.rawdumper.raw.color.XYCoords;
+
 /**
  * Code and table for transforming CCT and tint to CIE xy coordinates taken from Adobe's DNG SDK.
  *
  * Modified and ported to java by Flávio Keglevich on 11/11/17.
  */
 
-class Temperature
+public class Temperature
 {
     /*****************************************************************************/
     // Copyright 2006 Adobe Systems Incorporated
@@ -76,16 +79,16 @@ class Temperature
                     { 600, 0.33724, 0.36051, -116.45 }
             };
 
-    static float[] getXYFromCCTAndTint(double temperature, double tint)
+    public static XYCoords getXYFromColorTemperature(ColorTemperature colorTemperature)
     {
         // Result
-        float x = 0, y = 0;
+        double x = 0, y = 0;
 
         // Find inverse temperature to use as index.
-        double r = 1.0E6 / temperature;
+        double r = 1.0E6 / colorTemperature.getTemperature();
 
         // Convert tint to offset is uv space.
-        double offset = tint * (1.0 / TINT_SCALE);
+        double offset = colorTemperature.getTint() * (1.0 / TINT_SCALE);
 
         // Search for line pair containing coordinate.
         for (int index = 0; index <= 29; index++)
@@ -133,11 +136,93 @@ class Temperature
                 v += vv3 * offset;
 
                 // Convert to xy coordinates.
-                x = (float) (1.5 * u / (u - 4.0 * v + 2.0));
-                y = (float) (v / (u - 4.0 * v + 2.0));
+                x = 1.5 * u / (u - 4.0 * v + 2.0);
+                y = v / (u - 4.0 * v + 2.0);
                 break;
             }
         }
-        return new float[]{x, y};
+        return new XYCoords(x, y);
+    }
+
+    public static ColorTemperature getColorTemperatureFromXYCoords(XYCoords xy)
+    {
+        double temperature = 0, tint = 0;
+
+        // Convert to uv space.
+        double u = 2.0 * xy.getX() / (1.5 - xy.getX() + 6.0 * xy.getY());
+        double v = 3.0 * xy.getY() / (1.5 - xy.getX() + 6.0 * xy.getY());
+
+        // Search for line pair coordinate is between.
+        double last_dt = 0.0;
+
+        double last_dv = 0.0;
+        double last_du = 0.0;
+
+        for (int index = 1; index <= 30; index++)
+        {
+            // Convert slope to delta-u and delta-v, with length 1.
+            double du = 1.0;
+            double dv = TEMP_TABLE [index][3];
+
+            double len = Math.sqrt(1.0 + dv * dv);
+
+            du /= len;
+            dv /= len;
+
+            // Find delta from black body point to test coordinate.
+            double uu = u - TEMP_TABLE [index][1];
+            double vv = v - TEMP_TABLE [index][2];
+
+            // Find distance above or below line.
+            double dt = - uu * dv + vv * du;
+
+            // If below line, we have found line pair.
+            if (dt <= 0.0 || index == 30)
+            {
+
+                // Find fractional weight of two lines.
+                if (dt > 0.0) dt = 0.0;
+
+                dt = -dt;
+
+                double f;
+
+                if (index == 1)
+                    f = 0.0;
+                else
+                    f = dt / (last_dt + dt);
+
+                // Interpolate the temperature.
+
+                temperature = 1.0E6 / (TEMP_TABLE [index - 1][0] * f +
+                        TEMP_TABLE [index    ][0] * (1.0 - f));
+
+                // Find delta from black body point to test coordinate.
+                uu = u - (TEMP_TABLE [index - 1][1] * f +
+                        TEMP_TABLE [index    ][1] * (1.0 - f));
+
+                vv = v - (TEMP_TABLE [index - 1][2] * f +
+                        TEMP_TABLE [index    ][2] * (1.0 - f));
+
+                // Interpolate vectors along slope.
+                du = du * (1.0 - f) + last_du * f;
+                dv = dv * (1.0 - f) + last_dv * f;
+
+                len = Math.sqrt (du * du + dv * dv);
+
+                du /= len;
+                dv /= len;
+
+                // Find distance along slope.
+                tint = (uu * du + vv * dv) * TINT_SCALE;
+                break;
+            }
+
+            // Try next line pair.
+            last_dt = dt;
+            last_du = du;
+            last_dv = dv;
+        }
+        return new ColorTemperature(temperature, tint);
     }
 }

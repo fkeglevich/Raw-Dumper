@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.util;
 
+import com.fkeglevich.rawdumper.raw.color.ColorTemperature;
+import com.fkeglevich.rawdumper.raw.color.XYCoords;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 
 /**
@@ -27,7 +29,9 @@ public class ColorUtil
 {
     public static float[] getXYFromCCT(double temperature, ColorInfo colorInfo)
     {
-        return Temperature.getXYFromCCTAndTint(temperature, getTintForTemperature(temperature, colorInfo));
+        XYCoords xyCoords = Temperature.getXYFromColorTemperature(new ColorTemperature(temperature, getTintForTemperature(temperature, colorInfo)));
+
+        return new float[] {(float) xyCoords.getX(), (float) xyCoords.getY()};
     }
 
     private static double getTintForTemperature(double temperature, ColorInfo colorInfo)
