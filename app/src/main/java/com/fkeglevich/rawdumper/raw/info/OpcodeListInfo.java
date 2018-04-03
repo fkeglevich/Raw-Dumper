@@ -51,15 +51,15 @@ public class OpcodeListInfo
         opcodeList2Cache = updateOpcodeListCache(opcodeList2Cache, opcodeList2File);
         opcodeList3Cache = updateOpcodeListCache(opcodeList3Cache, opcodeList3File);
 
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST1, opcodeList1Cache, true);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST2, opcodeList2Cache, true);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST3, opcodeList3Cache, true);
+        safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST1, opcodeList1Cache);
+        safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST2, opcodeList2Cache);
+        safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST3, opcodeList3Cache);
     }
 
-    private void safeWriteField(TiffWriter writer, int tag, byte[] data, boolean writeLength)
+    private void safeWriteField(TiffWriter writer, int tag, byte[] data)
     {
         if (data != null)
-            writer.setField(tag, data, writeLength);
+            writer.setField(tag, data, true);
     }
 
     private byte[] updateOpcodeListCache(byte[] cache, String resourceNam)
