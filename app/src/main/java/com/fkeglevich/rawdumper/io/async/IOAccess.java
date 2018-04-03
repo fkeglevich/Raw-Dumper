@@ -54,4 +54,9 @@ public class IOAccess
     {
         functionContext.call(new SaveDngFunction(), captureInfo, callback, exception);
     }
+
+    public void saveStringAsync(String data, String filePath, AsyncOperation<Void> callback, AsyncOperation<MessageException> exception)
+    {
+        saveFileAsync(new Locked<byte[]>(data.getBytes()), filePath, callback, exception);
+    }
 }
