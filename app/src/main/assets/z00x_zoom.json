@@ -51,7 +51,8 @@
                     "1200",
                     "1400",
                     "1600",
-                    "3200"
+                    "3200",
+                    "6400"
                 ],
                 "shutterSpeedParameter": "set_shutter_speed",
                 "shutterSpeedAutoValue": "0",
