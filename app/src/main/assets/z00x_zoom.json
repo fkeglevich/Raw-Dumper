@@ -137,7 +137,7 @@
             "retryPipelineDelay": 0,
             "sensor": {
                 "baseISO": 50,
-                "bayerPattern": "GRBG",
+                "bayerPattern": "GBRG",
                 "binningRawImageSizes": [],
                 "bitsPerPixel": 10,
                 "blackLevel": [
@@ -146,8 +146,8 @@
                     64.0,
                     64.0
                 ],
-                "maker": "Toshiba",
-                "name": "T4K37",
+                "maker": "Panasonic",
+                "name": "MN34130",
                 "rawImageSizes": [
                     {
                         "height": 3120,
