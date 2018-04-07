@@ -50,11 +50,11 @@ public class ModeRestrictionChain extends RestrictionChain
         this.previewActions = previewActions;
 
         ChainNode<Mode, PictureFormat, List<PictureFormat>> modeNode
-                = new ChainNode<>(modeFeature, new DataContainerVF<Mode, PictureFormat>(), new PictureFormatFixer(), formatFeature);
+                = new ChainNode<>(modeFeature, new DataContainerVF<>(), new PictureFormatFixer(), formatFeature);
         addChainNode(modeNode);
 
         ChainNode<PictureFormat, CaptureSize, List<CaptureSize>> formatNode
-                = new ChainNode<>(formatFeature, new DataContainerVF<PictureFormat, CaptureSize>(), new PictureSizeFixer(), pictureSizeFeature);
+                = new ChainNode<>(formatFeature, new DataContainerVF<>(), new PictureSizeFixer(), pictureSizeFeature);
         addChainNode(formatNode);
 
         ChainNode<CaptureSize, CaptureSize, List<CaptureSize>> pictureSizeNode
