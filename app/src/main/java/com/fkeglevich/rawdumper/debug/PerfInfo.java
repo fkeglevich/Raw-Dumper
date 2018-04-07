@@ -69,7 +69,14 @@ public class PerfInfo
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
         {
             double milliseconds = ((System.nanoTime() - tickingMap.get(tag)) / NANO_TIME_TO_MILLISECONDS);
-            Log.i(TAG, tag + " needed " + milliseconds + " ms");
+            try
+            {
+                Log.i(TAG, tag + " needed " + milliseconds + " ms");
+            }
+            catch (RuntimeException re)
+            {
+                System.out.println(tag + " needed " + milliseconds + " ms");
+            }
         }
     }
 }
