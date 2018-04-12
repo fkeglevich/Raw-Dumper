@@ -32,6 +32,7 @@ import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromRawAndJpegBuilder;
 import com.fkeglevich.rawdumper.su.ShellManager;
+import com.fkeglevich.rawdumper.util.MinDelay;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
@@ -45,9 +46,12 @@ import eu.chainfire.libsuperuser.Shell;
 
 public class StandardRawPipeline extends PicturePipelineBase
 {
+    private static final int MINIMUM_DELAY_AFTER_START_PREVIEW = 350;
+
     private final CameraContext cameraContext;
     private final byte[] buffer;
     private final Handler uiHandler;
+    private final MinDelay delay;
 
     private Camera.Parameters parameters = null;
 
@@ -57,6 +61,7 @@ public class StandardRawPipeline extends PicturePipelineBase
         this.cameraContext = cameraContext;
         this.buffer = buffer;
         this.uiHandler = new Handler(Looper.getMainLooper());
+        this.delay = new MinDelay(MINIMUM_DELAY_AFTER_START_PREVIEW);
     }
 
     @Override
@@ -71,6 +76,7 @@ public class StandardRawPipeline extends PicturePipelineBase
     protected void processPipeline(PipelineData pipelineData, final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback)
     {
         startPreview();
+        delay.startCounting();
         saveDngPicture(pipelineData, pictureCallback, exceptionCallback);
         postOnPictureTaken(pictureCallback);
     }
@@ -121,11 +127,11 @@ public class StandardRawPipeline extends PicturePipelineBase
 
     private void postOnPictureTaken(final PictureListener pictureCallback)
     {
-        uiHandler.post(() -> pictureCallback.onPictureTaken());
+        uiHandler.post(pictureCallback::onPictureTaken);
     }
 
     private void postOnPictureSaved(final PictureListener pictureCallback)
     {
-        uiHandler.postDelayed(() -> pictureCallback.onPictureSaved(), 120);
+        uiHandler.postDelayed(pictureCallback::onPictureSaved, delay.stopCounting());
     }
 }
