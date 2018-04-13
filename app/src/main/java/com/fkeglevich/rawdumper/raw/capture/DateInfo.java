@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
-import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
+import com.fkeglevich.rawdumper.tiff.TagFormatter;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -86,7 +86,7 @@ public class DateInfo
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         if (getCaptureDate() != null)
-            tiffWriter.setField(TiffTag.TIFFTAG_DATETIME, ExifTagWriter.formatCalendarTag(getCaptureDate()));
+            tiffWriter.setField(TiffTag.TIFFTAG_DATETIME, TagFormatter.formatCalendarTag(getCaptureDate()));
     }
 
     /**

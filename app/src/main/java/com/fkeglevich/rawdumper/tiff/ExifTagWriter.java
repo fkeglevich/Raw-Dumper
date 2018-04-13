@@ -20,29 +20,24 @@ import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
-import com.fkeglevich.rawdumper.util.MathUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 /**
+ * Writes EXIF tags to a TIFF file
+ *
  * Created by Flávio Keglevich on 28/06/2017.
- * TODO: Add a class header comment!
  */
 
 public class ExifTagWriter
 {
-    // Calendar tag formatting
-    private static final String DATE_PATTERN = "yyyy:MM:dd HH:mm:ss";
-
     public static int writeExposureTimeTags(TiffWriter tiffWriter, ShutterSpeed shutterSpeed)
     {
         double exposureTime = shutterSpeed.getExposureInSeconds();
         int result;
         result = tiffWriter.setField(ExifTag.EXIFTAG_EXPOSURETIME, exposureTime);
         if (result == 0) return result;
-        result = tiffWriter.setField(ExifTag.EXIFTAG_SHUTTERSPEEDVALUE, formatApexShutterSpeedTag(exposureTime));
+        result = tiffWriter.setField(ExifTag.EXIFTAG_SHUTTERSPEEDVALUE, TagFormatter.formatApexShutterSpeedTag(exposureTime));
         return result;
     }
 
@@ -59,7 +54,7 @@ public class ExifTagWriter
     public static int writeDateTimeOriginalTags(TiffWriter tiffWriter, Calendar dateTimeOriginal)
     {
         int result;
-        result = tiffWriter.setField(ExifTag.EXIFTAG_DATETIMEORIGINAL, formatCalendarTag(dateTimeOriginal));
+        result = tiffWriter.setField(ExifTag.EXIFTAG_DATETIMEORIGINAL, TagFormatter.formatCalendarTag(dateTimeOriginal));
         if (result == 0) return result;
         result = tiffWriter.setField(ExifTag.EXIFTAG_SUBSECTIMEORIGINAL, "" + dateTimeOriginal.get(Calendar.MILLISECOND));
         return result;
@@ -68,7 +63,7 @@ public class ExifTagWriter
     public static int writeDateTimeDigitizedTags(TiffWriter tiffWriter, Calendar dateTimeOriginal)
     {
         int result;
-        result = tiffWriter.setField(ExifTag.EXIFTAG_DATETIMEDIGITIZED, formatCalendarTag(dateTimeOriginal));
+        result = tiffWriter.setField(ExifTag.EXIFTAG_DATETIMEDIGITIZED, TagFormatter.formatCalendarTag(dateTimeOriginal));
         if (result == 0) return result;
         result = tiffWriter.setField(ExifTag.EXIFTAG_SUBSECTIMEDIGITIZED, "" + dateTimeOriginal.get(Calendar.MILLISECOND));
         return result;
@@ -79,7 +74,7 @@ public class ExifTagWriter
         int result;
         result = tiffWriter.setField(ExifTag.EXIFTAG_FNUMBER, aperture);
         if (result == 0) return result;
-        result = tiffWriter.setField(ExifTag.EXIFTAG_APERTUREVALUE, formatApexApertureTag(aperture));
+        result = tiffWriter.setField(ExifTag.EXIFTAG_APERTUREVALUE, TagFormatter.formatApexApertureTag(aperture));
         return result;
     }
 
@@ -102,22 +97,4 @@ public class ExifTagWriter
     {
         return tiffWriter.setField(ExifTag.EXIFTAG_FOCALLENGTH, focalLength);
     }
-
-    public static double formatApexShutterSpeedTag(double exposureTime)
-    {
-        return -1.0 * MathUtil.log2(exposureTime);
-    }
-
-    public static double formatApexApertureTag(double aperture)
-    {
-        return 2 * MathUtil.log2(aperture);
-    }
-
-    public static String formatCalendarTag(Calendar calendar)
-    {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.US);
-        dateFormat.setCalendar(calendar);
-        return dateFormat.format(calendar.getTime());
-    }
-
 }
