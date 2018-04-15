@@ -28,6 +28,8 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is used for loading and creating DeviceInfo objects.
@@ -61,16 +63,46 @@ public class DeviceInfoLoader
     {
         try
         {
-            String deviceInfoFileName = getDeviceInfoFileName(deviceModel);
+            return loadDeviceInfoFromFileName(getDeviceInfoFileName(deviceModel));
+        }
+        catch (IOException ioe)
+        {
+            return throwDeviceLoadException(ioe);
+        }
+    }
+
+    public List<DeviceInfo> loadAllDeviceInfos() throws DeviceLoadException
+    {
+        try
+        {
+            List<DeviceInfo> result = new ArrayList<>();
+            SupportedDeviceList deviceList = loadDeviceList();
+            List<String> deviceInfoFiles = deviceList.listDeviceInfoFiles();
+            for (String fileName : deviceInfoFiles)
+                result.add(loadDeviceInfoFromFileName(fileName));
+
+            return result;
+        }
+        catch (IOException ioe)
+        {
+            return throwDeviceLoadException(ioe);
+        }
+    }
+
+    private <T> T throwDeviceLoadException(Exception exception) throws DeviceLoadException
+    {
+        Log.e("DeviceInfoLoader", exception.getClass().getSimpleName() + ": " + exception.getMessage());
+        throw new DeviceLoadException();
+    }
+
+    private DeviceInfo loadDeviceInfoFromFileName(String deviceInfoFileName) throws IOException
+    {
+        try
+        {
             String deviceInfoJson = AssetUtil.getAssetAsString(deviceInfoFileName + DEVICE_FILE_EXTENSION);
             DeviceInfo deviceInfo = moshi.adapter(DeviceInfo.class).fromJson(deviceInfoJson);
             if (deviceInfo != null) deviceInfo.runtimeInit(deviceInfoFileName);
             return deviceInfo;
-        }
-        catch (IOException ioe)
-        {
-            Log.e("DeviceInfoLoader", "IOException: " + ioe.getMessage());
-            throw new DeviceLoadException();
         }
         catch (IllegalArgumentException iae)
         {

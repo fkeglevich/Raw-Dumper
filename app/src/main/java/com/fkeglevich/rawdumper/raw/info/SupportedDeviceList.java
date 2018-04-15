@@ -19,6 +19,10 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.support.annotation.Keep;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Represents the list of known devices.
@@ -39,5 +43,14 @@ class SupportedDeviceList
                 return sd.deviceInfoFile;
 
         throw new IOException("Couldn't find the device info file! device model: " + deviceModel);
+    }
+
+    List<String> listDeviceInfoFiles()
+    {
+        Set<String> files = new HashSet<>();
+        for (SupportedDevice sd : supportedDevices)
+            files.add(sd.deviceInfoFile);
+
+        return new ArrayList<>(files);
     }
 }
