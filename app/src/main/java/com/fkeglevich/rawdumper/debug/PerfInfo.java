@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.debug;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.fkeglevich.rawdumper.BuildConfig;
@@ -53,9 +54,19 @@ public class PerfInfo
      */
     public static void end(String tag)
     {
+        end(tag, null);
+    }
+
+    /**
+     * Ends measuring performance and logs the result
+     * @param tag   A tag for storing/querying the result
+     * @param data  Extra data value for better documentation
+     */
+    public static void end(String tag, String data)
+    {
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
         {
-            log(tag);
+            log(tag, data);
             tickingMap.remove(tag);
         }
     }
@@ -66,16 +77,27 @@ public class PerfInfo
      */
     public static void log(String tag)
     {
+        log(tag, null);
+    }
+
+    /**
+     * Logs the performance delta, measured in milliseconds
+     * @param tag   A tag for storing/querying the result
+     * @param data  Extra data value for better documentation
+     */
+    public static void log(String tag, @Nullable String data)
+    {
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
         {
             double milliseconds = ((System.nanoTime() - tickingMap.get(tag)) / NANO_TIME_TO_MILLISECONDS);
+            String extraData = data == null ? "" : "(" + data + ")";
             try
             {
-                Log.i(TAG, tag + " needed " + milliseconds + " ms");
+                Log.i(TAG, tag + extraData + " needed " + milliseconds + " ms");
             }
             catch (RuntimeException re)
             {
-                System.out.println(tag + " needed " + milliseconds + " ms");
+                System.out.println(tag + extraData + " needed " + milliseconds + " ms");
             }
         }
     }
