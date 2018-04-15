@@ -29,40 +29,14 @@ import com.fkeglevich.rawdumper.debug.DebugFlag;
 
 public class CameraSelectorImpl extends CameraSelector
 {
-    private int currentCameraId;
-
     public CameraSelectorImpl()
     {
-        currentCameraId = initCameraId();
+        super(DebugFlag.shouldOpenFrontCameraFirst() && Camera.getNumberOfCameras() > 1 ? 1 : 0);
     }
 
     @Override
-    public synchronized void selectNextCamera()
-    {
-        currentCameraId++;
-        if (currentCameraId >= getNumOfCameras())
-            currentCameraId = 0;
-    }
-
-    @Override
-    public synchronized boolean hasMultipleCameras()
-    {
-        return getNumOfCameras() > 1;
-    }
-
-    @Override
-    protected synchronized int getSelectedCameraId()
-    {
-        return currentCameraId;
-    }
-
-    private int getNumOfCameras()
+    protected int getNumOfCameras()
     {
         return Camera.getNumberOfCameras();
-    }
-
-    private int initCameraId()
-    {
-        return DebugFlag.shouldOpenFrontCameraFirst() ? 1 : 0;
     }
 }

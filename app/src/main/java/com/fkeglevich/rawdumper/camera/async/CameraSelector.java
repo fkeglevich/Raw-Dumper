@@ -26,11 +26,29 @@ import com.fkeglevich.rawdumper.camera.extension.CameraSelectorAccess;
 
 public abstract class CameraSelector
 {
-    public abstract void selectNextCamera();
+    private int currentCameraId;
 
-    public abstract boolean hasMultipleCameras();
+    protected CameraSelector(int cameraId)
+    {
+        currentCameraId = cameraId;
+    }
 
-    protected abstract int getSelectedCameraId();
+    public synchronized void selectNextCamera()
+    {
+        currentCameraId++;
+        if (currentCameraId >= getNumOfCameras())
+            currentCameraId = 0;
+    }
+
+    public synchronized boolean hasMultipleCameras()
+    {
+        return getNumOfCameras() > 1;
+    }
+
+    protected synchronized int getSelectedCameraId()
+    {
+        return currentCameraId;
+    }
 
     public CameraSelectorAccess getAccess()
     {
@@ -43,4 +61,6 @@ public abstract class CameraSelector
             }
         };
     }
+
+    protected abstract int getNumOfCameras();
 }
