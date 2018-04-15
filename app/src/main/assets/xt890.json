@@ -4,7 +4,7 @@
             "binningSizes": [],
             "canBePatched": false,
             "color": {
-                "calibrationIlluminant1": "D55",
+                "calibrationIlluminant1": "STANDARD_LIGHT_A",
                 "cameraCalibration1": [
                     1.0,
                     0.0,
@@ -17,6 +17,29 @@
                     1.0
                 ],
                 "colorMatrix1": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "calibrationIlluminant2": "D65",
+                "cameraCalibration2": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "colorMatrix2": [
                     1.0,
                     0.0,
                     0.0,
@@ -109,7 +132,7 @@
             "binningSizes": [],
             "canBePatched": false,
             "color": {
-                "calibrationIlluminant1": "D55",
+                "calibrationIlluminant1": "STANDARD_LIGHT_A",
                 "cameraCalibration1": [
                     1.0,
                     0.0,
@@ -122,6 +145,29 @@
                     1.0
                 ],
                 "colorMatrix1": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "calibrationIlluminant2": "D65",
+                "cameraCalibration2": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "colorMatrix2": [
                     1.0,
                     0.0,
                     0.0,
