@@ -274,6 +274,9 @@
             "lens": {
                 "aperture": 2.0
             },
+            "logcatServices": [
+                "WhiteBalanceService"
+            ],
             "model": "%s (front camera)",
             "noise": {
                 "noiseProfile": null

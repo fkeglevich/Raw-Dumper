@@ -24,6 +24,9 @@ import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -48,6 +51,7 @@ public class ExtraCameraInfo
     private OpcodeListInfo[] opcodes;
     private NoiseInfo noise;
     private CaptureSize[] binningSizes;
+    private String[] logcatServices;
 
     private boolean hasKnownMakernote;
     private boolean retryOnError;
@@ -154,6 +158,11 @@ public class ExtraCameraInfo
     public boolean isCanBePatched()
     {
         return canBePatched;
+    }
+
+    public List<String> getLogcatServices()
+    {
+        return logcatServices != null ? Arrays.asList(logcatServices) : Collections.emptyList();
     }
 
     void fixId(int newId)

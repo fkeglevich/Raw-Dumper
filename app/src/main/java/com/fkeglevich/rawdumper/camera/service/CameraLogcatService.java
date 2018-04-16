@@ -91,7 +91,7 @@ public class CameraLogcatService
 
     private List<String> getServiceNamesFromContext(CameraContext cameraContext)
     {
-        return Collections.singletonList("WhiteBalanceService");
+        return cameraContext.getCameraInfo().getLogcatServices();
     }
 
     @Nullable
