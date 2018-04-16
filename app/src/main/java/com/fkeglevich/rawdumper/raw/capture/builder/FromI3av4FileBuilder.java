@@ -108,12 +108,7 @@ public class FromI3av4FileBuilder extends CommonBuilder
     @Override
     public void buildWhiteBalanceInfo()
     {
-        ColorInfo colorInfo = pair.getExtraCameraInfo().getColor();
-
-        if (pair.getExtraCameraInfo().hasKnownMakernote())
-            captureInfo.whiteBalanceInfo = WhiteBalanceInfo.createFromMakerNote(makerNoteInfo, colorInfo);
-        else
-            captureInfo.whiteBalanceInfo = WhiteBalanceInfo.createFromDaylightTemperature(colorInfo);
+        captureInfo.whiteBalanceInfo = WhiteBalanceInfo.create(pair.getExtraCameraInfo(), makerNoteInfo);
     }
 
     @Override

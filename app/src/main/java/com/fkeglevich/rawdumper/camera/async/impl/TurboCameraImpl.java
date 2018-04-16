@@ -42,6 +42,7 @@ import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.FocusRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.ModeRestrictionChain;
+import com.fkeglevich.rawdumper.camera.service.CameraLogcatService;
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 
@@ -93,6 +94,8 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         //mode format
         pictureModeFeature.setValue(pictureModeFeature.getAvailableValues().get(0));
         pictureFormatFeature.setValue(pictureFormatFeature.getAvailableValues().get(1));
+
+        CameraLogcatService.getInstance().startService(lowLevelCamera.getCameraContext());
 
         ThreadUtil.simpleDelay(150);
     }
@@ -199,6 +202,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     @Override
     public void close()
     {
+        CameraLogcatService.getInstance().stopService();
         recyclerFactory.cleanUpAllFeatures();
         virtualRecyclerFactory.cleanUpAllFeatures();
         lowLevelCamera.close();
