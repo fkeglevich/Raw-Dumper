@@ -25,6 +25,7 @@ import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.exception.CameraPatchRequiredException;
 import com.fkeglevich.rawdumper.camera.exception.RawIsUnavailableException;
+import com.fkeglevich.rawdumper.camera.service.CameraLogcatService;
 import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
 import com.fkeglevich.rawdumper.ui.dialog.FatalErrorDialog;
 import com.fkeglevich.rawdumper.ui.dialog.OkDialog;
@@ -45,6 +46,7 @@ public class CameraLifetimeController
         {
             cameraManager.closeCamera();
             cameraPreview.clearCamera();
+            CameraLogcatService.getInstance().disableHalDebugMode();
         }
     };
 

@@ -21,6 +21,7 @@ import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
+import com.fkeglevich.rawdumper.su.ShellManager;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -29,7 +30,9 @@ import java.util.List;
 
 public class CameraLogcatService
 {
-    private static final String[] INIT_COMMANDS = {"setprop \"camera.hal.debug\" 2"};
+    private static final String ENTER_HAL_DEBUG_MODE = "setprop \"camera.hal.debug\" 2";
+    private static final String EXIT_HAL_DEBUG_MODE = "setprop \"camera.hal.debug\" 0";
+    private static final String[] INIT_COMMANDS = {ENTER_HAL_DEBUG_MODE};
     private static final String METHOD_NAME = "getInstance";
     private static final String PACKAGE_NAME = ".available.";
 
@@ -78,6 +81,12 @@ public class CameraLogcatService
 
         activeServices.clear();
         logcatServiceThread.closeShell();
+    }
+
+    public void disableHalDebugMode()
+    {
+        Log.i(getClass().getSimpleName(), "Disabling camera hal debug mode");
+        ShellManager.getInstance().addSingleCommand(EXIT_HAL_DEBUG_MODE, null);
     }
 
     private List<String> getServiceNamesFromContext(CameraContext cameraContext)
