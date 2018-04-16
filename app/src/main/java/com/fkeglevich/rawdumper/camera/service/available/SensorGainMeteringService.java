@@ -34,7 +34,7 @@ public class SensorGainMeteringService extends LogcatFeatureService<Double>
         return instance;
     }
 
-    protected SensorGainMeteringService()
+    private SensorGainMeteringService()
     {
         super(LOGCAT_MATCH);
     }
