@@ -75,7 +75,7 @@ public class CameraLifetimeController
 
     private void setupCameraManager()
     {
-        cameraManager.onCameraOpened.addListener(eventData -> onCameraOpened(eventData));
+        cameraManager.onCameraOpened.addListener(this::onCameraOpened);
         cameraManager.onCameraException.addListener(eventData ->
         {
             if (eventData instanceof RawIsUnavailableException || eventData instanceof CameraPatchRequiredException)
