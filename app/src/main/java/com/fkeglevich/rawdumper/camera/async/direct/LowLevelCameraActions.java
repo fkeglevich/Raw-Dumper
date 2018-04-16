@@ -32,6 +32,7 @@ import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
 import com.fkeglevich.rawdumper.camera.helper.FocusHelper;
 import com.fkeglevich.rawdumper.camera.parameter.PictureSizeLayer;
+import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
 import com.fkeglevich.rawdumper.util.Mutable;
 
 import java.util.List;
@@ -172,6 +173,7 @@ public class LowLevelCameraActions implements CameraActions
     {
         synchronized (lock)
         {
+            WhiteBalanceService.getInstance().fixValue();
             pipelineManager.getPicturePipeline().takePicture(pictureCallback, exceptionCallback);
         }
     }
