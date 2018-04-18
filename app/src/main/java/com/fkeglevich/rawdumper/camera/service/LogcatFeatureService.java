@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.service;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public abstract class LogcatFeatureService<T>
 {
@@ -43,7 +44,17 @@ public abstract class LogcatFeatureService<T>
         String string = fixedValue != null ? fixedValue : getMatch().latestMatch;
         fixedValue = null;
         if (string != null)
-            return parseString(string);
+        {
+            try
+            {
+                return parseString(string);
+            }
+            catch (Exception e)
+            {
+                Log.i(LogcatFeatureService.class.getSimpleName(), e.getMessage());
+                return null;
+            }
+        }
         else
             return null;
     }
