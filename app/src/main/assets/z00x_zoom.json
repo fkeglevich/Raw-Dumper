@@ -275,7 +275,8 @@
                 "aperture": 2.0
             },
             "logcatServices": [
-                "WhiteBalanceService"
+                "WhiteBalanceService",
+                "SensorGainMeteringService"
             ],
             "model": "%s (front camera)",
             "noise": {
