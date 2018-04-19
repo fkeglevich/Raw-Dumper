@@ -64,6 +64,7 @@ public class CameraLogcatService
             LogcatFeatureService service = getServiceFromName(name);
             if (service != null)
             {
+                Log.i(getClass().getSimpleName(), "Found service:" + name);
                 service.setAvailable(true);
                 matchList.add(service.getMatch());
                 activeServices.add(service);
@@ -86,7 +87,7 @@ public class CameraLogcatService
     public void disableHalDebugMode()
     {
         Log.i(getClass().getSimpleName(), "Disabling camera hal debug mode");
-        ShellManager.getInstance().addSingleCommand(EXIT_HAL_DEBUG_MODE, null);
+        //ShellManager.getInstance().addSingleCommand(EXIT_HAL_DEBUG_MODE, null);
     }
 
     private List<String> getServiceNamesFromContext(CameraContext cameraContext)

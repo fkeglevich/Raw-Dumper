@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
+import android.util.Log;
+
 import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
@@ -23,6 +25,8 @@ import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.ColorUtil;
 import com.fkeglevich.rawdumper.util.MathUtil;
+
+import java.util.Arrays;
 
 /**
  * Created by Flávio Keglevich on 14/06/2017.
@@ -38,7 +42,10 @@ public class WhiteBalanceInfo
         float[] neutralValues = WhiteBalanceService.getInstance().isAvailable() ? WhiteBalanceService.getInstance().getValue() : null;
 
         if (neutralValues != null)
+        {
+            Log.i(WhiteBalanceInfo.class.getSimpleName(), "Using neutral values from WB Service: " + Arrays.toString(neutralValues));
             return new WhiteBalanceInfo(neutralValues);
+        }
         if (cameraInfo.hasKnownMakernote())
             return createFromMakerNote(makerNoteInfo, cameraInfo.getColor());
         else
