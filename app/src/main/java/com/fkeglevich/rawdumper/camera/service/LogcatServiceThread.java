@@ -25,7 +25,7 @@ import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
 
-class LogcatServiceThread
+public class LogcatServiceThread
 {
     private static final String THREAD_NAME = "LogcatServiceThread";
     private static final int LOGCAT_COMMAND_CODE = 2;
@@ -80,16 +80,28 @@ class LogcatServiceThread
         localMatchArray = null;
     }
 
+    private long lastNanos = 0;
+
+    public static volatile double ms = 0;
+
     @WorkerThread
     private void processLine(String line)
     {
+        //ms = (System.nanoTime() - lastNanos) / 1000000.0;
+        //Log.i("ASD", ms + "");
+        //lastNanos = System.nanoTime();
+
         if (localMatchArray == null) return;
-        for (LogcatMatch match : localMatchArray)
-            if (line.startsWith(match.fingerprintPrefix))
+        LogcatMatch match;
+        for (int i = 0; i < localMatchArray.length; i++)
+        {
+            match = localMatchArray[i];
+            if (line.contains(match.fingerprintPrefix))
             {
                 match.latestMatch = line;
                 return;
             }
+        }
     }
 
     @WorkerThread
