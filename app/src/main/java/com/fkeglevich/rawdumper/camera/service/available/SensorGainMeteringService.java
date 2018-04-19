@@ -22,10 +22,8 @@ import com.fkeglevich.rawdumper.camera.service.LogcatMatch;
 
 public class SensorGainMeteringService extends LogcatFeatureService<Double>
 {
-    /*total_gain: 3.480188  digital gain: 1.000000
-    @getManualIso - -1
-    */
-    private static final LogcatMatch LOGCAT_MATCH = new LogcatMatch("Camera_AtomAIQ", LogPriority.D, "total_gain");
+    private static final String FINGERPRINT = "total_gain: ";
+    private static final LogcatMatch LOGCAT_MATCH = new LogcatMatch("Camera_AtomAIQ", LogPriority.D, FINGERPRINT);
 
     private static final SensorGainMeteringService instance = new SensorGainMeteringService();
 
@@ -42,7 +40,12 @@ public class SensorGainMeteringService extends LogcatFeatureService<Double>
     @Override
     protected Double parseString(String string)
     {
-        String[] split = string.split(" ");
+        /*total_gain: 3.480188  digital gain: 1.000000
+            @getManualIso - -1
+            */
+
+        String firstPiece = string.substring(string.indexOf(FINGERPRINT));
+        String[] split = firstPiece.split(" ");
         return Double.parseDouble(split[1]);
     }
 }
