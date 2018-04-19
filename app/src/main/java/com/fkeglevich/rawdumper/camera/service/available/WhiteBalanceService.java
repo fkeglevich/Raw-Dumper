@@ -22,7 +22,7 @@ import com.fkeglevich.rawdumper.camera.service.LogcatMatch;
 
 public class WhiteBalanceService extends LogcatFeatureService<float[]>
 {
-    private static final String FINGERPRINT = "@setAicParameter: wb ";
+    private static final String FINGERPRINT = "@setAicParameter: wb int";
     private static final LogcatMatch LOGCAT_MATCH = new LogcatMatch("Camera_ISP", LogPriority.D, FINGERPRINT);
 
     private static final WhiteBalanceService instance = new WhiteBalanceService();
@@ -40,17 +40,15 @@ public class WhiteBalanceService extends LogcatFeatureService<float[]>
     @Override
     protected float[] parseString(String string)
     {
-        //TODO: avoid throwing exceptions here in case of parse failures
-
+        String firstPiece = string.substring(string.indexOf(FINGERPRINT));
         //@setAicParameter: wb integer_bits=1 gr=32768 r=60811 b=50613 gb=32768
-        String[] split = string.replace(FINGERPRINT, "").split(" ");
-        if (split.length != 5)
-            return null;
 
-        String gr = split[1].split("=")[1];
-        String r = split[2].split("=")[1];
-        String b = split[3].split("=")[1];
-        String gb = split[4].split("=")[1];
+        String[] split = firstPiece.split(" ");
+
+        String gr = split[3].split("=")[1];
+        String r = split[4].split("=")[1];
+        String b = split[5].split("=")[1];
+        String gb = split[6].split("=")[1];
 
         float rGain = (float) (Double.parseDouble(gr) / Double.parseDouble(r));
         float bGain = (float) (Double.parseDouble(gb) / Double.parseDouble(b));
