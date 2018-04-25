@@ -57,7 +57,7 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 
     public Feature<Nullable<Iso>> createIsoMeteringFeature()
     {
-        IsoMeteringFeature result = new IsoMeteringFeature(parameterCollection);
+        IsoMeteringFeature result = new IsoMeteringFeature(parameterCollection, cameraContext.getSensorInfo());
         registerFeature(result);
         return result;
     }
@@ -71,7 +71,7 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 
     public Feature<Nullable<ShutterSpeed>> createSSMeteringFeature()
     {
-        SSMeteringFeature result = new SSMeteringFeature(parameterCollection);
+        SSMeteringFeature result = new SSMeteringFeature(parameterCollection, cameraContext.getSensorInfo());
         registerFeature(result);
         return result;
     }
