@@ -267,7 +267,7 @@
                 ],
                 "shutterSpeedParameter": "set_shutter_speed",
                 "shutterSpeedAutoValue": "0",
-                "shutterSpeedValues": []
+                "shutterSpeedValues": ["0"]
             },
             "hasKnownMakernote": true,
             "id": 1,
