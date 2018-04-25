@@ -32,7 +32,8 @@ public class CameraLogcatService
 {
     private static final String ENTER_HAL_DEBUG_MODE = "setprop \"camera.hal.debug\" 2";
     private static final String EXIT_HAL_DEBUG_MODE = "setprop \"camera.hal.debug\" 0";
-    private static final String[] INIT_COMMANDS = {ENTER_HAL_DEBUG_MODE};
+    private static final String CLEAR_LOGCAT_CMD = "logcat -c";
+    private static final String[] INIT_COMMANDS = {CLEAR_LOGCAT_CMD, ENTER_HAL_DEBUG_MODE};
     private static final String METHOD_NAME = "getInstance";
     private static final String PACKAGE_NAME = ".available.";
 
