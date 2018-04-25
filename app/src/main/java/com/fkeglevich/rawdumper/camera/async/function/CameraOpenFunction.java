@@ -29,6 +29,7 @@ import com.fkeglevich.rawdumper.camera.exception.CameraPatchRequiredException;
 import com.fkeglevich.rawdumper.camera.exception.RawIsUnavailableException;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.IntelCameraExtensionLoader;
+import com.fkeglevich.rawdumper.camera.service.CameraLogcatService;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class CameraOpenFunction extends ThrowingAsyncFunction<CameraContext, Tur
         if (rawIsUnavailable)
             throw cameraCanBePatched ? new CameraPatchRequiredException() : new RawIsUnavailableException();
 
+        CameraLogcatService.getInstance().startService(context);
         ICameraExtension cameraExtension = IntelCameraExtensionLoader.extendedOpenCamera(context);
 
         try

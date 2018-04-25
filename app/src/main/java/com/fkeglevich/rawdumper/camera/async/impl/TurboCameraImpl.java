@@ -95,8 +95,6 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         pictureModeFeature.setValue(pictureModeFeature.getAvailableValues().get(0));
         pictureFormatFeature.setValue(pictureFormatFeature.getAvailableValues().get(1));
 
-        CameraLogcatService.getInstance().startService(lowLevelCamera.getCameraContext());
-
         ThreadUtil.simpleDelay(150);
     }
 
