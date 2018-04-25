@@ -276,7 +276,8 @@
             },
             "logcatServices": [
                 "WhiteBalanceService",
-                "SensorGainMeteringService"
+                "SensorGainMeteringService",
+                "CoarseIntegrationTimeMeteringService"
             ],
             "model": "%s (front camera)",
             "noise": {
