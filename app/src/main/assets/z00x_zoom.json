@@ -298,6 +298,7 @@
                     16.0,
                     16.0
                 ],
+                "integrationTimeScale":31028,
                 "maker": "OmniVision",
                 "name": "OV5670",
                 "rawImageSizes": [

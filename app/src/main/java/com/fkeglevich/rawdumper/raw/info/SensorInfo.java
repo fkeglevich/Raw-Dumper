@@ -55,6 +55,7 @@ public class SensorInfo
     private float[] blackLevel;
 
     private int baseISO;
+    private Integer integrationTimeScale;
 
     public RawImageSize[] getRawImageSizes()
     {
@@ -69,6 +70,11 @@ public class SensorInfo
     public int getBaseISO()
     {
         return baseISO;
+    }
+
+    public Integer getIntegrationTimeScale()
+    {
+        return integrationTimeScale;
     }
 
     public void writeTiffTags(TiffWriter tiffWriter)

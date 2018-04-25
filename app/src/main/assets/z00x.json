@@ -187,6 +187,7 @@
                     64.0,
                     64.0
                 ],
+                "integrationTimeScale":47424,
                 "maker": "Toshiba",
                 "name": "T4K37",
                 "rawImageSizes": [
@@ -384,6 +385,7 @@
                     16.0,
                     16.0
                 ],
+                "integrationTimeScale":31028,
                 "maker": "OmniVision",
                 "name": "OV5670",
                 "rawImageSizes": [
