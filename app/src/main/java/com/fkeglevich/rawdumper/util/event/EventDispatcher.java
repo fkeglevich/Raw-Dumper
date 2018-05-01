@@ -30,6 +30,8 @@ public interface EventDispatcher<T>
 
     void removeListener(@NonNull EventListener<T> listener);
 
+    boolean hasListener(@NonNull EventListener<T> listener);
+
     void removeAllListeners();
 
     void dispatchEvent(T data);

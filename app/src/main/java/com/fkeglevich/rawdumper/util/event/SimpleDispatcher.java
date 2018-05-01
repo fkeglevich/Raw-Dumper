@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.util.event;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class SimpleDispatcher<T> implements EventDispatcher<T>
 {
-    private final List<EventListener<T>> listenerList = new ArrayList<>();
+    private final Collection<EventListener<T>> listenerList = new ArrayList<>();
 
     @Override
     public void addListener(@NonNull EventListener<T> listener)
@@ -41,6 +42,12 @@ public class SimpleDispatcher<T> implements EventDispatcher<T>
     public void removeListener(@NonNull EventListener<T> listener)
     {
         listenerList.remove(listener);
+    }
+
+    @Override
+    public boolean hasListener(@NonNull EventListener<T> listener)
+    {
+        return listenerList.contains(listener);
     }
 
     @Override
