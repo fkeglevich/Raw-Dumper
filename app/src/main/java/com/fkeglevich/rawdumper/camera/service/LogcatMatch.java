@@ -23,6 +23,7 @@ public class LogcatMatch
     public final String fingerprintPrefix;
 
     public volatile String latestMatch = null;
+    public volatile boolean enabled = false;
 
     public LogcatMatch(String tag, LogPriority priority, String fingerprintPrefix)
     {

@@ -21,10 +21,9 @@ import android.util.Log;
 
 public abstract class LogcatFeatureService<T>
 {
-    private final LogcatMatch match;
+    final LogcatMatch match;
 
     private String fixedValue;
-    private volatile boolean available = false;
 
     protected LogcatFeatureService(LogcatMatch match)
     {
@@ -35,13 +34,13 @@ public abstract class LogcatFeatureService<T>
 
     public synchronized void fixValue()
     {
-        fixedValue = getMatch().latestMatch;
+        fixedValue = match.latestMatch;
     }
 
     @Nullable
     public synchronized T getValue()
     {
-        String string = fixedValue != null ? fixedValue : getMatch().latestMatch;
+        String string = fixedValue != null ? fixedValue : match.latestMatch;
         fixedValue = null;
         if (string != null)
         {
@@ -61,17 +60,12 @@ public abstract class LogcatFeatureService<T>
 
     public boolean isAvailable()
     {
-        return available;
+        return match.enabled;
     }
 
-    void setAvailable(boolean available)
+    synchronized void setAvailable(boolean available)
     {
-        if (!available) getMatch().latestMatch = null;
-        this.available = available;
-    }
-
-    LogcatMatch getMatch()
-    {
-        return match;
+        if (!available) match.latestMatch = null;
+        match.enabled = available;
     }
 }

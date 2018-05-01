@@ -66,4 +66,13 @@ public class DeviceInfo
     {
         return deviceFileName;
     }
+
+    public boolean needsLogcatServices()
+    {
+        for (ExtraCameraInfo cameraInfo : cameras)
+            if (!cameraInfo.getLogcatServices().isEmpty())
+                return true;
+
+        return false;
+    }
 }
