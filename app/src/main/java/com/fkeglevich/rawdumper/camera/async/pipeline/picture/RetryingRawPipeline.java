@@ -33,7 +33,7 @@ import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromI3av4FileBuilder;
-import com.fkeglevich.rawdumper.su.ShellManager;
+import com.fkeglevich.rawdumper.su.MainSUShell;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -106,7 +106,7 @@ public class RetryingRawPipeline implements PicturePipeline
     {
         String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
         String partialPath = Directories.getPartialPicturesDirectory().getAbsolutePath();
-        ShellManager.getInstance().addSingleCommand("mv " + dumpDirectory + "/*.i3av4" + " " + partialPath, new Shell.OnCommandLineListener()
+        MainSUShell.getInstance().addSingleCommand("mv " + dumpDirectory + "/*.i3av4" + " " + partialPath, new Shell.OnCommandLineListener()
         {
             @Override
             public void onCommandResult(int commandCode, int exitCode)

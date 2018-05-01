@@ -17,7 +17,9 @@
 package com.fkeglevich.rawdumper.controller.permission;
 
 import com.fkeglevich.rawdumper.controller.permission.exception.RootAccessException;
-import com.fkeglevich.rawdumper.su.ShellManager;
+import com.fkeglevich.rawdumper.su.MainSUShell;
+import com.fkeglevich.rawdumper.su.ShellFactory;
+import com.fkeglevich.rawdumper.util.event.EventListener;
 
 import eu.chainfire.libsuperuser.Shell;
 
@@ -26,20 +28,19 @@ import eu.chainfire.libsuperuser.Shell;
  * TODO: Add a class header comment!
  */
 
-public class MandatoryRootManager extends MandatoryPermissionManager
+class MandatoryRootManager extends MandatoryPermissionManager
 {
     @Override
     void dispatchPermissionsGranted()
     {
-        if (!ShellManager.getInstance().isRunning())
+        if (!MainSUShell.getInstance().isRunning())
         {
-            ShellManager.getInstance().open((commandCode, exitCode, output) ->
-            {
-                if (exitCode == Shell.OnCommandResultListener.SHELL_RUNNING)
-                    MandatoryRootManager.super.dispatchPermissionsGranted();
-                else
-                    dispatchMissingPermissions(new RootAccessException());
-            });
+            ShellFactory factory = ShellFactory.getInstance();
+
+            factory.onError.addListener(eventData -> dispatchMissingPermissions(new RootAccessException()));
+            factory.onSuccess.addListener(eventData -> MandatoryRootManager.super.dispatchPermissionsGranted());
+
+            factory.startCreatingShells();
         }
         else
             super.dispatchPermissionsGranted();
