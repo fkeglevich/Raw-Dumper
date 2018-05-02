@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.camera.feature;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
-import com.fkeglevich.rawdumper.camera.service.available.CoarseIntegrationTimeMeteringService;
 import com.fkeglevich.rawdumper.camera.service.available.SensorGainMeteringService;
 import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 import com.fkeglevich.rawdumper.util.Nullable;

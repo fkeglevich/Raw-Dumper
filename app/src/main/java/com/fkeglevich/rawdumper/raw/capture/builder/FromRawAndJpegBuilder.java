@@ -26,7 +26,6 @@ import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfo;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
-import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 /**

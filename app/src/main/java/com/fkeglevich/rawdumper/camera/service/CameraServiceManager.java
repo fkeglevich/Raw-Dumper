@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
-import android.support.annotation.Nullable;
-
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.service.available.CoarseIntegrationTimeMeteringService;
 import com.fkeglevich.rawdumper.camera.service.available.SensorGainMeteringService;

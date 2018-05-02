@@ -19,9 +19,6 @@ package com.fkeglevich.rawdumper.controller.permission;
 import com.fkeglevich.rawdumper.controller.permission.exception.RootAccessException;
 import com.fkeglevich.rawdumper.su.MainSUShell;
 import com.fkeglevich.rawdumper.su.ShellFactory;
-import com.fkeglevich.rawdumper.util.event.EventListener;
-
-import eu.chainfire.libsuperuser.Shell;
 
 /**
  * Created by Flávio Keglevich on 09/08/2017.
