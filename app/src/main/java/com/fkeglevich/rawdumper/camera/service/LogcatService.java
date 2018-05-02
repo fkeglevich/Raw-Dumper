@@ -94,6 +94,7 @@ public class LogcatService
         });
     }
 
+    @SuppressWarnings("ForLoopReplaceableByForEach")
     @WorkerThread
     private void processLine(String line)
     {
@@ -116,6 +117,7 @@ public class LogcatService
                     useSU().
                     setWantSTDERR(false).
                     setWatchdogTimeout(0).
+                    setAutoHandler(false).
                     setMinimalLogging(true).
                     setOnSTDOUTLineListener(this::processLine);
     }
