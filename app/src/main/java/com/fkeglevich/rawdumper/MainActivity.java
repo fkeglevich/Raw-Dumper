@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import com.fkeglevich.rawdumper.activity.ModularActivity;
@@ -35,6 +36,8 @@ public class MainActivity extends ModularActivity
     //private DrawerController drawerController;
     private CameraLifetimeController cameraLifetimeController;
 
+    private Handler handler;
+
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -45,10 +48,21 @@ public class MainActivity extends ModularActivity
         //drawerController = new DrawerController(reference);
         cameraLifetimeController = new CameraLifetimeController(reference);
 
-        //disable(findViewById(R.id.focusBt));
-        //disable(findViewById(R.id.focusText));
         disable(findViewById(R.id.wbBt));
         disable(findViewById(R.id.wbText));
+
+        //handler = new Handler(Looper.getMainLooper());
+        /*handler.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                TextView view = (TextView) findViewById(R.id.wbText);
+                view.setText(Arrays.toString(WhiteBalanceService.getInstance().getValue()));
+                //view.setText(OrientationManager.getInstance().lastDegrees + "");
+                handler.postDelayed(this, 100);
+            }
+        });*/
     }
 
     private void disable(View view)
