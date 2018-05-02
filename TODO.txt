@@ -4,10 +4,10 @@ TODO list:
    - Automatic discovery of raw image sizes
    - Automatic discovery of raw bayer pattern
    - Note: this would require a whole new realtime-logcat-analysis module
+     update: now we have that kind of module HMMMMM
    
  - Better handling of known devices
    - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
-      - Trying to use the red and blue gains (they're absent on Zen2 with LL blobs)
 
  - Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
 
@@ -22,20 +22,21 @@ TODO list:
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
    - Create function tint-temperature function for Zen2 rear camera
    - IDEA: instead, use a illuminant case-by-case basis for the tint too
+   - update: this probably won't work as good as intended (maybe fallback to a fast Gray World AWB algorithm?)
+
+ - (IN PROGRESS) Optimize logcat reading, right now the GC is crying
 
  - (IN PROGRESS) Create YUV picture pipelines
 
  - (IN PROGRESS) Reduce overdraw
  
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
-   - (NEEDS FIX!) Create OrientationActivity class or similar
-   - (ALMOST DONE) Needs to change the rotation parameter when shooting jpeg pictures
+   - (DONE!) Orient RAW pictures
+   - (IN PROGRESS) Orient JPG/YUV pictures
  
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
 	- Zenfone 5
- 
- - Better handling of SU shell commands
 
 Next features:
  - PictureSizeFeature
@@ -48,6 +49,7 @@ Next features:
  - Almost-perfect lens shading correction
    - (NOT ANYMORE!) requires DNG SDK for working with low-level gain maps dng opcodes
    - Idea: while DNG SDK support is not ready, simply apply the gain directly to the raw data
+     update: we are going to create the low level opcodes by ourselves
  - Almost-perfect white balance
    - Needs some basic testing before. See WB-algorithm-idea.txt
 
@@ -71,18 +73,18 @@ Done:
  - Make the app work on Android Nougat
  - Make the Build.MODEL to be dynamic and appear in the dng model tag
  - Make the app translatable to different languages
- - Add the brazillian portuguese language
+ - Add the brazilian portuguese language
  - Save DNGs using tiles
  - Use the Noise Profile DNG tag
  - Create a better separation layer between the UI and Camera threads
- - Restrict the exposure when an invalid ISO/Shutter/EV combination occour
+ - Restrict the exposure when an invalid ISO/Shutter/EV combination occur
  - Improve animations
  - Create round button disabled
  - (BUG FIXED) When switching the app too fast, in some rare occasions, the camera is opened twice or the preview is frozen on Android Nougat
  - FIXED TOUCH FOCUS POSITION YAAAY!
  - Added Iso and shutter speed metering
- - Add the extra logic for differenciating the zen2 camera blobs's version
- - Test Brightness metering (result: it's not obsviously useful)
+ - Add the extra logic for differentiating the zen2 camera blobs's version
+ - Test Brightness metering (result: it's not obviously useful)
  - Don't use displayValue for getting parameter values (especially for FocusMode!)
  - Create BufferFactory and use the maximum buffer size for all YUV/RAW picture captures
  - Create a better camera "reopening" for the MM Z00A front camera case 
@@ -107,3 +109,12 @@ Done:
  - Implement GPU-accelerated focus peaking
  - (FIXED) Sometimes there is a small glitch in the lower portion of the screen when the app is starting
  - (FIXED) Opcodes sometimes aren't written to the file
+ - (Waaaaaaaay) better handling of SU shell commands
+ - (FIXED) A non-camera-related exception during the camera opening process can crash the entire application
+   (instead of simply displaying a nice error message)
+ - (FIXED) The raw pictures now have the right orientation
+ - New feature: pictures taken with the front camera are now properly mirrored
+ - New feature: iso and shutter speed metering for the Zen2/Zoom camera!
+   ps: this *could* be enabled for others devices (razr I) as well
+ - New feature: almost-perfect-auto-white-balance for the zen2/zen zoom cameras
+   ps: this *could* be enabled for others devices (zen5, razr I) as well
