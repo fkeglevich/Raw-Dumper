@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.controller.orientation;
 
 import android.content.Context;
 import android.hardware.SensorManager;
+import android.support.annotation.NonNull;
 import android.view.OrientationEventListener;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
@@ -71,20 +72,35 @@ public class OrientationManager
     public ImageOrientation getImageOrientation(CameraContext cameraContext)
     {
         int cameraOrientation = cameraContext.getCameraInfo().getOrientation();
-        int degrees;
-        if (lastDegrees != OrientationEventListener.ORIENTATION_UNKNOWN)
-            degrees = (lastDegrees + cameraOrientation) % 360;
-        else
-            degrees = cameraOrientation % 360;
+        int facing = cameraContext.getCameraInfo().getFacing();
 
-        if (degrees >= 45 && degrees < 135)
-            return ImageOrientation.RIGHTTOP;
-        if (degrees >= 135 && degrees < 225)
-            return ImageOrientation.BOTRIGHT;
-        if (degrees >= 225 && degrees < 315)
-            return ImageOrientation.LEFTBOT;
+        int degrees;
+        int orientation = lastDegrees != OrientationEventListener.ORIENTATION_UNKNOWN ? lastDegrees : 0;
+
+        if (facing == CAMERA_FACING_FRONT)
+        {
+            degrees = (cameraOrientation + orientation) % 360;
+            degrees = (360 - degrees) % 360;
+        }
         else
-            return ImageOrientation.TOPLEFT;
+            degrees = (cameraOrientation + orientation + 180) % 360;
+
+        ImageOrientation result = degreesToOrientation(degrees, facing == CAMERA_FACING_FRONT);
+        //Log.i("OrientationManager", result.toString());
+        return result;
+    }
+
+    @NonNull
+    private ImageOrientation degreesToOrientation(int degrees, boolean flipHorizontally)
+    {
+        if (degrees >= 45 && degrees < 135)
+            return flipHorizontally ? ImageOrientation.RIGHTBOT : ImageOrientation.LEFTBOT;
+        if (degrees >= 135 && degrees < 225)
+            return flipHorizontally ? ImageOrientation.TOPRIGHT : ImageOrientation.TOPLEFT;
+        if (degrees >= 225 && degrees < 315)
+            return flipHorizontally ? ImageOrientation.LEFTTOP : ImageOrientation.RIGHTTOP;
+        else
+            return flipHorizontally ? ImageOrientation.BOTLEFT : ImageOrientation.BOTRIGHT;
     }
 
     public int getCameraRotation(CameraContext cameraContext)
