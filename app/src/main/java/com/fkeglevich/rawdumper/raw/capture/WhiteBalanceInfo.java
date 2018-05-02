@@ -81,59 +81,6 @@ public class WhiteBalanceInfo
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
-        /*
-
-        04-15 14:59:08.701 334-24441/? D/Camera_ISP: @setAicParameter
-    @setAicParameter: wb integer_bits=1 gr=32768 r=57976 b=51000 gb=32768
-
-         */
-
-        /*
-
-        04-15 15:00:41.500 334-24572/? D/Camera_AtomAIQ: total_gain: 3.480188  digital gain: 1.000000
-    @getManualIso - -1
-
-         */
-
-        //logcat "Camera_ISP:D" "Camera_AtomAIQ:D" "*:S"
-
-        //logcat "Camera_ISP:D" "Camera_AtomAIQ:D" "*:S" -v raw
-
-        //logcat "Camera_ISP:D" "*:S" -v raw
-        //@setAicParameter: wb integer_bits=1 gr=32768 r=58899 b=50257 gb=32768
-
-        //| grep -i "@setAicParameter: wb integer_bits"
-
-        //tiffWriter.setField(TiffTag.TIFFTAG_ASSHOTNEUTRAL, asShotNeutral, true);
-        //32768 / (2^15)
-        //wb integer_bit
-
-        //@setAicParameter: wb integer_bits=1 gr=32768 r=51236 b=42524 gb=32768
-        //gr / r
-        //gb / b
-
-        /*String wb = MainActivity.WB_MATCH.latestMatch;
-        if (wb != null)
-        {
-            //@setAicParameter: wb integer_bits=1 gr=32768 r=60811 b=50613 gb=32768
-            String[] split = wb.replace("@setAicParameter: wb ", "").split(" ");
-
-            String gr = split[1].split("=")[1];
-            String r = split[2].split("=")[1];
-            String b = split[3].split("=")[1];
-            String gb = split[4].split("=")[1];
-
-            float rGain = (float) (Double.parseDouble(gr) / Double.parseDouble(r));
-            float bGain = (float) (Double.parseDouble(gb) / Double.parseDouble(b));
-
-            tiffWriter.setField(TiffTag.TIFFTAG_ASSHOTNEUTRAL, new float[] {rGain, 1f, bGain}, true);
-        }
-
-        else
-            tiffWriter.setField(TiffTag.TIFFTAG_ASSHOTNEUTRAL, new float[] {0,639550316f, 1f, 0,770576616f}, true);*/
-
-
-
         tiffWriter.setField(TiffTag.TIFFTAG_ASSHOTNEUTRAL, asShotNeutral, true);
     }
 }
