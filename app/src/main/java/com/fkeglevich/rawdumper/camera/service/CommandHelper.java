@@ -73,6 +73,10 @@ class CommandHelper
                     .append(match.priority.name())
                     .append("\" ");
         }
-        return new String[] {CLEAR_LOGCAT_CMD, builder.append("\"*:S\" -v raw").toString()};
+
+        builder.append("\"*:S\" -v raw");
+        //builder.append(" | grep -E \"total_gain: |Feedback AEC integration_time\\[0\\]: |@setAicParameter: wb int\"");
+
+        return new String[] {CLEAR_LOGCAT_CMD, builder.toString()};
     }
 }
