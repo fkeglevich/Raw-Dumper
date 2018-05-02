@@ -23,11 +23,11 @@ A more detailed description is given below:
 
 3. Certain features require a realtime reading of these low-level camera sensor information:
 
-- Total sensor gain, for ISO metering
-- Integration time, for shutter speed metering
-- AWB gains, for correct white balance in the generated .dng files (and maybe color temperature metering in the future)
+- **Total sensor gain**, for ISO metering
+- **Integration time**, for shutter speed metering
+- **AWB gains**, for correct white balance in the generated .dng files (and maybe color temperature metering in the future)
 
-These information above appears on the logcat logs when the camera.hal.debug property is set to 2 before the camera is opened. So the app calls the logcat command in a background root shell to keep reading the camera's logs in realtime. While reading the logs the app uses a simple pattern matching to parse only the specific logs where the useful information is stored. 
+These information above appears on the logcat logs when the camera.hal.debug property is set to 2 before the camera is opened. So the app calls the logcat command in a background root shell to keep reading the camera's logs in realtime. While reading the logs the app uses a simple pattern matching to parse only the specific logs where the useful information listed above is stored. 
 
 These are the **tag\:priority** pairs used to form the logcat command:
 - Camera_AtomAIQ:D
@@ -40,4 +40,4 @@ Some important notes:
 - If none of the logcat-reading-features are used, the logcat commmand is never used.
 - Even though sensitive information may appear in the system logs, it won't be accessible to the app because the command discards everything that isn't camera-related.
 
-For more information about the syntax of the logcat command, see the [documentation](https://developer.android.com/studio/command-line/logcat)
+For more information about the syntax of the logcat command, see the [documentation](https://developer.android.com/studio/command-line/logcat).
