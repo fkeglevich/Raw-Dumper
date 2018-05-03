@@ -114,7 +114,7 @@ Done:
    (instead of simply displaying a nice error message)
  - (FIXED) The raw pictures now have the right orientation
  - New feature: pictures taken with the front camera are now properly mirrored
- - New feature: iso and shutter speed metering for the Zen2/Zoom camera!
+ - New feature: iso and shutter speed metering for the Zen2/Zoom front camera!
    ps: this *could* be enabled for others devices (razr I) as well
  - New feature: almost-perfect-auto-white-balance for the zen2/zen zoom cameras
    ps: this *could* be enabled for others devices (zen5, razr I) as well
