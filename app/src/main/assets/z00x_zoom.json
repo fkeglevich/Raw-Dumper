@@ -267,13 +267,18 @@
                 ],
                 "shutterSpeedParameter": "set_shutter_speed",
                 "shutterSpeedAutoValue": "0",
-                "shutterSpeedValues": []
+                "shutterSpeedValues": ["0"]
             },
             "hasKnownMakernote": true,
             "id": 1,
             "lens": {
                 "aperture": 2.0
             },
+            "logcatServices": [
+                "WhiteBalanceService",
+                "SensorGainMeteringService",
+                "CoarseIntegrationTimeMeteringService"
+            ],
             "model": "%s (front camera)",
             "noise": {
                 "noiseProfile": null
@@ -293,6 +298,7 @@
                     16.0,
                     16.0
                 ],
+                "integrationTimeScale":31028,
                 "maker": "OmniVision",
                 "name": "OV5670",
                 "rawImageSizes": [

@@ -31,7 +31,7 @@ import com.fkeglevich.rawdumper.io.async.IOThread;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromRawAndJpegBuilder;
-import com.fkeglevich.rawdumper.su.ShellManager;
+import com.fkeglevich.rawdumper.su.MainSUShell;
 import com.fkeglevich.rawdumper.util.MinDelay;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -108,7 +108,7 @@ public class StandardRawPipeline extends PicturePipelineBase
         String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
         if (!DebugFlag.isDisableMandatoryRoot())
         {
-            ShellManager.getInstance().addSingleCommand("rm " + dumpDirectory + "/*.i3av4", new Shell.OnCommandLineListener()
+            MainSUShell.getInstance().addSingleCommand("rm " + dumpDirectory + "/*.i3av4", new Shell.OnCommandLineListener()
             {
                 @Override
                 public void onCommandResult(int commandCode, int exitCode)

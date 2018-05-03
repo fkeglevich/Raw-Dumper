@@ -21,7 +21,7 @@ import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.io.Directories;
-import com.fkeglevich.rawdumper.su.ShellManager;
+import com.fkeglevich.rawdumper.su.MainSUShell;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -79,7 +79,7 @@ public class RetryingPipelineSimulator
             }
         }
 
-        ShellManager.getInstance().addSingleCommand("mv " + dummyPicture.getAbsolutePath() + " " + dumpDirectory, new Shell.OnCommandLineListener()
+        MainSUShell.getInstance().addSingleCommand("mv " + dummyPicture.getAbsolutePath() + " " + dumpDirectory, new Shell.OnCommandLineListener()
         {
             @Override
             public void onCommandResult(int commandCode, int exitCode)

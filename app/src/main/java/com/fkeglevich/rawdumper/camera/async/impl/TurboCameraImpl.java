@@ -42,6 +42,7 @@ import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.FocusRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.ModeRestrictionChain;
+import com.fkeglevich.rawdumper.camera.service.CameraServiceManager;
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 
@@ -199,6 +200,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     @Override
     public void close()
     {
+        CameraServiceManager.getInstance().disableFeatures();
         recyclerFactory.cleanUpAllFeatures();
         virtualRecyclerFactory.cleanUpAllFeatures();
         lowLevelCamera.close();

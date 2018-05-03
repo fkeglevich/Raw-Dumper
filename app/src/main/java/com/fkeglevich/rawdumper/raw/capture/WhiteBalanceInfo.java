@@ -16,11 +16,17 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
+import android.util.Log;
+
+import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.ColorUtil;
 import com.fkeglevich.rawdumper.util.MathUtil;
+
+import java.util.Arrays;
 
 /**
  * Created by Flávio Keglevich on 14/06/2017.
@@ -31,13 +37,28 @@ public class WhiteBalanceInfo
 {
     private static final int DAYLIGHT_TEMPERATURE = 5503;
 
+    public static WhiteBalanceInfo create(ExtraCameraInfo cameraInfo, MakerNoteInfo makerNoteInfo)
+    {
+        float[] neutralValues = WhiteBalanceService.getInstance().isAvailable() ? WhiteBalanceService.getInstance().getValue() : null;
+
+        if (neutralValues != null)
+        {
+            Log.i(WhiteBalanceInfo.class.getSimpleName(), "Using neutral values from WB Service: " + Arrays.toString(neutralValues));
+            return new WhiteBalanceInfo(neutralValues);
+        }
+        if (cameraInfo.hasKnownMakernote())
+            return createFromMakerNote(makerNoteInfo, cameraInfo.getColor());
+        else
+            return createFromDaylightTemperature(cameraInfo.getColor());
+    }
+
     private static WhiteBalanceInfo createFromXYCoords(double x, double y, ColorInfo colorInfo)
     {
         float[] neutralValues = MathUtil.doubleArrayToFloat(colorInfo.calculateSimpleAsShotNeutral(x, y));
         return new WhiteBalanceInfo(neutralValues);
     }
 
-    public static WhiteBalanceInfo createFromMakerNote(MakerNoteInfo makerNoteInfo, ColorInfo colorInfo)
+    private static WhiteBalanceInfo createFromMakerNote(MakerNoteInfo makerNoteInfo, ColorInfo colorInfo)
     {
         if (makerNoteInfo.wbCoordinatesXY != null)
             return createFromXYCoords(makerNoteInfo.wbCoordinatesXY[0], makerNoteInfo.wbCoordinatesXY[1], colorInfo);
@@ -45,7 +66,7 @@ public class WhiteBalanceInfo
             return createFromDaylightTemperature(colorInfo);
     }
 
-    public static WhiteBalanceInfo createFromDaylightTemperature(ColorInfo colorInfo)
+    private static WhiteBalanceInfo createFromDaylightTemperature(ColorInfo colorInfo)
     {
         float[] xy = ColorUtil.getXYFromCCT(DAYLIGHT_TEMPERATURE, colorInfo);
         return createFromXYCoords(xy[0], xy[1], colorInfo);

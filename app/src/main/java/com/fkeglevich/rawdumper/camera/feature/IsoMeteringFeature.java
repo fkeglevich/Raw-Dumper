@@ -19,6 +19,8 @@ package com.fkeglevich.rawdumper.camera.feature;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+import com.fkeglevich.rawdumper.camera.service.available.SensorGainMeteringService;
+import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 import com.fkeglevich.rawdumper.util.Nullable;
 
 /**
@@ -29,8 +31,31 @@ import com.fkeglevich.rawdumper.util.Nullable;
 
 public class IsoMeteringFeature extends Feature<Nullable<Iso>>
 {
-    IsoMeteringFeature(ParameterCollection parameterCollection)
+    private final SensorInfo sensorInfo;
+
+    IsoMeteringFeature(ParameterCollection parameterCollection, SensorInfo sensorInfo)
     {
         super(ExposureParameterFactory.createIsoMeteringParameter(), parameterCollection);
+        this.sensorInfo = sensorInfo;
+    }
+
+    @Override
+    public boolean isAvailable()
+    {
+        return super.isAvailable() || SensorGainMeteringService.getInstance().isAvailable();
+    }
+
+    @Override
+    public Nullable<Iso> getValue()
+    {
+        if (super.isAvailable())
+            return super.getValue();
+        else
+        {
+            Double gain = SensorGainMeteringService.getInstance().getValue();
+            if (gain != null)
+                return Nullable.of(Iso.create((int)Math.round(gain * sensorInfo.getBaseISO())));
+        }
+        return Nullable.of(null);
     }
 }

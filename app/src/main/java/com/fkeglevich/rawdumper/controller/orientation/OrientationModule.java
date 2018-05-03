@@ -37,7 +37,7 @@ public class OrientationModule
 
     private void setupOnCreateEvent()
     {
-        reference.onCreate.addListener(eventData -> OrientationManager.getInstance().setup(reference.weaklyGet()));
+        OrientationManager.getInstance().setup(reference.weaklyGet());
     }
 
     private void setupOnResumeEvent()

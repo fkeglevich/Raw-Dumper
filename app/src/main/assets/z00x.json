@@ -144,6 +144,9 @@
             "lens": {
                 "aperture": 2.0
             },
+            "logcatServices": [
+                "WhiteBalanceService"
+            ],
             "model": "%s (back camera)",
             "noise": {
                 "noiseProfile": [
@@ -184,6 +187,7 @@
                     64.0,
                     64.0
                 ],
+                "integrationTimeScale":47424,
                 "maker": "Toshiba",
                 "name": "T4K37",
                 "rawImageSizes": [
@@ -353,6 +357,11 @@
             "lens": {
                 "aperture": 2.0
             },
+            "logcatServices": [
+                "WhiteBalanceService",
+                "SensorGainMeteringService",
+                "CoarseIntegrationTimeMeteringService"
+            ],
             "model": "%s (front camera)",
             "noise": {
                 "noiseProfile": null
@@ -376,6 +385,7 @@
                     16.0,
                     16.0
                 ],
+                "integrationTimeScale":31028,
                 "maker": "OmniVision",
                 "name": "OV5670",
                 "rawImageSizes": [

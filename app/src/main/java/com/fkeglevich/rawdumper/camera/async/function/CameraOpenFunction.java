@@ -29,6 +29,7 @@ import com.fkeglevich.rawdumper.camera.exception.CameraPatchRequiredException;
 import com.fkeglevich.rawdumper.camera.exception.RawIsUnavailableException;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.IntelCameraExtensionLoader;
+import com.fkeglevich.rawdumper.camera.service.CameraServiceManager;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;
@@ -51,21 +52,17 @@ public class CameraOpenFunction extends ThrowingAsyncFunction<CameraContext, Tur
         if (rawIsUnavailable)
             throw cameraCanBePatched ? new CameraPatchRequiredException() : new RawIsUnavailableException();
 
-        ICameraExtension cameraExtension = IntelCameraExtensionLoader.extendedOpenCamera(context);
-
         try
         {
+            CameraServiceManager.getInstance().enableFeatures(context);
+            ICameraExtension cameraExtension = IntelCameraExtensionLoader.extendedOpenCamera(context);
             LowLevelCamera llCamera = new LowLevelCameraImpl(context, cameraExtension);
             return new TurboCameraImpl(llCamera);
         }
-        catch (IOException ioe)
+        catch (IOException | RuntimeException e)
         {
+            Log.e(TAG, "Exception (" + e.getClass().getSimpleName() + "): " + e.getMessage());
             throw new CameraOpenException();
-        }
-        catch (IllegalStateException ise)
-        {
-            Log.e(TAG, "IllegalStateException: " + ise.getMessage());
-            throw ise;
         }
     }
 }

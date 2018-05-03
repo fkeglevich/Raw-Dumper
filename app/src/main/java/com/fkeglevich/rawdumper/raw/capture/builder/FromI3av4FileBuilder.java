@@ -26,7 +26,6 @@ import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfo;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
-import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 import java.io.File;
@@ -108,12 +107,7 @@ public class FromI3av4FileBuilder extends CommonBuilder
     @Override
     public void buildWhiteBalanceInfo()
     {
-        ColorInfo colorInfo = pair.getExtraCameraInfo().getColor();
-
-        if (pair.getExtraCameraInfo().hasKnownMakernote())
-            captureInfo.whiteBalanceInfo = WhiteBalanceInfo.createFromMakerNote(makerNoteInfo, colorInfo);
-        else
-            captureInfo.whiteBalanceInfo = WhiteBalanceInfo.createFromDaylightTemperature(colorInfo);
+        captureInfo.whiteBalanceInfo = WhiteBalanceInfo.create(pair.getExtraCameraInfo(), makerNoteInfo);
     }
 
     @Override

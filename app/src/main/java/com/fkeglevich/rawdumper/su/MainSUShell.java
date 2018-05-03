@@ -23,34 +23,31 @@ import eu.chainfire.libsuperuser.Shell;
  * TODO: Add a class header comment!
  */
 
-public class ShellManager
+public class MainSUShell
 {
-    private static ShellManager instance = null;
+    private static final MainSUShell instance = new MainSUShell();
 
-    public synchronized static ShellManager getInstance()
+    public synchronized static MainSUShell getInstance()
     {
-        if (instance == null)
-            instance = new ShellManager();
-
         return instance;
     }
 
     private Shell.Interactive shell = null;
+    private int shellId = -1;
 
-    private ShellManager()
-    {   }
-
-    public synchronized void open(Shell.OnCommandResultListener onCommandResultListener)
+    public synchronized void requestShell()
     {
-        if (isRunning())
-            throw new RuntimeException("The shell is already running!");
+        if (isRunning()) throw new RuntimeException("The shell is already running!");
+        if (shellId != -1) return;
 
-        shell = new Shell.Builder().
-                useSU().
-                setWantSTDERR(true).
-                setWatchdogTimeout(5).
-                setMinimalLogging(true).
-                open(onCommandResultListener);
+        ShellFactory factory = ShellFactory.getInstance();
+        shellId = factory.requestShell(
+                        new Shell.Builder().
+                            useSU().
+                            setWantSTDERR(true).
+                            setWatchdogTimeout(5).
+                            setMinimalLogging(true));
+        factory.onSuccess.addListener(eventData -> shell = factory.getShell(shellId));
     }
 
     public synchronized boolean isRunning()

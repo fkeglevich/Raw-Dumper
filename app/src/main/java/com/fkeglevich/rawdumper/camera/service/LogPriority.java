@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, Flávio Keglevich
+ * Copyright 2018, Flávio Keglevich
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,9 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.util.event;
+package com.fkeglevich.rawdumper.camera.service;
 
-import android.support.annotation.NonNull;
-
-/**
- * TODO: Add class header
- *
- * Created by Flávio Keglevich on 11/09/17.
- */
-
-public interface EventDispatcher<T>
+public enum LogPriority
 {
-    void addListener(@NonNull EventListener<T> listener);
-
-    void removeListener(@NonNull EventListener<T> listener);
-
-    boolean hasListener(@NonNull EventListener<T> listener);
-
-    void removeAllListeners();
-
-    void dispatchEvent(T data);
+    V, D, I, W, E, F, S;
 }

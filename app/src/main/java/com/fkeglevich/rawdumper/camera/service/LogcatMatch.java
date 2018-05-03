@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, Flávio Keglevich
+ * Copyright 2018, Flávio Keglevich
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,21 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.util.event;
+package com.fkeglevich.rawdumper.camera.service;
 
-import android.support.annotation.NonNull;
-
-/**
- * TODO: Add class header
- *
- * Created by Flávio Keglevich on 11/09/17.
- */
-
-public interface EventDispatcher<T>
+public class LogcatMatch
 {
-    void addListener(@NonNull EventListener<T> listener);
+    public final String tag;
+    public final LogPriority priority;
+    public final String fingerprintPrefix;
 
-    void removeListener(@NonNull EventListener<T> listener);
+    public volatile String latestMatch = null;
+    public volatile boolean enabled = false;
 
-    boolean hasListener(@NonNull EventListener<T> listener);
-
-    void removeAllListeners();
-
-    void dispatchEvent(T data);
+    public LogcatMatch(String tag, LogPriority priority, String fingerprintPrefix)
+    {
+        this.tag = tag;
+        this.priority = priority;
+        this.fingerprintPrefix = fingerprintPrefix;
+    }
 }

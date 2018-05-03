@@ -33,5 +33,5 @@ class DngDefaults
     static final int RAW_PLANAR_CONFIG       = TiffTag.PLANARCONFIG_CONTIG;
 
     static final DngVersion VERSION          = DngVersion.VERSION_1_4_0_0;
-    static final DngVersion BACKWARD_VERSION = DngVersion.VERSION_1_3_0_0;
+    static final DngVersion BACKWARD_VERSION = DngVersion.VERSION_1_1_0_0;
 }

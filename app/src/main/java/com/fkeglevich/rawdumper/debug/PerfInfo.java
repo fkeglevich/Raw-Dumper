@@ -42,7 +42,7 @@ public class PerfInfo
      * Starts measuring performance
      * @param tag   A tag for storing/querying the result
      */
-    public static void start(String tag)
+    public synchronized static void start(String tag)
     {
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
             tickingMap.put(tag, System.nanoTime());
@@ -52,7 +52,7 @@ public class PerfInfo
      * Ends measuring performance and logs the result
      * @param tag   A tag for storing/querying the result
      */
-    public static void end(String tag)
+    public synchronized static void end(String tag)
     {
         end(tag, null);
     }
@@ -62,7 +62,7 @@ public class PerfInfo
      * @param tag   A tag for storing/querying the result
      * @param data  Extra data value for better documentation
      */
-    public static void end(String tag, String data)
+    public synchronized static void end(String tag, String data)
     {
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
         {
@@ -75,7 +75,7 @@ public class PerfInfo
      * Logs the performance delta, measured in milliseconds
      * @param tag   A tag for storing/querying the result
      */
-    public static void log(String tag)
+    public synchronized static void log(String tag)
     {
         log(tag, null);
     }
@@ -85,7 +85,7 @@ public class PerfInfo
      * @param tag   A tag for storing/querying the result
      * @param data  Extra data value for better documentation
      */
-    public static void log(String tag, @Nullable String data)
+    public synchronized static void log(String tag, @Nullable String data)
     {
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
         {
