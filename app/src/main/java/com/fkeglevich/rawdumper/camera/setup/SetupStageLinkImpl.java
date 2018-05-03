@@ -129,6 +129,12 @@ class SetupStageLinkImpl implements SetupStageLink
     }
 
     @Override
+    public void setShellRequestToken()
+    {
+        setupReference.removeAllStagesOfType(ShellRequestStage.class);
+    }
+
+    @Override
     public void setPermissionToken()
     {
         setupReference.removeAllStagesOfType(PermissionsStage.class);

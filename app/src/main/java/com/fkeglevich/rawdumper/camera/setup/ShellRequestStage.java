@@ -34,6 +34,7 @@ public class ShellRequestStage implements SetupStage
         if (setupBase.getDeviceInfo().needsLogcatServices())
             CameraServiceManager.getInstance().prepare();
 
+        setupBase.setShellRequestToken();
         setupBase.processNextStage();
     }
 }

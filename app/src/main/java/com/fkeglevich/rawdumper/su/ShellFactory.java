@@ -48,10 +48,10 @@ public class ShellFactory
     private final Handler       managerHandler;
     private final Runnable      createShellsRunnable = () ->
     {
-        for (int i = 0; i < builderList.size(); i++)
+        synchronized (ShellFactory.this)
         {
-            Thread thread = new ShellCreationThread(builderList.get(i), i, ShellFactory.this);
-            thread.start();
+            for (int i = 0; i < builderList.size(); i++)
+                new ShellCreationThread(builderList.get(i), i, ShellFactory.this).start();
         }
     };
 
@@ -85,6 +85,13 @@ public class ShellFactory
     public synchronized void startCreatingShells()
     {
         requiresIdleState();
+        if (builderList.isEmpty())
+        {
+            creatingShells = false;
+            dispatchSuccess();
+            return;
+        }
+
         for (Shell.Interactive shell : shellList)
             if (shell != null)
                 throw new IllegalStateException("There are shells that weren't used!");
@@ -103,6 +110,8 @@ public class ShellFactory
         {
             errorFlag = true;
             killOpenedShells();
+            builderList.clear();
+            creatingShells = false;
             dispatchError();
         }
 

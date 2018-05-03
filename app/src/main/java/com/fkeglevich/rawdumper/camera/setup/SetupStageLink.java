@@ -51,6 +51,7 @@ interface SetupStageLink
     void processNextStage();
     void sendException(MessageException exception);
 
+    void setShellRequestToken();
     void setPermissionToken();
     void setWorkaroundToken();
 }
