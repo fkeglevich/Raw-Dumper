@@ -3,4 +3,4 @@ Raw Dumper is a simple camera app for taking raw pictures on android devices wit
 
 Screenshot:
 
-<img src="https://github.com/fkeglevich/Raw-Dumper/raw/master/screenshots/Screenshot1.jpg"/>
+<img src="https://github.com/fkeglevich/Raw-Dumper/raw/master/screenshots/Screenshot1.jpg" width="450" height="800"/>
