@@ -118,3 +118,5 @@ Done:
    ps: this *could* be enabled for others devices (razr I) as well
  - New feature: almost-perfect-auto-white-balance for the zen2/zen zoom cameras
    ps: this *could* be enabled for others devices (zen5, razr I) as well
+ - Fixed not-so-rare race condition bug related to the shell creation process
+ - Fixed shadows of the buttons and removed some unused layouts
