@@ -35,6 +35,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/round_button"
         android:padding="12dp"
+        android:elevation="2dp"
         app:srcCompat="@drawable/ic_camera_alt_black_36dp"/>
 
     <ProgressBar
@@ -46,6 +47,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="11dp"
         android:padding="12dp"
+        android:elevation="2dp"
         android:visibility="invisible"/>
 
     <ImageButton
@@ -60,6 +62,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/round_button"
         android:padding="8dp"
+        android:elevation="2dp"
         app:srcCompat="@drawable/ic_flash_off_black_24dp"/>
 
     <ImageButton
@@ -71,6 +74,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/round_button"
         android:padding="8dp"
+        android:elevation="2dp"
         app:srcCompat="@drawable/ic_cached_black_24dp"/>
 
     <LinearLayout
@@ -101,6 +105,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
                 android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+                android:elevation="2dp"
                 android:text="ISO"/>
 
             <TextView
@@ -126,6 +131,7 @@
                 android:background="@drawable/round_button"
                 android:layout_marginBottom="@dimen/manual_controls_text_spacing"
                 android:padding="8dp"
+                android:elevation="2dp"
                 app:srcCompat="@drawable/ic_camera_black_24dp"/>
 
             <TextView
@@ -150,6 +156,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
                 android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+                android:elevation="2dp"
                 android:text="EV"/>
 
             <TextView
@@ -175,6 +182,7 @@
                 android:background="@drawable/round_button"
                 android:layout_marginBottom="@dimen/manual_controls_text_spacing"
                 android:padding="8dp"
+                android:elevation="2dp"
                 app:srcCompat="@drawable/ic_filter_center_focus_black_24dp"/>
 
             <TextView
@@ -199,6 +207,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
                 android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+                android:elevation="2dp"
                 android:text="WB"/>
 
             <TextView
@@ -273,6 +282,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
+                android:elevation="2dp"
                 android:text="AF"/>
 
             <Button
@@ -280,6 +290,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
+                android:elevation="2dp"
                 android:text="CF"/>
 
             <ImageButton
@@ -288,6 +299,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
                 android:padding="8dp"
+                android:elevation="2dp"
                 app:srcCompat="@drawable/ic_local_florist_black_24dp"/>
 
             <Button
@@ -295,6 +307,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
+                android:elevation="2dp"
                 android:text="∞"/>
 
             <Button
@@ -302,6 +315,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
+                android:elevation="2dp"
                 android:text="f"
                 android:textAllCaps="false"/>
 
@@ -310,6 +324,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
+                android:elevation="2dp"
                 android:text="ED"/>
 
             <Button
@@ -317,6 +332,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
+                android:elevation="2dp"
                 android:text="MF"
                 android:visibility="visible"/>
 
@@ -338,6 +354,7 @@
                 android:layout_marginEnd="13dp"
                 android:background="@drawable/round_button"
                 android:padding="8dp"
+                android:elevation="2dp"
                 app:srcCompat="@drawable/ic_arrow_back_black_24dp"/>
 
             <ImageView
@@ -374,7 +391,7 @@
         android:paddingBottom="8dp"
         android:layout_above="@+id/linearLayout2">
 
-	<view
+	    <view
             android:id="@+id/evValueChooser"
             class="com.lantouzi.wheelview.WheelView"
             app:lwvMarkTextColor="#FFFFFFFF"
@@ -382,44 +399,6 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/linearLayout2" />
     </FrameLayout>
-
-    <HorizontalScrollView
-        android:id="@+id/shutterSpeedScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_above="@+id/linearLayout2"
-        android:layout_alignParentStart="true"
-        android:background="@color/adjustBarBackground"
-        android:scrollbars="none"
-        android:visibility="invisible">
-
-        <LinearLayout
-            android:id="@+id/shutterSpeedLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <HorizontalScrollView
-        android:id="@+id/isoScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_above="@+id/linearLayout2"
-        android:layout_alignParentStart="true"
-        android:background="@color/adjustBarBackground"
-        android:scrollbars="none"
-        android:visibility="invisible">
-
-        <LinearLayout
-            android:id="@+id/isoLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-    </HorizontalScrollView>
 
     <ImageButton
         android:id="@+id/modesButton"
@@ -432,6 +411,7 @@
         android:layout_marginStart="22dp"
         android:background="@drawable/round_button"
         android:padding="8dp"
+        android:elevation="2dp"
         app:srcCompat="@drawable/ic_more_vert_black_24dp"/>
 
     <RelativeLayout
@@ -440,6 +420,7 @@
         android:layout_height="match_parent"
         android:background="@color/modeScreenBackground"
         android:clickable="true"
+        android:elevation="2dp"
         android:visibility="invisible">
 
         <ImageButton
@@ -454,6 +435,7 @@
             android:layout_marginRight="22dp"
             android:background="@drawable/round_button"
             android:padding="8dp"
+            android:elevation="2dp"
             app:srcCompat="@drawable/ic_info_outline_black_24dp"/>
 
         <ImageButton
@@ -468,6 +450,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/round_button"
             android:padding="8dp"
+            android:elevation="2dp"
             app:srcCompat="@drawable/ic_arrow_back_black_24dp"/>
 
     </RelativeLayout>
