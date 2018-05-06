@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.support.annotation.Keep;
 
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -69,6 +70,9 @@ public class DeviceInfo
 
     public boolean needsLogcatServices()
     {
+        if (DebugFlag.isDisableLogcatService())
+            return false;
+
         for (ExtraCameraInfo cameraInfo : cameras)
             if (!cameraInfo.getLogcatServices().isEmpty())
                 return true;
