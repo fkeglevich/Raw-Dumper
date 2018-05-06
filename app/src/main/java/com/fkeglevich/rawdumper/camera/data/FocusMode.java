@@ -38,8 +38,8 @@ import static android.hardware.Camera.Parameters.FOCUS_MODE_MACRO;
 public enum FocusMode implements ParameterValue, Displayable
 {
     AUTO(FOCUS_MODE_AUTO,                               true,  false, R.string.focus_auto),
-    CONTINUOUS_PICTURE(FOCUS_MODE_CONTINUOUS_PICTURE,   true,  true, R.string.focus_continuous),
-    CONTINUOUS_VIDEO(FOCUS_MODE_CONTINUOUS_VIDEO,       true,  true, R.string.focus_continuous),
+    CONTINUOUS_PICTURE(FOCUS_MODE_CONTINUOUS_PICTURE,   true,  true,  R.string.focus_continuous),
+    CONTINUOUS_VIDEO(FOCUS_MODE_CONTINUOUS_VIDEO,       true,  true,  R.string.focus_continuous),
     MACRO(FOCUS_MODE_MACRO,                             true,  false, R.string.focus_macro),
     INFINITY(FOCUS_MODE_INFINITY,                       false, false, R.string.focus_infinity),
     FIXED(FOCUS_MODE_FIXED,                             false, false, R.string.focus_fixed),
