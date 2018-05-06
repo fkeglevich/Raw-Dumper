@@ -21,6 +21,8 @@ import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
+import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
+import com.fkeglevich.rawdumper.camera.data.ManualTemperatureRange;
 import com.fkeglevich.rawdumper.camera.data.ParameterValue;
 
 import java.util.HashMap;
@@ -47,6 +49,8 @@ class Decoders
         dispatcher.put(FocusMode.class,         createParameterValueDecoder(FocusMode.values(), FocusMode.AUTO));
         dispatcher.put(ManualFocus.class,       ManualFocus::parse);
         dispatcher.put(ManualFocusRange.class,  ManualFocusRange::parse);
+        dispatcher.put(ManualTemperature.class, ManualTemperature::parse);
+        dispatcher.put(ManualTemperatureRange.class, ManualTemperatureRange::parse);
     }
 
     @SuppressWarnings("unchecked")

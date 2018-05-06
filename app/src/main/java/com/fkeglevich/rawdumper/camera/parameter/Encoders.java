@@ -20,6 +20,7 @@ import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
+import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
 import com.fkeglevich.rawdumper.camera.data.ParameterValue;
 
 import java.util.HashMap;
@@ -38,13 +39,14 @@ class Encoders
 
     static
     {
-        dispatcher.put(String.class,        Object::toString);
-        dispatcher.put(Integer.TYPE,        Object::toString);
-        dispatcher.put(Float.TYPE,          Object::toString);
-        dispatcher.put(CaptureSize.class,   value -> ((CaptureSize) value).displayValue());
-        dispatcher.put(Flash.class,         getParameterValueEncoder());
-        dispatcher.put(FocusMode.class,     getParameterValueEncoder());
-        dispatcher.put(ManualFocus.class,   getParameterValueEncoder());
+        dispatcher.put(String.class,            Object::toString);
+        dispatcher.put(Integer.TYPE,            Object::toString);
+        dispatcher.put(Float.TYPE,              Object::toString);
+        dispatcher.put(CaptureSize.class,       value -> ((CaptureSize) value).displayValue());
+        dispatcher.put(Flash.class,             getParameterValueEncoder());
+        dispatcher.put(FocusMode.class,         getParameterValueEncoder());
+        dispatcher.put(ManualFocus.class,       getParameterValueEncoder());
+        dispatcher.put(ManualTemperature.class, getParameterValueEncoder());
     }
 
     @SuppressWarnings("unchecked")
