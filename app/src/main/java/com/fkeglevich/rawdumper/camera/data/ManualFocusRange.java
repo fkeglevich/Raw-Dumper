@@ -22,11 +22,8 @@ package com.fkeglevich.rawdumper.camera.data;
  * Created by Flávio Keglevich on 29/10/17.
  */
 
-public class ManualFocusRange
+public class ManualFocusRange extends DataRange<ManualFocus>
 {
-    private final ManualFocus lower;
-    private final ManualFocus upper;
-
     //focus_range_values: 5~100,1
     public static ManualFocusRange parse(String value)
     {
@@ -40,25 +37,6 @@ public class ManualFocusRange
 
     private ManualFocusRange(ManualFocus lower, ManualFocus upper)
     {
-        this.lower = lower;
-        this.upper = upper;
-    }
-
-    public boolean contains(ManualFocus value)
-    {
-        if (value.equals(ManualFocus.DISABLED))
-            return true;
-
-        return value.compareTo(getLower()) >= 0 && value.compareTo(getUpper())  <= 0;
-    }
-
-    public ManualFocus getLower()
-    {
-        return lower;
-    }
-
-    public ManualFocus getUpper()
-    {
-        return upper;
+        super(lower, upper, ManualFocus.DISABLED);
     }
 }
