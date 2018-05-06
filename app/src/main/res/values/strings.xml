@@ -112,4 +112,13 @@
     <string name="focus_edof">EDOF</string>
     <string name="focus_manual">MANUAL</string>
 
+    <string name="wb_auto">AUTO</string>
+    <string name="wb_incandescent">INCAND</string>
+    <string name="wb_fluorescent">FLUO</string>
+    <string name="wb_warm_fluorescent">W-FLUO</string>
+    <string name="wb_daylight">SUNNY</string>
+    <string name="wb_cloudy">CLOUDY</string>
+    <string name="wb_twilight">TWILIGHT</string>
+    <string name="wb_shade">SHADE</string>
+
 </resources>
