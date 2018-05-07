@@ -28,7 +28,8 @@
     android:clickable="true"
     android:gravity="center_horizontal"
     android:layout_above="@+id/linearLayout2"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    tools:ignore="KeyboardInaccessibleWidget,UnusedAttribute" >
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -39,7 +40,7 @@
 
         <LinearLayout
             android:id="@+id/stdWbChooser"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:divider="@drawable/focus_divider"
             android:gravity="center_horizontal"
@@ -116,7 +117,8 @@
                 android:layout_height="40dp"
                 android:background="@drawable/round_button"
                 android:elevation="2dp"
-                android:text="K"
+                android:text="@string/manual_temperature_text"
+                android:textStyle="bold"
                 android:visibility="gone" />
 
         </LinearLayout>

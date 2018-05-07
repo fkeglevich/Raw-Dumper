@@ -28,4 +28,5 @@
     android:padding="8dp"
     android:elevation="2dp"
     app:srcCompat="@drawable/ic_flash_off_black_24dp"
-    tools:showIn="@layout/activity_main" />
+    tools:showIn="@layout/activity_main"
+    tools:ignore="UnusedAttribute" />
