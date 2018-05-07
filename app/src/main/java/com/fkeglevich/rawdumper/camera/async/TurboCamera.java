@@ -23,10 +23,12 @@ import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
+import com.fkeglevich.rawdumper.camera.feature.ManualTemperatureFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.util.Nullable;
 
@@ -49,6 +51,9 @@ public interface TurboCamera extends TakePictureAction
 
     FocusFeature getFocusFeature();
     ManualFocusFeature getManualFocusFeature();
+
+    WritableFeature<WhiteBalancePreset, List<WhiteBalancePreset>> getWhiteBalancePresetFeature();
+    ManualTemperatureFeature getManualTemperatureFeature();
 
     WritableFeature<Mode, List<Mode>> getPictureModeFeature();
     WritableFeature<PictureFormat, List<PictureFormat>> getPictureFormatFeature();

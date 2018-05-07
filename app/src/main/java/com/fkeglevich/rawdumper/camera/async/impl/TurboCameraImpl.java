@@ -27,17 +27,20 @@ import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.data.mode.ModeList;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FeatureRecyclerFactory;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
+import com.fkeglevich.rawdumper.camera.feature.ManualTemperatureFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureFormatFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureModeFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureSizeFeature;
 import com.fkeglevich.rawdumper.camera.feature.PreviewFeature;
 import com.fkeglevich.rawdumper.camera.feature.VirtualFeatureRecyclerFactory;
+import com.fkeglevich.rawdumper.camera.feature.WhiteBalancePresetFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.FocusRestriction;
@@ -70,6 +73,8 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private PictureSizeFeature                                  pictureSizeFeature;
     private FocusFeature                                        focusFeature;
     private ManualFocusFeature                                  manualFocusFeature;
+    private WhiteBalancePresetFeature                           whiteBalancePresetFeature;
+    private ManualTemperatureFeature                            manualTemperatureFeature;
     private PictureModeFeature                                  pictureModeFeature;
     private PictureFormatFeature                                pictureFormatFeature;
 
@@ -109,6 +114,8 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         previewFeature      = recyclerFactory.createPreviewFeature();
         focusFeature        = recyclerFactory.createFocusFeature();
         manualFocusFeature  = recyclerFactory.createManualFocusFeature();
+        whiteBalancePresetFeature = recyclerFactory.createWhiteBalancePresetFeature();
+        manualTemperatureFeature  = recyclerFactory.createManualTemperatureFeature();
     }
 
     private void createVirtualFeatures()
@@ -171,6 +178,18 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     public ManualFocusFeature getManualFocusFeature()
     {
         return manualFocusFeature;
+    }
+
+    @Override
+    public WritableFeature<WhiteBalancePreset, List<WhiteBalancePreset>> getWhiteBalancePresetFeature()
+    {
+        return whiteBalancePresetFeature;
+    }
+
+    @Override
+    public ManualTemperatureFeature getManualTemperatureFeature()
+    {
+        return manualTemperatureFeature;
     }
 
     @Override

@@ -110,4 +110,18 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
         registerFeature(result);
         return result;
     }
+
+    public WhiteBalancePresetFeature createWhiteBalancePresetFeature()
+    {
+        WhiteBalancePresetFeature result = new WhiteBalancePresetFeature(parameterCollection);
+        registerFeature(result);
+        return result;
+    }
+
+    public ManualTemperatureFeature createManualTemperatureFeature()
+    {
+        ManualTemperatureFeature result = new ManualTemperatureFeature(parameterCollection);
+        registerFeature(result);
+        return result;
+    }
 }

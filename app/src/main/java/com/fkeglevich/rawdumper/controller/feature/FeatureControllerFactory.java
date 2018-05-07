@@ -215,6 +215,19 @@ public class FeatureControllerFactory
         return result;
     }
 
+    WhiteBalancePresetController createWbController(ActivityReference reference)
+    {
+        WhiteBalancePresetController result = new WhiteBalancePresetController(reference, dismissibleManager);
+        dismissibleManager.addDismissible(result);
+        return result;
+    }
+
+    WhiteBalanceMeteringController createWbMeteringController(ActivityReference reference)
+    {
+        TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.wbText);
+        return new WhiteBalanceMeteringController(textView);
+    }
+
     private ButtonController createButtonController(ActivityReference reference,
                                                            @IdRes int buttonId,
                                                            DisplayableFeatureUi adapter,
