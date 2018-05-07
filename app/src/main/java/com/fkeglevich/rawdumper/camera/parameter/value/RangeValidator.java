@@ -18,9 +18,8 @@ package com.fkeglevich.rawdumper.camera.parameter.value;
 
 import android.support.annotation.NonNull;
 
-import com.fkeglevich.rawdumper.camera.data.ManualFocus;
-import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
-import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
+import com.fkeglevich.rawdumper.camera.data.DataRange;
+import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 
 /**
@@ -29,36 +28,36 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
  * Created by Flávio Keglevich on 29/10/17.
  */
 
-public class ManualFocusValidator implements ValueValidator<ManualFocus, ManualFocusRange>
+public class RangeValidator<T extends Comparable<T>, A extends DataRange<T>> implements ValueValidator<T, A>
 {
-    private final ManualFocusRange focusRange;
+    private final A range;
 
     @NonNull
-    public static ManualFocusValidator create(ParameterCollection parameterCollection)
+    public static <T extends Comparable<T>, A extends DataRange<T>> RangeValidator<T, A> create(ParameterCollection parameterCollection, Parameter<A> parameter)
     {
-        return new ManualFocusValidator(parameterCollection.get(AsusParameters.MANUAL_FOCUS_RANGE));
+        return new RangeValidator<>(parameterCollection.get(parameter));
     }
 
-    private ManualFocusValidator(ManualFocusRange focusRange)
+    private RangeValidator(A range)
     {
-        this.focusRange = focusRange;
+        this.range = range;
     }
 
     @Override
     public boolean isAvailable()
     {
-        return focusRange != null;
+        return range != null;
     }
 
     @Override
-    public boolean isValid(ManualFocus value)
+    public boolean isValid(T value)
     {
-        return focusRange.contains(value);
+        return range.contains(value);
     }
 
     @Override
-    public ManualFocusRange getAvailableValues()
+    public A getAvailableValues()
     {
-        return focusRange;
+        return range;
     }
 }

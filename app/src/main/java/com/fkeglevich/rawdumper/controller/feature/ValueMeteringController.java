@@ -35,9 +35,9 @@ import com.fkeglevich.rawdumper.util.event.EventListener;
 
 public abstract class ValueMeteringController<T extends Displayable> extends FeatureController
 {
-    static final int AUTO_VALUE_TEXT_COLOR      = 0xFFFFFFFF;
-    static final int MANUAL_VALUE_TEXT_COLOR    = 0xFFFFFF00;
-    static final int METERING_DELAY_MILLIS      = 100;
+    public static final int AUTO_VALUE_TEXT_COLOR      = 0xFFFFFFFF;
+    public static final int MANUAL_VALUE_TEXT_COLOR    = 0xFFFFFF00;
+    public static final int METERING_DELAY_MILLIS      = 100;
 
     private final EventListener<ParameterChangeEvent<T>> fallbackChangedListener = eventData -> updateViewFromMetering();
 

@@ -20,7 +20,7 @@ import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
-import com.fkeglevich.rawdumper.camera.parameter.value.ManualFocusValidator;
+import com.fkeglevich.rawdumper.camera.parameter.value.RangeValidator;
 
 /**
  * TODO: Add class header
@@ -32,7 +32,7 @@ public class ManualFocusFeature extends WritableFeature<ManualFocus, ManualFocus
 {
     ManualFocusFeature(ParameterCollection parameterCollection)
     {
-        super(AsusParameters.MANUAL_FOCUS, parameterCollection, ManualFocusValidator.create(parameterCollection));
+        super(AsusParameters.MANUAL_FOCUS, parameterCollection, RangeValidator.create(parameterCollection, AsusParameters.MANUAL_FOCUS_RANGE));
     }
 
     public void setValueAsProportion(double proportion)

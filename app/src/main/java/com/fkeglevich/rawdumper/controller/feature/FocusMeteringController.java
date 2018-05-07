@@ -22,10 +22,16 @@ import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
+import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
+import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
+import com.fkeglevich.rawdumper.controller.context.ContextManager;
+import com.fkeglevich.rawdumper.controller.feature.preset.PresetMeteringController;
 import com.fkeglevich.rawdumper.util.event.EventListener;
+
+import java.util.List;
 
 import static com.fkeglevich.rawdumper.controller.feature.ValueMeteringController.AUTO_VALUE_TEXT_COLOR;
 import static com.fkeglevich.rawdumper.controller.feature.ValueMeteringController.MANUAL_VALUE_TEXT_COLOR;
@@ -34,102 +40,40 @@ import static com.fkeglevich.rawdumper.controller.feature.ValueMeteringControlle
  * Created by flavio on 22/11/17.
  */
 
-public class FocusMeteringController extends FeatureController
+class FocusMeteringController extends PresetMeteringController<FocusMode, ManualFocus, ManualFocusRange>
 {
-    private final TextView focusText;
-    private FocusFeature focusFeature;
-    private ManualFocusFeature manualFocusFeature;
-
-    private EventListener<ParameterChangeEvent<ManualFocus>> manualFocusListener = eventData -> updateText(false);
-
-    private EventListener<ParameterChangeEvent<FocusMode>> focusListener = eventData -> updateText(false);
-
-    public FocusMeteringController(TextView focusText)
+    FocusMeteringController(TextView focusText)
     {
-        this.focusText = focusText;
-        updateText(false);
+        super(focusText);
     }
 
     @Override
-    protected void setup(TurboCamera camera)
+    protected WritableFeature<FocusMode, List<FocusMode>> getPresetFeature(TurboCamera camera)
     {
-        focusFeature = camera.getFocusFeature();
-        if (!focusFeature.isAvailable())
-        {
-            reset();
-            updateText(true);
-            return;
-        }
-
-        focusFeature.getOnChanged().addListener(focusListener);
-
-        manualFocusFeature = camera.getManualFocusFeature();
-        if (manualFocusFeature.isAvailable())
-            manualFocusFeature.getOnChanged().addListener(manualFocusListener);
-        else
-            manualFocusFeature = null;
-
-        updateText(false);
+        return camera.getFocusFeature();
     }
 
     @Override
-    protected void reset()
+    protected WritableFeature<ManualFocus, ManualFocusRange> getManualFeature(TurboCamera camera)
     {
-        if (focusFeature != null)
-            focusFeature.getOnChanged().removeListener(focusListener);
-        focusFeature = null;
-
-        if (manualFocusFeature != null)
-            manualFocusFeature.getOnChanged().removeListener(manualFocusListener);
-        manualFocusFeature = null;
-
-        updateText(false);
+        return camera.getManualFocusFeature();
     }
 
     @Override
-    protected void disable()
+    protected FocusMode getUnavailableValue()
     {
-
+        return FocusMode.FIXED;
     }
 
     @Override
-    protected void enable()
+    protected FocusMode getDefaultValue()
     {
-
+        return FocusMode.AUTO;
     }
 
-    private void updateText(boolean showFixedFocusValue)
+    @Override
+    protected String getManualText(WritableFeature<ManualFocus, ManualFocusRange> manualFeature)
     {
-        if (showFixedFocusValue)
-        {
-            focusText.setAlpha(0.25f);
-            focusText.setTextColor(AUTO_VALUE_TEXT_COLOR);
-            focusText.setText(FocusMode.FIXED.displayValue());
-            return;
-        }
-
-        if (manualFocusFeature != null)
-        {
-            if (!manualFocusFeature.getValue().equals(ManualFocus.DISABLED))
-            {
-                focusText.setAlpha(1f);
-                focusText.setTextColor(MANUAL_VALUE_TEXT_COLOR);
-                focusText.setText(R.string.focus_manual);
-                return;
-            }
-        }
-
-        if (focusFeature != null)
-        {
-            focusText.setAlpha(1f);
-            focusText.setTextColor(AUTO_VALUE_TEXT_COLOR);
-            focusText.setText(focusFeature.getValue().displayValue());
-        }
-        else
-        {
-            focusText.setAlpha(0.25f);
-            focusText.setTextColor(AUTO_VALUE_TEXT_COLOR);
-            focusText.setText(FocusMode.AUTO.displayValue());
-        }
+        return ContextManager.getApplicationContext().getString(R.string.focus_manual);
     }
 }
