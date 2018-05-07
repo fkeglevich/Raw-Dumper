@@ -31,7 +31,7 @@
     android:visibility="visible"
     android:showDividers="middle"
     android:divider="@drawable/controls_divider"
-    tools:targetApi="lollipop"
+    tools:ignore="UnusedAttribute"
     tools:showIn="@layout/activity_main">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
