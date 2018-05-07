@@ -80,6 +80,4 @@ public class OrientationUIController
                 view.setRotation(eventData);
         });
     }
-
-
 }
