@@ -25,7 +25,8 @@
     android:clickable="true"
     android:elevation="2dp"
     android:visibility="invisible"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    tools:ignore="KeyboardInaccessibleWidget,UnusedAttribute">
 
     <ImageButton
         android:id="@+id/infoButton"
