@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:fillViewport="true"
+        android:visibility="visible"
         android:scrollbars="none">
 
         <LinearLayout
@@ -138,9 +139,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="13dp"
-            android:layout_marginEnd="13dp"
             android:background="@drawable/round_button"
-            android:padding="8dp"
             android:elevation="2dp"
             app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
@@ -150,7 +149,8 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textSize="12sp"
-            android:text="2300" />
+            android:rotation="90"
+            android:text="2300K" />
 
         <SeekBar
             android:id="@+id/manualWbBar"
@@ -168,7 +168,7 @@
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:rotation="90"
-            android:text="7500" />
+            android:text="7500K" />
 
     </LinearLayout>
 
