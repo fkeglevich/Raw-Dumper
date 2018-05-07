@@ -40,6 +40,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
+        android:transformPivotX="28dp"
+        android:transformPivotY="20dp"
         tools:showIn="@layout/main_control_buttons">
 
         <Button
@@ -64,25 +66,27 @@
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:transformPivotX="28dp"
+        android:transformPivotY="20dp">
 
         <ImageButton
+            android:id="@+id/shutterSpeedBt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_button"
             android:layout_marginBottom="@dimen/manual_controls_text_spacing"
-            android:padding="8dp"
+            android:background="@drawable/round_button"
             android:elevation="2dp"
+            android:padding="8dp"
             app:srcCompat="@drawable/ic_camera_black_24dp"
-            tools:showIn="@layout/activity_main"
-            android:id="@+id/shutterSpeedBt"/>
+            tools:showIn="@layout/activity_main" />
 
         <TextView
             android:id="@+id/ssText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -90,7 +94,9 @@
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:transformPivotX="28dp"
+        android:transformPivotY="20dp">
 
         <Button
             android:id="@+id/evBt"
@@ -114,7 +120,9 @@
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:transformPivotX="28dp"
+        android:transformPivotY="20dp">
 
         <ImageButton
             android:id="@+id/focusBt"
@@ -139,7 +147,9 @@
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:transformPivotX="28dp"
+        android:transformPivotY="20dp">
 
         <Button
             android:id="@+id/wbBt"
