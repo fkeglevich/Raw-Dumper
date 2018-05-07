@@ -64,10 +64,4 @@ public class MainActivity extends ModularActivity
             }
         });*/
     }
-
-    private void disable(View view)
-    {
-        view.setClickable(false);
-        view.setAlpha(0.25f);
-    }
 }
