@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2018, Flávio Keglevich
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="84dp"
+    android:layout_above="@+id/captureButton"
+    android:layout_alignParentStart="true"
+    android:orientation="horizontal"
+    android:paddingLeft="11dp"
+    android:paddingRight="11dp"
+    android:gravity="center"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:visibility="visible"
+    android:showDividers="middle"
+    android:divider="@drawable/controls_divider"
+    tools:showIn="@layout/activity_main">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="@dimen/manual_controls_max_width"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:showIn="@layout/main_control_buttons">
+
+        <Button
+            android:id="@+id/isoBt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_button"
+            android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+            android:elevation="2dp"
+            android:text="ISO" />
+
+        <TextView
+            android:id="@+id/isoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:text="1600" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/manual_controls_max_width"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+            android:padding="8dp"
+            android:elevation="2dp"
+            app:srcCompat="@drawable/ic_camera_black_24dp"
+            tools:showIn="@layout/activity_main"
+            android:id="@+id/shutterSpeedBt" />
+
+        <TextView
+            android:id="@+id/ssText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:text="1/10000s" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/manual_controls_max_width"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/evBt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_button"
+            android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+            android:elevation="2dp"
+            android:text="EV" />
+
+        <TextView
+            android:id="@+id/evText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:text="-0.67" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/manual_controls_max_width"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/focusBt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_button"
+            android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+            android:padding="8dp"
+            android:elevation="2dp"
+            app:srcCompat="@drawable/ic_filter_center_focus_black_24dp" />
+
+        <TextView
+            android:id="@+id/focusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:text="AUTO" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/manual_controls_max_width"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/wbBt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_button"
+            android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+            android:elevation="2dp"
+            android:text="WB" />
+
+        <TextView
+            android:id="@+id/wbText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:text="AUTO" />
+
+    </LinearLayout>
+
+</LinearLayout>
