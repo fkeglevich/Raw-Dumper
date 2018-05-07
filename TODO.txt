@@ -4,7 +4,7 @@ TODO list:
    - Automatic discovery of raw image sizes
    - Automatic discovery of raw bayer pattern
    - Note: this would require a whole new realtime-logcat-analysis module
-     update: now we have that kind of module HMMMMM
+     update: now we have that kind of module
    
  - Better handling of known devices
    - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
@@ -28,6 +28,9 @@ TODO list:
 
  - (IN PROGRESS) Create YUV picture pipelines
 
+ - (IN PROGRESS) Selection of white balance preset and manual white balance
+   - Better translating of wb presets to AWB raw gains
+
  - (IN PROGRESS) Reduce overdraw
  
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
@@ -39,8 +42,6 @@ TODO list:
 	- Zenfone 5
 
 Next features:
- - PictureSizeFeature
- - Selection of white balance preset and manual white balance
  - Selection of picture size
  - Gain-based white balance
  - Night Mode with raw pictures
