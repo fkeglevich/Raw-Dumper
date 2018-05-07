@@ -31,6 +31,7 @@
     android:visibility="visible"
     android:showDividers="middle"
     android:divider="@drawable/controls_divider"
+    tools:targetApi="lollipop"
     tools:showIn="@layout/activity_main">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -48,15 +49,14 @@
             android:background="@drawable/round_button"
             android:layout_marginBottom="@dimen/manual_controls_text_spacing"
             android:elevation="2dp"
-            android:text="ISO" />
+            android:text="@string/iso_button" />
 
         <TextView
             android:id="@+id/isoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:text="1600" />
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
@@ -75,15 +75,14 @@
             android:elevation="2dp"
             app:srcCompat="@drawable/ic_camera_black_24dp"
             tools:showIn="@layout/activity_main"
-            android:id="@+id/shutterSpeedBt" />
+            android:id="@+id/shutterSpeedBt"/>
 
         <TextView
             android:id="@+id/ssText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:text="1/10000s" />
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
@@ -100,15 +99,14 @@
             android:background="@drawable/round_button"
             android:layout_marginBottom="@dimen/manual_controls_text_spacing"
             android:elevation="2dp"
-            android:text="EV" />
+            android:text="@string/ev_button" />
 
         <TextView
             android:id="@+id/evText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:text="-0.67" />
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
@@ -133,8 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:text="AUTO" />
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
@@ -151,15 +148,14 @@
             android:background="@drawable/round_button"
             android:layout_marginBottom="@dimen/manual_controls_text_spacing"
             android:elevation="2dp"
-            android:text="WB" />
+            android:text="@string/wb_button" />
 
         <TextView
             android:id="@+id/wbText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:text="AUTO" />
+            android:textSize="12sp"/>
 
     </LinearLayout>
 

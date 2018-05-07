@@ -120,5 +120,8 @@
     <string name="wb_cloudy">CLOUDY</string>
     <string name="wb_twilight">TWILIGHT</string>
     <string name="wb_shade">SHADE</string>
+    <string name="iso_button">ISO</string>
+    <string name="ev_button">EV</string>
+    <string name="wb_button">WB</string>
 
 </resources>
