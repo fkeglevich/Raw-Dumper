@@ -23,6 +23,8 @@ import android.view.OrientationEventListener;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
+import com.fkeglevich.rawdumper.util.event.EventDispatcher;
+import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 
@@ -41,7 +43,9 @@ public class OrientationManager
     }
 
     private OrientationEventListener orientationListener = null;
-    private int lastDegrees = OrientationEventListener.ORIENTATION_UNKNOWN;
+    private volatile int lastDegrees = OrientationEventListener.ORIENTATION_UNKNOWN;
+
+    public final EventDispatcher<Integer> on90DegreesChanged = new SimpleDispatcher<>();
 
     void setup(Context context)
     {
@@ -51,6 +55,12 @@ public class OrientationManager
             @Override
             public void onOrientationChanged(int orientation)
             {
+                int orientation90Degrees = to90Degrees(orientation);
+                if (to90Degrees(lastDegrees) != orientation90Degrees)
+                {
+                    on90DegreesChanged.dispatchEvent(orientation90Degrees);
+                }
+
                 lastDegrees = orientation;
             }
         };
@@ -85,9 +95,7 @@ public class OrientationManager
         else
             degrees = (cameraOrientation + orientation + 180) % 360;
 
-        ImageOrientation result = degreesToOrientation(degrees, facing == CAMERA_FACING_FRONT);
-        //Log.i("OrientationManager", result.toString());
-        return result;
+        return degreesToOrientation(degrees, facing == CAMERA_FACING_FRONT);
     }
 
     @NonNull
@@ -101,6 +109,14 @@ public class OrientationManager
             return flipHorizontally ? ImageOrientation.LEFTTOP : ImageOrientation.RIGHTTOP;
         else
             return flipHorizontally ? ImageOrientation.BOTLEFT : ImageOrientation.BOTRIGHT;
+    }
+
+    private int to90Degrees(int degrees)
+    {
+        if (degrees >= 45 && degrees < 135) return -90;
+        if (degrees >= 135 && degrees < 225) return 180;
+        if (degrees >= 225 && degrees < 315) return 90;
+        else return 0;
     }
 
     public int getCameraRotation(CameraContext cameraContext)
