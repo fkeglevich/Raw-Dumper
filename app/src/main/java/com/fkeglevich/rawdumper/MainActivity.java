@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 
 import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.controller.feature.CameraLifetimeController;

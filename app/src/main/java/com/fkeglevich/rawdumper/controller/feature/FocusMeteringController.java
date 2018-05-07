@@ -23,18 +23,11 @@ import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
-import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
-import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
-import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
 import com.fkeglevich.rawdumper.controller.feature.preset.PresetMeteringController;
-import com.fkeglevich.rawdumper.util.event.EventListener;
 
 import java.util.List;
-
-import static com.fkeglevich.rawdumper.controller.feature.ValueMeteringController.AUTO_VALUE_TEXT_COLOR;
-import static com.fkeglevich.rawdumper.controller.feature.ValueMeteringController.MANUAL_VALUE_TEXT_COLOR;
 
 /**
  * Created by flavio on 22/11/17.
