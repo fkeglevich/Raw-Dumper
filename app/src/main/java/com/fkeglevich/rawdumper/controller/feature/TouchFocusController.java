@@ -23,12 +23,18 @@ import android.view.View;
 
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
+import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
+import com.fkeglevich.rawdumper.camera.feature.PreviewFeature;
+import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.ui.TouchFocusView;
 import com.fkeglevich.rawdumper.ui.UiUtil;
+
+import static com.fkeglevich.rawdumper.ui.TouchFocusView.STROKE_WIDTH_DP;
 
 /**
  * TODO: Add class header
@@ -43,6 +49,7 @@ public class TouchFocusController extends FeatureController
     private FocusFeature focusFeature;
     private boolean enabled = true;
     private PreviewArea lastTouchArea = null;
+    private Feature<CaptureSize> previewFeature;
 
     private final AutoFocusResult autoFocusResult = new AutoFocusResult()
     {
@@ -68,13 +75,18 @@ public class TouchFocusController extends FeatureController
                         && focusFeature.getValue().canAutoFocus()
                         && !focusFeature.getValue().isContinuous())
                 {
-                    int touchSize = UiUtil.dpToPixels(36, TouchFocusController.this.focusView.getContext());
-                    lastTouchArea = PreviewArea.createTouchArea(v, event, touchSize);
-                    TouchFocusController.this.focusView.setMeteringArea(lastTouchArea, TouchFocusView.FOCUS_METERING);
-                    focusFeature.cancelAutoFocus();
-                    focusFeature.startAutoFocus(lastTouchArea, autoFocusResult);
+                    CaptureSize captureSize = previewFeature.getValue();
+                    double scale = PreviewHelper.calculateVerticalScale(captureSize.getWidth(), captureSize.getHeight(), v.getWidth(), v.getHeight());
+                    int w = v.getWidth(), h = (int)(v.getHeight() * scale);
+                    if (event.getY() < h)
+                    {
+                        int touchSize = UiUtil.dpToPixels(36, TouchFocusController.this.focusView.getContext());
+                        lastTouchArea = PreviewArea.createTouchArea(w, h, event, touchSize).fix(UiUtil.dpToPixels(STROKE_WIDTH_DP, v.getContext()));
+                        TouchFocusController.this.focusView.setMeteringArea(lastTouchArea, TouchFocusView.FOCUS_METERING);
+                        focusFeature.cancelAutoFocus();
+                        focusFeature.startAutoFocus(lastTouchArea, autoFocusResult);
+                    }
                 }
-
                 v.performClick();
             }
             return false;
@@ -84,6 +96,7 @@ public class TouchFocusController extends FeatureController
     @Override
     protected void setup(TurboCamera camera)
     {
+        previewFeature = camera.getPreviewFeature();
         focusFeature = camera.getFocusFeature();
         ManualFocusFeature manualFocusFeature = camera.getManualFocusFeature();
         if (!focusFeature.isAvailable())
