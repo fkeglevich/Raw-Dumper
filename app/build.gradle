@@ -55,7 +55,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.android.support:appcompat-v7:25.4.0'
-    implementation 'com.android.support:support-annotations:27.0.2'
     testImplementation 'junit:junit:4.12'
     implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
     implementation 'com.andkulikov:transitionseverywhere:1.7.2'
@@ -68,6 +67,6 @@ dependencies {
     //required support lib modules
     implementation 'com.android.support:appcompat-v7:25.4.0'
     implementation 'com.android.support:recyclerview-v7:25.4.0'
-    implementation 'com.android.support:support-annotations:27.0.2'
+    implementation 'com.android.support:support-annotations:27.1.1'
     implementation 'com.android.support:design:25.4.0'
 }
