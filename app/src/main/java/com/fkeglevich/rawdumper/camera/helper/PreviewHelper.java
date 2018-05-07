@@ -41,6 +41,12 @@ public class PreviewHelper
         return rotation;
     }
 
+    public static double calculateVerticalScale(int previewWidth, int previewHeight, int viewWidth, int viewHeight)
+    {
+        double matchScale = ((double) viewHeight) / previewWidth;
+        return viewWidth / (previewHeight * matchScale);
+    }
+
     private static int setCameraDisplayOrientation(ExtraCameraInfo cameraInfo, Camera camera, int degrees)
     {
         int facing = cameraInfo.getFacing();

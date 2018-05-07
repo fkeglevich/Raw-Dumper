@@ -18,6 +18,8 @@ package com.fkeglevich.rawdumper.gl.camera;
 
 import android.graphics.SurfaceTexture;
 
+import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
+
 /**
  * Created by flavio on 28/11/17.
  */
@@ -52,8 +54,7 @@ class ProgramData
 
     void updatePreviewScale()
     {
-        double matchScale = ((double) surfaceSize[1]) / previewWidth;
-        previewScale[1] = (float)(surfaceSize[0] / (previewHeight * matchScale));
+        previewScale[1] = (float)(PreviewHelper.calculateVerticalScale(previewWidth, previewHeight, (int)surfaceSize[0], (int)surfaceSize[1]));
     }
 
     void writeData(PreviewProgram program)
