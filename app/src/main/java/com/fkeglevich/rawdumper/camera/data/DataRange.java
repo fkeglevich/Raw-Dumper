@@ -20,7 +20,7 @@ package com.fkeglevich.rawdumper.camera.data;
  * TODO: add header comment
  * Created by Flávio Keglevich on 06/05/18.
  */
-class DataRange<T extends Comparable<T>>
+public class DataRange<T extends Comparable<T>>
 {
     private final T lower;
     private final T upper;
