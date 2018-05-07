@@ -21,6 +21,7 @@ import android.os.Handler;
 
 import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.controller.feature.CameraLifetimeController;
+import com.fkeglevich.rawdumper.controller.orientation.OrientationUIController;
 import com.fkeglevich.rawdumper.ui.ModesInterface;
 
 /**
@@ -34,33 +35,18 @@ public class MainActivity extends ModularActivity
     private ModesInterface modesInterface;
     //private DrawerController drawerController;
     private CameraLifetimeController cameraLifetimeController;
+    private OrientationUIController orientationUIController;
 
     private Handler handler;
 
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //getWindow().setBackgroundDrawable(null);
         setContentView(R.layout.activity_main);
         modesInterface = new ModesInterface(reference);
 
         //drawerController = new DrawerController(reference);
         cameraLifetimeController = new CameraLifetimeController(reference);
-
-        //disable(findViewById(R.id.wbBt));
-        //disable(findViewById(R.id.wbText));
-
-        //handler = new Handler(Looper.getMainLooper());
-        /*handler.post(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                TextView view = (TextView) findViewById(R.id.wbText);
-                view.setText(Arrays.toString(WhiteBalanceService.getInstance().getValue()));
-                //view.setText(OrientationManager.getInstance().lastDegrees + "");
-                handler.postDelayed(this, 100);
-            }
-        });*/
+        orientationUIController = new OrientationUIController(reference);
     }
 }
