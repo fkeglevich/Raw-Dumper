@@ -36,6 +36,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/isoBox"
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -63,6 +64,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ssBox"
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -91,6 +93,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/evBox"
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -117,6 +120,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/focusBox"
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -144,6 +148,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/wbBox"
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
         android:gravity="center"
