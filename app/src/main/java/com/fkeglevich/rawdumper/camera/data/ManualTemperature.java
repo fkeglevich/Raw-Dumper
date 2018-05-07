@@ -22,7 +22,7 @@ import android.support.annotation.NonNull;
  * TODO: add header comment
  * Created by Flávio Keglevich on 06/05/18.
  */
-public class ManualTemperature implements Comparable<ManualTemperature>, ParameterValue
+public class ManualTemperature implements Comparable<ManualTemperature>, ParameterValue, Displayable
 {
     private static final int INVALID_NUMERIC_VALUE = 0;
 
@@ -101,5 +101,11 @@ public class ManualTemperature implements Comparable<ManualTemperature>, Paramet
     public String getParameterValue()
     {
         return equals(DISABLED) ? "0" : String.valueOf(getNumericValue());
+    }
+
+    @Override
+    public String displayValue()
+    {
+        return equals(DISABLED) ? "AUTO" : (getNumericValue() + "K");
     }
 }

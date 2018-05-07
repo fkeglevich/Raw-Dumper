@@ -65,6 +65,6 @@ public class WhiteBalanceMeteringController extends PresetMeteringController<Whi
     @Override
     protected String getManualText(WritableFeature<ManualTemperature, ManualTemperatureRange> manualFeature)
     {
-        return manualFeature.getValue().getNumericValue() + "K";
+        return manualFeature.getValue().displayValue();
     }
 }
