@@ -30,7 +30,6 @@ import java.util.List;
 
 public class PreviewArea
 {
-    private static final int DEFAULT_TOUCH_SIZE = 100;
     private static final List<Integer> VALID_DEGREES = Arrays.asList(0, 90, 180, 270);
 
     private final int x;
@@ -39,14 +38,9 @@ public class PreviewArea
     private final int viewHeight;
     private final int touchSize;
 
-    public static PreviewArea createTouchArea(View view, MotionEvent motionEvent, int touchSize)
+    public static PreviewArea createTouchArea(int viewWidth, int viewHeight, MotionEvent motionEvent, int touchSize)
     {
-        return new PreviewArea((int) motionEvent.getX(), (int) motionEvent.getY(), view.getWidth(), view.getHeight(), touchSize);
-    }
-
-    public static PreviewArea createTouchArea(View view, MotionEvent motionEvent)
-    {
-        return createTouchArea(view, motionEvent, DEFAULT_TOUCH_SIZE);
+        return new PreviewArea((int) motionEvent.getX(), (int) motionEvent.getY(), viewWidth, viewHeight, touchSize);
     }
 
     private PreviewArea(int x, int y, int viewWidth, int viewHeight, int touchSize)
