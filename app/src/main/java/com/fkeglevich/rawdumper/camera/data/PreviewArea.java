@@ -91,4 +91,16 @@ public class PreviewArea
             default:    return new PreviewArea(viewHeight - y, x, viewHeight, viewWidth, touchSize);
         }
     }
+
+    public PreviewArea fix(int margin)
+    {
+        int newX = x, newY = y;
+        if ((x - touchSize - margin) < 0)          newX = touchSize + margin;
+        if ((x + touchSize + margin) > viewWidth)  newX = viewWidth - touchSize - margin;
+
+        if ((y - touchSize - margin) < 0)          newY = touchSize + margin;
+        if ((y + touchSize + margin) > viewHeight) newY = viewHeight - touchSize - margin;
+
+        return new PreviewArea(newX, newY, viewWidth, viewHeight, touchSize);
+    }
 }
