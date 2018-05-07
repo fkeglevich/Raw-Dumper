@@ -49,7 +49,7 @@ public class ListValidator<V> implements ValueValidator<V, List<V>>
 
     public ListValidator(List<V> valueList)
     {
-        this.valueList = Collections.unmodifiableList(valueList);
+        this.valueList = valueList != null ? Collections.unmodifiableList(valueList) : Collections.emptyList();
     }
 
     @Override
