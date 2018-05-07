@@ -37,6 +37,7 @@ public class TouchFocusView extends View
     public static final int FOCUS_METERING         = 0xFFCCCCCC;
     public static final int FOCUS_METERING_SUCCESS = 0xFF33FF33;
     public static final int FOCUS_METERING_FAIL    = 0xFFFF3333;
+    public static final int STROKE_WIDTH_DP = 1;
 
     /**
      * Simple constructor to use when creating a view from code.
@@ -102,7 +103,7 @@ public class TouchFocusView extends View
         paint = new Paint();
         paint.setColor(FOCUS_METERING_SUCCESS);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(UiUtil.dpToPixels(1, getContext()));
+        paint.setStrokeWidth(UiUtil.dpToPixels(STROKE_WIDTH_DP, getContext()));
     }
 
     public void setMeteringArea(PreviewArea area, int color)
