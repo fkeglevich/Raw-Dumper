@@ -24,6 +24,7 @@ import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperatureRange;
 import com.fkeglevich.rawdumper.camera.data.ParameterValue;
+import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,7 @@ class Decoders
         dispatcher.put(CaptureSize.class,       CaptureSize::parse);
         dispatcher.put(Flash.class,             createParameterValueDecoder(Flash.values(), Flash.OFF));
         dispatcher.put(FocusMode.class,         createParameterValueDecoder(FocusMode.values(), FocusMode.AUTO));
+        dispatcher.put(WhiteBalancePreset.class,createParameterValueDecoder(WhiteBalancePreset.values(), WhiteBalancePreset.AUTO));
         dispatcher.put(ManualFocus.class,       ManualFocus::parse);
         dispatcher.put(ManualFocusRange.class,  ManualFocusRange::parse);
         dispatcher.put(ManualTemperature.class, ManualTemperature::parse);

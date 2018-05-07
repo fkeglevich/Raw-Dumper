@@ -22,6 +22,7 @@ import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
 import com.fkeglevich.rawdumper.camera.data.ParameterValue;
+import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,7 @@ class Encoders
         dispatcher.put(CaptureSize.class,       value -> ((CaptureSize) value).displayValue());
         dispatcher.put(Flash.class,             getParameterValueEncoder());
         dispatcher.put(FocusMode.class,         getParameterValueEncoder());
+        dispatcher.put(WhiteBalancePreset.class,getParameterValueEncoder());
         dispatcher.put(ManualFocus.class,       getParameterValueEncoder());
         dispatcher.put(ManualTemperature.class, getParameterValueEncoder());
     }
