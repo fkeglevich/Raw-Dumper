@@ -123,5 +123,6 @@
     <string name="iso_button">ISO</string>
     <string name="ev_button">EV</string>
     <string name="wb_button">WB</string>
+    <string name="manual_temperature_text">K</string>
 
 </resources>
