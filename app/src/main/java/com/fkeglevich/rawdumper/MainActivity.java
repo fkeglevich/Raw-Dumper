@@ -48,8 +48,8 @@ public class MainActivity extends ModularActivity
         //drawerController = new DrawerController(reference);
         cameraLifetimeController = new CameraLifetimeController(reference);
 
-        disable(findViewById(R.id.wbBt));
-        disable(findViewById(R.id.wbText));
+        //disable(findViewById(R.id.wbBt));
+        //disable(findViewById(R.id.wbText));
 
         //handler = new Handler(Looper.getMainLooper());
         /*handler.post(new Runnable()
