@@ -13,14 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <View
-        android:id="@+id/captureLayer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:visibility="invisible"
-        android:background="#00CCCCCC"/>
-
     <com.fkeglevich.rawdumper.ui.TouchFocusView
         android:id="@+id/focusView"
         android:layout_width="match_parent"
@@ -89,6 +81,14 @@
         android:padding="8dp"
         android:elevation="2dp"
         app:srcCompat="@drawable/ic_more_vert_black_24dp"/>
+
+    <View
+        android:id="@+id/captureLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="invisible"
+        android:background="#00000000"/>
 
     <include layout="@layout/modes_layout" />
 
