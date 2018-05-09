@@ -45,6 +45,8 @@ public class ColorInfo
 
     private double[] tintTemperatureFunction;
 
+    private int[] temperatureRange;
+
     private CalibrationIlluminant calibrationIlluminant1;
     private CalibrationIlluminant calibrationIlluminant2;
 
@@ -86,5 +88,10 @@ public class ColorInfo
             return new double[] {0, 0};
 
         return tintTemperatureFunction;
+    }
+
+    public int[] getTemperatureRange()
+    {
+        return temperatureRange;
     }
 }

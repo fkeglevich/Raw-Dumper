@@ -56,6 +56,10 @@
                     0.0223,
                     0.2117,
                     0.532
+                ],
+                "temperatureRange": [
+                    2500,
+                    10000
                 ]
             },
 			"exposure": {
@@ -283,6 +287,10 @@
                 "tintTemperatureFunction":[
                     0.01745062221,
                     -24.02411117
+                ],
+                "temperatureRange": [
+                    2500,
+                    10000
                 ]
             },
 			"exposure": {
