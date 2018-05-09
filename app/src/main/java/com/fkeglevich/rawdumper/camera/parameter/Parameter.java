@@ -27,24 +27,9 @@ import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 
 public abstract class Parameter<T> implements DeltaParameter<T>
 {
-    private final EventDispatcher<ParameterChangeEvent<T>> onChanging = new SimpleDispatcher<>();
-    private final EventDispatcher<ParameterChangeEvent<T>> onChanged = new SimpleDispatcher<>();
-
     abstract String getKey();
 
     abstract ValueDecoder<T> getDecoder();
 
     abstract ValueEncoder<T> getEncoder();
-
-    @Override
-    public EventDispatcher<ParameterChangeEvent<T>> getOnChanging()
-    {
-        return onChanging;
-    }
-
-    @Override
-    public EventDispatcher<ParameterChangeEvent<T>> getOnChanged()
-    {
-        return onChanged;
-    }
 }

@@ -16,6 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.parameter;
 
+import com.fkeglevich.rawdumper.util.event.AsyncEventDispatcher;
+import com.fkeglevich.rawdumper.util.event.EventDispatcher;
+import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
+
 /**
  * TODO: Add class header
  * <p>
@@ -26,23 +30,32 @@ class StaticParameter<T> extends Parameter<T>
 {
     static <T> Parameter<T> create(String key, ValueDecoder<T> decoder, ValueEncoder<T> encoder)
     {
-        return new StaticParameter<>(key, decoder, encoder);
+        return new StaticParameter<>(key, decoder, encoder, false);
+    }
+
+    static <T> Parameter<T> createAsyncEvent(String key, ValueDecoder<T> decoder, ValueEncoder<T> encoder)
+    {
+        return new StaticParameter<>(key, decoder, encoder, true);
     }
 
     static <T> Parameter<T> createReadOnly(String key, ValueDecoder<T> decoder)
     {
-        return new StaticParameter<>(key, decoder, null);
+        return new StaticParameter<>(key, decoder, null, false);
     }
 
     private final String key;
     private final ValueDecoder<T> decoder;
     private final ValueEncoder<T> encoder;
+    private final EventDispatcher<ParameterChangeEvent<T>> onChanging;
+    private final EventDispatcher<ParameterChangeEvent<T>> onChanged;
 
-    private StaticParameter(String key, ValueDecoder<T> decoder, ValueEncoder<T> encoder)
+    private StaticParameter(String key, ValueDecoder<T> decoder, ValueEncoder<T> encoder, boolean async)
     {
         this.key = key;
         this.decoder = decoder;
         this.encoder = encoder;
+        this.onChanging = async ? new AsyncEventDispatcher<>() : new SimpleDispatcher<>();
+        this.onChanged = async ? new AsyncEventDispatcher<>() : new SimpleDispatcher<>();
     }
 
     @Override
@@ -63,5 +76,17 @@ class StaticParameter<T> extends Parameter<T>
     {
         if (encoder == null) throw new RuntimeException("This parameter is read-only!");
         return encoder;
+    }
+
+    @Override
+    public EventDispatcher<ParameterChangeEvent<T>> getOnChanging()
+    {
+        return onChanging;
+    }
+
+    @Override
+    public EventDispatcher<ParameterChangeEvent<T>> getOnChanged()
+    {
+        return onChanged;
     }
 }

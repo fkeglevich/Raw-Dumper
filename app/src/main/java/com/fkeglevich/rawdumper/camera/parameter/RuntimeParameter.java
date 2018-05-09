@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.camera.parameter;
 import android.util.Log;
 
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
+import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 
 import junit.framework.Assert;
 
@@ -33,6 +34,8 @@ class RuntimeParameter<T> extends Parameter<T>
     private String key;
     private ValueDecoder<T> decoder = null;
     private ValueEncoder<T> encoder = null;
+    private final EventDispatcher<ParameterChangeEvent<T>> onChanging = new SimpleDispatcher<>();
+    private final EventDispatcher<ParameterChangeEvent<T>> onChanged = new SimpleDispatcher<>();
 
     private static void throwUninitialized()
     {
@@ -74,5 +77,17 @@ class RuntimeParameter<T> extends Parameter<T>
     {
         if (encoder == null) throwUninitialized();
         return encoder;
+    }
+
+    @Override
+    public EventDispatcher<ParameterChangeEvent<T>> getOnChanging()
+    {
+        return onChanging;
+    }
+
+    @Override
+    public EventDispatcher<ParameterChangeEvent<T>> getOnChanged()
+    {
+        return onChanged;
     }
 }
