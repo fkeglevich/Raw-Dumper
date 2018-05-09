@@ -42,6 +42,8 @@ public class MainActivity extends ModularActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setBackground(null);
+        getWindow().setBackgroundDrawable(null);
         setContentView(R.layout.activity_main);
         modesInterface = new ModesInterface(reference);
 
