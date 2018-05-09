@@ -16,6 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
+import com.fkeglevich.rawdumper.raw.info.ColorInfo;
+
+import junit.framework.Assert;
+
 /**
  * TODO: add header comment
  * Created by Flávio Keglevich on 06/05/18.
@@ -30,6 +34,19 @@ public class ManualTemperatureRange extends DataRange<ManualTemperature>
         String[] bounds = value.split("~");
         ManualTemperature lower = ManualTemperature.create(Integer.parseInt(bounds[0]));
         ManualTemperature upper = ManualTemperature.create(Integer.parseInt(bounds[1]));
+        return new ManualTemperatureRange(lower, upper);
+    }
+
+    public static ManualTemperatureRange getFrom(ColorInfo colorInfo)
+    {
+        if (colorInfo.getTemperatureRange() == null)
+            return null;
+
+        Assert.assertTrue(colorInfo.getTemperatureRange().length == 2);
+
+        ManualTemperature lower = ManualTemperature.create(colorInfo.getTemperatureRange()[0]);
+        ManualTemperature upper = ManualTemperature.create(colorInfo.getTemperatureRange()[1]);
+
         return new ManualTemperatureRange(lower, upper);
     }
 
