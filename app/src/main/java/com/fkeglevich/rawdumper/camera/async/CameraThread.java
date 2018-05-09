@@ -83,7 +83,7 @@ public class CameraThread
         functionContext.call(new CameraRestartFunction(), camera, callback, exception);
     }
 
-    public TurboCamera getCurrentCamera()
+    private TurboCamera getCurrentCamera()
     {
         return openedCamera;
     }
