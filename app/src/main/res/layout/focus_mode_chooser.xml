@@ -27,7 +27,8 @@
     android:visibility="visible"
     android:clickable="true"
     android:layout_above="@+id/mainControls"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    tools:ignore="KeyboardInaccessibleWidget">
 
     <LinearLayout
         android:id="@+id/stdFocusChooser"

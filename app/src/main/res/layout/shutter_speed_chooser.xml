@@ -23,8 +23,10 @@
     android:background="@color/adjustBarBackground"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
+    android:clickable="true"
     android:layout_above="@+id/mainControls"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    tools:ignore="KeyboardInaccessibleWidget">
 
     <view
         android:id="@+id/ssValueChooser"
