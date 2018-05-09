@@ -89,9 +89,8 @@ public class LowLevelCameraActions implements CameraActions
     {
         synchronized (lock)
         {
-            Camera camera = getCamera();
             setMeteringArea(focusArea);
-            camera.autoFocus((success, camera1) -> callback.autoFocusDone(success));
+            getCamera().autoFocus((success, camera) -> callback.autoFocusDone(success));
         }
     }
 
