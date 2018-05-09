@@ -25,6 +25,7 @@
     android:orientation="horizontal"
     android:paddingLeft="11dp"
     android:paddingRight="11dp"
+    android:paddingTop="14dp"
     android:gravity="center"
     android:clipChildren="false"
     android:clipToPadding="false"
