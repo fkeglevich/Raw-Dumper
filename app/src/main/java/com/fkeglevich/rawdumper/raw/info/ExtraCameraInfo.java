@@ -21,6 +21,7 @@ import android.os.Build;
 import android.support.annotation.Keep;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -123,6 +124,11 @@ public class ExtraCameraInfo
     public synchronized int getFacing()
     {
         return facing;
+    }
+
+    public PreviewArea.FlipType getFlipType()
+    {
+        return getFacing() == Camera.CameraInfo.CAMERA_FACING_FRONT ? PreviewArea.FlipType.HORIZONTAL : PreviewArea.FlipType.NONE;
     }
 
     public synchronized int getOrientation()
