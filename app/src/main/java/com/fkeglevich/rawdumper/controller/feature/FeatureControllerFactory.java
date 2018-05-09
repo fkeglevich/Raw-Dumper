@@ -114,11 +114,11 @@ public class FeatureControllerFactory
         return new FlashController(flashButton);
     }
 
-    TouchFocusController createTouchFocusController(ActivityReference reference)
+    TouchFocusMeteringAreaController createTouchFocusController(ActivityReference reference)
     {
         View cameraSurfaceView = reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
         TouchFocusView focusView = (TouchFocusView) reference.weaklyGet().findViewById(R.id.focusView);
-        return new TouchFocusController(cameraSurfaceView, focusView);
+        return new TouchFocusMeteringAreaController(cameraSurfaceView, focusView);
     }
 
     ValueMeteringController<Iso> createIsoMeteringController(ActivityReference reference)

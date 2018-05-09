@@ -29,7 +29,6 @@ import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
-import com.fkeglevich.rawdumper.camera.feature.PreviewFeature;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.ui.TouchFocusView;
 import com.fkeglevich.rawdumper.ui.UiUtil;
@@ -42,7 +41,7 @@ import static com.fkeglevich.rawdumper.ui.TouchFocusView.STROKE_WIDTH_DP;
  * Created by Flávio Keglevich on 28/10/17.
  */
 
-public class TouchFocusController extends FeatureController
+public class TouchFocusMeteringAreaController extends FeatureController
 {
     private final TouchFocusView focusView;
     private final Handler uiHandler;
@@ -61,7 +60,7 @@ public class TouchFocusController extends FeatureController
         }
     };
 
-    TouchFocusController(View clickArea, TouchFocusView focusView)
+    TouchFocusMeteringAreaController(View clickArea, TouchFocusView focusView)
     {
         this.focusView = focusView;
         this.uiHandler = new Handler(Looper.getMainLooper());
@@ -71,26 +70,36 @@ public class TouchFocusController extends FeatureController
         {
             if(enabled && event.getAction() == MotionEvent.ACTION_DOWN)
             {
-                if (focusFeature != null
-                        && focusFeature.getValue().canAutoFocus()
-                        && !focusFeature.getValue().isContinuous())
-                {
-                    CaptureSize captureSize = previewFeature.getValue();
-                    double scale = PreviewHelper.calculateVerticalScale(captureSize.getWidth(), captureSize.getHeight(), v.getWidth(), v.getHeight());
-                    int w = v.getWidth(), h = (int)(v.getHeight() * scale);
-                    if (event.getY() < h)
-                    {
-                        int touchSize = UiUtil.dpToPixels(36, TouchFocusController.this.focusView.getContext());
-                        lastTouchArea = PreviewArea.createTouchArea(w, h, event, touchSize).fix(UiUtil.dpToPixels(STROKE_WIDTH_DP, v.getContext()));
-                        TouchFocusController.this.focusView.setMeteringArea(lastTouchArea, TouchFocusView.FOCUS_METERING);
-                        focusFeature.cancelAutoFocus();
-                        focusFeature.startAutoFocus(lastTouchArea, autoFocusResult);
-                    }
-                }
+                if (focusFeature != null)
+                    performFocusOrExposureLock(v, event, shouldAutoFocus());
+
                 v.performClick();
             }
             return false;
         });
+    }
+
+    private void performFocusOrExposureLock(View v, MotionEvent event, boolean autoFocus)
+    {
+        CaptureSize captureSize = previewFeature.getValue();
+        double scale = PreviewHelper.calculateVerticalScale(captureSize.getWidth(), captureSize.getHeight(), v.getWidth(), v.getHeight());
+        int w = v.getWidth(), h = (int)(v.getHeight() * scale);
+        if (event.getY() < h)
+        {
+            int touchSize = UiUtil.dpToPixels(36, focusView.getContext());
+            lastTouchArea = PreviewArea.createTouchArea(w, h, event, touchSize).fix(UiUtil.dpToPixels(STROKE_WIDTH_DP, v.getContext()));
+            if (autoFocus)
+            {
+                drawMeteringArea();
+                focusFeature.cancelAutoFocus();
+                focusFeature.startAutoFocus(lastTouchArea, autoFocusResult);
+            }
+            else
+            {
+                if (focusFeature.setMeteringArea(lastTouchArea))
+                    drawMeteringArea();
+            }
+        }
     }
 
     @Override
@@ -99,17 +108,13 @@ public class TouchFocusController extends FeatureController
         previewFeature = camera.getPreviewFeature();
         focusFeature = camera.getFocusFeature();
         ManualFocusFeature manualFocusFeature = camera.getManualFocusFeature();
-        if (!focusFeature.isAvailable())
-        {
-            reset();
-            return;
-        }
 
-        focusFeature.getOnChanging().addListener(eventData ->
-        {
-            cleanFocus();
-            focusFeature.cancelAutoFocus();
-        });
+        if (focusFeature.isAvailable())
+            focusFeature.getOnChanging().addListener(eventData ->
+            {
+                cleanFocus();
+                focusFeature.cancelAutoFocus();
+            });
 
         if (manualFocusFeature.isAvailable())
             manualFocusFeature.getOnChanging().addListener(eventData ->
@@ -142,5 +147,17 @@ public class TouchFocusController extends FeatureController
     {
         focusView.setMeteringArea(null, TouchFocusView.FOCUS_METERING);
         lastTouchArea = null;
+    }
+
+    private boolean shouldAutoFocus()
+    {
+        return focusFeature.isAvailable()
+                && focusFeature.getValue().canAutoFocus()
+                && !focusFeature.getValue().isContinuous();
+    }
+
+    private void drawMeteringArea()
+    {
+        focusView.setMeteringArea(lastTouchArea, TouchFocusView.FOCUS_METERING);
     }
 }
