@@ -35,6 +35,8 @@ import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 
 public class OrientationManager
 {
+    private static final int ANGLE_MARGIN = 5;
+
     private static final OrientationManager instance = new OrientationManager();
 
     public static OrientationManager getInstance()
@@ -117,6 +119,15 @@ public class OrientationManager
         if (degrees >= 135 && degrees < 225) return 180;
         if (degrees >= 225 && degrees < 315) return 90;
         else return 0;
+    }
+
+    private boolean hasProblematicAngle(int degrees)
+    {
+        if (Math.abs(degrees - 45)  < ANGLE_MARGIN) return true;
+        if (Math.abs(degrees - 135) < ANGLE_MARGIN) return true;
+        if (Math.abs(degrees - 225) < ANGLE_MARGIN) return true;
+        if (Math.abs(degrees - 315) < ANGLE_MARGIN) return true;
+        return false;
     }
 
     public int getCameraRotation(CameraContext cameraContext)
