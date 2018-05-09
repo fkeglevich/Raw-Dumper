@@ -14,6 +14,7 @@ TODO list:
             So in a case of crash, the photos can be automatically recovered later
 
  - (IN PROGRESS) Create code for mean-gain-map stacking
+   - Be careful of non 4:3 proportions's consequences
 
  - (IN PROGRESS) Auto rotate UI elements
    - Needs to keep track of the old 90 degree value for a smoother transition
@@ -32,20 +33,25 @@ TODO list:
  - (IN PROGRESS) Create YUV picture pipelines
 
  - (IN PROGRESS) Selection of white balance preset and manual white balance
-   - Better translating of WB presets to AWB raw gains
+   - Better translating of WB PRESETS to AWB raw gains
    - (DONE!) Create restriction of WB preset with manual temperature
    - (DONE!) Create manual WB interface
    - (DONE!) Create every WB feature and controller
-   - Add WB temp range to ColorInfo
-     - Btw add manual wb compatibility to deviceInfo
+   - (DONE!) Add WB temp range to ColorInfo
+     - (DONE!) Btw add manual wb compatibility to deviceInfo
+   - Make the temp curve more exp-like
+   - Check manual WB compatibility with ZenZoom rear and front cams
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (DONE!) Orient RAW pictures
    - (IN PROGRESS) Orient JPG/YUV pictures
 
- - (PRIORITY) Make the sliders run at 60fps
- - (PRIORITY) Avoid a potential regression of the focus features
+ - (PRIORITY) (DONE!) Add clickable to the background of the controls
+ - (PRIORITY) (DONE!) Make the sliders run at 60fps
+ - (PRIORITY) (DONE!) Avoid a potential regression of the focus features
  - (PRIORITY) End UI rotation feature
+ - (PRIORITY) Recreate about-box with pictures?
+
 
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
@@ -133,3 +139,4 @@ Done:
  - FIXED TOUCH FOCUS (YAAY!)
  - (DONE!) Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
  - (DONE!) Reduce overdraw
+ - New Logo! Made by Nazmul Hasan
