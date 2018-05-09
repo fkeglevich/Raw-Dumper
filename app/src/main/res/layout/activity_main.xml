@@ -59,7 +59,7 @@
         app:srcCompat="@drawable/ic_cached_black_24dp"/>
 
     <include layout="@layout/main_control_buttons"
-        android:id="@+id/linearLayout2"/>
+        android:id="@+id/mainControls"/>
 
     <include layout="@layout/iso_value_chooser" />
 

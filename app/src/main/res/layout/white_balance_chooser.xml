@@ -27,7 +27,7 @@
     android:visibility="visible"
     android:clickable="true"
     android:gravity="center_horizontal"
-    android:layout_above="@+id/linearLayout2"
+    android:layout_above="@+id/mainControls"
     tools:showIn="@layout/activity_main"
     tools:ignore="KeyboardInaccessibleWidget,UnusedAttribute" >
 

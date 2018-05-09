@@ -23,7 +23,7 @@
     android:background="@color/adjustBarBackground"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:layout_above="@+id/linearLayout2"
+    android:layout_above="@+id/mainControls"
     tools:showIn="@layout/activity_main"
     tools:ignore="KeyboardInaccessibleWidget">
 
