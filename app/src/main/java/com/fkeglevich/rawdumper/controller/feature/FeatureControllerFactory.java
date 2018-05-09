@@ -203,16 +203,7 @@ public class FeatureControllerFactory
 
     ManualFocusController createManualFocusController(ActivityReference reference)
     {
-        View manualButton = reference.weaklyGet().findViewById(R.id.manualFocusBt);
-        View backButton = reference.weaklyGet().findViewById(R.id.manualFocusBackBt);
-        SeekBar seekBar = (SeekBar) reference.weaklyGet().findViewById(R.id.manualFocusBar);
-        View chooser = reference.weaklyGet().findViewById(R.id.manualFocusChooser);
-        View stdFocusChooser = reference.weaklyGet().findViewById(R.id.stdFocusChooser);
-        CameraPreview cameraPreview = (CameraPreview) reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
-
-        ManualFocusController result = new ManualFocusController(manualButton, backButton, seekBar, chooser, stdFocusChooser, cameraPreview);
-        //dismissibleManager.addDismissible(result);
-        return result;
+        return new ManualFocusController(reference);
     }
 
     WhiteBalancePresetController createWbController(ActivityReference reference)
@@ -226,6 +217,11 @@ public class FeatureControllerFactory
     {
         TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.wbText);
         return new WhiteBalanceMeteringController(textView);
+    }
+
+    ManualTemperatureController createManualWbController(ActivityReference reference)
+    {
+        return new ManualTemperatureController(reference);
     }
 
     private ButtonController createButtonController(ActivityReference reference,

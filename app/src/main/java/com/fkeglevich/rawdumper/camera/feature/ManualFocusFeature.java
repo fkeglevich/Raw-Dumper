@@ -28,13 +28,14 @@ import com.fkeglevich.rawdumper.camera.parameter.value.RangeValidator;
  * Created by Flávio Keglevich on 29/10/17.
  */
 
-public class ManualFocusFeature extends WritableFeature<ManualFocus, ManualFocusRange>
+public class ManualFocusFeature extends ProportionFeature<ManualFocus, ManualFocusRange>
 {
     ManualFocusFeature(ParameterCollection parameterCollection)
     {
         super(AsusParameters.MANUAL_FOCUS, parameterCollection, RangeValidator.create(parameterCollection, AsusParameters.MANUAL_FOCUS_RANGE));
     }
 
+    @Override
     public void setValueAsProportion(double proportion)
     {
         int lower = getAvailableValues().getLower().getNumericValue();
