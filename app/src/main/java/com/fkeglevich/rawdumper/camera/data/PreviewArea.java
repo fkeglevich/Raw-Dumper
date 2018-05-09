@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.camera.data;
 
 import android.view.MotionEvent;
-import android.view.View;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +29,11 @@ import java.util.List;
 
 public class PreviewArea
 {
+    public enum FlipType
+    {
+        NONE, HORIZONTAL, VERTICAL;
+    }
+
     private static final List<Integer> VALID_DEGREES = Arrays.asList(0, 90, 180, 270);
 
     private final int x;
@@ -89,6 +93,16 @@ public class PreviewArea
             case 90:    return new PreviewArea(y, viewWidth - x, viewHeight, viewWidth, touchSize);
             case 180:   return new PreviewArea(viewWidth - x, viewHeight - y, viewWidth, viewHeight, touchSize);
             default:    return new PreviewArea(viewHeight - y, x, viewHeight, viewWidth, touchSize);
+        }
+    }
+
+    public PreviewArea flip(FlipType type)
+    {
+        switch (type)
+        {
+            case HORIZONTAL: return new PreviewArea(viewWidth - x,  y, viewWidth, viewHeight, touchSize);
+            case VERTICAL:   return new PreviewArea(x, viewHeight - y, viewWidth, viewHeight, touchSize);
+            default:         return this;
         }
     }
 
