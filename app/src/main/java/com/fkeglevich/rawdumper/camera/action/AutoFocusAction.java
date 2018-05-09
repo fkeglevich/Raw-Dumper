@@ -30,4 +30,6 @@ public interface AutoFocusAction
     void startAutoFocus(PreviewArea focusArea, AutoFocusResult callback);
 
     void cancelAutoFocus();
+
+    boolean setMeteringArea(PreviewArea area);
 }

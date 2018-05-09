@@ -64,4 +64,10 @@ public class FocusFeature extends WritableFeature<FocusMode, List<FocusMode>> im
         checkFeatureAvailability(this);
         autoFocusAction.cancelAutoFocus();
     }
+
+    @Override
+    public boolean setMeteringArea(PreviewArea area)
+    {
+        return autoFocusAction.setMeteringArea(area);
+    }
 }

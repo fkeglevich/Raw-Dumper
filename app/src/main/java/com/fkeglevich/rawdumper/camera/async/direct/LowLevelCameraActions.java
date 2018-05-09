@@ -53,6 +53,7 @@ public class LowLevelCameraActions implements CameraActions
     //Mutable state fields
     private boolean isPreviewing;
     private int displayRotation;
+    private PreviewArea.FlipType flipType;
 
     static LowLevelCameraActions createInvalid(Mutable<ICameraExtension> cameraExtension,
                                                Object lock,
@@ -73,11 +74,12 @@ public class LowLevelCameraActions implements CameraActions
         this.pipelineManager = pipelineManager;
     }
 
-    void setupMutableState(int displayRotation)
+    void setupMutableState(int displayRotation, PreviewArea.FlipType flipType)
     {
         synchronized (lock)
         {
             this.displayRotation = displayRotation;
+            this.flipType = flipType;
             this.isPreviewing = false;
         }
     }
@@ -85,11 +87,10 @@ public class LowLevelCameraActions implements CameraActions
     @Override
     public void startAutoFocus(PreviewArea focusArea, final AutoFocusResult callback)
     {
-        List<Camera.Area> areas = FocusHelper.generateFocusAreas(focusArea.rotate(displayRotation));
         synchronized (lock)
         {
             Camera camera = getCamera();
-            setAreasParameters(areas, camera);
+            setMeteringArea(focusArea);
             camera.autoFocus((success, camera1) -> callback.autoFocusDone(success));
         }
     }
@@ -104,14 +105,27 @@ public class LowLevelCameraActions implements CameraActions
         }
     }
 
-    private void setAreasParameters(List<Camera.Area> areas, Camera camera)
+    @Override
+    public boolean setMeteringArea(PreviewArea area)
+    {
+        synchronized (lock)
+        {
+            Camera camera = getCamera();
+            return setAreasParameters(FocusHelper.generateFocusAreas(area.rotate(displayRotation).flip(flipType)), camera);
+        }
+    }
+
+    private boolean setAreasParameters(List<Camera.Area> areas, Camera camera)
     {
         Camera.Parameters parameters = camera.getParameters();
-        if (parameters.getMaxNumFocusAreas() >= 1)
-            parameters.setFocusAreas(areas);
-        if (parameters.getMaxNumMeteringAreas() >= 1)
-            parameters.setMeteringAreas(areas);
+        boolean hasAnyFocusArea = parameters.getMaxNumFocusAreas() >= 1;
+        boolean hasAnyMeteringArea = parameters.getMaxNumMeteringAreas() >= 1;
+
+        if (hasAnyFocusArea)    parameters.setFocusAreas(areas);
+        if (hasAnyMeteringArea) parameters.setMeteringAreas(areas);
+
         camera.setParameters(parameters);
+        return hasAnyMeteringArea;
     }
 
     @Override

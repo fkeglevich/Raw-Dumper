@@ -74,7 +74,7 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
             parameterCollection.setupMutableState(parameters);
             pictureSizeLayer.setupMutableState(parameters, cameraContext.getSensorInfo());
             pipelineManager.setupMutableState(cameraExtension, lock, cameraContext, this);
-            lowLevelCameraActions.setupMutableState(displayRotation);
+            lowLevelCameraActions.setupMutableState(displayRotation, cameraContext.getCameraInfo().getFlipType());
         }
     }
 
