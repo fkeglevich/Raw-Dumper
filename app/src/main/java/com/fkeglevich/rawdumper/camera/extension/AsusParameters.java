@@ -43,5 +43,6 @@ public class AsusParameters
     public static final Parameter<ManualFocusRange> MANUAL_FOCUS_RANGE = ParameterFactory.createReadOnly("focus_range_values", ManualFocusRange.class);
 
     public static final Parameter<ManualTemperature> MANUAL_TEMPERATURE = ParameterFactory.create("asus_color_temp", ManualTemperature.class);
-    public static final Parameter<ManualTemperatureRange> MANUAL_TEMPERATURE_RANGE = ParameterFactory.createReadOnly("color_temp_values", ManualTemperatureRange.class);
+    //public static final Parameter<ManualTemperatureRange> MANUAL_TEMPERATURE_RANGE = ParameterFactory.createReadOnly("color_temp_values", ManualTemperatureRange.class);
+    public static final Parameter<ManualTemperatureRange> MANUAL_TEMPERATURE_RANGE = ParameterFactory.createReadOnly("preview_color_temp", ManualTemperatureRange.class);
 }
