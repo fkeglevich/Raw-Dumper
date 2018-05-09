@@ -33,6 +33,11 @@ public class ParameterFactory
         return StaticParameter.create(key, Decoders.selectDecoder(valueClass), Encoders.selectEncoder(valueClass));
     }
 
+    public static <T> Parameter<T> createAsyncEvent(String key, Class<T> valueClass)
+    {
+        return StaticParameter.createAsyncEvent(key, Decoders.selectDecoder(valueClass), Encoders.selectEncoder(valueClass));
+    }
+
     public static <T> Parameter<List<T>> createList(String key, Class<T> valueClass)
     {
         return StaticParameter.create(key, Decoders.selectListDecoder(valueClass), Encoders.selectListEncoder(valueClass));
