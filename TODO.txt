@@ -9,8 +9,6 @@ TODO list:
  - Better handling of known devices
    - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
 
- - Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
-
  - (IN PROGRESS) (IMPORTANT) Add the ~recovering photos~ user case, if the app crashes
    - Note:  temporarily save EVERY important information just before taking the pictures.
             So in a case of crash, the photos can be automatically recovered later
@@ -34,10 +32,9 @@ TODO list:
  - (IN PROGRESS) Create YUV picture pipelines
 
  - (IN PROGRESS) Selection of white balance preset and manual white balance
-   - Better translating of wb presets to AWB raw gains
+   - Better translating of WB presets to AWB raw gains
+   - Create restriction of WB preset with manual temperature
 
- - (IN PROGRESS) Reduce overdraw
- 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (DONE!) Orient RAW pictures
    - (IN PROGRESS) Orient JPG/YUV pictures
@@ -124,4 +121,7 @@ Done:
    ps: this *could* be enabled for others devices (zen5, razr I) as well
  - Fixed not-so-rare race condition bug related to the shell creation process
  - Fixed shadows of the buttons and removed some unused layouts
+ - Improvements to the main layout
  - FIXED TOUCH FOCUS (YAAY!)
+ - (DONE!) Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
+ - (DONE!) Reduce overdraw
