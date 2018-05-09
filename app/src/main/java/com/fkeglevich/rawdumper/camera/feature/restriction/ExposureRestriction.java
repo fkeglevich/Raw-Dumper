@@ -63,13 +63,13 @@ public class ExposureRestriction
         parameterMap.put(ExposureType.EV,               evFeature);
 
         isoFeature.getOnChanging()
-                .addListener(this.<Iso>createEventListener(ExposureType.ISO));
+                .addListener(this.createEventListener(ExposureType.ISO));
 
         shutterSpeedFeature.getOnChanging()
-                .addListener(this.<ShutterSpeed>createEventListener(ExposureType.SHUTTER_SPEED));
+                .addListener(this.createEventListener(ExposureType.SHUTTER_SPEED));
 
         evFeature.getOnChanging()
-                .addListener(this.<Ev>createEventListener(ExposureType.EV));
+                .addListener(this.createEventListener(ExposureType.EV));
     }
 
     private <T> EventListener<ParameterChangeEvent<T>> createEventListener(final ExposureType type)
