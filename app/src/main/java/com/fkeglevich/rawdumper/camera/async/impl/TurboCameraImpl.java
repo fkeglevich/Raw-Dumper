@@ -44,6 +44,7 @@ import com.fkeglevich.rawdumper.camera.feature.WhiteBalancePresetFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.FocusRestriction;
+import com.fkeglevich.rawdumper.camera.feature.restriction.WhiteBalanceRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.ModeRestrictionChain;
 import com.fkeglevich.rawdumper.camera.service.CameraServiceManager;
 import com.fkeglevich.rawdumper.util.Nullable;
@@ -81,6 +82,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private ExposureRestriction                                 exposureRestriction;
     private FocusRestriction                                    focusRestriction;
     private ModeRestrictionChain                                modeRestrictionChain;
+    private WhiteBalanceRestriction                             whiteBalanceRestriction;
     private final ModeList modeList;
 
     public TurboCameraImpl(LowLevelCamera lowLevelCamera)
@@ -130,6 +132,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         exposureRestriction     = new ExposureRestriction(isoFeature, shutterSpeedFeature, evFeature);
         focusRestriction        = new FocusRestriction(focusFeature, manualFocusFeature);
         modeRestrictionChain    = new ModeRestrictionChain(pictureModeFeature, pictureFormatFeature, pictureSizeFeature, previewFeature, lowLevelCamera.getCameraActions());
+        whiteBalanceRestriction = new WhiteBalanceRestriction(whiteBalancePresetFeature, manualTemperatureFeature);
     }
 
     @Override
