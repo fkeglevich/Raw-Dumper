@@ -26,15 +26,24 @@ import com.fkeglevich.rawdumper.camera.parameter.value.RangeValidator;
  * TODO: add header comment
  * Created by Flávio Keglevich on 06/05/18.
  */
-public class ManualTemperatureFeature extends WritableFeature<ManualTemperature, ManualTemperatureRange>
+public class ManualTemperatureFeature extends ProportionFeature<ManualTemperature, ManualTemperatureRange>
 {
     ManualTemperatureFeature(ParameterCollection parameterCollection)
     {
         super(AsusParameters.MANUAL_TEMPERATURE, parameterCollection, RangeValidator.create(parameterCollection, AsusParameters.MANUAL_TEMPERATURE_RANGE));
     }
 
+    private long nanos = System.nanoTime();
+
+    @Override
     public void setValueAsProportion(double proportion)
     {
+        if (System.nanoTime() - nanos < 30e6)
+        {
+            nanos = System.nanoTime();
+            return;
+        }
+
         int lower = getAvailableValues().getLower().getNumericValue();
         int upper = getAvailableValues().getUpper().getNumericValue();
 
