@@ -35,11 +35,18 @@ TODO list:
    - Better translating of WB presets to AWB raw gains
    - (DONE!) Create restriction of WB preset with manual temperature
    - (DONE!) Create manual WB interface
+   - (DONE!) Create every WB feature and controller
+   - Add WB temp range to ColorInfo
+     - Btw add manual wb compatibility to deviceInfo
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (DONE!) Orient RAW pictures
    - (IN PROGRESS) Orient JPG/YUV pictures
- 
+
+ - (PRIORITY) Make the sliders run at 60fps
+ - (PRIORITY) Avoid a potential regression of the focus features
+ - (PRIORITY) End UI rotation feature
+
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
 	- Zenfone 5
