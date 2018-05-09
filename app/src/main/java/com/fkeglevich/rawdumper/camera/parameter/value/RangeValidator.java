@@ -32,6 +32,11 @@ public class RangeValidator<T extends Comparable<T>, A extends DataRange<T>> imp
 {
     private final A range;
 
+    public static <T extends Comparable<T>, A extends DataRange<T>> RangeValidator<T, A> create(A dataRange)
+    {
+        return new RangeValidator<>(dataRange);
+    }
+
     @NonNull
     public static <T extends Comparable<T>, A extends DataRange<T>> RangeValidator<T, A> create(ParameterCollection parameterCollection, Parameter<A> parameter)
     {
