@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.async.direct;
 
 import android.hardware.Camera;
+import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
@@ -28,6 +29,7 @@ import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.PictureSizeLayer;
 import com.fkeglevich.rawdumper.util.Mutable;
+import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;
@@ -44,9 +46,10 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
     private final CameraContext cameraContext;
 
     //mutable fields
-    private final Mutable<ICameraExtension>  cameraExtension        = Mutable.createInvalid();
-    private final MutableParameterCollection parameterCollection    = MutableParameterCollection.createInvalid();
-    private final PictureSizeLayer           pictureSizeLayer       = PictureSizeLayer.createInvalid();
+    private final Mutable<ICameraExtension>  cameraExtension         = Mutable.createInvalid();
+    private final MutableParameterCollection parameterCollection     = MutableParameterCollection.createInvalid();
+    private final PictureSizeLayer           pictureSizeLayer        = PictureSizeLayer.createInvalid();
+    private final AsyncParameterSender       asyncParameterSender    = new AsyncParameterSender();
     private final LowLevelCameraActions      lowLevelCameraActions;
     private final StandardPipelineManager    pipelineManager;
 
@@ -70,6 +73,7 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
             if (cameraContext.getCameraInfo().canDisableShutterSound())
                 extension.getCameraDevice().enableShutterSound(false);
 
+            asyncParameterSender.setupMutableState(parameters);
             cameraExtension.setupMutableState(extension);
             parameterCollection.setupMutableState(parameters);
             pictureSizeLayer.setupMutableState(parameters, cameraContext.getSensorInfo());
@@ -83,6 +87,7 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
     {
         synchronized (lock)
         {
+            asyncParameterSender.clearPendingOperations();
             cameraExtension.get().release();
         }
     }
@@ -97,6 +102,12 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
     public ParameterCollection getParameterCollection()
     {
         return parameterCollection;
+    }
+
+    @Override
+    public AsyncParameterSender getAsyncParameterSender()
+    {
+        return asyncParameterSender;
     }
 
     @Override

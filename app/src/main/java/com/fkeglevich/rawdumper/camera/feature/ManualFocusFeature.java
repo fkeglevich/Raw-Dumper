@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
@@ -30,9 +31,9 @@ import com.fkeglevich.rawdumper.camera.parameter.value.RangeValidator;
 
 public class ManualFocusFeature extends ProportionFeature<ManualFocus, ManualFocusRange>
 {
-    ManualFocusFeature(ParameterCollection parameterCollection)
+    ManualFocusFeature(AsyncParameterSender asyncParameterSender, ParameterCollection parameterCollection)
     {
-        super(AsusParameters.MANUAL_FOCUS, parameterCollection, RangeValidator.create(parameterCollection, AsusParameters.MANUAL_FOCUS_RANGE));
+        super(asyncParameterSender, AsusParameters.MANUAL_FOCUS, parameterCollection, RangeValidator.create(parameterCollection, AsusParameters.MANUAL_FOCUS_RANGE));
     }
 
     @Override
@@ -44,6 +45,6 @@ public class ManualFocusFeature extends ProportionFeature<ManualFocus, ManualFoc
         double numericValue = (upper - lower) * proportion + lower;
 
         ManualFocus manualFocus = ManualFocus.create((int) Math.round(numericValue));
-        setValue(manualFocus);
+        setValueAsync(manualFocus);
     }
 }

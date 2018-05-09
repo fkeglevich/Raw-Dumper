@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.Iso;
@@ -37,13 +38,16 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 {
     private final CameraContext cameraContext;
     private final ParameterCollection parameterCollection;
+    private final AsyncParameterSender asyncParameterSender;
     private final CameraActions cameraActions;
 
     public FeatureRecyclerFactory(CameraContext cameraContext,
                                   ParameterCollection parameterCollection,
+                                  AsyncParameterSender asyncParameterSender,
                                   CameraActions cameraActions)
     {
         this.parameterCollection = parameterCollection;
+        this.asyncParameterSender = asyncParameterSender;
         this.cameraActions = cameraActions;
         this.cameraContext = cameraContext;
     }
@@ -106,7 +110,7 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 
     public ManualFocusFeature createManualFocusFeature()
     {
-        ManualFocusFeature result = new ManualFocusFeature(parameterCollection);
+        ManualFocusFeature result = new ManualFocusFeature(asyncParameterSender, parameterCollection);
         registerFeature(result);
         return result;
     }
@@ -120,7 +124,7 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 
     public ManualTemperatureFeature createManualTemperatureFeature()
     {
-        ManualTemperatureFeature result = new ManualTemperatureFeature(parameterCollection);
+        ManualTemperatureFeature result = new ManualTemperatureFeature(cameraContext.getColorInfo(), asyncParameterSender, parameterCollection);
         registerFeature(result);
         return result;
     }

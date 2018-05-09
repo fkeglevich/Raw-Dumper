@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
@@ -28,10 +29,22 @@ import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 
 public abstract class ProportionFeature<T, A> extends WritableFeature<T, A>
 {
-    ProportionFeature(Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, A> validator)
+    private final AsyncParameterSender asyncParameterSender;
+
+    ProportionFeature(AsyncParameterSender asyncParameterSender, Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, A> validator)
     {
         super(featureParameter, parameterCollection, validator);
+        this.asyncParameterSender = asyncParameterSender;
     }
 
     public abstract void setValueAsProportion(double proportion);
+
+    void setValueAsync(T value)
+    {
+        checkFeatureAvailability(this);
+        if (!getValidator().isValid(value))
+            throw new IllegalArgumentException();
+
+        asyncParameterSender.sendParameterAsync(parameter, value);
+    }
 }

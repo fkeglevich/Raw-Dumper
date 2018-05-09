@@ -16,11 +16,17 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import android.support.annotation.NonNull;
+
+import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
+import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperatureRange;
 import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.RangeValidator;
+import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
+import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 
 /**
  * TODO: add header comment
@@ -28,28 +34,26 @@ import com.fkeglevich.rawdumper.camera.parameter.value.RangeValidator;
  */
 public class ManualTemperatureFeature extends ProportionFeature<ManualTemperature, ManualTemperatureRange>
 {
-    ManualTemperatureFeature(ParameterCollection parameterCollection)
+    @NonNull
+    private static ValueValidator<ManualTemperature, ManualTemperatureRange> createRangeValidator(ColorInfo colorInfo)
     {
-        super(AsusParameters.MANUAL_TEMPERATURE, parameterCollection, RangeValidator.create(parameterCollection, AsusParameters.MANUAL_TEMPERATURE_RANGE));
+        return RangeValidator.create(ManualTemperatureRange.getFrom(colorInfo));
     }
 
-    private long nanos = System.nanoTime();
+    ManualTemperatureFeature(ColorInfo colorInfo, AsyncParameterSender asyncParameterSender, ParameterCollection parameterCollection)
+    {
+        super(asyncParameterSender, AsusParameters.MANUAL_TEMPERATURE, parameterCollection, createRangeValidator(colorInfo));
+    }
 
     @Override
     public void setValueAsProportion(double proportion)
     {
-        if (System.nanoTime() - nanos < 30e6)
-        {
-            nanos = System.nanoTime();
-            return;
-        }
-
         int lower = getAvailableValues().getLower().getNumericValue();
         int upper = getAvailableValues().getUpper().getNumericValue();
 
         double numericValue = (upper - lower) * proportion + lower;
 
-        ManualTemperature manualFocus = ManualTemperature.create((int) Math.round(numericValue));
-        setValue(manualFocus);
+        ManualTemperature manualTemperature = ManualTemperature.create((int) Math.round(numericValue));
+        setValueAsync(manualTemperature);
     }
 }
