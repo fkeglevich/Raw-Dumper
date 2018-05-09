@@ -18,7 +18,7 @@ TODO list:
  - (IN PROGRESS) Auto rotate UI elements
    - Needs to keep track of the old 90 degree value for a smoother transition
    - Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
-   - Needs to increase the vertical area of the main control buttons
+   - (DONE!) Needs to increase the vertical area of the main control buttons
 
  - (IN PROGRESS) Handle different types of makernotes
 
