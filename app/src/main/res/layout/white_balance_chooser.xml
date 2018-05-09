@@ -119,6 +119,7 @@
                 android:background="@drawable/round_button"
                 android:elevation="2dp"
                 android:text="@string/manual_temperature_text"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:visibility="visible" />
 
