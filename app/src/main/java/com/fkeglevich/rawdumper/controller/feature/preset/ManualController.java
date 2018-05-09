@@ -101,7 +101,7 @@ public abstract class ManualController<P, M> extends FeatureController
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
-                //updateManualProportion(progress);
+                updateManualProportion(progress);
             }
 
             @Override
