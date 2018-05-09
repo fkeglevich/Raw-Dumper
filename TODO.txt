@@ -34,6 +34,7 @@ TODO list:
  - (IN PROGRESS) Selection of white balance preset and manual white balance
    - Better translating of WB presets to AWB raw gains
    - Create restriction of WB preset with manual temperature
+   - (DONE!) Create manual WB interface
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (DONE!) Orient RAW pictures
