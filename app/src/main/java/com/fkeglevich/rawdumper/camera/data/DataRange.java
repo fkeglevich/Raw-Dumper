@@ -26,7 +26,7 @@ public class DataRange<T extends Comparable<T>>
     private final T upper;
     private final T disabledValue;
 
-    DataRange(T lower, T upper, T disabledValue)
+    public DataRange(T lower, T upper, T disabledValue)
     {
         this.lower = lower;
         this.upper = upper;
