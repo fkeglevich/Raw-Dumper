@@ -48,6 +48,8 @@ public class OrientationUIController
         affectedViews.add(reference.findViewById(R.id.twilightWbBt));
         affectedViews.add(reference.findViewById(R.id.manualWbBt));
         affectedViews.add(reference.findViewById(R.id.manualWbBackBt));
+        affectedViews.add(reference.findViewById(R.id.manualWbCloudyIcon));
+        affectedViews.add(reference.findViewById(R.id.manualWbTungstenIcon));
 
         affectedViews.add(reference.findViewById(R.id.wbBox));
         affectedViews.add(reference.findViewById(R.id.focusBox));

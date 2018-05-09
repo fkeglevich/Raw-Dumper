@@ -139,18 +139,18 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="13dp"
+            android:layout_marginEnd="13dp"
             android:background="@drawable/round_button"
             android:elevation="2dp"
             app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
-        <TextView
-            android:id="@+id/wbMinTempText"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/manualWbTungstenIcon"
+            android:layout_width="24dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:rotation="90"
-            android:text="2300K" />
+            android:tint="@color/md_yellow_A200"
+            android:tintMode="src_atop"
+            app:srcCompat="@drawable/ic_wb_incandescent_black_24dp" />
 
         <SeekBar
             android:id="@+id/manualWbBar"
@@ -161,14 +161,14 @@
             android:layout_weight="1"
             android:progressDrawable="@drawable/seek_bar_background" />
 
-        <TextView
-            android:id="@+id/wbMaxTempText"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/manualWbCloudyIcon"
+            android:layout_width="24dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:rotation="90"
-            android:text="7500K" />
+            android:layout_marginEnd="13dp"
+            android:tint="@color/md_light_blue_400"
+            android:tintMode="src_in"
+            app:srcCompat="@drawable/ic_wb_cloudy_black_24dp"  />
 
     </LinearLayout>
 
