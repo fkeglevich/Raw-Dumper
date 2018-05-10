@@ -36,7 +36,8 @@ public enum Flash implements ParameterValue
     ON(FLASH_MODE_ON, ExifFlash.FIRED),
     AUTO(FLASH_MODE_AUTO, ExifFlash.UNKNOWN),
     TORCH(FLASH_MODE_TORCH, ExifFlash.FIRED),
-    RED_EYE(FLASH_MODE_RED_EYE, ExifFlash.FIRED);
+    RED_EYE(FLASH_MODE_RED_EYE, ExifFlash.FIRED),
+    SCREEN("screen", ExifFlash.FIRED);
 
     private final String parameterValue;
     private final ExifFlash exifFlash;
