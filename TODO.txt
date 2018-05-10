@@ -30,14 +30,13 @@ TODO list:
  - (IN PROGRESS) Create YUV picture pipelines
 
  - (IN PROGRESS) Selection of white balance preset and manual white balance
-   - Make the temp curve more exp-like
+   - Increase/Decrease progress by clicking the buttons
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (IN PROGRESS) Orient JPG/YUV pictures
 
  - (PRIORITY) End UI rotation feature
  - (PRIORITY) Recreate about-box with pictures?
- - (PRIORITY) Add clicked stage on main controls buttons
  - (PRIORITY) Add CC notice to about-box
 
  - (IMPORTANT) Test the newer version of these devices:
@@ -46,16 +45,14 @@ TODO list:
 
 Next features:
  - Selection of picture size
- - Gain-based white balance
  - Night Mode with raw pictures
- - Save pictures using the DNG SDK
-   - Advantages: compression and DNG files that-always-work
  - Almost-perfect lens shading correction
    - (NOT ANYMORE!) requires DNG SDK for working with low-level gain maps dng opcodes
    - Idea: while DNG SDK support is not ready, simply apply the gain directly to the raw data
      update: we are going to create the low level opcodes by ourselves
- - Almost-perfect white balance
-   - Needs some basic testing before. See WB-algorithm-idea.txt
+ - Save pictures using the DNG SDK
+   - Advantages: compression and DNG files that-always-work
+ - Gain-based white balance
 
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
@@ -140,5 +137,6 @@ Done:
  - (DONE!) Avoid a potential regression of the focus features
  - Fixed minor bugs found
  - (DONE!) Fix WB metering controller
- - The buttons of the main controls now apears toggled
+ - (DONE!) Add clicked stage on main controls buttons
  - (DONE!) Better translating of WB PRESETS to AWB raw gains
+ - (DONE!) Make the temp curve more exp-like
