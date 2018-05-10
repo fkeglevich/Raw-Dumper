@@ -120,6 +120,7 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
     {
         programData.updateSurfaceSize(width, height);
         GLES20.glViewport(0, 0, width, height);
+        clearFrame();
     }
 
     @Override
