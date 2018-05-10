@@ -73,7 +73,6 @@ public abstract class ManualController<P, M> extends FeatureController
         manualFeature = getManualFeature(camera);
         if (!(manualFeature.isAvailable() && getPresetFeature(camera).isAvailable()))
         {
-            Log.i("ASD", "reseyt");
             reset();
             return;
         }
