@@ -31,12 +31,6 @@ public class ParameterCollection
 {
     private final LowLevelParameterInterface parameterInterface;
 
-    @NonNull
-    public static ParameterCollection createVirtualParameterCollection()
-    {
-        return new ParameterCollection(new VirtualParameterInterface());
-    }
-
     public ParameterCollection(LowLevelParameterInterface parameterInterface)
     {
         this.parameterInterface = parameterInterface;
