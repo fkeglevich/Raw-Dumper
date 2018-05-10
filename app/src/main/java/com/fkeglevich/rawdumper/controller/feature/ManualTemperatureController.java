@@ -16,6 +16,10 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.SeekBar;
+
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
@@ -38,6 +42,23 @@ public class ManualTemperatureController extends ManualController<WhiteBalancePr
                 reference.findViewById(R.id.manualWbChooser),
                 reference.findViewById(R.id.manualWbBar),
                 reference.findViewById(R.id.stdWbChooser));
+        SeekBar seekBar = reference.findViewById(R.id.manualWbBar);
+        View decreaseBt = reference.findViewById(R.id.manualWbTungstenIcon);
+        decreaseBt.setOnClickListener(v ->
+        {
+            double value = seekBar.getProgress() / (double) seekBar.getMax();
+            value -= 0.005;
+            if (value < 0d) value = 0d;
+            seekBar.setProgress((int)Math.round(value * seekBar.getMax()));
+        });
+        View increaseBt = reference.findViewById(R.id.manualWbCloudyIcon);
+        increaseBt.setOnClickListener(v ->
+        {
+            double value = seekBar.getProgress() / (double) seekBar.getMax();
+            value += 0.005;
+            if (value > 1d) value = 1d;
+            seekBar.setProgress((int)Math.round(value * seekBar.getMax()));
+        });
     }
 
     @Override
