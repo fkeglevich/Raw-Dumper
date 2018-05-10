@@ -16,8 +16,10 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
+import android.hardware.Camera;
 import android.util.Log;
 
+import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
 import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
@@ -28,6 +30,8 @@ import com.fkeglevich.rawdumper.util.MathUtil;
 
 import java.util.Arrays;
 
+import static android.hardware.Camera.Parameters.WHITE_BALANCE_AUTO;
+
 /**
  * Created by Flávio Keglevich on 14/06/2017.
  * TODO: Add a class header comment!
@@ -35,9 +39,7 @@ import java.util.Arrays;
 
 public class WhiteBalanceInfo
 {
-    private static final int DAYLIGHT_TEMPERATURE = 5503;
-
-    public static WhiteBalanceInfo create(ExtraCameraInfo cameraInfo, MakerNoteInfo makerNoteInfo)
+    public static WhiteBalanceInfo create(ExtraCameraInfo cameraInfo, MakerNoteInfo makerNoteInfo, Camera.Parameters parameters)
     {
         float[] neutralValues = WhiteBalanceService.getInstance().isAvailable() ? WhiteBalanceService.getInstance().getValue() : null;
 
@@ -49,7 +51,16 @@ public class WhiteBalanceInfo
         if (cameraInfo.hasKnownMakernote())
             return createFromMakerNote(makerNoteInfo, cameraInfo.getColor());
         else
-            return createFromDaylightTemperature(cameraInfo.getColor());
+        {
+            if (parameters != null && parameters.getWhiteBalance() != null && !parameters.getWhiteBalance().equals(WHITE_BALANCE_AUTO))
+            {
+                for (WhiteBalancePreset preset : WhiteBalancePreset.values())
+                    if (preset.getParameterValue().equals(parameters.getWhiteBalance()))
+                        return createFromWhiteBalancePreset(preset, cameraInfo.getColor());
+
+            }
+            return createFromWhiteBalancePreset(WhiteBalancePreset.DAYLIGHT, cameraInfo.getColor());
+        }
     }
 
     private static WhiteBalanceInfo createFromXYCoords(double x, double y, ColorInfo colorInfo)
@@ -66,10 +77,15 @@ public class WhiteBalanceInfo
             return createFromDaylightTemperature(colorInfo);
     }
 
+    private static WhiteBalanceInfo createFromWhiteBalancePreset(WhiteBalancePreset preset, ColorInfo colorInfo)
+    {
+        float[] xy = ColorUtil.getXYFromCCT(preset.getTemperature().get(), colorInfo);
+        return createFromXYCoords(xy[0], xy[1], colorInfo);
+    }
+
     private static WhiteBalanceInfo createFromDaylightTemperature(ColorInfo colorInfo)
     {
-        float[] xy = ColorUtil.getXYFromCCT(DAYLIGHT_TEMPERATURE, colorInfo);
-        return createFromXYCoords(xy[0], xy[1], colorInfo);
+        return createFromWhiteBalancePreset(WhiteBalancePreset.DAYLIGHT, colorInfo);
     }
 
     private final float[] asShotNeutral;

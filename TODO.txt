@@ -30,7 +30,6 @@ TODO list:
  - (IN PROGRESS) Create YUV picture pipelines
 
  - (IN PROGRESS) Selection of white balance preset and manual white balance
-   - (IN PROGRESS) Better translating of WB PRESETS to AWB raw gains
    - Make the temp curve more exp-like
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
@@ -142,3 +141,4 @@ Done:
  - Fixed minor bugs found
  - (DONE!) Fix WB metering controller
  - The buttons of the main controls now apears toggled
+ - (DONE!) Better translating of WB PRESETS to AWB raw gains

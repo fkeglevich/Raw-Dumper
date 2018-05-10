@@ -99,7 +99,7 @@ public class FromRawAndJpegBuilder extends CommonBuilder
     @Override
     public void buildWhiteBalanceInfo()
     {
-        captureInfo.whiteBalanceInfo = WhiteBalanceInfo.create(pair.getExtraCameraInfo(), makerNoteInfo);
+        captureInfo.whiteBalanceInfo = WhiteBalanceInfo.create(pair.getExtraCameraInfo(), makerNoteInfo, parameters);
     }
 
     @Override
