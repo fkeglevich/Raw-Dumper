@@ -157,8 +157,8 @@
             android:id="@+id/manualWbBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:max="100"
-            android:progress="50"
+            android:max="200"
+            android:progress="100"
             android:layout_weight="1"
             android:progressDrawable="@drawable/seek_bar_background" />
 
