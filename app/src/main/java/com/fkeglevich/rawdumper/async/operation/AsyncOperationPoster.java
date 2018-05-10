@@ -86,6 +86,7 @@ public class AsyncOperationPoster
             ArrayList<Runnable> callbackArray = lockedOperationList.get();
             for (Runnable runnable : callbackArray)
                 operationThreadHandler.removeCallbacks(runnable);
+            callbackArray.clear();
         }
     }
 
