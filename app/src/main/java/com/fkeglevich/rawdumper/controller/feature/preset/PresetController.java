@@ -27,6 +27,7 @@ import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
+import com.fkeglevich.rawdumper.controller.adapter.ButtonController;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
 import com.fkeglevich.rawdumper.controller.feature.Dismissible;
 import com.fkeglevich.rawdumper.controller.feature.FeatureController;
@@ -122,31 +123,29 @@ public abstract class PresetController<T> extends FeatureController implements D
     {
         TransitionManager.beginDelayedTransition((ViewGroup) chooser.getRootView(), fadeTransition);
         chooser.setVisibility(View.INVISIBLE);
+        ButtonController.changeButtonBackground(mainButton, R.drawable.round_button_default);
     }
 
     private void showChooser()
     {
         TransitionManager.beginDelayedTransition((ViewGroup) chooser.getRootView(), fadeTransition);
         chooser.setVisibility(View.VISIBLE);
+        ButtonController.changeButtonBackground(mainButton, R.drawable.round_button_toggled);
     }
 
     private void toggleButton(View button)
     {
-        changeButtonBackground(button, R.drawable.round_button_toggled);
+        ButtonController.changeButtonBackground(button, R.drawable.round_button_toggled);
         lastToggled = button;
     }
 
     private void unToggleLastButton()
     {
         if (lastToggled != null)
-            changeButtonBackground(lastToggled, R.drawable.round_button_default);
+            ButtonController.changeButtonBackground(lastToggled, R.drawable.round_button_default);
     }
 
-    private void changeButtonBackground(View button, @DrawableRes int id)
-    {
-        ViewCompat.setBackground(button, ContextCompat.getDrawable(button.getContext(), id));
-        button.invalidate();
-    }
+
 
     @Override
     protected void reset()
