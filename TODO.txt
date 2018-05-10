@@ -36,8 +36,6 @@ TODO list:
    - (IN PROGRESS) Orient JPG/YUV pictures
 
  - (PRIORITY) End UI rotation feature
- - (PRIORITY) Recreate about-box with pictures?
- - (PRIORITY) Add CC notice to about-box
 
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
@@ -140,3 +138,4 @@ Done:
  - (DONE!) Add clicked stage on main controls buttons
  - (DONE!) Better translating of WB PRESETS to AWB raw gains
  - (DONE!) Make the temp curve more exp-like
+ - (DONE!) Add CC notice to about-box
