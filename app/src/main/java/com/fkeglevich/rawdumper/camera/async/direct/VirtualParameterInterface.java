@@ -27,30 +27,48 @@ import java.util.Map;
 
 public class VirtualParameterInterface implements LowLevelParameterInterface
 {
+    private final Object lock;
+
+    public VirtualParameterInterface(Object lock)
+    {
+        this.lock = lock;
+    }
 
     private final Map<String, String> innerMap = new HashMap<>();
 
     @Override
     public String get(String key)
     {
-        return innerMap.get(key);
+        synchronized (lock)
+        {
+            return innerMap.get(key);
+        }
     }
 
     @Override
     public void set(String key, String value)
     {
-        innerMap.put(key, value);
+        synchronized (lock)
+        {
+            innerMap.put(key, value);
+        }
     }
 
     @Override
     public boolean has(String key)
     {
-        return innerMap.containsKey(key);
+        synchronized (lock)
+        {
+            return innerMap.containsKey(key);
+        }
     }
 
     @Override
     public void remove(String key)
     {
-        innerMap.remove(key);
+        synchronized (lock)
+        {
+            innerMap.remove(key);
+        }
     }
 }
