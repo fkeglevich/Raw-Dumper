@@ -67,4 +67,10 @@ public class WhiteBalanceMeteringController extends PresetMeteringController<Whi
     {
         return manualFeature.getValue().displayValue();
     }
+
+    @Override
+    protected ManualTemperature getDisabledManualValue()
+    {
+        return ManualTemperature.DISABLED;
+    }
 }

@@ -105,7 +105,7 @@ public abstract class PresetMeteringController<P extends Displayable, M, MR> ext
 
         if (manualFeature != null)
         {
-            if (!manualFeature.getValue().equals(ManualFocus.DISABLED))
+            if (!manualFeature.getValue().equals(getDisabledManualValue()))
             {
                 textView.setAlpha(1f);
                 textView.setTextColor(MANUAL_VALUE_TEXT_COLOR);
@@ -134,4 +134,5 @@ public abstract class PresetMeteringController<P extends Displayable, M, MR> ext
     protected abstract P getUnavailableValue();
     protected abstract P getDefaultValue();
     protected abstract String getManualText(WritableFeature<M, MR> manualFeature);
+    protected abstract M getDisabledManualValue();
 }

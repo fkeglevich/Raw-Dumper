@@ -69,4 +69,10 @@ class FocusMeteringController extends PresetMeteringController<FocusMode, Manual
     {
         return ContextManager.getApplicationContext().getString(R.string.focus_manual);
     }
+
+    @Override
+    protected ManualFocus getDisabledManualValue()
+    {
+        return ManualFocus.DISABLED;
+    }
 }
