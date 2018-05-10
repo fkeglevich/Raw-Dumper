@@ -30,16 +30,16 @@ TODO list:
  - (IN PROGRESS) Create YUV picture pipelines
 
  - (IN PROGRESS) Selection of white balance preset and manual white balance
-   - Better translating of WB PRESETS to AWB raw gains
+   - (IN PROGRESS) Better translating of WB PRESETS to AWB raw gains
    - Make the temp curve more exp-like
-   - Fix manual focus for ZenZoom (right now is going to be disabled)
-   - Fix WB metering controller
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (IN PROGRESS) Orient JPG/YUV pictures
 
  - (PRIORITY) End UI rotation feature
  - (PRIORITY) Recreate about-box with pictures?
+ - (PRIORITY) Add clicked stage on main controls buttons
+ - (PRIORITY) Add CC notice to about-box
 
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
@@ -62,6 +62,7 @@ Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
     - Some changes were made to address this bug, should test again to see if it still happens
  - (MINOR) The selector interface for ISO/shutter speed/EV is quite buggy sometimes
+ - (MINOR) Currently using the manual focus slider crashes the Zenfone Zoom camera
  
 Done:
 
@@ -138,3 +139,6 @@ Done:
  - (DONE!) fix regression: add clickable to the background of the controls
  - (DONE!) Make the sliders run at 60fps
  - (DONE!) Avoid a potential regression of the focus features
+ - Fixed minor bugs found
+ - (DONE!) Fix WB metering controller
+ - The buttons of the main controls now apears toggled
