@@ -3,8 +3,6 @@ TODO list:
  - A better handling of unknown devices
    - Automatic discovery of raw image sizes
    - Automatic discovery of raw bayer pattern
-   - Note: this would require a whole new realtime-logcat-analysis module
-     update: now we have that kind of module
    
  - Better handling of known devices
    - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
@@ -19,7 +17,6 @@ TODO list:
  - (IN PROGRESS) Auto rotate UI elements
    - Needs to keep track of the old 90 degree value for a smoother transition
    - Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
-   - (DONE!) Needs to increase the vertical area of the main control buttons
 
  - (IN PROGRESS) Handle different types of makernotes
 
@@ -34,24 +31,15 @@ TODO list:
 
  - (IN PROGRESS) Selection of white balance preset and manual white balance
    - Better translating of WB PRESETS to AWB raw gains
-   - (DONE!) Create restriction of WB preset with manual temperature
-   - (DONE!) Create manual WB interface
-   - (DONE!) Create every WB feature and controller
-   - (DONE!) Add WB temp range to ColorInfo
-     - (DONE!) Btw add manual wb compatibility to deviceInfo
    - Make the temp curve more exp-like
-   - Check manual WB compatibility with ZenZoom rear and front cams
+   - Fix manual focus for ZenZoom (right now is going to be disabled)
+   - Fix WB metering controller
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
-   - (DONE!) Orient RAW pictures
    - (IN PROGRESS) Orient JPG/YUV pictures
 
- - (PRIORITY) (DONE!) Add clickable to the background of the controls
- - (PRIORITY) (DONE!) Make the sliders run at 60fps
- - (PRIORITY) (DONE!) Avoid a potential regression of the focus features
  - (PRIORITY) End UI rotation feature
  - (PRIORITY) Recreate about-box with pictures?
-
 
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
@@ -140,3 +128,13 @@ Done:
  - (DONE!) Enable exposure touch-metering for the front camera (it's currently working on the rear camera, however is tied to the focus feature)
  - (DONE!) Reduce overdraw
  - New Logo! Made by Nazmul Hasan
+ - (DONE!) Needs to increase the vertical area of the main control buttons
+ - (DONE!) Create restriction of WB preset with manual temperature
+ - (DONE!) Create manual WB interface
+ - (DONE!) Create every WB feature and controller
+ - (DONE!) Add WB temp range to ColorInfo
+ - (DONE!) Btw add manual wb compatibility to deviceInfo
+ - (DONE!) Check manual WB compatibility with ZenZoom rear and front cams
+ - (DONE!) fix regression: add clickable to the background of the controls
+ - (DONE!) Make the sliders run at 60fps
+ - (DONE!) Avoid a potential regression of the focus features
