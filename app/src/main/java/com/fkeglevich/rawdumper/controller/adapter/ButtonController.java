@@ -16,9 +16,13 @@
 
 package com.fkeglevich.rawdumper.controller.adapter;
 
+import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
 import com.fkeglevich.rawdumper.controller.feature.Dismissible;
@@ -46,6 +50,12 @@ public class ButtonController implements DisplayableFeatureUi, Dismissible
     private final OnClickNotifier clickNotifier;
     private final Fade fadeTransition;
     private final ButtonDisabledStateController buttonDisabledStateController;
+
+    public static void changeButtonBackground(View button, @DrawableRes int id)
+    {
+        ViewCompat.setBackground(button, ContextCompat.getDrawable(button.getContext(), id));
+        button.invalidate();
+    }
 
     public ButtonController(View button, DisplayableFeatureUi adapter, View chooser,
                             ExternalNotificationController notificationController,
@@ -115,12 +125,14 @@ public class ButtonController implements DisplayableFeatureUi, Dismissible
     {
         TransitionManager.beginDelayedTransition((ViewGroup) chooser.getRootView(), fadeTransition);
         chooser.setVisibility(View.INVISIBLE);
+        changeButtonBackground(button, R.drawable.round_button_default);
     }
 
     private void showChooser()
     {
         TransitionManager.beginDelayedTransition((ViewGroup) chooser.getRootView(), fadeTransition);
         chooser.setVisibility(View.VISIBLE);
+        changeButtonBackground(button, R.drawable.round_button_toggled);
     }
 
     private void toggleChooser()
