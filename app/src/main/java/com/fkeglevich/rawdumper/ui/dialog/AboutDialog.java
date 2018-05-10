@@ -16,13 +16,13 @@
 
 package com.fkeglevich.rawdumper.ui.dialog;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.method.ScrollingMovementMethod;
-import android.text.util.Linkify;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
@@ -37,37 +37,30 @@ import com.fkeglevich.rawdumper.util.AppPackageUtil;
 
 public class AboutDialog
 {
-    private static final String TAG = "AboutDialog";
-
-    private static final int TEXT_VIEW_PADDING = 8;
-    private static final int TEXT_VIEW_MAX_LINES = 40;
-
-    private AlertDialog alertDialog;
+    private final AlertDialog alertDialog;
 
     public AboutDialog(Context context)
     {
-        String messageStr = context.getResources().getString(R.string.about_message, AppPackageUtil.getAppNameWithVersion());
-
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        final TextView messageView = new TextView(context);
-        int paddingValue = UiUtil.dpToPixels(TEXT_VIEW_PADDING, context);
-        messageView.setPadding(paddingValue, paddingValue, paddingValue, paddingValue);
-        final SpannableString spannableStr = new SpannableString(messageStr);
-        Linkify.addLinks(spannableStr, Linkify.WEB_URLS);
-        messageView.setMaxLines(TEXT_VIEW_MAX_LINES);
-        messageView.setVerticalScrollBarEnabled(true);
-        messageView.setMovementMethod(new ScrollingMovementMethod());
-        messageView.setText(spannableStr);
-        messageView.setMovementMethod(LinkMovementMethod.getInstance());
         builder.setCancelable(false);
-        builder.setTitle(context.getResources().getString(R.string.about_title));
-
+        builder.setTitle(R.string.about_title);
         builder.setPositiveButton(
                 context.getResources().getString(android.R.string.ok),
                 (dialog, id) -> dialog.dismiss());
-        builder.setView(messageView);
-
+        builder.setView(createDialogView(context));
         alertDialog = builder.create();
+    }
+
+    @SuppressLint("InflateParams")
+    @NonNull
+    private View createDialogView(Context context)
+    {
+        String messageStr = context.getResources().getString(R.string.about_message, AppPackageUtil.getAppNameWithVersion());
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View view = layoutInflater.inflate(R.layout.about_view, null);
+        TextView aboutText = (TextView) view.findViewById(R.id.aboutText);
+        aboutText.setText(messageStr);
+        return view;
     }
 
     public void showDialog(AppCompatActivity activity)
