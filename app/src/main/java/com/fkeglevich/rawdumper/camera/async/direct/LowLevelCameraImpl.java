@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.camera.async.direct;
 
 import android.hardware.Camera;
-import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
@@ -29,7 +28,6 @@ import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.PictureSizeLayer;
 import com.fkeglevich.rawdumper.util.Mutable;
-import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;

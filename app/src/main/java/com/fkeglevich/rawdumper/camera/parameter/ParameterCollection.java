@@ -16,10 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.parameter;
 
-import android.support.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.async.direct.LowLevelParameterInterface;
-import com.fkeglevich.rawdumper.camera.async.direct.VirtualParameterInterface;
 
 /**
  * TODO: Add class header

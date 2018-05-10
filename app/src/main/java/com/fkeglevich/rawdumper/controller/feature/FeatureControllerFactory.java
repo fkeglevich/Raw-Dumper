@@ -20,7 +20,6 @@ import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;

@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
 

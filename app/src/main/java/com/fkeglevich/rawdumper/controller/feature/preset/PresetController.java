@@ -16,10 +16,7 @@
 
 package com.fkeglevich.rawdumper.controller.feature.preset;
 
-import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 

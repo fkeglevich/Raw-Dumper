@@ -16,9 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.parameter;
 
-import com.fkeglevich.rawdumper.util.event.EventDispatcher;
-import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
-
 /**
  * TODO: Add class header
  * <p>
