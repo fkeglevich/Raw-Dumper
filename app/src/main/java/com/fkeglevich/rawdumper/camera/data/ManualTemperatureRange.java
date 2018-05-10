@@ -39,13 +39,13 @@ public class ManualTemperatureRange extends DataRange<ManualTemperature>
 
     public static ManualTemperatureRange getFrom(ColorInfo colorInfo)
     {
-        if (colorInfo.getTemperatureRange() == null)
-            return null;
+        int[] temperatureRange = colorInfo.getTemperatureRange();
+        if (temperatureRange == null) return null;
 
-        Assert.assertTrue(colorInfo.getTemperatureRange().length == 2);
+        Assert.assertTrue(temperatureRange.length == 4);
 
-        ManualTemperature lower = ManualTemperature.create(colorInfo.getTemperatureRange()[0]);
-        ManualTemperature upper = ManualTemperature.create(colorInfo.getTemperatureRange()[1]);
+        ManualTemperature lower = ManualTemperature.create(temperatureRange[0]);
+        ManualTemperature upper = ManualTemperature.create(temperatureRange[temperatureRange.length - 1]);
 
         return new ManualTemperatureRange(lower, upper);
     }

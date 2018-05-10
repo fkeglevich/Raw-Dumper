@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.camera.feature;
 import android.support.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
-import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperatureRange;
 import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
@@ -27,6 +26,7 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.RangeValidator;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
+import com.fkeglevich.rawdumper.util.MathUtil;
 
 /**
  * TODO: add header comment
@@ -34,6 +34,8 @@ import com.fkeglevich.rawdumper.raw.info.ColorInfo;
  */
 public class ManualTemperatureFeature extends ProportionFeature<ManualTemperature, ManualTemperatureRange>
 {
+    private final int[] temperatureRange;
+
     @NonNull
     private static ValueValidator<ManualTemperature, ManualTemperatureRange> createRangeValidator(ColorInfo colorInfo)
     {
@@ -43,6 +45,7 @@ public class ManualTemperatureFeature extends ProportionFeature<ManualTemperatur
     ManualTemperatureFeature(ColorInfo colorInfo, AsyncParameterSender asyncParameterSender, ParameterCollection parameterCollection)
     {
         super(asyncParameterSender, AsusParameters.MANUAL_TEMPERATURE, parameterCollection, createRangeValidator(colorInfo));
+        temperatureRange = colorInfo.getTemperatureRange();
     }
 
     @Override
@@ -51,9 +54,29 @@ public class ManualTemperatureFeature extends ProportionFeature<ManualTemperatur
         int lower = getAvailableValues().getLower().getNumericValue();
         int upper = getAvailableValues().getUpper().getNumericValue();
 
-        double numericValue = (upper - lower) * proportion + lower;
+        double numericValue = calculateTemp(proportion, lower, upper);
 
-        ManualTemperature manualTemperature = ManualTemperature.create((int) Math.round(numericValue));
-        setValueAsync(manualTemperature);
+        int finalValue = MathUtil.clamp((int) Math.round(numericValue), lower, upper);
+        setValueAsync(ManualTemperature.create(finalValue));
+    }
+
+    private double calculateTemp(double proportion, int lower, int upper)
+    {
+        if (proportion < 0.25)
+            return lin(inverseLin(proportion, 0, 0.25),       temperatureRange[0], temperatureRange[1]);
+        else if (proportion < 0.75)
+            return lin(inverseLin(proportion, 0.25, 0.75),    temperatureRange[1], temperatureRange[2]);
+        else
+            return lin(inverseLin(proportion, 0.75, 1),       temperatureRange[2], temperatureRange[3]);
+    }
+
+    private double inverseLin(double x, double min, double max)
+    {
+        return (x - min) / (max - min);
+    }
+
+    private double lin(double x, double min, double max)
+    {
+        return (max - min) * x + min;
     }
 }
