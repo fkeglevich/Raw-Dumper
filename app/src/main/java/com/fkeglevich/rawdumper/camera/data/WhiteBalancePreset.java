@@ -20,6 +20,7 @@ import android.support.annotation.StringRes;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
+import com.fkeglevich.rawdumper.util.Nullable;
 
 import static android.hardware.Camera.Parameters.WHITE_BALANCE_AUTO;
 import static android.hardware.Camera.Parameters.WHITE_BALANCE_CLOUDY_DAYLIGHT;
@@ -36,22 +37,24 @@ import static android.hardware.Camera.Parameters.WHITE_BALANCE_WARM_FLUORESCENT;
  */
 public enum WhiteBalancePreset implements ParameterValue, Displayable
 {
-    AUTO(WHITE_BALANCE_AUTO,                            R.string.wb_auto),
-    INCANDESCENT(WHITE_BALANCE_INCANDESCENT,            R.string.wb_incandescent),
-    FLUORESCENT(WHITE_BALANCE_FLUORESCENT,              R.string.wb_fluorescent),
-    WARM_FLUORESCENT(WHITE_BALANCE_WARM_FLUORESCENT,    R.string.wb_warm_fluorescent),
-    DAYLIGHT(WHITE_BALANCE_DAYLIGHT,                    R.string.wb_daylight),
-    CLOUDY(WHITE_BALANCE_CLOUDY_DAYLIGHT,               R.string.wb_cloudy),
-    TWILIGHT(WHITE_BALANCE_TWILIGHT,                    R.string.wb_twilight),
-    SHADE(WHITE_BALANCE_SHADE,                          R.string.wb_shade);
+    AUTO(WHITE_BALANCE_AUTO,                            R.string.wb_auto,       Nullable.of(null)),
+    INCANDESCENT(WHITE_BALANCE_INCANDESCENT,            R.string.wb_incandescent,     Nullable.of(2856)),
+    FLUORESCENT(WHITE_BALANCE_FLUORESCENT,              R.string.wb_fluorescent,       Nullable.of(3800)),
+    WARM_FLUORESCENT(WHITE_BALANCE_WARM_FLUORESCENT,    R.string.wb_warm_fluorescent,     Nullable.of(2940)),
+    DAYLIGHT(WHITE_BALANCE_DAYLIGHT,                    R.string.wb_daylight,      Nullable.of(5500)),
+    CLOUDY(WHITE_BALANCE_CLOUDY_DAYLIGHT,               R.string.wb_cloudy,     Nullable.of(6500)),
+    TWILIGHT(WHITE_BALANCE_TWILIGHT,                    R.string.wb_twilight,   Nullable.of(12000)),
+    SHADE(WHITE_BALANCE_SHADE,                          R.string.wb_shade,      Nullable.of(7500));
 
     private final String parameterValue;
     private final int stringValueId;
+    private final Nullable<Integer> temperature;
 
-    WhiteBalancePreset(String parameterValue, @StringRes int stringValueId)
+    WhiteBalancePreset(String parameterValue, @StringRes int stringValueId, Nullable<Integer> temperature)
     {
         this.parameterValue = parameterValue;
         this.stringValueId = stringValueId;
+        this.temperature = temperature;
     }
 
     @Override
@@ -64,5 +67,10 @@ public enum WhiteBalancePreset implements ParameterValue, Displayable
     public String displayValue()
     {
         return ContextManager.getApplicationContext().getResources().getString(stringValueId);
+    }
+
+    public Nullable<Integer> getTemperature()
+    {
+        return temperature;
     }
 }
