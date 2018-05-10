@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper;
 
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.controller.feature.CameraLifetimeController;
@@ -36,8 +35,6 @@ public class MainActivity extends ModularActivity
     //private DrawerController drawerController;
     private CameraLifetimeController cameraLifetimeController;
     private OrientationUIController orientationUIController;
-
-    private Handler handler;
 
     protected void onCreate(Bundle savedInstanceState)
     {
