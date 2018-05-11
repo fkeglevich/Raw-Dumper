@@ -29,8 +29,9 @@ TODO list:
 
  - (IN PROGRESS) Create YUV picture pipelines
 
- - (IN PROGRESS) Selection of white balance preset and manual white balance
-   - Increase/Decrease progress by clicking the buttons
+ - (IN PROGRESS) Lock exposure and WB during take picture
+
+ - (IN PROGRESS) Screen front flash
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (IN PROGRESS) Orient JPG/YUV pictures
@@ -139,3 +140,5 @@ Done:
  - (DONE!) Better translating of WB PRESETS to AWB raw gains
  - (DONE!) Make the temp curve more exp-like
  - (DONE!) Add CC notice to about-box
+ - (DONE!) Increase/Decrease progress by clicking the buttons
+ - (DONE!) Selection of white balance preset and manual white balance
