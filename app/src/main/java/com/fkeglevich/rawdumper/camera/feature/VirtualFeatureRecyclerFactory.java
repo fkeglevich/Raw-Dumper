@@ -17,7 +17,9 @@
 package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.parameter.CodeclessParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
@@ -61,10 +63,16 @@ public class VirtualFeatureRecyclerFactory extends FeatureRecyclerFactoryBase
     public PictureSizeFeature createPictureSizeFeature()
     {
         PictureSizeFeature result = new PictureSizeFeature(pictureSizeCollection);
-        List<CaptureSize> pictureSizes = new ArrayList<>();
-        pictureSizes.addAll(result.getAvailableValues());
+        List<CaptureSize> pictureSizes = new ArrayList<>(result.getAvailableValues());
         Collections.sort(pictureSizes);
         result.setValue(pictureSizes.get(pictureSizes.size() - 1));
+        registerFeature(result);
+        return result;
+    }
+
+    public WritableFeature<Flash, List<Flash>> createFlashFeature(ParameterCollection cameraParameterCollection, CameraContext cameraContext)
+    {
+        FlashFeature result = new FlashFeature(virtualParameterCollection, cameraParameterCollection, cameraActions, cameraContext);
         registerFeature(result);
         return result;
     }

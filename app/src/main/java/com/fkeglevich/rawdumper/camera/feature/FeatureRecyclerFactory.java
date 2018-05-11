@@ -87,13 +87,6 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
         return result;
     }
 
-    public WritableFeature<Flash, List<Flash>> createFlashFeature()
-    {
-        FlashFeature result = new FlashFeature(parameterCollection);
-        registerFeature(result);
-        return result;
-    }
-
     public PreviewFeature createPreviewFeature()
     {
         PreviewFeature result = new PreviewFeature(parameterCollection);

@@ -24,6 +24,7 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.pipeline.PipelineManager;
 import com.fkeglevich.rawdumper.camera.data.DataFormat;
+import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
@@ -203,5 +204,16 @@ public class LowLevelCameraActions implements CameraActions
     private Camera getCamera()
     {
         return cameraExtension.get().getCameraDevice();
+    }
+
+    @Override
+    public void setFlash(Flash flashValue)
+    {
+        synchronized (lock)
+        {
+            Camera.Parameters parameters = getCamera().getParameters();
+            parameters.setFlashMode(flashValue.getParameterValue());
+            getCamera().setParameters(parameters);
+        }
     }
 }

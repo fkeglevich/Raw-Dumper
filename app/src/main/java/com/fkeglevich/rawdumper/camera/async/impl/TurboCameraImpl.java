@@ -101,7 +101,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         createRestrictions();
         //mode format
         pictureModeFeature.setValue(pictureModeFeature.getAvailableValues().get(0));
-        pictureFormatFeature.setValue(pictureFormatFeature.getAvailableValues().get(1));
+        pictureFormatFeature.setValue(pictureFormatFeature.getAvailableValues().get(0));
 
         ThreadUtil.simpleDelay(150);
     }
@@ -113,7 +113,6 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         shutterSpeedFeature = recyclerFactory.createShutterSpeedFeature();
         ssMeteringFeature   = recyclerFactory.createSSMeteringFeature();
         evFeature           = recyclerFactory.createEVFeature();
-        flashFeature        = recyclerFactory.createFlashFeature();
         previewFeature      = recyclerFactory.createPreviewFeature();
         focusFeature        = recyclerFactory.createFocusFeature();
         manualFocusFeature  = recyclerFactory.createManualFocusFeature();
@@ -126,6 +125,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         pictureModeFeature      = virtualRecyclerFactory.createPictureModeFeature(modeList.getAvailableValues());
         pictureFormatFeature    = virtualRecyclerFactory.createPictureFormatFeature();
         pictureSizeFeature      = virtualRecyclerFactory.createPictureSizeFeature();
+        flashFeature            = virtualRecyclerFactory.createFlashFeature(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext());
     }
 
     private void createRestrictions()

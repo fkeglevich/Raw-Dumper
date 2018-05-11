@@ -48,9 +48,9 @@ public class FlashController extends FeatureController
     private final ButtonDisabledStateController buttonDisabledStateController;
 
     private List<Flash> flashList;
-    private int selectedFlashIndex;
+    private int selectedFlashIndex = 0;
 
-    public FlashController(ImageButton flashButton)
+    FlashController(ImageButton flashButton)
     {
         this.flashFeature = null;
         this.flashButton = flashButton;
@@ -93,12 +93,12 @@ public class FlashController extends FeatureController
         flashIconMap.put(Flash.AUTO, R.drawable.ic_flash_auto_black_24dp);
         flashIconMap.put(Flash.TORCH, R.drawable.ic_highlight_black_24dp);
         flashIconMap.put(Flash.RED_EYE, R.drawable.ic_remove_red_eye_black_24dp);
+        flashIconMap.put(Flash.SCREEN, R.drawable.ic_flash_on_black_24dp);
     }
 
     private List<Flash> createOrderedFlashList()
     {
-        List<Flash> valueList = new ArrayList<>();
-        valueList.addAll(flashFeature.getAvailableValues());
+        List<Flash> valueList = new ArrayList<>(flashFeature.getAvailableValues());
 
         /*  Currently, we are disabling the torch and red-eye flash modes
             The reason for that is a pure cosmetic one, since having too much

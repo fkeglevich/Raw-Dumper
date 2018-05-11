@@ -16,6 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import android.hardware.Camera;
+import android.support.annotation.NonNull;
+
+import com.fkeglevich.rawdumper.camera.action.CameraActions;
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
@@ -23,22 +28,46 @@ import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
 
 import java.util.List;
 
+import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
+
 /**
  * TODO: Add class header
  * <p>
  * Created by Flávio Keglevich on 13/10/17.
  */
 
-public class FlashFeature extends WritableFeature<Flash, List<Flash>>
+public class FlashFeature extends WritableFeature<Flash, List<Flash>> implements VirtualFeature
 {
-    FlashFeature(ParameterCollection parameterCollection)
+    private final CameraActions cameraActions;
+
+    @NonNull
+    private static ListValidator<Flash> createValidator(ParameterCollection parameterCollection, CameraContext cameraContext)
     {
-        super(Parameters.FLASH_MODE, parameterCollection, ListValidator.createFromListParameter(parameterCollection, Parameters.FLASH_MODE_VALUES));
+        List<Flash> flashList = parameterCollection.get(Parameters.FLASH_MODE_VALUES);
+        if (flashList.size() == 1 && cameraContext.getCameraInfo().getFacing() == CAMERA_FACING_FRONT)
+            flashList.add(Flash.SCREEN);
+        return new ListValidator<>(flashList);
+    }
+
+    FlashFeature(ParameterCollection parameterCollection, ParameterCollection cameraParameterCollection, CameraActions cameraActions, CameraContext cameraContext)
+    {
+        super(Parameters.FLASH_MODE, parameterCollection, createValidator(cameraParameterCollection, cameraContext));
+        this.cameraActions = cameraActions;
+        setValue(Flash.OFF);
+        getOnChanged().addListener(eventData -> performUpdate());
     }
 
     @Override
     public boolean isAvailable()
     {
         return getAvailableValues().size() > 1;
+    }
+
+    @Override
+    public void performUpdate()
+    {
+        Flash value = getValue();
+        if (!Flash.SCREEN.equals(value))
+            cameraActions.setFlash(value);
     }
 }
