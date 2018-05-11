@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import com.fkeglevich.rawdumper.camera.async.direct.mutable.MutableParameterCollection;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 import com.fkeglevich.rawdumper.util.Mutable;
@@ -97,6 +98,7 @@ public class PictureSizeLayer extends MutableParameterCollection
             if (rawImageSize.getWidth() == toFix.getWidth() && rawImageSize.getHeight() == toFix.getHeight())
                 return new CaptureSize(rawImageSize.getPaddedWidth(), rawImageSize.getPaddedHeight());
 
+        if (DebugFlag.shouldIgnorePicSizeMismatch()) return toFix;
         throw new IllegalStateException("The current picture size is not a valid raw size!");
     }
 
@@ -106,6 +108,7 @@ public class PictureSizeLayer extends MutableParameterCollection
             if (rawImageSize.getPaddedWidth() == toFix.getWidth() && rawImageSize.getPaddedHeight() == toFix.getHeight())
                 return new CaptureSize(rawImageSize.getWidth(), rawImageSize.getHeight());
 
+        if (DebugFlag.shouldIgnorePicSizeMismatch()) return toFix;
         throw new IllegalStateException("The current raw size is not a valid picture size!");
     }
 }

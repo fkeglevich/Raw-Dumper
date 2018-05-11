@@ -34,6 +34,7 @@ public class DebugFlag
     private static final DebugFlag FORCE_RETRY_PIPELINE     = new DebugFlag(false, false);
     private static final DebugFlag FORCE_RAW_ZENFONE_ZOOM   = new DebugFlag(false, false);
     private static final DebugFlag DISABLE_LOGCAT_SERVICE   = new DebugFlag(false, false);
+    private static final DebugFlag IGNORE_PIC_SIZE_MISMATCH = new DebugFlag(false, false);
 
     private final boolean value;
     private final boolean defaultValue;
@@ -77,5 +78,10 @@ public class DebugFlag
     public static boolean isDisableLogcatService()
     {
         return DISABLE_LOGCAT_SERVICE.get();
+    }
+
+    public static boolean shouldIgnorePicSizeMismatch()
+    {
+        return IGNORE_PIC_SIZE_MISMATCH.get();
     }
 }
