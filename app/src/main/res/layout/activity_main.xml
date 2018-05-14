@@ -14,6 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <View
+        android:id="@+id/screenFlash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:background="#CCFFFFFF"/>
+
     <com.fkeglevich.rawdumper.ui.TouchFocusView
         android:id="@+id/focusView"
         android:layout_width="match_parent"
@@ -90,6 +97,7 @@
         android:clickable="true"
         android:visibility="invisible"
         android:background="#00000000"
+        android:elevation="2dp"
         tools:ignore="KeyboardInaccessibleWidget" />
 
     <include layout="@layout/modes_layout" />
