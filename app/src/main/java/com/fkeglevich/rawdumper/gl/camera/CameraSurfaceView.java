@@ -115,7 +115,6 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
     @Override
     public void clearCamera()
     {
-        previewRenderer.stopRender();
         onPause();
         setVisibility(INVISIBLE);
     }
