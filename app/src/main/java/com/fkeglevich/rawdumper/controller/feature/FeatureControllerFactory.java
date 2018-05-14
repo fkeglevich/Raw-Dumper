@@ -110,7 +110,7 @@ public class FeatureControllerFactory
     FlashController createFlashController(ActivityReference reference)
     {
         ImageButton flashButton = (ImageButton) reference.weaklyGet().findViewById(R.id.flashButton);
-        return new FlashController(flashButton);
+        return new FlashController(flashButton, reference);
     }
 
     TouchFocusMeteringAreaController createTouchFocusController(ActivityReference reference)

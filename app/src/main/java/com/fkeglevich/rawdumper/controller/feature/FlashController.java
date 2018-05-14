@@ -22,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.widget.ImageButton;
 
 import com.fkeglevich.rawdumper.R;
+import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
@@ -42,6 +43,7 @@ import java.util.Map;
 
 public class FlashController extends FeatureController
 {
+    private final ScreenFlashController screenFlashController;
     private WritableFeature<Flash, List<Flash>> flashFeature;
     private final ImageButton flashButton;
     private final Map<Flash, Integer> flashIconMap;
@@ -50,8 +52,9 @@ public class FlashController extends FeatureController
     private List<Flash> flashList;
     private int selectedFlashIndex = 0;
 
-    FlashController(ImageButton flashButton)
+    FlashController(ImageButton flashButton, ActivityReference reference)
     {
+        this.screenFlashController = new ScreenFlashController(reference);
         this.flashFeature = null;
         this.flashButton = flashButton;
         this.flashIconMap = new HashMap<>();
@@ -74,6 +77,14 @@ public class FlashController extends FeatureController
         updateButtonUi();
 
         buttonDisabledStateController.enableAnimated();
+
+        flashFeature.getOnChanged().addListener(eventData ->
+        {
+            if (Flash.SCREEN.equals(eventData.parameterValue))
+                screenFlashController.startScreenFlash();
+            else
+                screenFlashController.stopScreenFlash();
+        });
 
         flashButton.setOnClickListener(v ->
         {
@@ -141,6 +152,7 @@ public class FlashController extends FeatureController
     @Override
     protected void reset()
     {
+        screenFlashController.stopScreenFlash();
         setIconFromFlash(Flash.OFF);
         if (flashFeature != null && flashFeature.isAvailable())
             buttonDisabledStateController.disableAnimated();
