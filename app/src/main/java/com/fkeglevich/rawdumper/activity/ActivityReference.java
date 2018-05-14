@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.activity;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.fkeglevich.rawdumper.controller.permission.PermissionRequest;
 import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
@@ -64,7 +65,7 @@ public class ActivityReference
      * @return      A T view object
      */
     @SuppressWarnings("unchecked")
-    public <T> T findViewById(@IdRes int id)
+    public <T extends View> T findViewById(@IdRes int id)
     {
         return (T) weaklyGet().findViewById(id);
     }
