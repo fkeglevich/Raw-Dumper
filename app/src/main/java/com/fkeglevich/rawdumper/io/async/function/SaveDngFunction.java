@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.io.async.function;
 
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.dng.DngWriter;
 import com.fkeglevich.rawdumper.dng.writer.StripImageWriter;
 import com.fkeglevich.rawdumper.io.async.IOUtil;
@@ -39,6 +40,7 @@ public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Void, Me
     @Override
     protected Void call(CaptureInfo captureInfo) throws MessageException
     {
+        if (DebugFlag.dontSavePictures()) return null;
         if (!captureInfo.isValid()) throw new IllegalArgumentException("Invalid capture info!");
 
         DngWriter writer = DngWriter.open(captureInfo.destinationRawFilename);

@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.io.async.function;
 
 import com.fkeglevich.rawdumper.async.Locked;
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.io.async.IOUtil;
 import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -38,6 +39,7 @@ public class SaveFileFunction extends FileFunction<Locked<byte[]>>
     @Override
     protected Void call(Locked<byte[]> argument) throws MessageException
     {
+        if (DebugFlag.dontSavePictures()) return null;
         synchronized (argument.getLock())
         {
             try
