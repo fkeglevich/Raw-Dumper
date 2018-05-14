@@ -101,7 +101,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         createRestrictions();
         //mode format
         pictureModeFeature.setValue(pictureModeFeature.getAvailableValues().get(0));
-        pictureFormatFeature.setValue(pictureFormatFeature.getAvailableValues().get(0));
+        pictureFormatFeature.setValue(pictureFormatFeature.getAvailableValues().get(1));
 
         ThreadUtil.simpleDelay(150);
     }
