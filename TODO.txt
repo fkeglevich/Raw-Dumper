@@ -29,9 +29,7 @@ TODO list:
 
  - (IN PROGRESS) Create YUV picture pipelines
 
- - (IN PROGRESS) Lock exposure and WB during take picture
-
- - (IN PROGRESS) Screen front flash
+ - Take picture with volume button
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (IN PROGRESS) Orient JPG/YUV pictures
@@ -41,6 +39,10 @@ TODO list:
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
 	- Zenfone 5
+
+ - JPEG Capture:
+    - Needs picture rotation
+    - Needs proper logcat service data to be re-measured
 
 Next features:
  - Selection of picture size
@@ -58,6 +60,7 @@ Known bugs:
     - Some changes were made to address this bug, should test again to see if it still happens
  - (MINOR) The selector interface for ISO/shutter speed/EV is quite buggy sometimes
  - (MINOR) Currently using the manual focus slider crashes the Zenfone Zoom camera
+ - (MINOR) Zen2 front camera breaks exposure at ISO 800 and 1/60 Shutter Speed
  
 Done:
 
@@ -142,3 +145,4 @@ Done:
  - (DONE!) Add CC notice to about-box
  - (DONE!) Increase/Decrease progress by clicking the buttons
  - (DONE!) Selection of white balance preset and manual white balance
+ - (DONE!) Screen front flash
