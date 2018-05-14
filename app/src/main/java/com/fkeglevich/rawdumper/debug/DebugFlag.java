@@ -36,6 +36,12 @@ public class DebugFlag
     private static final DebugFlag DISABLE_LOGCAT_SERVICE   = new DebugFlag(false, false);
     private static final DebugFlag IGNORE_PIC_SIZE_MISMATCH = new DebugFlag(false, false);
     private static final DebugFlag DONT_SAVE_PICTURES       = new DebugFlag(false, false);
+    private static final DebugFlag ENABLE_EMULATOR          = new DebugFlag(false, false);
+
+    private static boolean or(DebugFlag first, DebugFlag second)
+    {
+        return first.get() || second.get();
+    }
 
     private final boolean value;
     private final boolean defaultValue;
@@ -53,7 +59,7 @@ public class DebugFlag
 
     public static boolean isDisableMandatoryRoot()
     {
-        return DISABLE_MANDATORY_ROOT.get();
+        return or(ENABLE_EMULATOR, DISABLE_MANDATORY_ROOT);
     }
 
     public static boolean shouldOpenFrontCameraFirst()
@@ -83,7 +89,7 @@ public class DebugFlag
 
     public static boolean shouldIgnorePicSizeMismatch()
     {
-        return IGNORE_PIC_SIZE_MISMATCH.get();
+        return or(ENABLE_EMULATOR, IGNORE_PIC_SIZE_MISMATCH);
     }
 
     public static boolean dontSavePictures()
