@@ -25,7 +25,7 @@ import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.exception.CameraPatchRequiredException;
 import com.fkeglevich.rawdumper.camera.exception.RawIsUnavailableException;
-import com.fkeglevich.rawdumper.ui.activity.FullscreenManager;
+import com.fkeglevich.rawdumper.controller.activity.FullscreenManager;
 import com.fkeglevich.rawdumper.ui.dialog.FatalErrorDialog;
 import com.fkeglevich.rawdumper.ui.dialog.OkDialog;
 import com.fkeglevich.rawdumper.util.event.EventListener;

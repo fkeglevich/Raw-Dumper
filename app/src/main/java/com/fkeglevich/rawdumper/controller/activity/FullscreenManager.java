@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.ui.activity;
+package com.fkeglevich.rawdumper.controller.activity;
 
 import android.os.Build;
 import android.support.v7.app.ActionBar;
