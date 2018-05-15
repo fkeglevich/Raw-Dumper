@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -37,7 +38,9 @@ public class TouchFocusView extends View
     public static final int FOCUS_METERING         = 0xFFCCCCCC;
     public static final int FOCUS_METERING_SUCCESS = 0xFF33FF33;
     public static final int FOCUS_METERING_FAIL    = 0xFFFF3333;
-    public static final int STROKE_WIDTH_DP = 1;
+    public static final int STROKE_WIDTH_DP        = 1;
+
+    private static final long TIMEOUT_DELAY        = 5000;
 
     /**
      * Simple constructor to use when creating a view from code.
@@ -97,6 +100,8 @@ public class TouchFocusView extends View
     private Paint paint;
     private PreviewArea meteringArea = null;
     private Rect drawingRect = new Rect();
+    private final Handler handler = new Handler();
+    private final Runnable timeoutCallback = () -> setMeteringArea(null, FOCUS_METERING);
 
     private void init()
     {
@@ -111,6 +116,8 @@ public class TouchFocusView extends View
         meteringArea = area;
         paint.setColor(color);
         invalidate();
+        handler.removeCallbacks(timeoutCallback);
+        handler.postDelayed(timeoutCallback, TIMEOUT_DELAY);
     }
 
     @Override
