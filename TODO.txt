@@ -35,8 +35,9 @@ TODO list:
 
  - Save features's values when closing camera
 
- - (IN PROGRESS) Add timeout to focus/exposure indicator
-   - Add Fade animation
+ - (DONE!) Add timeout to focus/exposure indicator
+   - (DONE!) Add Fade animation
+   - (DONE!) Fix minor glitch when reversing the animation
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (IN PROGRESS) Orient JPG/YUV pictures
@@ -68,7 +69,6 @@ Known bugs:
  - (MINOR) The selector interface for ISO/shutter speed/EV is quite buggy sometimes
  - (MINOR) Currently using the manual focus slider crashes the Zenfone Zoom camera
  - (MINOR) Zen2 front camera breaks exposure at ISO 800 and 1/60 Shutter Speed
- - (MINOR) GL Glitch because the Camera Preview only updates when the camera is running
  
 Done:
 
@@ -155,3 +155,4 @@ Done:
  - (DONE!) Selection of white balance preset and manual white balance
  - (DONE!) Screen front flash
  - (DONE!) Take picture with volume button (and headset button)
+ - Fixed GL Glitch because the lack of a proper background drawable
