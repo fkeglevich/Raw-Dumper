@@ -47,7 +47,7 @@ public class ButtonDisabledStateController
         setupAnimation(disableAnimation);
 
         buttonEnabled = initEnabled;
-        if (buttonEnabled)
+        if (isButtonEnabled())
         {
             button.setAlpha(ENABLED_ALPHA);
             button.setClickable(true);
@@ -61,7 +61,7 @@ public class ButtonDisabledStateController
 
     public void enableAnimated()
     {
-        if (!buttonEnabled)
+        if (!isButtonEnabled())
         {
             startAlphaAnimation(enableAnimation);
             button.setClickable(true);
@@ -71,7 +71,7 @@ public class ButtonDisabledStateController
 
     public void disableAnimated()
     {
-        if (buttonEnabled)
+        if (isButtonEnabled())
         {
             startAlphaAnimation(disableAnimation);
             button.setClickable(false);
@@ -104,5 +104,10 @@ public class ButtonDisabledStateController
     {
         button.setAlpha(ENABLED_ALPHA);
         button.startAnimation(enableAnimation);
+    }
+
+    public boolean isButtonEnabled()
+    {
+        return buttonEnabled;
     }
 }
