@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import android.hardware.Camera;
 import android.support.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
