@@ -32,12 +32,14 @@ import java.util.List;
  */
 public class OrientationUIController
 {
+    private static final long ROTATE_DURATION = 1000L;
+
     private final List<View> affectedViews = new ArrayList<>();
     private final Rotate rotate = new Rotate();
 
     public OrientationUIController(ActivityReference reference)
     {
-        rotate.setDuration(500L);
+        rotate.setDuration(ROTATE_DURATION);
 
         affectedViews.add(reference.findViewById(R.id.autoWbBt));
         affectedViews.add(reference.findViewById(R.id.incandescentWbBt));
