@@ -16,6 +16,9 @@
 
 package com.fkeglevich.rawdumper.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -24,8 +27,11 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
+import com.transitionseverywhere.Fade;
+import com.transitionseverywhere.TransitionManager;
 
 /**
  * TODO: Add class header
@@ -102,6 +108,8 @@ public class TouchFocusView extends View
     private Rect drawingRect = new Rect();
     private final Handler handler = new Handler();
     private final Runnable timeoutCallback = () -> setMeteringArea(null, FOCUS_METERING);
+    private final ValueAnimator alphaAnimator = ValueAnimator.ofInt(0, 255);
+    private boolean isReversing = false;
 
     private void init()
     {
@@ -109,13 +117,41 @@ public class TouchFocusView extends View
         paint.setColor(FOCUS_METERING_SUCCESS);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(UiUtil.dpToPixels(STROKE_WIDTH_DP, getContext()));
+        alphaAnimator.setDuration(250);
+        alphaAnimator.addUpdateListener(animation ->
+        {
+            paint.setAlpha((int) animation.getAnimatedValue());
+            invalidate();
+        });
+        alphaAnimator.addListener(new AnimatorListenerAdapter()
+        {
+            @Override
+            public void onAnimationEnd(Animator animation)
+            {
+                if (isReversing)
+                {
+                    isReversing = false;
+                    meteringArea = null;
+                }
+            }
+        });
     }
 
     public void setMeteringArea(PreviewArea area, int color)
     {
-        meteringArea = area;
-        paint.setColor(color);
-        invalidate();
+        if (area != null)
+        {
+            meteringArea = area;
+            paint.setColor(color);
+            alphaAnimator.start();
+        }
+        else
+        {
+            alphaAnimator.reverse();
+            isReversing = true;
+        }
+
+
         handler.removeCallbacks(timeoutCallback);
         handler.postDelayed(timeoutCallback, TIMEOUT_DELAY);
     }
