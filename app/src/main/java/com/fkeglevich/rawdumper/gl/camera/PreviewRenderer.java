@@ -66,7 +66,6 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
     void stopRender()
     {
         rendering = false;
-        clearFrame();
     }
 
     void pauseUpdatingPreview()
@@ -126,6 +125,7 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
     @Override
     public void onDrawFrame(GL10 gl)
     {
+        clearFrame();
         if (rendering)
         {
             stopRender();

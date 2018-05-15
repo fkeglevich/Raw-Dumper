@@ -83,8 +83,8 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
                 requestRender();
             }
         });
-        setVisibility(VISIBLE);
         onResume();
+        setBackground(null);
         previewRenderer.useRevealProgram();
         previewRenderer.startRender();
 
@@ -115,8 +115,8 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
     @Override
     public void clearCamera()
     {
+        setBackgroundColor(0xFF000000);
         onPause();
-        setVisibility(INVISIBLE);
     }
 
     @Override
@@ -168,8 +168,6 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
     public void resumeUpdating()
     {
         previewRenderer.resumeUpdatingPreview();
-        //previewRenderer.startRender();
-        //requestRender();
         takePictureAnimationIsEnding = true;
         takePictureAnimation.start();
     }
