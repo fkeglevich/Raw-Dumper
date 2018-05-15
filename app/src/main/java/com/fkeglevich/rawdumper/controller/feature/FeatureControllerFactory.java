@@ -189,7 +189,7 @@ public class FeatureControllerFactory
         View pictureLayer = reference.weaklyGet().findViewById(R.id.captureLayer);
         View progressBar = reference.weaklyGet().findViewById(R.id.progressBar);
         CameraPreview cameraPreview = (CameraPreview) reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
-        return new TakePictureController(captureButton, pictureLayer, cameraPreview, meteringControllers, progressBar);
+        return new TakePictureController(captureButton, pictureLayer, cameraPreview, meteringControllers, progressBar, reference);
     }
 
     FocusController createFocusController(ActivityReference reference)

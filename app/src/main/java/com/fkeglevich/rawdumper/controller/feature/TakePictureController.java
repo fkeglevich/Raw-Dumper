@@ -18,14 +18,18 @@ package com.fkeglevich.rawdumper.controller.feature;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.StringRes;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.R;
+import com.fkeglevich.rawdumper.activity.ActivityReference;
+import com.fkeglevich.rawdumper.activity.KeyEventData;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
+import com.fkeglevich.rawdumper.util.event.EventListener;
 
 import java.util.List;
 
@@ -44,10 +48,13 @@ public class TakePictureController extends FeatureController
     private final CameraPreview cameraPreview;
     private final List<ValueMeteringController> meteringControllers;
     private final View progressBar;
+    private final ActivityReference reference;
+    private EventListener<KeyEventData> keyListener;
+    private boolean isTakingPicture = false;
 
     @SuppressLint("ShowToast")
     TakePictureController(View captureButton, View pictureLayer, CameraPreview cameraPreview,
-                          List<ValueMeteringController> meteringControllers, View progressBar)
+                          List<ValueMeteringController> meteringControllers, View progressBar, ActivityReference reference)
     {
         this.captureButton = captureButton;
         this.buttonDisabledStateController = new ButtonDisabledStateController(captureButton, false);
@@ -56,35 +63,53 @@ public class TakePictureController extends FeatureController
         this.cameraPreview = cameraPreview;
         this.meteringControllers = meteringControllers;
         this.progressBar = progressBar;
+        this.reference = reference;
     }
 
     @Override
     protected void setup(final TurboCamera camera)
     {
+        isTakingPicture = false;
         buttonDisabledStateController.enableAnimated();
-        captureButton.setOnClickListener(v ->
+        captureButton.setOnClickListener(v -> actualTakePicture(camera));
+        keyListener = eventData ->
         {
-            //play animation
-            disableUi();
-            camera.takePicture(new PictureListener()
+            if (eventData.keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
+                    eventData.keyCode == KeyEvent.KEYCODE_HEADSETHOOK)
             {
-                @Override
-                public void onPictureTaken()
-                {
-                    //Reserved for future versions
-                }
+                eventData.defaultPreventer.preventDefault();
+                actualTakePicture(camera);
+            }
+        };
+        reference.onKeyDown.addListener(keyListener);
+    }
 
-                @Override
-                public void onPictureSaved()
-                {
-                    showToast(R.string.picture_saved);
-                    enableUi();
-                }
-            }, exception ->
+    private void actualTakePicture(TurboCamera camera)
+    {
+        if (isTakingPicture) return;
+        //play animation
+        disableUi();
+        isTakingPicture = true;
+        camera.takePicture(new PictureListener()
+        {
+            @Override
+            public void onPictureTaken()
             {
-                showToast(R.string.error_saving_picture);
+                //Reserved for future versions
+            }
+
+            @Override
+            public void onPictureSaved()
+            {
+                showToast(R.string.picture_saved);
                 enableUi();
-            });
+                isTakingPicture = false;
+            }
+        }, exception ->
+        {
+            showToast(R.string.error_saving_picture);
+            enableUi();
+            isTakingPicture = false;
         });
     }
 
@@ -118,6 +143,7 @@ public class TakePictureController extends FeatureController
     protected void reset()
     {
         disable();
+        reference.onKeyDown.removeListener(keyListener);
     }
 
     @Override
