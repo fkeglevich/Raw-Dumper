@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 
 import com.fkeglevich.rawdumper.controller.permission.PermissionRequest;
 import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
@@ -89,5 +90,27 @@ public abstract class ModularActivity extends AppCompatActivity
     {
         PermissionRequest request = new PermissionRequest(requestCode, permissions, grantResults);
         reference.onRequestPermissionsResult.dispatchEvent(request);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        DefaultPreventer defaultPreventer = new DefaultPreventer();
+        reference.onKeyDown.dispatchEvent(new KeyEventData(event, keyCode, defaultPreventer));
+        if (defaultPreventer.isDefaultPrevented())
+            return true;
+        else
+            return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event)
+    {
+        DefaultPreventer defaultPreventer = new DefaultPreventer();
+        reference.onKeyUp.dispatchEvent(new KeyEventData(event, keyCode, defaultPreventer));
+        if (defaultPreventer.isDefaultPrevented())
+            return true;
+        else
+            return super.onKeyUp(keyCode, event);
     }
 }

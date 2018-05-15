@@ -85,4 +85,7 @@ public class ActivityReference
     public final EventDispatcher<Boolean> onWindowFocusChanged = createDispatcher();
     public final EventDispatcher<DefaultPreventer>  onBackPressed = createDispatcher();
     public final EventDispatcher<PermissionRequest> onRequestPermissionsResult = createDispatcher();
+
+    public final EventDispatcher<KeyEventData> onKeyDown = createDispatcher();
+    public final EventDispatcher<KeyEventData> onKeyUp = createDispatcher();
 }
