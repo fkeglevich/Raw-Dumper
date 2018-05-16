@@ -125,9 +125,9 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
     @Override
     public void onDrawFrame(GL10 gl)
     {
-        clearFrame();
         if (rendering)
         {
+            clearFrame();
             stopRender();
             if (updatingPreview)
                 surfaceTextureManager.updateTexImage();
