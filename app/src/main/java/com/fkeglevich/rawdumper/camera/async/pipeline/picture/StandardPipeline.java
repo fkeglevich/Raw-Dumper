@@ -26,6 +26,7 @@ import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.io.Directories;
 import com.fkeglevich.rawdumper.util.Mutable;
+import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.File;
 import java.util.Calendar;
@@ -55,6 +56,16 @@ abstract class StandardPipeline extends PicturePipelineBase
         saveImage(pipelineData, pictureCallback, exceptionCallback, filename);
         startPreview();
         uiHandler.post(pictureCallback::onPictureTaken);
+    }
+
+    void postOnPictureSaved(PictureListener pictureCallback)
+    {
+        uiHandler.post(pictureCallback::onPictureSaved);
+    }
+
+    void postOnPictureSaved(PictureExceptionListener exceptionCallback, MessageException e)
+    {
+        uiHandler.post(() -> exceptionCallback.onException(e));
     }
 
     abstract void saveImage(PipelineData pipelineData,

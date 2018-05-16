@@ -51,7 +51,7 @@ public class JpegPipeline extends StandardPipeline
                     @Override
                     protected void execute(Void argument)
                     {
-                        pictureCallback.onPictureSaved();
+                        postOnPictureSaved(pictureCallback);
                     }
                 }
                 , new AsyncOperation<MessageException>()
@@ -59,7 +59,7 @@ public class JpegPipeline extends StandardPipeline
                     @Override
                     protected void execute(MessageException argument)
                     {
-                        exceptionCallback.onException(argument);
+                        postOnPictureSaved(exceptionCallback, argument);
                     }
                 });
     }
