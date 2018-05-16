@@ -32,7 +32,7 @@ import java.util.List;
  * Created by Flávio Keglevich on 05/11/17.
  */
 
-class BufferFactory
+public class BufferFactory
 {
     static byte[] createLargestImageCallbackBuffer(Mutable<ICameraExtension> cameraExtension,
                                                    CameraContext cameraContext)
@@ -43,7 +43,18 @@ class BufferFactory
         return new byte[largestBufferSize];
     }
 
+    public static int calculateLargestBitmapBufferSize(Mutable<ICameraExtension> cameraExtension)
+    {
+        return numPixelsOfLargestSize(cameraExtension);
+    }
+
     private static int largestYuvBufferSize(Mutable<ICameraExtension> cameraExtension)
+    {
+        int largestNumPixels = numPixelsOfLargestSize(cameraExtension);
+        return largestNumPixels * 3 / 2;
+    }
+
+    private static int numPixelsOfLargestSize(Mutable<ICameraExtension> cameraExtension)
     {
         Camera camera = cameraExtension.get().getCameraDevice();
         Camera.Parameters parameters = camera.getParameters();
@@ -56,8 +67,7 @@ class BufferFactory
             if (sizeNumPixels > largestNumPixels)
                 largestNumPixels = sizeNumPixels;
         }
-
-        return largestNumPixels * 3 / 2;
+        return largestNumPixels;
     }
 
     private static int largestRawBufferSize(SensorInfo sensorInfo)

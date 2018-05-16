@@ -16,14 +16,27 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.util.Log;
 
+import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.async.pipeline.BufferFactory;
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.RawImageCallbackAccess;
+import com.fkeglevich.rawdumper.io.async.IOThread;
+import com.fkeglevich.rawdumper.raw.capture.YuvCaptureInfo;
 import com.fkeglevich.rawdumper.util.Mutable;
+import com.fkeglevich.rawdumper.util.exception.MessageException;
+
+import jp.co.cyberagent.android.gpuimage.GPUImageNativeLibrary;
+
+import static android.graphics.Bitmap.Config.ARGB_4444;
 
 /**
  * TODO: Add class header
@@ -35,12 +48,18 @@ public class YuvPipeline extends StandardPipeline
 {
     private final FileFormat fileFormat;
     private final byte[] buffer;
+    private final int bitmapBufferSize;
+
+    private int[] bitmapBuffer = null;
+    private Camera.Size pictureSize = null;
 
     public YuvPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, FileFormat fileFormat, byte[] buffer)
     {
         super(cameraExtension, lock, fileFormat);
         this.fileFormat = fileFormat;
         this.buffer = buffer;
+        this.bitmapBufferSize = BufferFactory.calculateLargestBitmapBufferSize(cameraExtension);
+        Log.i(YuvPipeline.class.getSimpleName(), bitmapBufferSize + "");
     }
 
     @Override
@@ -48,11 +67,36 @@ public class YuvPipeline extends StandardPipeline
     {
         super.setupCameraBefore(camera);
         RawImageCallbackAccess.addRawImageCallbackBuffer(camera, buffer);
+        pictureSize = camera.getParameters().getPictureSize();
+        if (bitmapBuffer == null)
+            bitmapBuffer = new int[bitmapBufferSize];
     }
 
     @Override
     void saveImage(PipelineData pipelineData, PictureListener pictureCallback, PictureExceptionListener exceptionCallback, String filename)
     {
-        throw new UnsupportedOperationException();
+        YuvCaptureInfo captureInfo  = new YuvCaptureInfo();
+        captureInfo.yuvBuffer       = pipelineData.rawData;
+        captureInfo.bitmapBuffer    = bitmapBuffer;
+        captureInfo.width           = pictureSize.width;
+        captureInfo.height          = pictureSize.height;
+        captureInfo.fileFormat      = fileFormat;
+        captureInfo.filename        = filename;
+
+        IOThread.getIOAccess().saveYuv(captureInfo, new AsyncOperation<Void>()
+        {
+            @Override
+            protected void execute(Void argument)
+            {
+                postOnPictureSaved(pictureCallback);
+            }
+        }, new AsyncOperation<MessageException>()
+        {
+            @Override
+            protected void execute(MessageException argument)
+            {
+                postOnPictureSaved(exceptionCallback, argument);
+            }
+        });
     }
 }
