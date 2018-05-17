@@ -45,8 +45,8 @@ public class DefaultFormatStrategy extends FormatStrategy
 
         addIfAvailable(jpegStrategy, FileFormat.JPEG, formatList);
         addIfAvailable(rawStrategy, FileFormat.DNG, formatList);
-        addIfAvailable(yuvStrategy, FileFormat.PNG, formatList);
-        addIfAvailable(yuvStrategy, FileFormat.WEBP, formatList);
+        //addIfAvailable(yuvStrategy, FileFormat.PNG, formatList);
+        //addIfAvailable(yuvStrategy, FileFormat.WEBP, formatList);
 
         return Collections.unmodifiableList(formatList);
     }
