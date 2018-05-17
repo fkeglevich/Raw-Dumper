@@ -15,10 +15,11 @@ TODO list:
    - Be careful of non 4:3 proportions's consequences
 
  - (IN PROGRESS) Auto rotate UI elements
-   - Needs to keep track of the old 90 degree value for a smoother transition
-   - Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
+   - (FUTURE RELEASE) Needs to keep track of the old 90 degree value for a smoother transition
+   - (FUTURE RELEASE) Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
+   - Create proper ISO/SS choosers
 
- - (IN PROGRESS) Handle different types of makernotes
+ - (FUTURE RELEASE) Handle different types of makernotes
 
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
    - Create function tint-temperature function for Zen2 rear camera
@@ -27,24 +28,13 @@ TODO list:
 
  - (IN PROGRESS) Optimize logcat reading, right now the GC is crying
 
- - (IN PROGRESS) Create YUV picture pipelines
-
- - Create proper ISO/SS choosers
-   - That rotate!
-
  - Save features's values when closing camera
-
- - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
-   - (IN PROGRESS) Orient JPG/YUV pictures
-
- - (PRIORITY) End UI rotation feature
 
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
 	- Zenfone 5
 
  - JPEG Capture:
-    - Needs picture rotation
     - Needs proper logcat service data to be re-measured
 
 Next features:
@@ -64,6 +54,12 @@ Known bugs:
  - (MINOR) The selector interface for ISO/shutter speed/EV is quite buggy sometimes
  - (MINOR) Currently using the manual focus slider crashes Zenfone Zoom camera
  - (MINOR) Zen2 front camera breaks exposure at ISO 800 and 1/60 Shutter Speed
+ - (MINOR) YUV pictures aren't affected by rotation.
+    I am not really sure if I'm going to properly implement YUV capture because the it takes at least 8 seconds
+    to save a 13 mpix lossless WEBP picture when the logcat service is disabled.
+    Lossy webpy is also too slow and the memory requirements are also too high.
+    PNG capture is event slower.
+    I probably won't enable YUV capture due to performance problems.
  
 Done:
 
@@ -152,3 +148,6 @@ Done:
  - (DONE!) Take picture with volume button (and headset button)
  - (DONE!) Add timeout to focus/exposure indicator
  - Fixed GL Glitch because the lack of a proper background drawable
+ - (DONE!) Create YUV picture pipelines
+ - (DONE!) Jpeg picture rotation
+ - Disabled YUV capture due to performance problems
