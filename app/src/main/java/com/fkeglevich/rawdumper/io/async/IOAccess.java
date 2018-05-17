@@ -22,7 +22,9 @@ import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.io.async.function.LoadDeviceInfoFunction;
 import com.fkeglevich.rawdumper.io.async.function.SaveDngFunction;
 import com.fkeglevich.rawdumper.io.async.function.SaveFileFunction;
+import com.fkeglevich.rawdumper.io.async.function.SaveYuvFunction;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
+import com.fkeglevich.rawdumper.raw.capture.YuvCaptureInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
@@ -55,8 +57,13 @@ public class IOAccess
         functionContext.call(new SaveDngFunction(), captureInfo, callback, exception);
     }
 
+    public void saveYuv(YuvCaptureInfo captureInfo, AsyncOperation<Void> callback, AsyncOperation<MessageException> exception)
+    {
+        functionContext.call(new SaveYuvFunction(), captureInfo, callback, exception);
+    }
+
     public void saveStringAsync(String data, String filePath, AsyncOperation<Void> callback, AsyncOperation<MessageException> exception)
     {
-        saveFileAsync(new Locked<byte[]>(data.getBytes()), filePath, callback, exception);
+        saveFileAsync(new Locked<>(data.getBytes()), filePath, callback, exception);
     }
 }
