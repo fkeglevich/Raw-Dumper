@@ -52,9 +52,9 @@ public class StandardPipelineManager implements PipelineManager
     {
         byte[] buffer = BufferFactory.createLargestImageCallbackBuffer(cameraExtension, cameraContext);
 
-        PicturePipeline jpegPipeline    = new JpegPipeline(cameraExtension, lock);
-        PicturePipeline pngPipeline     = new YuvPipeline (cameraExtension, lock, FileFormat.PNG, buffer);
-        PicturePipeline webpPipeline    = new YuvPipeline (cameraExtension, lock, FileFormat.WEBP, buffer);
+        PicturePipeline jpegPipeline    = new JpegPipeline(cameraExtension, lock, cameraContext);
+        PicturePipeline pngPipeline     = new YuvPipeline (cameraExtension, lock, cameraContext, FileFormat.PNG, buffer);
+        PicturePipeline webpPipeline    = new YuvPipeline (cameraExtension, lock, cameraContext, FileFormat.WEBP, buffer);
         PicturePipeline dngPipeline     = new RawPipeline (cameraExtension, lock, cameraContext, buffer, restartableCamera);
 
         pipelineMap.put(FileFormat.JPEG, jpegPipeline);

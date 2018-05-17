@@ -24,6 +24,7 @@ import android.util.Log;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.pipeline.BufferFactory;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
@@ -53,9 +54,9 @@ public class YuvPipeline extends StandardPipeline
     private int[] bitmapBuffer = null;
     private Camera.Size pictureSize = null;
 
-    public YuvPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, FileFormat fileFormat, byte[] buffer)
+    public YuvPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, FileFormat fileFormat, byte[] buffer)
     {
-        super(cameraExtension, lock, fileFormat);
+        super(cameraExtension, lock, cameraContext, fileFormat);
         this.fileFormat = fileFormat;
         this.buffer = buffer;
         this.bitmapBufferSize = BufferFactory.calculateLargestBitmapBufferSize(cameraExtension);

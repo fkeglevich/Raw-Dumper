@@ -16,14 +16,17 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
+import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
 
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.pipeline.filename.FilenameBuilder;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
+import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.io.Directories;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -40,11 +43,13 @@ import java.util.Calendar;
 abstract class StandardPipeline extends PicturePipelineBase
 {
     private final Handler uiHandler;
+    private final CameraContext cameraContext;
     private final FilenameBuilder filenameBuilder;
 
-    StandardPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, FileFormat fileFormat)
+    StandardPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, FileFormat fileFormat)
     {
         super(cameraExtension, lock);
+        this.cameraContext      = cameraContext;
         this.filenameBuilder    = new FilenameBuilder().isPicture().useFileFormat(fileFormat);
         this.uiHandler          = new Handler(Looper.getMainLooper());
     }
@@ -56,6 +61,15 @@ abstract class StandardPipeline extends PicturePipelineBase
         saveImage(pipelineData, pictureCallback, exceptionCallback, filename);
         startPreview();
         uiHandler.post(pictureCallback::onPictureTaken);
+    }
+
+    @Override
+    protected void setupCameraBefore(Camera camera)
+    {
+        super.setupCameraBefore(camera);
+        Camera.Parameters parameters = camera.getParameters();
+        parameters.setRotation(OrientationManager.getInstance().getCameraRotation(cameraContext));
+        camera.setParameters(parameters);
     }
 
     void postOnPictureSaved(PictureListener pictureCallback)
