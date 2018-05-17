@@ -34,9 +34,6 @@ TODO list:
 	- Razr I
 	- Zenfone 5
 
- - JPEG Capture:
-    - Needs proper logcat service data to be re-measured
-
 Next features:
  - Selection of picture size
  - Night Mode with raw pictures
