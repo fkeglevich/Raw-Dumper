@@ -30,14 +30,9 @@ TODO list:
  - (IN PROGRESS) Create YUV picture pipelines
 
  - Create proper ISO/SS choosers
-
- - Add toast-like text when changing controls's values
+   - That rotate!
 
  - Save features's values when closing camera
-
- - (DONE!) Add timeout to focus/exposure indicator
-   - (DONE!) Add Fade animation
-   - (DONE!) Fix minor glitch when reversing the animation
 
  - (ALMOST DONE) Autorotate the pictures taken using the phone orientation
    - (IN PROGRESS) Orient JPG/YUV pictures
@@ -67,7 +62,7 @@ Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
     - Some changes were made to address this bug, should test again to see if it still happens
  - (MINOR) The selector interface for ISO/shutter speed/EV is quite buggy sometimes
- - (MINOR) Currently using the manual focus slider crashes the Zenfone Zoom camera
+ - (MINOR) Currently using the manual focus slider crashes Zenfone Zoom camera
  - (MINOR) Zen2 front camera breaks exposure at ISO 800 and 1/60 Shutter Speed
  
 Done:
@@ -155,4 +150,5 @@ Done:
  - (DONE!) Selection of white balance preset and manual white balance
  - (DONE!) Screen front flash
  - (DONE!) Take picture with volume button (and headset button)
+ - (DONE!) Add timeout to focus/exposure indicator
  - Fixed GL Glitch because the lack of a proper background drawable
