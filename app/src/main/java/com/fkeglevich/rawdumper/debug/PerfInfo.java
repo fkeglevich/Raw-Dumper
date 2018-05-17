@@ -89,6 +89,11 @@ public class PerfInfo
     {
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
         {
+            if (!tickingMap.containsKey(tag))
+            {
+                Log.i(TAG, "Error: " + tag + " doesn't exist!");
+                return;
+            }
             double milliseconds = ((System.nanoTime() - tickingMap.get(tag)) / NANO_TIME_TO_MILLISECONDS);
             String extraData = data == null ? "" : "(" + data + ")";
             try
