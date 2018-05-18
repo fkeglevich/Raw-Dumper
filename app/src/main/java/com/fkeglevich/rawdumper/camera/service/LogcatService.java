@@ -78,17 +78,16 @@ public class LogcatService
 
     private void requestShells()
     {
-        handler.post(() ->
+        ShellFactory factory = ShellFactory.getInstance();
+        logcatShellId    = factory.requestShell(createLogcatShellBuilder());
+        cameraHalShellId = factory.requestShell(createCameraHalShellBuilder());
+        factory.onSuccess.addListener(eventData ->
         {
-            ShellFactory factory = ShellFactory.getInstance();
-            logcatShellId    = factory.requestShell(createLogcatShellBuilder());
-            cameraHalShellId = factory.requestShell(createCameraHalShellBuilder());
-            factory.onSuccess.addListener(eventData ->
+            handler.post(() ->
             {
                 cameraHalShell = factory.getShell(cameraHalShellId);
                 logcatShell = factory.getShell(logcatShellId);
                 CommandHelper.addLogcatCommand(logcatShell, localMatchArray);
-
                 state.set(State.PAUSED);
             });
         });
