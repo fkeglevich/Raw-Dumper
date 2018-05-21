@@ -37,7 +37,7 @@ public class PictureModeFeature extends WritableFeature<Mode, List<Mode>> implem
     PictureModeFeature(ParameterCollection parameterCollection, CameraActions cameraActions, List<Mode> valueList)
     {
         super(VirtualParameters.PICTURE_MODE, parameterCollection, new ListValidator<>(valueList), true);
-        this.cameraActions = cameraActions;;
+        this.cameraActions = cameraActions;
     }
 
     @Override
