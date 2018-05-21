@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
+import android.support.annotation.Nullable;
+
 import junit.framework.Assert;
 
 /**
@@ -73,6 +75,28 @@ public class BayerGainMap
         blue.multiplyByScalar(value);
         greenRed.multiplyByScalar(value);
         greenBlue.multiplyByScalar(value);
+    }
+
+    @Nullable
+    public GainMap getMapFromToken(String token)
+    {
+        switch (token)
+        {
+            case "R": return red;
+            case "B": return blue;
+            case "Gr": return greenRed;
+            case "Gb": return greenBlue;
+            default: return null;
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "[red: " + red.toString() +
+                "\nblue: " + blue.toString() +
+                "\ngreenRed: " + greenRed.toString() +
+                "\ngreenBlue: " + greenBlue.toString() + "]";
     }
 
     private void isValid()
