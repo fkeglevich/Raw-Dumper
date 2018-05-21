@@ -36,28 +36,27 @@ public class GainMap
         this.values = new float[numRows][numColumns];
     }
 
-    public GainMap add(GainMap b)
+    public void add(GainMap b)
     {
         Assert.assertEquals(numColumns, b.numColumns);
         Assert.assertEquals(numRows,    b.numRows);
 
-        GainMap result = new GainMap(numColumns, numRows);
-
         for (int row = 0; row < numRows; row++)
             for (int col = 0; col < numColumns; col++)
-                result.values[row][col] = values[row][col] + b.values[row][col];
-
-        return result;
+                values[row][col] += b.values[row][col];
     }
 
-    public GainMap divideByScalar(float value)
+    public void divideByScalar(float value)
     {
-        GainMap result = new GainMap(numColumns, numRows);
-
         for (int row = 0; row < numRows; row++)
             for (int col = 0; col < numColumns; col++)
-                result.values[row][col] = values[row][col] / value;
+                values[row][col] /= value;
+    }
 
-        return result;
+    public void multiplyByScalar(float value)
+    {
+        for (int row = 0; row < numRows; row++)
+            for (int col = 0; col < numColumns; col++)
+                values[row][col] *= value;
     }
 }

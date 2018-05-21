@@ -42,35 +42,37 @@ public class BayerGainMap
         this.greenBlue = new GainMap(numColumns, numRows);
     }
 
-    public BayerGainMap add(BayerGainMap b)
+    public void add(BayerGainMap b)
     {
         isValid();
         b.isValid();
         Assert.assertEquals(numColumns, b.numColumns);
         Assert.assertEquals(numRows,    b.numRows);
 
-        BayerGainMap result = new BayerGainMap(numColumns, numRows);
-
-        result.red       = red.add(b.red);
-        result.blue      = blue.add(b.blue);
-        result.greenRed  = greenRed.add(b.greenRed);
-        result.greenBlue = greenBlue.add(b.greenBlue);
-
-        return result;
+        red.add(b.red);
+        blue.add(b.blue);
+        greenRed.add(b.greenRed);
+        greenBlue.add(b.greenBlue);
     }
 
-    public BayerGainMap divideByScalar(float value)
+    public void divideByScalar(float value)
     {
         isValid();
 
-        BayerGainMap result = new BayerGainMap(numColumns, numRows);
+        red.divideByScalar(value);
+        blue.divideByScalar(value);
+        greenRed.divideByScalar(value);
+        greenBlue.divideByScalar(value);
+    }
 
-        result.red       = red.divideByScalar(value);
-        result.blue      = blue.divideByScalar(value);
-        result.greenRed  = greenRed.divideByScalar(value);
-        result.greenBlue = greenBlue.divideByScalar(value);
+    public void multiplyByScalar(float value)
+    {
+        isValid();
 
-        return result;
+        red.multiplyByScalar(value);
+        blue.multiplyByScalar(value);
+        greenRed.multiplyByScalar(value);
+        greenBlue.multiplyByScalar(value);
     }
 
     private void isValid()
