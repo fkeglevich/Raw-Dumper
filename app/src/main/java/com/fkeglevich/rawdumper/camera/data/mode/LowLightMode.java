@@ -33,7 +33,7 @@ public class LowLightMode extends Mode
 {
     LowLightMode(ExtraCameraInfo cameraInfo)
     {
-        super("LL", true, getFormatStrategy(cameraInfo));
+        super("LL", true, getFormatStrategy(cameraInfo), ModeType.LOW_LIGHT);
     }
 
     @NonNull
