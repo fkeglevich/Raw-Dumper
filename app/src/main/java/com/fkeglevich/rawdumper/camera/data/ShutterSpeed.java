@@ -81,7 +81,13 @@ public class ShutterSpeed implements Displayable
         if (getExposureInSeconds() > 0.9999)
             return getExposureInSeconds() + "s";
         else
-            return "1/" + Math.round(1.0 / getExposureInSeconds());
+        {
+            long roundedValue = Math.round(1.0 / getExposureInSeconds());
+            if (roundedValue >= 10000)
+                return "1/" + (roundedValue / 1000) + "⁴";
+            else
+                return "1/" + roundedValue;
+        }
     }
 
     @Override
