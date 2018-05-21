@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.controller.adapter;
 
+import android.os.Handler;
+
 import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.controller.feature.DisplayableFeatureUi;
 import com.fkeglevich.rawdumper.ui.listener.ItemSelectedListener;
@@ -31,11 +33,48 @@ import java.util.List;
 
 public class WheelViewAdapter implements DisplayableFeatureUi
 {
+    private static final int DELAY_MILLIS = 100;
+
     private final WheelView wheelView;
+    private final Handler handler;
+    private final Runnable timedRunnable = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (dirty && lastPosition != -1 && listener != null)
+            {
+                listener.onSelected(lastPosition);
+                dirty = false;
+            }
+            handler.postDelayed(this, DELAY_MILLIS);
+        }
+    };
+
+    private int lastPosition = -1;
+    private boolean dirty = false;
+    private ItemSelectedListener listener = null;
 
     public WheelViewAdapter(WheelView wheelView)
     {
         this.wheelView = wheelView;
+        this.wheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener()
+        {
+            @Override
+            public void onWheelItemChanged(WheelView wheelView, int position)
+            {
+                if (lastPosition != position)
+                {
+                    lastPosition = position;
+                    dirty = true;
+                }
+            }
+
+            @Override
+            public void onWheelItemSelected(WheelView wheelView, int position)
+            {   }
+        });
+        handler = new Handler();
     }
 
     @Override
@@ -59,18 +98,8 @@ public class WheelViewAdapter implements DisplayableFeatureUi
     @Override
     public void setListener(final ItemSelectedListener listener)
     {
-        wheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener()
-        {
-            @Override
-            public void onWheelItemChanged(WheelView wheelView, int position)
-            {   }
-
-            @Override
-            public void onWheelItemSelected(WheelView wheelView, int position)
-            {
-                listener.onSelected(position);
-            }
-        });
+        this.listener = listener;
+        handler.post(timedRunnable);
     }
 
     @Override
