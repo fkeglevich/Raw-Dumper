@@ -35,8 +35,6 @@ import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 
 public class OrientationManager
 {
-    private static final int ANGLE_MARGIN = 5;
-
     private static final OrientationManager instance = new OrientationManager();
 
     public static OrientationManager getInstance()
@@ -47,7 +45,7 @@ public class OrientationManager
     private OrientationEventListener orientationListener = null;
     private volatile int lastDegrees = OrientationEventListener.ORIENTATION_UNKNOWN;
 
-    public final EventDispatcher<Integer> on90DegreesChanged = new SimpleDispatcher<>();
+    public final EventDispatcher<Integer> onOrientationChanged = new SimpleDispatcher<>();
 
     void setup(Context context)
     {
@@ -57,12 +55,7 @@ public class OrientationManager
             @Override
             public void onOrientationChanged(int orientation)
             {
-                int orientation90Degrees = to90Degrees(orientation);
-                if (to90Degrees(lastDegrees) != orientation90Degrees)
-                {
-                    on90DegreesChanged.dispatchEvent(orientation90Degrees);
-                }
-
+                onOrientationChanged.dispatchEvent(orientation);
                 lastDegrees = orientation;
             }
         };
@@ -111,23 +104,6 @@ public class OrientationManager
             return flipHorizontally ? ImageOrientation.LEFTTOP : ImageOrientation.RIGHTTOP;
         else
             return flipHorizontally ? ImageOrientation.BOTLEFT : ImageOrientation.BOTRIGHT;
-    }
-
-    private int to90Degrees(int degrees)
-    {
-        if (degrees >= 45 && degrees < 135) return -90;
-        if (degrees >= 135 && degrees < 225) return 180;
-        if (degrees >= 225 && degrees < 315) return 90;
-        else return 0;
-    }
-
-    private boolean hasProblematicAngle(int degrees)
-    {
-        if (Math.abs(degrees - 45)  < ANGLE_MARGIN) return true;
-        if (Math.abs(degrees - 135) < ANGLE_MARGIN) return true;
-        if (Math.abs(degrees - 225) < ANGLE_MARGIN) return true;
-        if (Math.abs(degrees - 315) < ANGLE_MARGIN) return true;
-        return false;
     }
 
     public int getCameraRotation(CameraContext cameraContext)
