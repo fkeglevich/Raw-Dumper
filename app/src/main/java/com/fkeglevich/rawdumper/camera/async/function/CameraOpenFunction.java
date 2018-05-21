@@ -61,6 +61,7 @@ public class CameraOpenFunction extends ThrowingAsyncFunction<CameraContext, Tur
         }
         catch (IOException | RuntimeException e)
         {
+            e.printStackTrace();
             Log.e(TAG, "Exception (" + e.getClass().getSimpleName() + "): " + e.getMessage());
             throw new CameraOpenException();
         }
