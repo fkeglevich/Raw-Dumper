@@ -59,4 +59,19 @@ public class GainMap
             for (int col = 0; col < numColumns; col++)
                 values[row][col] *= value;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder("[numRows = " + numRows + "\nnumColumns:" + numColumns);
+        result.append("\n");
+        for (int row = 0; row < numRows; row++)
+        {
+            for (int col = 0; col < numColumns; col++)
+                result.append(String.format(java.util.Locale.US,"%.2f", values[row][col])).append(" ");
+            if (row != (numRows - 1)) result.append("\n");
+        }
+        result.append("]");
+        return result.toString();
+    }
 }
