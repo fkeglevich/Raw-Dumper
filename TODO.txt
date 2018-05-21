@@ -17,7 +17,7 @@ TODO list:
  - (IN PROGRESS) Auto rotate UI elements
    - (FUTURE RELEASE) Needs to keep track of the old 90 degree value for a smoother transition
    - (FUTURE RELEASE) Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
-   - Create proper ISO/SS choosers
+   - (FUTURE RELEASE) Create rotating ISO/SS choosers
 
  - (FUTURE RELEASE) Handle different types of makernotes
 
@@ -48,9 +48,9 @@ Next features:
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
     - Some changes were made to address this bug, should test again to see if it still happens
- - (MINOR) The selector interface for ISO/shutter speed/EV is quite buggy sometimes
  - (MINOR) Currently using the manual focus slider crashes Zenfone Zoom camera
  - (MINOR) Zen2 front camera breaks exposure at ISO 800 and 1/60 Shutter Speed
+ - (MINOR) The focus button sometimes appears enabled when it shouldn't
  - (MINOR) YUV pictures aren't affected by rotation.
     I am not really sure if I'm going to properly implement YUV capture because the it takes at least 8 seconds
     to save a 13 mpix lossless WEBP picture when the logcat service is disabled.
@@ -148,3 +148,5 @@ Done:
  - (DONE!) Create YUV picture pipelines
  - (DONE!) Jpeg picture rotation
  - Disabled YUV capture due to performance problems
+ - Added compatibility to a new patched lib
+ - Fixed: the selector interface for ISO/shutter speed/EV is quite buggy sometimes
