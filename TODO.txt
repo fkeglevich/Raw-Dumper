@@ -14,10 +14,7 @@ TODO list:
  - (IN PROGRESS) Create code for mean-gain-map stacking
    - Be careful of non 4:3 proportions's consequences
 
- - (IN PROGRESS) Auto rotate UI elements
-   - (FUTURE RELEASE) Needs to keep track of the old 90 degree value for a smoother transition
-   - (FUTURE RELEASE) Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
-   - (FUTURE RELEASE) Create rotating ISO/SS choosers
+ - (FUTURE RELEASE) Auto rotate the ISO/SS choosers
 
  - (FUTURE RELEASE) Handle different types of makernotes
 
@@ -150,3 +147,5 @@ Done:
  - Disabled YUV capture due to performance problems
  - Added compatibility to a new patched lib
  - Fixed: the selector interface for ISO/shutter speed/EV is quite buggy sometimes
+ - (DONE!) Needs to keep track of the old 90 degree value for a smoother transition
+ - (DONE!) Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
