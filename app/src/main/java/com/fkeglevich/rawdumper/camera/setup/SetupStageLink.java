@@ -23,7 +23,7 @@ import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
-import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
+import com.fkeglevich.rawdumper.controller.permission.MandatoryRootManager;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
@@ -41,7 +41,7 @@ interface SetupStageLink
 
     CameraPreview getSurfaceTextureSource();
     ActivityReference getActivity();
-    MandatoryPermissionManager getPermissionManager();
+    MandatoryRootManager getPermissionManager();
     CameraSelector getCameraSelector();
 
     CameraContext buildCameraContext();
@@ -53,5 +53,6 @@ interface SetupStageLink
 
     void setShellRequestToken();
     void setPermissionToken();
+    void setRootToken();
     void setWorkaroundToken();
 }

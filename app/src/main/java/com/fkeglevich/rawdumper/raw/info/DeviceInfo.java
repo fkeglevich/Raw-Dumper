@@ -38,6 +38,7 @@ public class DeviceInfo
     private int alignWidth;
 
     private transient String deviceFileName;
+    private transient boolean needHalDebugCommandFlag = true;
 
     private DeviceInfo()
     {   }
@@ -78,5 +79,15 @@ public class DeviceInfo
                 return true;
 
         return false;
+    }
+
+    public void disableDebugCmd()
+    {
+        needHalDebugCommandFlag = false;
+    }
+
+    public boolean needsHalDebugCommandFlag()
+    {
+        return needHalDebugCommandFlag;
     }
 }

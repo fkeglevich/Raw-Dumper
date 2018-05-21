@@ -39,7 +39,7 @@ import java.util.List;
 
 public class MandatoryPermissionManager
 {
-    private static <T> SimpleDispatcher<T> createDispatcher()
+    static <T> SimpleDispatcher<T> createDispatcher()
     {
         return new HandlerDispatcher<>(Looper.getMainLooper());
     }

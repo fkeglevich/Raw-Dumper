@@ -46,13 +46,15 @@ public class LogcatService
     private Shell.Interactive cameraHalShell;
 
     private final LogcatMatch[] localMatchArray;
+    private final boolean needHalDebugCommandFlag;
     private final Handler handler;
 
     private final AtomicReference<State> state = new AtomicReference<>(State.IDLE);
 
-    LogcatService(@NonNull LogcatMatch[] matchArray)
+    LogcatService(@NonNull LogcatMatch[] matchArray, boolean needHalDebugCommand)
     {
         localMatchArray = matchArray;
+        needHalDebugCommandFlag = needHalDebugCommand;
         HandlerThread thread = new HandlerThread(THREAD_NAME);
         thread.start();
         handler = new Handler(thread.getLooper());
@@ -61,13 +63,13 @@ public class LogcatService
 
     public synchronized void exitHalDebug()
     {
-        if (state.compareAndSet(State.RUNNING, State.PAUSED))
+        if (needHalDebugCommandFlag && state.compareAndSet(State.RUNNING, State.PAUSED))
             CommandHelper.addExitHalDebugCommand(cameraHalShell);
     }
 
     public synchronized void enterHalDebug()
     {
-        if (state.compareAndSet(State.PAUSED, State.RUNNING))
+        if (needHalDebugCommandFlag && state.compareAndSet(State.PAUSED, State.RUNNING))
             CommandHelper.addEnterHalDebugCommand(cameraHalShell);
     }
 
@@ -80,12 +82,14 @@ public class LogcatService
     {
         ShellFactory factory = ShellFactory.getInstance();
         logcatShellId    = factory.requestShell(createLogcatShellBuilder());
-        cameraHalShellId = factory.requestShell(createCameraHalShellBuilder());
+        if (needHalDebugCommandFlag)
+            cameraHalShellId = factory.requestShell(createCameraHalShellBuilder());
         factory.onSuccess.addListener(eventData ->
         {
             handler.post(() ->
             {
-                cameraHalShell = factory.getShell(cameraHalShellId);
+                if (needHalDebugCommandFlag)
+                    cameraHalShell = factory.getShell(cameraHalShellId);
                 logcatShell = factory.getShell(logcatShellId);
                 CommandHelper.addLogcatCommand(logcatShell, localMatchArray);
                 state.set(State.PAUSED);

@@ -38,12 +38,23 @@ import java.util.List;
 
 class Zen2LLWorkaround implements DeviceWorkaround
 {
+    private enum LibPatch
+    {
+        NONE(""),
+        V1("601cffed1dd2c6129587fc7a21f0b4c4"),
+        V2("de8e7213d408170cb606c026e06200d4");
+
+        public final String md5;
+
+        LibPatch (String md5)
+        {
+            this.md5 = md5;
+        }
+    }
+
     private static final String TAG = "Zen2LLWorkaround";
-
     private static final File M10MO_SO_FILE = new File("/system/lib/hw/m10mo/camera.m10mo.so");
-
     private static final String CAMERA_LIB_PATH  = "/system/lib/hw/camera.vendor.mofd_v1.so";
-    private static final String CAMERA_PATCH_MD5 = "601cffed1dd2c6129587fc7a21f0b4c4";
 
     @Override
     public void applyWorkaroundIfNeeded(DeviceInfo deviceInfo)
@@ -54,7 +65,12 @@ class Zen2LLWorkaround implements DeviceWorkaround
 
     private void apply(DeviceInfo deviceInfo)
     {
-        boolean isLibNotPatched = !isCameraLibPatched();
+        LibPatch libPatch = getCameraLibPatch();
+        Log.i(Zen2LLWorkaround.class.getSimpleName(), libPatch.name());
+        if (libPatch.equals(LibPatch.V2))
+            deviceInfo.disableDebugCmd();
+
+        boolean isLibNotPatched = LibPatch.NONE.equals(libPatch);
 
         ExposureInfo exposureInfo;
         ExtraCameraInfo[] extraCameraInfos = deviceInfo.getCameras();
@@ -64,6 +80,8 @@ class Zen2LLWorkaround implements DeviceWorkaround
             exposureInfo = cameraInfo.getExposure();
             removeLongExposureValues(exposureInfo.getShutterSpeedValues());
             disableRawIfNeeded(cameraInfo, isLibNotPatched);
+            if (libPatch.equals(LibPatch.V2))
+                cameraInfo.removeUnessentialLogcatServices();
         }
     }
 
@@ -88,14 +106,18 @@ class Zen2LLWorkaround implements DeviceWorkaround
         }
     }
 
-    private boolean isCameraLibPatched()
+    private LibPatch getCameraLibPatch()
     {
         FileInputStream fi = null;
         try
         {
             fi = new FileInputStream(CAMERA_LIB_PATH);
             String base16 = MD5.calculateAsBase16(fi);
-            return CAMERA_PATCH_MD5.equals(base16);
+
+            for (LibPatch libPatch : LibPatch.values())
+                if (libPatch.md5.equals(base16))
+                    return libPatch;
+
         }
         catch (FileNotFoundException e)
         {
@@ -119,6 +141,6 @@ class Zen2LLWorkaround implements DeviceWorkaround
                 }
             }
         }
-        return false;
+        return LibPatch.NONE;
     }
 }

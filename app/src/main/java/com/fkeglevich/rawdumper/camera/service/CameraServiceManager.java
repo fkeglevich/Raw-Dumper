@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
+import android.util.Log;
+
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.service.available.CoarseIntegrationTimeMeteringService;
 import com.fkeglevich.rawdumper.camera.service.available.SensorGainMeteringService;
@@ -44,9 +46,10 @@ public class CameraServiceManager
     private CameraServiceManager()
     {   }
 
-    public synchronized void prepare()
+    public synchronized void prepare(boolean needHalDebugCommandFlag)
     {
-        if (logcatService == null) logcatService = new LogcatService(createMatchArray());
+        Log.i(CameraServiceManager.class.getSimpleName(), "needHalDebugCommandFlag: " + needHalDebugCommandFlag);
+        if (logcatService == null) logcatService = new LogcatService(createMatchArray(), needHalDebugCommandFlag);
     }
 
     public synchronized void enableFeatures(CameraContext cameraContext)

@@ -22,9 +22,11 @@ import android.support.annotation.Keep;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
+import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -174,5 +176,16 @@ public class ExtraCameraInfo
     void fixId(int newId)
     {
         this.id = newId;
+    }
+
+    public void removeUnessentialLogcatServices()
+    {
+        List<String> serviceList = new ArrayList<>();
+        for (String serviceName : logcatServices)
+        {
+            if (serviceName.equals(WhiteBalanceService.class.getSimpleName()))
+                serviceList.add(serviceName);
+        }
+        logcatServices = serviceList.toArray(new String[0]);
     }
 }
