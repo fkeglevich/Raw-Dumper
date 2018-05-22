@@ -45,13 +45,20 @@ public class SaveYuvFunction extends ThrowingAsyncFunction<YuvCaptureInfo, Void,
         if (DebugFlag.dontSavePictures()) return null;
         if (!captureInfo.isValid()) throw new IllegalArgumentException("Invalid yuv capture info!");
 
+        PerfInfo.start("SaveYuvFunction Total");
+        PerfInfo.start("switchUVPlanes");
         YuvUtil.switchUVPlanes(captureInfo.yuvBuffer, captureInfo.width, captureInfo.height);
+        PerfInfo.end("switchUVPlanes");
+        PerfInfo.start("YUVtoARBG");
         GPUImageNativeLibrary.YUVtoARBG(captureInfo.yuvBuffer, captureInfo.width, captureInfo.height, captureInfo.bitmapBuffer);
+        PerfInfo.end("YUVtoARBG");
+        PerfInfo.start("createBitmap");
         Bitmap bitmap = Bitmap.createBitmap(captureInfo.bitmapBuffer, captureInfo.width, captureInfo.height, ARGB_4444);
-
+        PerfInfo.end("createBitmap");
+        PerfInfo.start("compress");
         try (FileOutputStream fos = new FileOutputStream(captureInfo.filename))
         {
-            if (!bitmap.compress(captureInfo.fileFormat.getCompressFormat(), 100, fos))
+            if (!bitmap.compress(captureInfo.fileFormat.getCompressFormat(), 75, fos))
                 throw new IOException("Error compressing bitmap!");
         }
         catch (IOException e)
@@ -62,6 +69,8 @@ public class SaveYuvFunction extends ThrowingAsyncFunction<YuvCaptureInfo, Void,
         {
             bitmap.recycle();
         }
+        PerfInfo.end("compress");
+        PerfInfo.end("SaveYuvFunction Total");
         return null;
     }
 }
