@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.raw.info.workaround;
 
 import android.hardware.Camera;
-import android.os.Debug;
 
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.debug.DebugFlag;

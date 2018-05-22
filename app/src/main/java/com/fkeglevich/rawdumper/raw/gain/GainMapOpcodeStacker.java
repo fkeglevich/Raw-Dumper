@@ -19,9 +19,6 @@ package com.fkeglevich.rawdumper.raw.gain;
 import com.fkeglevich.rawdumper.dng.opcode.GainMapOpcode;
 import com.fkeglevich.rawdumper.dng.opcode.OpcodeListWriter;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
-import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
-import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import java.util.Collections;
