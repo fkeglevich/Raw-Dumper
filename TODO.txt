@@ -146,3 +146,4 @@ Done:
  - (DONE!) Recalibrate the zen2 cameras Standard A color matrices
  - (DONE!) Create workaround for mirroring the front camera image
  - (DONE!) on Zenfone Zoom, start using the front camera
+ - Fixed front camera orientation (again)
