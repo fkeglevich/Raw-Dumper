@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.dng.opcode;
 
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.dng.DngVersion;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.gain.BayerGainMap;
@@ -78,7 +79,7 @@ public class GainMapOpcode extends Opcode
         this.mapPointsV = bayerGainMap.numRows;
         this.mapPointsH = bayerGainMap.numColumns;
 
-        mapSpacingV = 1.0 / (this.mapPointsV - 1);
+        mapSpacingV = 1.0 / (virtualMapPointsV(rawImageSize) - 1);
         mapSpacingH = 1.0 / (this.mapPointsH - 1);
 
         mapOriginH  = 0;
@@ -86,6 +87,12 @@ public class GainMapOpcode extends Opcode
 
         mapPlanes   = 3;
         this.bayerGainMap = bayerGainMap;
+    }
+
+    private double virtualMapPointsV(RawImageSize rawImageSize)
+    {
+        double imageSizeScale = ((double) rawImageSize.getPaddedWidth()) / rawImageSize.getPaddedHeight();
+        return (mapPointsH + 1) / imageSizeScale;
     }
 
     @Override
