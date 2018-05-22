@@ -166,11 +166,7 @@
                 ]
             },
             "uniqueCameraModel": "Asus ZenFone 2 %s (back camera)",
-            "opcodes": [
-                {
-                    "opcodeList3File": "t4k37op3"
-                }
-            ],
+            "opcodes": [],
             "retryOnError": false,
             "retryPipelineDelay": 0,
             "sensor": {
@@ -381,11 +377,7 @@
                 "noiseProfile": null
             },
             "uniqueCameraModel": "Asus ZenFone 2 %s (front camera)",
-            "opcodes": [
-                {
-                    "opcodeList3File": "ov5670op3"
-                }
-            ],
+            "opcodes": [],
             "retryOnError": true,
             "retryPipelineDelay": 2000,
             "sensor": {
