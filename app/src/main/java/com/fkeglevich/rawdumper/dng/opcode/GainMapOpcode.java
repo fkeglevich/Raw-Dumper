@@ -113,12 +113,22 @@ public class GainMapOpcode extends Opcode
                 .putDouble(mapOriginH)
                 .putInt(mapPlanes);
 
-        for (int y = 0; y < mapPointsV; y++)
-            for (int x = 0; x < mapPointsH; x ++)
-            {
-                buffer.putFloat(bayerGainMap.red.values[y][x]);
-                buffer.putFloat((bayerGainMap.greenRed.values[y][x] + bayerGainMap.greenBlue.values[y][x]) / 2f);
-                buffer.putFloat(bayerGainMap.blue.values[y][x]);
-            }
+        if (DebugFlag.useDebugGainMap())
+        {
+            for (int y = 0; y < mapPointsV; y++)
+                for (int x = 0; x < mapPointsH; x ++)
+                    for (int p = 0; p < mapPlanes; p++)
+                        buffer.putFloat(((x % 2 == 0) || (y % 2 == 0)) ? 0.2f : 2f);
+        }
+        else
+        {
+            for (int y = 0; y < mapPointsV; y++)
+                for (int x = 0; x < mapPointsH; x++)
+                {
+                    buffer.putFloat(bayerGainMap.red.values[y][x]);
+                    buffer.putFloat((bayerGainMap.greenRed.values[y][x] + bayerGainMap.greenBlue.values[y][x]) / 2f);
+                    buffer.putFloat(bayerGainMap.blue.values[y][x]);
+                }
+        }
     }
 }
