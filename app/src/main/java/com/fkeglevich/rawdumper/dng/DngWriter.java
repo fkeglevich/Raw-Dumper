@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.dng;
 
 import android.support.annotation.Nullable;
 
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
@@ -83,12 +84,15 @@ public class DngWriter
         captureInfo.camera.getNoise().writeTiffTags(tiffWriter);
         captureInfo.whiteBalanceInfo.writeTiffTags(tiffWriter);
 
-        if (captureInfo.camera.getGainMapCollection() != null)
+        if (!DebugFlag.getDontUseGainMaps())
         {
-            GainMapOpcodeStacker.write(captureInfo.camera, captureInfo.makerNoteInfo, captureInfo.imageSize, tiffWriter);
+            if (captureInfo.camera.getGainMapCollection() != null)
+            {
+                GainMapOpcodeStacker.write(captureInfo.camera, captureInfo.makerNoteInfo, captureInfo.imageSize, tiffWriter);
+            }
+            else if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)
+                captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter);
         }
-        else if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)
-            captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter);
     }
 
     private void writeBasicHeader(RawImageSize rawImageSize)
