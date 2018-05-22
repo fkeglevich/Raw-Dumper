@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
+import android.util.Log;
+
 import com.fkeglevich.rawdumper.debug.PerfInfo;
 import com.fkeglevich.rawdumper.dng.opcode.GainMapOpcode;
 import com.fkeglevich.rawdumper.dng.opcode.OpcodeListWriter;
@@ -31,26 +33,33 @@ import java.util.Map;
  * TODO: add header comment
  * Created by Flávio Keglevich on 21/05/18.
  */
-public class GainMapOpcodeWriter
+public class GainMapOpcodeStacker
 {
+    private static final String TAG = "GainMapOpcodeWriter";
+
     public static void write(ExtraCameraInfo cameraInfo, MakerNoteInfo mknInfo, RawImageSize imageSize, TiffWriter tiffWriter)
     {
         Map<ShadingIlluminant, BayerGainMap> map = cameraInfo.getGainMapCollection();
         double[] illuminantScale = mknInfo.illuminantScale;
         if (map == null || illuminantScale == null) return;
 
-        PerfInfo.start("GainMapOpcodeWriter");
+        //PerfInfo.start(TAG);
         BayerGainMap accGainMap = new BayerGainMap(map.get(ShadingIlluminant.A).numColumns, map.get(ShadingIlluminant.A).numRows);
         for (int i = 0; i < illuminantScale.length; i++)
         {
             if (illuminantScale[i] != 0)
             {
+                //Log.i(TAG, ShadingIlluminant.values()[i].name());
                 BayerGainMap gainMap = map.get(ShadingIlluminant.values()[i]).cloneMap();
                 gainMap.multiplyByScalar((float) illuminantScale[i]);
                 accGainMap.add(gainMap);
             }
         }
-        PerfInfo.end("GainMapOpcodeWriter");
+        //Log.i(TAG, accGainMap.red.toString());
+        //Log.i(TAG, accGainMap.blue.toString());
+        //Log.i(TAG, accGainMap.greenRed.toString());
+        //Log.i(TAG, accGainMap.greenBlue.toString());
+        //PerfInfo.end("GainMapOpcodeWriter");
         GainMapOpcode opcode = new GainMapOpcode(imageSize, accGainMap);
         OpcodeListWriter.writeOpcodeList3Tag(tiffWriter, Collections.singletonList(opcode));
     }

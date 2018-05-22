@@ -21,7 +21,7 @@ import android.support.annotation.Nullable;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
-import com.fkeglevich.rawdumper.raw.gain.GainMapOpcodeWriter;
+import com.fkeglevich.rawdumper.raw.gain.GainMapOpcodeStacker;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -85,7 +85,7 @@ public class DngWriter
 
         if (captureInfo.camera.getGainMapCollection() != null)
         {
-            GainMapOpcodeWriter.write(captureInfo.camera, captureInfo.makerNoteInfo, captureInfo.imageSize, tiffWriter);
+            GainMapOpcodeStacker.write(captureInfo.camera, captureInfo.makerNoteInfo, captureInfo.imageSize, tiffWriter);
         }
         else if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)
             captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter);
