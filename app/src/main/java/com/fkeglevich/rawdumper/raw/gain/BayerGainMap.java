@@ -77,6 +77,16 @@ public class BayerGainMap
         greenBlue.multiplyByScalar(value);
     }
 
+    public BayerGainMap cloneMap()
+    {
+        BayerGainMap result = new BayerGainMap(numColumns, numRows);
+        result.red = red.cloneMap();
+        result.blue = blue.cloneMap();
+        result.greenRed = greenRed.cloneMap();
+        result.greenBlue = greenBlue.cloneMap();
+        return result;
+    }
+
     @Nullable
     public GainMap getMapFromToken(String token)
     {

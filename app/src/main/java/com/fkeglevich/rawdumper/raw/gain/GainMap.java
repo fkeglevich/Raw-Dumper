@@ -60,6 +60,15 @@ public class GainMap
                 values[row][col] *= value;
     }
 
+    public GainMap cloneMap()
+    {
+        GainMap result = new GainMap(numColumns, numRows);
+        for (int row = 0; row < numRows; row++)
+            System.arraycopy(values[row], 0, result.values[row], 0, numColumns);
+
+        return result;
+    }
+
     @Override
     public String toString()
     {

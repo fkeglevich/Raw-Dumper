@@ -23,6 +23,8 @@ import android.support.annotation.Keep;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
+import com.fkeglevich.rawdumper.raw.gain.BayerGainMap;
+import com.fkeglevich.rawdumper.raw.gain.ShadingIlluminant;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -31,6 +33,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Simple immutable class that stores specific information about
@@ -55,6 +58,7 @@ public class ExtraCameraInfo
     private NoiseInfo noise;
     private CaptureSize[] binningSizes;
     private String[] logcatServices;
+    private String gainMapFile;
 
     private boolean hasKnownMakernote;
     private boolean retryOnError;
@@ -64,6 +68,7 @@ public class ExtraCameraInfo
     private transient int facing;
     private transient int orientation;
     private transient boolean canDisableShutterSound;
+    private transient Map<ShadingIlluminant, BayerGainMap> gainMapCollection;
 
     private ExtraCameraInfo()
     {   }
@@ -75,6 +80,7 @@ public class ExtraCameraInfo
         facing                  = cameraInfo.facing;
         orientation             = cameraInfo.orientation;
         canDisableShutterSound  = cameraInfo.canDisableShutterSound;
+        gainMapCollection       = GainMapAssetLoader.load(gainMapFile);
     }
 
     public void writeTiffTags(TiffWriter tiffWriter)
@@ -171,6 +177,11 @@ public class ExtraCameraInfo
     public List<String> getLogcatServices()
     {
         return logcatServices != null ? Arrays.asList(logcatServices) : Collections.emptyList();
+    }
+
+    public Map<ShadingIlluminant, BayerGainMap> getGainMapCollection()
+    {
+        return gainMapCollection;
     }
 
     void fixId(int newId)

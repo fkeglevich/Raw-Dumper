@@ -26,10 +26,10 @@ public enum ShadingIlluminant
 {
     A   ( 0, "A",    CalibrationIlluminant.STANDARD_LIGHT_A),
     CW  ( 1, "CW",   CalibrationIlluminant.COOL_WHITE_FLUORESCENT),
-    TL84( 3, "TL84", CalibrationIlluminant.FLUORESCENT),
-    D50 ( 4, "D50",  CalibrationIlluminant.D50),
-    D65 ( 5, "D65",  CalibrationIlluminant.D65),
-    H   ( 6, "H",    CalibrationIlluminant.UNKNOWN);
+    TL84( 2, "TL84", CalibrationIlluminant.FLUORESCENT),
+    D50 ( 3, "D50",  CalibrationIlluminant.D50),
+    D65 ( 4, "D65",  CalibrationIlluminant.D65),
+    H   ( 5, "H",    CalibrationIlluminant.UNKNOWN);
     //U30 (-1, "U30",  CalibrationIlluminant.OTHER_LIGHT_SOURCE),
     //Cali(-1, "Cali", CalibrationIlluminant.UNKNOWN);
 
