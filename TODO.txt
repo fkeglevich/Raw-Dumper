@@ -11,11 +11,8 @@ TODO list:
    - Note:  temporarily save EVERY important information just before taking the pictures.
             So in a case of crash, the photos can be automatically recovered later
 
- - (IN PROGRESS) Create code for mean-gain-map stacking
-   - Be careful of non 4:3 proportions's consequences
-
+ - (FUTURE RELEASE) Adjust for non 4:3 proportions's when creating gain maps
  - (FUTURE RELEASE) Auto rotate the ISO/SS choosers
-
  - (FUTURE RELEASE) Handle different types of makernotes
 
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
@@ -48,6 +45,7 @@ Known bugs:
  - (MINOR) Currently using the manual focus slider crashes Zenfone Zoom camera
  - (MINOR) Zen2 front camera breaks exposure at ISO 800 and 1/60 Shutter Speed
  - (MINOR) The focus button sometimes appears enabled when it shouldn't
+ - (MINOR) Certain DNG Orientation tag values are not properly supported by some raw converters
  - (MINOR) YUV pictures aren't affected by rotation.
     I am not really sure if I'm going to properly implement YUV capture because the it takes at least 8 seconds
     to save a 13 mpix lossless WEBP picture when the logcat service is disabled.
@@ -149,3 +147,4 @@ Done:
  - Fixed: the selector interface for ISO/shutter speed/EV is quite buggy sometimes
  - (DONE!) Needs to keep track of the old 90 degree value for a smoother transition
  - (DONE!) Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
+ - (DONE!) Create code for mean-gain-map stacking
