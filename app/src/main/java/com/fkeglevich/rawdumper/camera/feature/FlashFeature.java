@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.camera.feature;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
@@ -26,7 +25,6 @@ import com.fkeglevich.rawdumper.camera.extension.Parameters;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;

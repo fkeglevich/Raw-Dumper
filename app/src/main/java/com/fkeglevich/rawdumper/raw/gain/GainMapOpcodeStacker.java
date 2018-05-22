@@ -16,9 +16,6 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
-import android.util.Log;
-
-import com.fkeglevich.rawdumper.debug.PerfInfo;
 import com.fkeglevich.rawdumper.dng.opcode.GainMapOpcode;
 import com.fkeglevich.rawdumper.dng.opcode.OpcodeListWriter;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
