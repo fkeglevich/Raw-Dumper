@@ -35,11 +35,13 @@ import java.util.Map;
  */
 class GainMapAssetLoader
 {
+    private static final String GAIN_MAPS_FOLDER = "gain_maps/";
+
     static Map<ShadingIlluminant, BayerGainMap> load(String assetName)
     {
         if (assetName == null) return null;
         Context context = ContextManager.getApplicationContext();
-        try (DataInputStream dis = new DataInputStream(context.getAssets().open(assetName, AssetManager.ACCESS_BUFFER)))
+        try (DataInputStream dis = new DataInputStream(context.getAssets().open(GAIN_MAPS_FOLDER + assetName, AssetManager.ACCESS_BUFFER)))
         {
             BayerGainMapSerializer serializer = new BayerGainMapSerializer();
             PerfInfo.start("GainMapAssetLoader");
