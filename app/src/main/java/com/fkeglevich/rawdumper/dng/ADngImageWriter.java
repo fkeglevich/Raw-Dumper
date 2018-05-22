@@ -33,5 +33,5 @@ public abstract class ADngImageWriter
 {
     protected abstract void init(TiffWriter tiffWriter, RawImageSize rawImageSize);
 
-    protected abstract void writeImageData(TiffWriter tiffWriter, RawImageData imageData) throws IOException;
+    protected abstract void writeImageData(TiffWriter tiffWriter, RawImageData imageData, boolean invertRows) throws IOException;
 }

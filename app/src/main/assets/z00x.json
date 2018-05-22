@@ -24,15 +24,15 @@
                     1.0
                 ],
                 "colorMatrix1": [
-                    1.1741,
-                    -0.2862,
-                    -0.0448,
-                    -0.1778,
-                    0.9912,
-                    0.2184,
-                    0.0223,
-                    0.2117,
-                    0.532
+                    1.4508,
+                    -0.6778,
+                    0.1591,
+                    -0.1258,
+                    0.833,
+                    0.3494,
+                    0.0129,
+                    0.1964,
+                    0.5402
                 ],
                 "calibrationIlluminant2": "D55",
                 "cameraCalibration2": [
@@ -145,6 +145,7 @@
 					"10000"
 				]
 			},
+            "gainMapFile": "t4k37_gain_map.bin",
             "hasKnownMakernote": true,
             "id": 0,
             "lens": {
@@ -165,11 +166,7 @@
                 ]
             },
             "uniqueCameraModel": "Asus ZenFone 2 %s (back camera)",
-            "opcodes": [
-                {
-                    "opcodeList3File": "t4k37op3"
-                }
-            ],
+            "opcodes": [],
             "retryOnError": false,
             "retryPipelineDelay": 0,
             "sensor": {
@@ -253,15 +250,15 @@
                     1.0
                 ],
                 "colorMatrix1": [
-                    0.9678,
-                    -0.1981,
-                    -0.0469,
-                    -0.1948,
-                    0.9686,
-                    0.2657,
-                    -0.0133,
-                    0.2255,
-                    0.6228
+                    1.1279,
+                    -0.4256,
+                    0.0963,
+                    -0.0612,
+                    0.725,
+                    0.4047,
+                    0.0437,
+                    0.1336,
+                    0.6898
                 ],
                 "calibrationIlluminant2": "D55",
                 "cameraCalibration2": [
@@ -364,6 +361,7 @@
                     "10000"
 				]
 			},
+            "gainMapFile": "ov5670_gain_map.bin",
             "hasKnownMakernote": true,
             "id": 1,
             "lens": {
@@ -379,11 +377,7 @@
                 "noiseProfile": null
             },
             "uniqueCameraModel": "Asus ZenFone 2 %s (front camera)",
-            "opcodes": [
-                {
-                    "opcodeList3File": "ov5670op3"
-                }
-            ],
+            "opcodes": [],
             "retryOnError": true,
             "retryPipelineDelay": 2000,
             "sensor": {

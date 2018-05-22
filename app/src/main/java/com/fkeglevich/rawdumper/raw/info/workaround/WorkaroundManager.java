@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.info.workaround;
 
+import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 import java.util.HashMap;
@@ -37,10 +38,10 @@ public class WorkaroundManager
         workaroundMap.put("z00x_zoom", new ZenZoomWorkaround());
     }
 
-    public void applyWorkaroundIfNeeded(DeviceInfo deviceInfo)
+    public void applyWorkaroundIfNeeded(DeviceInfo deviceInfo, CameraSelector cameraSelector)
     {
         String fileName = deviceInfo.getDeviceFileName();
         if (workaroundMap.containsKey(fileName))
-            workaroundMap.get(fileName).applyWorkaroundIfNeeded(deviceInfo);
+            workaroundMap.get(fileName).applyWorkaroundIfNeeded(deviceInfo, cameraSelector);
     }
 }

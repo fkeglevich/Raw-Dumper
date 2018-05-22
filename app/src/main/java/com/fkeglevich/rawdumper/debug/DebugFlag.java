@@ -37,6 +37,8 @@ public class DebugFlag
     private static final DebugFlag IGNORE_PIC_SIZE_MISMATCH = new DebugFlag(false, false);
     private static final DebugFlag DONT_SAVE_PICTURES       = new DebugFlag(false, false);
     private static final DebugFlag ENABLE_EMULATOR          = new DebugFlag(false, false);
+    private static final DebugFlag DONT_USE_GAIN_MAPS       = new DebugFlag(false, false);
+    private static final DebugFlag USE_DEBUG_GAIN_MAP       = new DebugFlag(false, false);
 
     private static boolean or(DebugFlag first, DebugFlag second)
     {
@@ -95,5 +97,15 @@ public class DebugFlag
     public static boolean dontSavePictures()
     {
         return DONT_SAVE_PICTURES.get();
+    }
+
+    public static boolean getDontUseGainMaps()
+    {
+        return DONT_USE_GAIN_MAPS.get();
+    }
+
+    public static boolean useDebugGainMap()
+    {
+        return USE_DEBUG_GAIN_MAP.get();
     }
 }

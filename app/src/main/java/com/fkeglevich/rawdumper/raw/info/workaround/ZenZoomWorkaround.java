@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.info.workaround;
 
 import android.hardware.Camera;
 
+import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
@@ -29,9 +30,11 @@ import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 public class ZenZoomWorkaround implements DeviceWorkaround
 {
     @Override
-    public void applyWorkaroundIfNeeded(DeviceInfo deviceInfo)
+    public void applyWorkaroundIfNeeded(DeviceInfo deviceInfo, CameraSelector cameraSelector)
     {
         apply(deviceInfo);
+        if (!DebugFlag.shouldOpenFrontCameraFirst())
+            cameraSelector.selectNextCamera();
     }
 
     private void apply(DeviceInfo deviceInfo)

@@ -43,15 +43,17 @@ public class StripImageWriter extends ADngImageWriter
     }
 
     @Override
-    protected void writeImageData(TiffWriter tiffWriter, RawImageData imageData) throws IOException
+    protected void writeImageData(TiffWriter tiffWriter, RawImageData imageData, boolean invertRows) throws IOException
     {
         init(tiffWriter, imageData.getSize());
         int paddedHeight = imageData.getSize().getPaddedHeight();
+
         for (int row = 0; row < paddedHeight; row++)
         {
-            imageData.copyValidRowToBuffer(row, buffer);
+            imageData.copyValidRowToBuffer(invertRows ? (paddedHeight - 1 - row): row, buffer);
             tiffWriter.writeRawStrip(row, buffer, buffer.length);
         }
+
         tiffWriter.writeDirectory();
     }
 }

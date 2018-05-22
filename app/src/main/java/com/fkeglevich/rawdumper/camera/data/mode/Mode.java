@@ -34,12 +34,14 @@ public abstract class Mode implements DataContainer<PictureFormat>, ParameterVal
     private final String modeParameterValue;
     private final boolean useUltraPixels;
     private final FormatStrategy formatStrategy;
+    private final ModeType modeType;
 
-    Mode(String modeParameterValue, boolean useUltraPixels, FormatStrategy formatStrategy)
+    Mode(String modeParameterValue, boolean useUltraPixels, FormatStrategy formatStrategy, ModeType modeType)
     {
         this.modeParameterValue = modeParameterValue;
         this.useUltraPixels = useUltraPixels;
         this.formatStrategy = formatStrategy;
+        this.modeType = modeType;
     }
 
     @Override
@@ -62,5 +64,10 @@ public abstract class Mode implements DataContainer<PictureFormat>, ParameterVal
     public boolean isUseUltraPixels()
     {
         return useUltraPixels;
+    }
+
+    public ModeType getModeType()
+    {
+        return modeType;
     }
 }

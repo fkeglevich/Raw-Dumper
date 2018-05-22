@@ -77,11 +77,11 @@ public class SensorInfo
         return integrationTimeScale;
     }
 
-    public void writeTiffTags(TiffWriter tiffWriter)
+    public void writeTiffTags(TiffWriter tiffWriter, boolean invertRows)
     {
         tiffWriter.setField(TiffTag.TIFFTAG_BITSPERSAMPLE,          storageBitsPerPixel);
         tiffWriter.setField(TiffTag.TIFFTAG_CFAREPEATPATTERNDIM,    DEFAULT_CFA_REPEAT_PATTERN_DIM, false);
-        tiffWriter.setField(TiffTag.TIFFTAG_CFAPATTERN,             bayerPattern.getBytePattern(), false);
+        tiffWriter.setField(TiffTag.TIFFTAG_CFAPATTERN,             invertRows ? bayerPattern.invertVertically().getBytePattern() : bayerPattern.getBytePattern(), false);
         tiffWriter.setField(TiffTag.TIFFTAG_CFAPLANECOLOR,          DEFAULT_CFA_PLANE_COLOR, true);
         tiffWriter.setField(TiffTag.TIFFTAG_CFALAYOUT,              DEFAULT_CFA_LAYOUT);
         tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL,             new long[] { whiteLevel }, true);

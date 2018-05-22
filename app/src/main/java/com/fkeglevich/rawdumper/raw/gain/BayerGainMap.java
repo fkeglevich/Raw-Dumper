@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
+import android.support.annotation.Nullable;
+
 import junit.framework.Assert;
 
 /**
@@ -42,35 +44,79 @@ public class BayerGainMap
         this.greenBlue = new GainMap(numColumns, numRows);
     }
 
-    public BayerGainMap add(BayerGainMap b)
+    public void add(BayerGainMap b)
     {
         isValid();
         b.isValid();
         Assert.assertEquals(numColumns, b.numColumns);
         Assert.assertEquals(numRows,    b.numRows);
 
-        BayerGainMap result = new BayerGainMap(numColumns, numRows);
-
-        result.red       = red.add(b.red);
-        result.blue      = blue.add(b.blue);
-        result.greenRed  = greenRed.add(b.greenRed);
-        result.greenBlue = greenBlue.add(b.greenBlue);
-
-        return result;
+        red.add(b.red);
+        blue.add(b.blue);
+        greenRed.add(b.greenRed);
+        greenBlue.add(b.greenBlue);
     }
 
-    public BayerGainMap divideByScalar(float value)
+    public void divideByScalar(float value)
     {
         isValid();
 
+        red.divideByScalar(value);
+        blue.divideByScalar(value);
+        greenRed.divideByScalar(value);
+        greenBlue.divideByScalar(value);
+    }
+
+    public void multiplyByScalar(float value)
+    {
+        isValid();
+
+        red.multiplyByScalar(value);
+        blue.multiplyByScalar(value);
+        greenRed.multiplyByScalar(value);
+        greenBlue.multiplyByScalar(value);
+    }
+
+    public void invertRows()
+    {
+        isValid();
+
+        red.invertRows();
+        blue.invertRows();
+        greenRed.invertRows();
+        greenBlue.invertRows();
+    }
+
+    public BayerGainMap cloneMap()
+    {
         BayerGainMap result = new BayerGainMap(numColumns, numRows);
-
-        result.red       = red.divideByScalar(value);
-        result.blue      = blue.divideByScalar(value);
-        result.greenRed  = greenRed.divideByScalar(value);
-        result.greenBlue = greenBlue.divideByScalar(value);
-
+        result.red = red.cloneMap();
+        result.blue = blue.cloneMap();
+        result.greenRed = greenRed.cloneMap();
+        result.greenBlue = greenBlue.cloneMap();
         return result;
+    }
+
+    @Nullable
+    public GainMap getMapFromToken(String token)
+    {
+        switch (token)
+        {
+            case "R": return red;
+            case "B": return blue;
+            case "Gr": return greenRed;
+            case "Gb": return greenBlue;
+            default: return null;
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "[red: " + red.toString() +
+                "\nblue: " + blue.toString() +
+                "\ngreenRed: " + greenRed.toString() +
+                "\ngreenBlue: " + greenBlue.toString() + "]";
     }
 
     private void isValid()

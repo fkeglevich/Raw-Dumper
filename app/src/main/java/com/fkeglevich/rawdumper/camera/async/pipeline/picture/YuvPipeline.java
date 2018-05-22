@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.util.Log;
 
@@ -26,7 +24,6 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.pipeline.BufferFactory;
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.RawImageCallbackAccess;
@@ -34,10 +31,6 @@ import com.fkeglevich.rawdumper.io.async.IOThread;
 import com.fkeglevich.rawdumper.raw.capture.YuvCaptureInfo;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
-
-import jp.co.cyberagent.android.gpuimage.GPUImageNativeLibrary;
-
-import static android.graphics.Bitmap.Config.ARGB_4444;
 
 /**
  * TODO: Add class header

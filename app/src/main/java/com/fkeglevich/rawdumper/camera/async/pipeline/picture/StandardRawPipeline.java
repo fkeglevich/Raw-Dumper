@@ -46,7 +46,7 @@ import eu.chainfire.libsuperuser.Shell;
 
 public class StandardRawPipeline extends PicturePipelineBase
 {
-    private static final int MINIMUM_DELAY_AFTER_START_PREVIEW = 350;
+    private static final int MINIMUM_DELAY_AFTER_START_PREVIEW = 400;
 
     private final CameraContext cameraContext;
     private final byte[] buffer;

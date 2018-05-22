@@ -20,12 +20,14 @@ import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.raw.gain.ShadingIlluminant;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.util.ColorUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,6 +102,7 @@ public class MakerNoteInfoExtractor
             mknStringBytes = new String(mknBytes, "ISO-8859-1");
             extractExposureTimeAndIso(result, mknBytes);
             extractColorMatrixAndWB(result, mknStringBytes, colorInfo);
+            Log.i(TAG, Arrays.toString(result.illuminantScale));
         }
         catch (UnsupportedEncodingException e)
         {
@@ -139,8 +142,9 @@ public class MakerNoteInfoExtractor
                     String[] lines = found.split("\n");
                     if (lines.length == 4)
                     {
+                        info.illuminantScale = new double[ShadingIlluminant.values().length];
                         info.colorMatrix = getColorMatrix(lines[0] + " " + lines[1] + " " + lines[2]);
-                        info.wbTemperature = getMeanTemperature(lines[3]);
+                        info.wbTemperature = getMeanTemperature(lines[3], info.illuminantScale);
                         info.wbCoordinatesXY = ColorUtil.getXYFromCCT(info.wbTemperature, colorInfo);
                         return true;
                     }
@@ -178,7 +182,7 @@ public class MakerNoteInfoExtractor
         return colorMatrix;
     }
 
-    private double getMeanTemperature(String whiteBalanceStr)
+    private double getMeanTemperature(String whiteBalanceStr, double[] illuminantScale)
     {
         String[] spaceSeparated = whiteBalanceStr.trim().split(" ");
         int[] illuminantIds = new int[spaceSeparated.length];
@@ -193,8 +197,10 @@ public class MakerNoteInfoExtractor
 
         double meanTemperature = 0;
         for (int i = 0; i < illuminantValues.length; i++)
+        {
+            illuminantScale[i] = illuminantValues[illuminantIds[i]] / MAX_ILLUMINANT_VALUE;
             meanTemperature += TEMPERATURES[i] * (illuminantValues[illuminantIds[i]] / MAX_ILLUMINANT_VALUE);
-
+        }
         return meanTemperature;
     }
 }

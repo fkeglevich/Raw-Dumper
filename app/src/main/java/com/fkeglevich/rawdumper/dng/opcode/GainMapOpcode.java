@@ -16,8 +16,10 @@
 
 package com.fkeglevich.rawdumper.dng.opcode;
 
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.dng.DngVersion;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+import com.fkeglevich.rawdumper.raw.gain.BayerGainMap;
 
 import java.nio.ByteBuffer;
 
@@ -58,7 +60,9 @@ public class GainMapOpcode extends Opcode
 
     private int mapPlanes;
 
-    public GainMapOpcode(RawImageSize rawImageSize, int mapPointsV, int mapPointsH)
+    private BayerGainMap bayerGainMap;
+
+    public GainMapOpcode(RawImageSize rawImageSize, BayerGainMap bayerGainMap)
     {
         super(OPCODE_ID, DngVersion.VERSION_1_3_0_0, OPCODE_DEFAULT_FLAGS);
         top     = 0;
@@ -72,16 +76,23 @@ public class GainMapOpcode extends Opcode
         rowPitch    = 1;
         colPitch    = 1;
 
-        this.mapPointsV = mapPointsV;
-        this.mapPointsH = mapPointsH;
+        this.mapPointsV = bayerGainMap.numRows;
+        this.mapPointsH = bayerGainMap.numColumns;
 
-        mapSpacingV = 1.0 / (this.mapPointsV - 1);
+        mapSpacingV = 1.0 / (virtualMapPointsV(rawImageSize) - 1);
         mapSpacingH = 1.0 / (this.mapPointsH - 1);
 
         mapOriginH  = 0;
         mapOriginV  = 0;
 
         mapPlanes   = 3;
+        this.bayerGainMap = bayerGainMap;
+    }
+
+    private double virtualMapPointsV(RawImageSize rawImageSize)
+    {
+        double imageSizeScale = ((double) rawImageSize.getPaddedWidth()) / rawImageSize.getPaddedHeight();
+        return (mapPointsH + 1) / imageSizeScale;
     }
 
     @Override
@@ -109,9 +120,22 @@ public class GainMapOpcode extends Opcode
                 .putDouble(mapOriginH)
                 .putInt(mapPlanes);
 
-        for (int y = 0; y < mapPointsV; y++)
-            for (int x = 0; x < mapPointsH; x ++)
-                for (int p = 0; p < mapPlanes; p++)
-                    buffer.putFloat(((x % 2 == 0) || (y % 2 == 0)) ? 0.2f : 2f);
+        if (DebugFlag.useDebugGainMap())
+        {
+            for (int y = 0; y < mapPointsV; y++)
+                for (int x = 0; x < mapPointsH; x ++)
+                    for (int p = 0; p < mapPlanes; p++)
+                        buffer.putFloat(((x % 2 == 0) || (y % 2 == 0)) ? 0.2f : 2f);
+        }
+        else
+        {
+            for (int y = 0; y < mapPointsV; y++)
+                for (int x = 0; x < mapPointsH; x++)
+                {
+                    buffer.putFloat(bayerGainMap.red.values[y][x]);
+                    buffer.putFloat((bayerGainMap.greenRed.values[y][x] + bayerGainMap.greenBlue.values[y][x]) / 2f);
+                    buffer.putFloat(bayerGainMap.blue.values[y][x]);
+                }
+        }
     }
 }

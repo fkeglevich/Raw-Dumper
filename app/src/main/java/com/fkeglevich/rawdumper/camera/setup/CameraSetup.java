@@ -20,7 +20,7 @@ import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
-import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
+import com.fkeglevich.rawdumper.controller.permission.MandatoryRootManager;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -52,14 +52,15 @@ public class CameraSetup
     public final EventDispatcher<TurboCamera> onComplete = new SimpleDispatcher<>();
 
     public CameraSetup(CameraPreview textureSource, ActivityReference activityReference,
-                       MandatoryPermissionManager permissionManager, CameraSelector cameraSelector)
+                       MandatoryRootManager permissionManager, CameraSelector cameraSelector)
     {
         this.setupStageLink = new SetupStageLinkImpl(textureSource, activityReference, permissionManager, cameraSelector, this);
         this.setupStages = new LinkedList<>(Arrays.asList(  new DeviceInfoStage(),
-                                                            new ShellRequestStage(),
                                                             new PermissionsStage(),
                                                             new DirectoryStage(),
                                                             new WorkaroundStage(),
+                                                            new ShellRequestStage(),
+                                                            new RootAccessStage(),
                                                             new SurfaceTextureStage(),
                                                             new CameraOpenStage()));
     }

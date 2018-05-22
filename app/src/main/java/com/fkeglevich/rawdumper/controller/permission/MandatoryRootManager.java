@@ -19,27 +19,34 @@ package com.fkeglevich.rawdumper.controller.permission;
 import com.fkeglevich.rawdumper.controller.permission.exception.RootAccessException;
 import com.fkeglevich.rawdumper.su.MainSUShell;
 import com.fkeglevich.rawdumper.su.ShellFactory;
+import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 
 /**
  * Created by Flávio Keglevich on 09/08/2017.
  * TODO: Add a class header comment!
  */
 
-class MandatoryRootManager extends MandatoryPermissionManager
+public class MandatoryRootManager extends MandatoryPermissionManager
 {
-    @Override
-    void dispatchPermissionsGranted()
+    public final EventDispatcher<Void> onRootAccessGranted = createDispatcher();
+
+    public void requestRootAccess()
     {
         if (!MainSUShell.getInstance().isRunning())
         {
             ShellFactory factory = ShellFactory.getInstance();
 
             factory.onError.addListener(eventData -> dispatchMissingPermissions(new RootAccessException()));
-            factory.onSuccess.addListener(eventData -> MandatoryRootManager.super.dispatchPermissionsGranted());
+            factory.onSuccess.addListener(eventData -> dispatchRootAccessGranted());
 
             factory.startCreatingShells();
         }
         else
-            super.dispatchPermissionsGranted();
+            dispatchRootAccessGranted();
+    }
+
+    private void dispatchRootAccessGranted()
+    {
+        onRootAccessGranted.dispatchEvent(null);
     }
 }

@@ -52,6 +52,7 @@ public class CaptureInfo
     public byte[] extraJpegBytes                = null;
     public byte[] rawDataBytes                  = null;
     public File relatedI3av4File                = null;
+    public boolean invertRows                   = false;
 
     public boolean isValid()
     {

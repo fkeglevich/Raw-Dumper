@@ -18,9 +18,11 @@ package com.fkeglevich.rawdumper.dng;
 
 import android.support.annotation.Nullable;
 
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
+import com.fkeglevich.rawdumper.raw.gain.GainMapOpcodeStacker;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -54,7 +56,7 @@ public class DngWriter
         try
         {
             writeMetadata(captureInfo);
-            writer.writeImageData(tiffWriter, imageData);
+            writer.writeImageData(tiffWriter, imageData, captureInfo.invertRows);
             writeExifInfo(captureInfo);
         }
         finally
@@ -72,7 +74,7 @@ public class DngWriter
     private void writeMetadata(CaptureInfo captureInfo)
     {
         writeBasicHeader(captureInfo.imageSize);
-        captureInfo.camera.getSensor().writeTiffTags(tiffWriter);
+        captureInfo.camera.getSensor().writeTiffTags(tiffWriter, captureInfo.invertRows);
         captureInfo.camera.writeTiffTags(tiffWriter);
         captureInfo.device.writeTiffTags(tiffWriter);
         captureInfo.writeTiffTags(tiffWriter);
@@ -82,8 +84,13 @@ public class DngWriter
         captureInfo.camera.getNoise().writeTiffTags(tiffWriter);
         captureInfo.whiteBalanceInfo.writeTiffTags(tiffWriter);
 
-        if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)
-            captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter);
+        if (!DebugFlag.getDontUseGainMaps())
+        {
+            if (captureInfo.camera.getGainMapCollection() != null)
+                GainMapOpcodeStacker.write(captureInfo, tiffWriter);
+            else if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)
+                captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter);
+        }
     }
 
     private void writeBasicHeader(RawImageSize rawImageSize)

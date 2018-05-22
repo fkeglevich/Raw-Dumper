@@ -27,11 +27,8 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
-import com.transitionseverywhere.Fade;
-import com.transitionseverywhere.TransitionManager;
 
 /**
  * TODO: Add class header

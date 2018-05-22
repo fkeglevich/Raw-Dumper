@@ -31,6 +31,7 @@ public class MakerNoteInfo
     public Double wbTemperature         = null;
     public float[] wbCoordinatesXY      = null;
     public float[] colorMatrix          = null;
+    public double[] illuminantScale     = null;
     public byte[] originalMakerNote     = null;
 
     public MakerNoteInfo(byte[] originalMakerNote)

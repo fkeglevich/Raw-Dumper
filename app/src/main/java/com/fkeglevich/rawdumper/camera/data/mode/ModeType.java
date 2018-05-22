@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, Flávio Keglevich
+ * Copyright 2018, Flávio Keglevich
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,10 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.raw.info.workaround;
+package com.fkeglevich.rawdumper.camera.data.mode;
 
-import com.fkeglevich.rawdumper.camera.async.CameraSelector;
-import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
-
-/**
- * TODO: Add class header
- * <p>
- * Created by Flávio Keglevich on 29/10/17.
- */
-
-interface DeviceWorkaround
+public enum ModeType
 {
-    void applyWorkaroundIfNeeded(DeviceInfo deviceInfo, CameraSelector cameraSelector);
+    NORMAL,
+    LOW_LIGHT;
 }

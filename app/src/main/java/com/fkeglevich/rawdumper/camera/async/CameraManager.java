@@ -22,9 +22,8 @@ import com.fkeglevich.rawdumper.camera.async.impl.CameraSelectorImpl;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.setup.CameraSetup;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationModule;
-import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionModule;
+import com.fkeglevich.rawdumper.controller.permission.MandatoryRootManager;
 import com.fkeglevich.rawdumper.controller.permission.MandatoryRootModule;
-import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -47,7 +46,7 @@ public class CameraManager
     }
 
     private final OrientationModule orientationModule;
-    private final MandatoryPermissionModule permissionModule;
+    private final MandatoryRootModule permissionModule;
     private final CameraSelector cameraSelector;
     private final CameraSetup cameraSetup;
 
@@ -62,13 +61,11 @@ public class CameraManager
     public CameraManager(ActivityReference activityReference, CameraPreview textureSource)
     {
         orientationModule = new OrientationModule(activityReference);
-        permissionModule = DebugFlag.isDisableMandatoryRoot()
-                            ? new MandatoryPermissionModule(activityReference)
-                            : new MandatoryRootModule(activityReference);
+        permissionModule = new MandatoryRootModule(activityReference);
 
         cameraSelector = new CameraSelectorImpl();
         cameraSetup = new CameraSetup(textureSource,
-                activityReference, permissionModule.getPermissionManager(), cameraSelector);
+                activityReference, (MandatoryRootManager)permissionModule.getPermissionManager(), cameraSelector);
 
         onCameraOpened = new SimpleDispatcher<>();
         onCameraClosed = new SimpleDispatcher<>();

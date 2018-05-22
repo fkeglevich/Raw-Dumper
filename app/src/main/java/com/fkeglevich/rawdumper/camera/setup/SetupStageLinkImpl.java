@@ -23,7 +23,7 @@ import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
-import com.fkeglevich.rawdumper.controller.permission.MandatoryPermissionManager;
+import com.fkeglevich.rawdumper.controller.permission.MandatoryRootManager;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
@@ -42,13 +42,13 @@ class SetupStageLinkImpl implements SetupStageLink
 
     private final CameraPreview textureSource;
     private final ActivityReference activityReference;
-    private final MandatoryPermissionManager permissionManager;
+    private final MandatoryRootManager permissionManager;
     private final CameraSelector cameraSelector;
     private final CameraSetup setupReference;
 
     SetupStageLinkImpl(CameraPreview textureSource,
                        ActivityReference activityReference,
-                       MandatoryPermissionManager permissionManager,
+                       MandatoryRootManager permissionManager,
                        CameraSelector cameraSelector,
                        CameraSetup setupReference)
     {
@@ -91,7 +91,7 @@ class SetupStageLinkImpl implements SetupStageLink
     }
 
     @Override
-    public MandatoryPermissionManager getPermissionManager()
+    public MandatoryRootManager getPermissionManager()
     {
         return permissionManager;
     }
@@ -138,6 +138,12 @@ class SetupStageLinkImpl implements SetupStageLink
     public void setPermissionToken()
     {
         setupReference.removeAllStagesOfType(PermissionsStage.class);
+    }
+
+    @Override
+    public void setRootToken()
+    {
+        setupReference.removeAllStagesOfType(RootAccessStage.class);
     }
 
     @Override

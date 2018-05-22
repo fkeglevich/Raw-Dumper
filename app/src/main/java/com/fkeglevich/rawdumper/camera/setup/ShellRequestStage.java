@@ -32,7 +32,7 @@ public class ShellRequestStage implements SetupStage
             MainSUShell.getInstance().requestShell();
 
         if (setupBase.getDeviceInfo().needsLogcatServices())
-            CameraServiceManager.getInstance().prepare();
+            CameraServiceManager.getInstance().prepare(setupBase.getDeviceInfo().needsHalDebugCommandFlag());
 
         setupBase.setShellRequestToken();
         setupBase.processNextStage();

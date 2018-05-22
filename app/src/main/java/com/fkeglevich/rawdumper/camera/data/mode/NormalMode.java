@@ -34,7 +34,7 @@ public class NormalMode extends Mode
 {
     NormalMode(ParameterCollection parameterCollection, ExtraCameraInfo cameraInfo)
     {
-        super("PRO", false, getFormatStrategy(parameterCollection, cameraInfo));
+        super("PRO", false, getFormatStrategy(parameterCollection, cameraInfo), ModeType.NORMAL);
     }
 
     @NonNull

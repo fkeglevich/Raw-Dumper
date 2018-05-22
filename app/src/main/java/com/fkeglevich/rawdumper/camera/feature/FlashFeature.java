@@ -38,19 +38,25 @@ import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 public class FlashFeature extends WritableFeature<Flash, List<Flash>> implements VirtualFeature
 {
     private final CameraActions cameraActions;
+    private final List<Flash> originalList;
 
     @NonNull
     private static ListValidator<Flash> createValidator(ParameterCollection parameterCollection, CameraContext cameraContext)
     {
         List<Flash> flashList = parameterCollection.get(Parameters.FLASH_MODE_VALUES);
-        if (flashList.size() == 1 && cameraContext.getCameraInfo().getFacing() == CAMERA_FACING_FRONT)
-            flashList.add(Flash.SCREEN);
+        if (cameraContext.getCameraInfo().getFacing() == CAMERA_FACING_FRONT)
+        {
+            if (flashList.isEmpty()) flashList.add(Flash.OFF);
+            if (flashList.size() == 1) flashList.add(Flash.SCREEN);
+        }
+
         return new ListValidator<>(flashList);
     }
 
     FlashFeature(ParameterCollection parameterCollection, ParameterCollection cameraParameterCollection, CameraActions cameraActions, CameraContext cameraContext)
     {
         super(Parameters.FLASH_MODE, parameterCollection, createValidator(cameraParameterCollection, cameraContext));
+        this.originalList = cameraParameterCollection.get(Parameters.FLASH_MODE_VALUES);
         this.cameraActions = cameraActions;
         setValue(Flash.OFF);
         getOnChanged().addListener(eventData -> performUpdate());
@@ -66,7 +72,7 @@ public class FlashFeature extends WritableFeature<Flash, List<Flash>> implements
     public void performUpdate()
     {
         Flash value = getValue();
-        if (!Flash.SCREEN.equals(value))
+        if (originalList.contains(value))
             cameraActions.setFlash(value);
     }
 }

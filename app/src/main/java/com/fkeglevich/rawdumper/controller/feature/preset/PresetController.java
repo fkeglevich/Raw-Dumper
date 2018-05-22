@@ -142,8 +142,6 @@ public abstract class PresetController<T> extends FeatureController implements D
             ButtonController.changeButtonBackground(lastToggled, R.drawable.round_button_default);
     }
 
-
-
     @Override
     protected void reset()
     {

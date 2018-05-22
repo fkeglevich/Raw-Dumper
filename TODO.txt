@@ -3,22 +3,14 @@ TODO list:
  - A better handling of unknown devices
    - Automatic discovery of raw image sizes
    - Automatic discovery of raw bayer pattern
-   
- - Better handling of known devices
-   - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
+
+ - (IN PROGRESS) Do a better calibration profile of the Toshiba and OV sensors of the Z00A
 
  - (IN PROGRESS) (IMPORTANT) Add the ~recovering photos~ user case, if the app crashes
    - Note:  temporarily save EVERY important information just before taking the pictures.
             So in a case of crash, the photos can be automatically recovered later
 
- - (IN PROGRESS) Create code for mean-gain-map stacking
-   - Be careful of non 4:3 proportions's consequences
-
- - (IN PROGRESS) Auto rotate UI elements
-   - (FUTURE RELEASE) Needs to keep track of the old 90 degree value for a smoother transition
-   - (FUTURE RELEASE) Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
-   - Create proper ISO/SS choosers
-
+ - (FUTURE RELEASE) Auto rotate the ISO/SS choosers
  - (FUTURE RELEASE) Handle different types of makernotes
 
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
@@ -37,10 +29,6 @@ TODO list:
 Next features:
  - Selection of picture size
  - Night Mode with raw pictures
- - Almost-perfect lens shading correction
-   - (NOT ANYMORE!) requires DNG SDK for working with low-level gain maps dng opcodes
-   - Idea: while DNG SDK support is not ready, simply apply the gain directly to the raw data
-     update: we are going to create the low level opcodes by ourselves
  - Save pictures using the DNG SDK
    - Advantages: compression and DNG files that-always-work
  - Gain-based white balance
@@ -48,9 +36,10 @@ Next features:
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
     - Some changes were made to address this bug, should test again to see if it still happens
- - (MINOR) The selector interface for ISO/shutter speed/EV is quite buggy sometimes
  - (MINOR) Currently using the manual focus slider crashes Zenfone Zoom camera
  - (MINOR) Zen2 front camera breaks exposure at ISO 800 and 1/60 Shutter Speed
+ - (MINOR) The focus button sometimes appears enabled when it shouldn't
+ - (MINOR) Certain DNG Orientation tag values are not properly supported by some raw converters
  - (MINOR) YUV pictures aren't affected by rotation.
     I am not really sure if I'm going to properly implement YUV capture because the it takes at least 8 seconds
     to save a 13 mpix lossless WEBP picture when the logcat service is disabled.
@@ -148,3 +137,12 @@ Done:
  - (DONE!) Create YUV picture pipelines
  - (DONE!) Jpeg picture rotation
  - Disabled YUV capture due to performance problems
+ - Added compatibility to a new patched lib
+ - Fixed: the selector interface for ISO/shutter speed/EV is quite buggy sometimes
+ - (DONE!) Needs to keep track of the old 90 degree value for a smoother transition
+ - (DONE!) Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
+ - (DONE!) Create code for mean-gain-map stacking
+ - (DONE!) Adjust for non 4:3 proportions's when creating gain maps
+ - (DONE!) Recalibrate the zen2 cameras Standard A color matrices
+ - (DONE!) Create workaround for mirroring the front camera image
+ - (DONE!) on Zenfone Zoom, start using the front camera
