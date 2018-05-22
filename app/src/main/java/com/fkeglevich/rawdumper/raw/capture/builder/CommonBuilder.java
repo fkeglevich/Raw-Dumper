@@ -23,6 +23,8 @@ import com.fkeglevich.rawdumper.raw.capture.DateInfo;
 
 import java.io.File;
 
+import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
+
 /**
  * Created by Flávio Keglevich on 25/08/2017.
  * TODO: Add a class header comment!
@@ -57,5 +59,12 @@ public abstract class CommonBuilder extends ACaptureInfoBuilder
                                     .useFileFormat(FileFormat.DNG)
                                     .isPicture()
                                     .build();
+    }
+
+    @Override
+    public void buildInvertRows()
+    {
+        if (captureInfo.camera != null)
+            captureInfo.invertRows = captureInfo.camera.getFacing() == CAMERA_FACING_FRONT;
     }
 }

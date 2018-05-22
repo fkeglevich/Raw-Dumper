@@ -50,7 +50,7 @@ public class TileImageWriter extends ADngImageWriter
     }
 
     @Override
-    protected void writeImageData(TiffWriter tiffWriter, RawImageData imageData) throws IOException
+    protected void writeImageData(TiffWriter tiffWriter, RawImageData imageData, boolean invertRows) throws IOException
     {
         init(tiffWriter, imageData.getSize());
 
@@ -61,7 +61,8 @@ public class TileImageWriter extends ADngImageWriter
         int tileBytesPerLine = tileWidth * bytesPerPixel;
 
         for (int row = 0; row < paddedHeight; row++)
-            imageData.copyValidRowToBuffer(row, buffer, tileBytesPerLine * row);
+            imageData.copyValidRowToBuffer(invertRows ? (paddedHeight - 1 - row): row, buffer, tileBytesPerLine * row);
+
 
         tiffWriter.writeRawTile(FIRST_TILE_ID, buffer, buffer.length);
         tiffWriter.writeDirectory();

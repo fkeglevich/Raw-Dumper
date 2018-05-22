@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.gain;
 
 import com.fkeglevich.rawdumper.dng.opcode.GainMapOpcode;
 import com.fkeglevich.rawdumper.dng.opcode.OpcodeListWriter;
+import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
@@ -34,10 +35,10 @@ public class GainMapOpcodeStacker
 {
     private static final String TAG = "GainMapOpcodeWriter";
 
-    public static void write(ExtraCameraInfo cameraInfo, MakerNoteInfo mknInfo, RawImageSize imageSize, TiffWriter tiffWriter)
+    public static void write(CaptureInfo captureInfo, TiffWriter tiffWriter)
     {
-        Map<ShadingIlluminant, BayerGainMap> map = cameraInfo.getGainMapCollection();
-        double[] illuminantScale = mknInfo.illuminantScale;
+        Map<ShadingIlluminant, BayerGainMap> map = captureInfo.camera.getGainMapCollection();
+        double[] illuminantScale = captureInfo.makerNoteInfo.illuminantScale;
         if (map == null || illuminantScale == null) return;
 
         //PerfInfo.start(TAG);
@@ -52,12 +53,14 @@ public class GainMapOpcodeStacker
                 accGainMap.add(gainMap);
             }
         }
+        if (captureInfo.invertRows)
+            accGainMap.invertRows();
         //Log.i(TAG, accGainMap.red.toString());
         //Log.i(TAG, accGainMap.blue.toString());
         //Log.i(TAG, accGainMap.greenRed.toString());
         //Log.i(TAG, accGainMap.greenBlue.toString());
         //PerfInfo.end("GainMapOpcodeWriter");
-        GainMapOpcode opcode = new GainMapOpcode(imageSize, accGainMap);
+        GainMapOpcode opcode = new GainMapOpcode(captureInfo.imageSize, accGainMap);
         OpcodeListWriter.writeOpcodeList3Tag(tiffWriter, Collections.singletonList(opcode));
     }
 }

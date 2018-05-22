@@ -79,4 +79,16 @@ public enum BayerPattern
     {
         return Gb;
     }
+
+    public BayerPattern invertVertically()
+    {
+        switch (this)
+        {
+            case BGGR: return GRBG;
+            case RGGB: return GBRG;
+            case GBRG: return RGGB;
+            case GRBG: return BGGR;
+            default:   return UNKNOWN;
+        }
+    }
 }

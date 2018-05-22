@@ -56,7 +56,7 @@ public class DngWriter
         try
         {
             writeMetadata(captureInfo);
-            writer.writeImageData(tiffWriter, imageData);
+            writer.writeImageData(tiffWriter, imageData, captureInfo.invertRows);
             writeExifInfo(captureInfo);
         }
         finally
@@ -74,7 +74,7 @@ public class DngWriter
     private void writeMetadata(CaptureInfo captureInfo)
     {
         writeBasicHeader(captureInfo.imageSize);
-        captureInfo.camera.getSensor().writeTiffTags(tiffWriter);
+        captureInfo.camera.getSensor().writeTiffTags(tiffWriter, captureInfo.invertRows);
         captureInfo.camera.writeTiffTags(tiffWriter);
         captureInfo.device.writeTiffTags(tiffWriter);
         captureInfo.writeTiffTags(tiffWriter);
@@ -87,9 +87,7 @@ public class DngWriter
         if (!DebugFlag.getDontUseGainMaps())
         {
             if (captureInfo.camera.getGainMapCollection() != null)
-            {
-                GainMapOpcodeStacker.write(captureInfo.camera, captureInfo.makerNoteInfo, captureInfo.imageSize, tiffWriter);
-            }
+                GainMapOpcodeStacker.write(captureInfo, tiffWriter);
             else if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)
                 captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter);
         }

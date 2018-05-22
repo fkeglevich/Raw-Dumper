@@ -48,6 +48,7 @@ public abstract class ACaptureInfoBuilder
     public abstract void buildExtraJpegBytes();
     public abstract void buildRawDataBytes();
     public abstract void buildRelatedI3av4File();
+    public abstract void buildInvertRows();
 
     public CaptureInfo build()
     {
@@ -64,6 +65,7 @@ public abstract class ACaptureInfoBuilder
         buildExtraJpegBytes();
         buildRawDataBytes();
         buildRelatedI3av4File();
+        buildInvertRows();
         return captureInfo;
     }
 }

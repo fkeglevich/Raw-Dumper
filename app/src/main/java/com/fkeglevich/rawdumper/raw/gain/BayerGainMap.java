@@ -77,6 +77,16 @@ public class BayerGainMap
         greenBlue.multiplyByScalar(value);
     }
 
+    public void invertRows()
+    {
+        isValid();
+
+        red.invertRows();
+        blue.invertRows();
+        greenRed.invertRows();
+        greenBlue.invertRows();
+    }
+
     public BayerGainMap cloneMap()
     {
         BayerGainMap result = new BayerGainMap(numColumns, numRows);

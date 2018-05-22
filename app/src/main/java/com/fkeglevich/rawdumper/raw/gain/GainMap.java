@@ -60,6 +60,22 @@ public class GainMap
                 values[row][col] *= value;
     }
 
+    public void invertRows()
+    {
+        int halfRows = numRows / 2;
+        float[] rowBuffer = new float[numColumns];
+        float[] currentRow, invertedRow;
+        for (int row = 0; row < halfRows; row++)
+        {
+            currentRow  = values[row];
+            invertedRow = values[numRows - 1 - row];
+
+            System.arraycopy(currentRow,  0, rowBuffer,   0, numColumns);
+            System.arraycopy(invertedRow, 0, currentRow,  0, numColumns);
+            System.arraycopy(rowBuffer,   0, invertedRow, 0, numColumns);
+        }
+    }
+
     public GainMap cloneMap()
     {
         GainMap result = new GainMap(numColumns, numRows);

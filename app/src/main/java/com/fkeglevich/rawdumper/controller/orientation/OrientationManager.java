@@ -90,7 +90,7 @@ public class OrientationManager
         else
             degrees = (cameraOrientation + orientation + 180) % 360;
 
-        return degreesToOrientation(degrees, facing == CAMERA_FACING_FRONT);
+        return degreesToOrientation(degrees, false);
     }
 
     @NonNull
