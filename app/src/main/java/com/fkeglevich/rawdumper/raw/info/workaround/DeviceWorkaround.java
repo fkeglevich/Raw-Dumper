@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.info.workaround;
 
+import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 /**
@@ -26,5 +27,5 @@ import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 interface DeviceWorkaround
 {
-    void applyWorkaroundIfNeeded(DeviceInfo deviceInfo);
+    void applyWorkaroundIfNeeded(DeviceInfo deviceInfo, CameraSelector cameraSelector);
 }

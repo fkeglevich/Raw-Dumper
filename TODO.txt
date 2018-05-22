@@ -145,3 +145,4 @@ Done:
  - (DONE!) Adjust for non 4:3 proportions's when creating gain maps
  - (DONE!) Recalibrate the zen2 cameras Standard A color matrices
  - (DONE!) Create workaround for mirroring the front camera image
+ - (DONE!) on Zenfone Zoom, start using the front camera

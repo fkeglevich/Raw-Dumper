@@ -31,7 +31,7 @@ public class WorkaroundStage implements SetupStage
     @Override
     public void executeStage(SetupStageLink setupBase)
     {
-        workaroundManager.applyWorkaroundIfNeeded(setupBase.getDeviceInfo());
+        workaroundManager.applyWorkaroundIfNeeded(setupBase.getDeviceInfo(), setupBase.getCameraSelector());
         setupBase.setWorkaroundToken();
         setupBase.processNextStage();
     }

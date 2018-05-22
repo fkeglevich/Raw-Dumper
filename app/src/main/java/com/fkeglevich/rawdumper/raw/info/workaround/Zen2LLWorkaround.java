@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.raw.info.workaround;
 import android.hardware.Camera;
 import android.util.Log;
 
+import com.fkeglevich.rawdumper.camera.async.CameraSelector;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
@@ -57,7 +58,7 @@ class Zen2LLWorkaround implements DeviceWorkaround
     private static final String CAMERA_LIB_PATH  = "/system/lib/hw/camera.vendor.mofd_v1.so";
 
     @Override
-    public void applyWorkaroundIfNeeded(DeviceInfo deviceInfo)
+    public void applyWorkaroundIfNeeded(DeviceInfo deviceInfo, CameraSelector cameraSelector)
     {
         if (M10MO_SO_FILE.exists())
             apply(deviceInfo);
