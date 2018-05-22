@@ -145,6 +145,7 @@
 					"10000"
 				]
 			},
+            "gainMapFile": "t4k37_gain_map.bin",
             "hasKnownMakernote": true,
             "id": 0,
             "lens": {
@@ -364,6 +365,7 @@
                     "10000"
 				]
 			},
+            "gainMapFile": "ov5670_gain_map.bin",
             "hasKnownMakernote": true,
             "id": 1,
             "lens": {
