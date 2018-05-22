@@ -47,6 +47,7 @@ import com.fkeglevich.rawdumper.camera.feature.restriction.FocusRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.WhiteBalanceRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.ModeRestrictionChain;
 import com.fkeglevich.rawdumper.camera.service.CameraServiceManager;
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 
@@ -102,6 +103,8 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         //mode format
         pictureModeFeature.setValue(pictureModeFeature.getAvailableValues().get(0));
         pictureFormatFeature.setValue(pictureFormatFeature.getAvailableValues().get(1));
+        if (DebugFlag.useSmallestPicSize())
+            pictureSizeFeature.setValue(pictureSizeFeature.getAvailableValues().get(0));
 
         ThreadUtil.simpleDelay(150);
     }

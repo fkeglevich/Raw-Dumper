@@ -84,7 +84,7 @@ public class DngWriter
         captureInfo.camera.getNoise().writeTiffTags(tiffWriter);
         captureInfo.whiteBalanceInfo.writeTiffTags(tiffWriter);
 
-        if (!DebugFlag.getDontUseGainMaps())
+        if (!DebugFlag.dontUseGainMaps())
         {
             if (captureInfo.camera.getGainMapCollection() != null)
                 GainMapOpcodeStacker.write(captureInfo, tiffWriter);

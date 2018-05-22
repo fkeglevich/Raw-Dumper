@@ -39,6 +39,7 @@ public class DebugFlag
     private static final DebugFlag ENABLE_EMULATOR          = new DebugFlag(false, false);
     private static final DebugFlag DONT_USE_GAIN_MAPS       = new DebugFlag(false, false);
     private static final DebugFlag USE_DEBUG_GAIN_MAP       = new DebugFlag(false, false);
+    private static final DebugFlag USE_SMALLEST_PIC_SIZE    = new DebugFlag(false, false);
 
     private static boolean or(DebugFlag first, DebugFlag second)
     {
@@ -99,7 +100,7 @@ public class DebugFlag
         return DONT_SAVE_PICTURES.get();
     }
 
-    public static boolean getDontUseGainMaps()
+    public static boolean dontUseGainMaps()
     {
         return DONT_USE_GAIN_MAPS.get();
     }
@@ -107,5 +108,10 @@ public class DebugFlag
     public static boolean useDebugGainMap()
     {
         return USE_DEBUG_GAIN_MAP.get();
+    }
+
+    public static boolean useSmallestPicSize()
+    {
+        return USE_SMALLEST_PIC_SIZE.get();
     }
 }
