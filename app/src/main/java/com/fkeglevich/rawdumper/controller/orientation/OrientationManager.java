@@ -90,20 +90,20 @@ public class OrientationManager
         else
             degrees = (cameraOrientation + orientation + 180) % 360;
 
-        return degreesToOrientation(degrees, false);
+        return degreesToOrientation(degrees, facing == CAMERA_FACING_FRONT /*&& invertRows == true*/);
     }
 
     @NonNull
     private ImageOrientation degreesToOrientation(int degrees, boolean flipHorizontally)
     {
-        if (degrees >= 45 && degrees < 135)
-            return flipHorizontally ? ImageOrientation.RIGHTBOT : ImageOrientation.LEFTBOT;
-        if (degrees >= 135 && degrees < 225)
-            return flipHorizontally ? ImageOrientation.TOPRIGHT : ImageOrientation.TOPLEFT;
-        if (degrees >= 225 && degrees < 315)
-            return flipHorizontally ? ImageOrientation.LEFTTOP : ImageOrientation.RIGHTTOP;
-        else
-            return flipHorizontally ? ImageOrientation.BOTLEFT : ImageOrientation.BOTRIGHT;
+        if (degrees >= 45 && degrees < 135) //90
+            return flipHorizontally ? ImageOrientation.LEFTBOT : ImageOrientation.LEFTBOT;
+        if (degrees >= 135 && degrees < 225) //180
+            return flipHorizontally ? ImageOrientation.BOTRIGHT : ImageOrientation.TOPLEFT;
+        if (degrees >= 225 && degrees < 315) //270
+            return flipHorizontally ? ImageOrientation.RIGHTTOP : ImageOrientation.RIGHTTOP;
+        else //0
+            return flipHorizontally ? ImageOrientation.TOPLEFT : ImageOrientation.BOTRIGHT;
     }
 
     public int getCameraRotation(CameraContext cameraContext)
