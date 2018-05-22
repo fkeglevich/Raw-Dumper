@@ -3,9 +3,8 @@ TODO list:
  - A better handling of unknown devices
    - Automatic discovery of raw image sizes
    - Automatic discovery of raw bayer pattern
-   
- - Better handling of known devices
-   - Do a better calibration profile of the Toshiba and OV sensors of the Z00A
+
+ - (IN PROGRESS) Do a better calibration profile of the Toshiba and OV sensors of the Z00A
 
  - (IN PROGRESS) (IMPORTANT) Add the ~recovering photos~ user case, if the app crashes
    - Note:  temporarily save EVERY important information just before taking the pictures.
@@ -144,3 +143,5 @@ Done:
  - (DONE!) Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
  - (DONE!) Create code for mean-gain-map stacking
  - (DONE!) Adjust for non 4:3 proportions's when creating gain maps
+ - (DONE!) Recalibrate the zen2 cameras Standard A color matrices
+ - (DONE!) Create workaround for mirroring the front camera image
