@@ -11,7 +11,6 @@ TODO list:
    - Note:  temporarily save EVERY important information just before taking the pictures.
             So in a case of crash, the photos can be automatically recovered later
 
- - (FUTURE RELEASE) Adjust for non 4:3 proportions's when creating gain maps
  - (FUTURE RELEASE) Auto rotate the ISO/SS choosers
  - (FUTURE RELEASE) Handle different types of makernotes
 
@@ -31,10 +30,6 @@ TODO list:
 Next features:
  - Selection of picture size
  - Night Mode with raw pictures
- - Almost-perfect lens shading correction
-   - (NOT ANYMORE!) requires DNG SDK for working with low-level gain maps dng opcodes
-   - Idea: while DNG SDK support is not ready, simply apply the gain directly to the raw data
-     update: we are going to create the low level opcodes by ourselves
  - Save pictures using the DNG SDK
    - Advantages: compression and DNG files that-always-work
  - Gain-based white balance
@@ -148,3 +143,4 @@ Done:
  - (DONE!) Needs to keep track of the old 90 degree value for a smoother transition
  - (DONE!) Needs to ignore the rotation when the rotation is too close to 45, 135, 225 and 315 degrees
  - (DONE!) Create code for mean-gain-map stacking
+ - (DONE!) Adjust for non 4:3 proportions's when creating gain maps
