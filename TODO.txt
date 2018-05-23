@@ -147,3 +147,4 @@ Done:
  - (DONE!) Create workaround for mirroring the front camera image
  - (DONE!) on Zenfone Zoom, start using the front camera
  - Fixed front camera orientation (again)
+ - (DONE!) Take picture with ZenZoom camera button and focus with half press
