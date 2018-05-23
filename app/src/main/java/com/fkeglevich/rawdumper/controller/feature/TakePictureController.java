@@ -31,6 +31,7 @@ import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,6 +42,8 @@ import java.util.List;
 
 public class TakePictureController extends FeatureController
 {
+    private final static List<Integer> KEY_CODES = Arrays.asList(KeyEvent.KEYCODE_VOLUME_DOWN, KeyEvent.KEYCODE_HEADSETHOOK, KeyEvent.KEYCODE_CAMERA);
+
     private final View captureButton;
     private final ButtonDisabledStateController buttonDisabledStateController;
     private final Toast toast;
@@ -74,8 +77,7 @@ public class TakePictureController extends FeatureController
         captureButton.setOnClickListener(v -> actualTakePicture(camera));
         keyListener = eventData ->
         {
-            if (eventData.keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
-                    eventData.keyCode == KeyEvent.KEYCODE_HEADSETHOOK)
+            if (KEY_CODES.contains(eventData.keyCode))
             {
                 eventData.defaultPreventer.preventDefault();
                 actualTakePicture(camera);

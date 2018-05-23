@@ -117,7 +117,7 @@ public class FeatureControllerFactory
     {
         View cameraSurfaceView = reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
         TouchFocusView focusView = (TouchFocusView) reference.weaklyGet().findViewById(R.id.focusView);
-        return new TouchFocusMeteringAreaController(cameraSurfaceView, focusView);
+        return new TouchFocusMeteringAreaController(cameraSurfaceView, focusView, reference);
     }
 
     ValueMeteringController<Iso> createIsoMeteringController(ActivityReference reference)

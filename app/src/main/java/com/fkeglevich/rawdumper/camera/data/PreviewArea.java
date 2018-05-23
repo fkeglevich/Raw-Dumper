@@ -42,9 +42,9 @@ public class PreviewArea
     private final int viewHeight;
     private final int touchSize;
 
-    public static PreviewArea createTouchArea(int viewWidth, int viewHeight, MotionEvent motionEvent, int touchSize)
+    public static PreviewArea createTouchArea(int viewWidth, int viewHeight, int x, int y, int touchSize)
     {
-        return new PreviewArea((int) motionEvent.getX(), (int) motionEvent.getY(), viewWidth, viewHeight, touchSize);
+        return new PreviewArea(x, y, viewWidth, viewHeight, touchSize);
     }
 
     private PreviewArea(int x, int y, int viewWidth, int viewHeight, int touchSize)
