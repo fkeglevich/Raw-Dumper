@@ -36,7 +36,7 @@
     <string name="about_message">
         Raw Dumper v<xliff:g id="app_version">%s</xliff:g>
         \n
-        \nCopyright © 2017, Flávio Keglevich
+        \nCopyright © 2018, Flávio Keglevich
         \n
         \nThis app is licensed under Apache License 2.0. The license can be found here:
         \nhttps://www.apache.org/licenses/LICENSE-2.0
