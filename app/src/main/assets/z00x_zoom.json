@@ -275,7 +275,7 @@
                 "shutterSpeedAutoValue": "0",
                 "shutterSpeedValues": ["0"]
             },
-            "gainMapFile": "ov5670_gain_map.bin",
+            "gainMapFile": "ov5670_zoom_gain_map.bin",
             "hasKnownMakernote": true,
             "id": 1,
             "lens": {

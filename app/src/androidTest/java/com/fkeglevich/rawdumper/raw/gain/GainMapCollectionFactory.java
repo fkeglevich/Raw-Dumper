@@ -45,6 +45,7 @@ public class GainMapCollectionFactory
 
         generateGainMapBinary("/sdcard/shades/t4k37_shading.txt");
         generateGainMapBinary("/sdcard/shades/ov5670_shading.txt");
+        generateGainMapBinary("/sdcard/shades/ov5670_shading_zoom.txt");
     }
 
     private void generateGainMapBinary(String fileName) throws IOException

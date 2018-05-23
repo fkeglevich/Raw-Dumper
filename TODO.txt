@@ -148,3 +148,4 @@ Done:
  - (DONE!) on Zenfone Zoom, start using the front camera
  - Fixed front camera orientation (again)
  - (DONE!) Take picture with ZenZoom camera button and focus with half press
+ - (DONE!) Create specific gain maps for ZenZoom front camera
