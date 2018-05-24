@@ -120,7 +120,8 @@ public abstract class PresetController<T> extends FeatureController implements D
     {
         TransitionManager.beginDelayedTransition((ViewGroup) chooser.getRootView(), fadeTransition);
         chooser.setVisibility(View.INVISIBLE);
-        ButtonController.changeButtonBackground(mainButton, R.drawable.round_button_default);
+        if (buttonDisabledStateController.isButtonEnabled())
+            ButtonController.changeButtonBackground(mainButton, R.drawable.round_button_default);
     }
 
     private void showChooser()
