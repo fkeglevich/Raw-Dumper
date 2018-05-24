@@ -39,7 +39,8 @@ import java.util.List;
 
 public class DeviceInfoLoader
 {
-    private static final String SUPPORTED_DEVICES_FILENAME = "supported_devices.json";
+    private static final String DEVICES_DIR_NAME = "devices/";
+    private static final String SUPPORTED_DEVICES_FILENAME = DEVICES_DIR_NAME + "supported_devices.json";
     private static final String DEVICE_FILE_EXTENSION = ".json";
 
     private Moshi moshi;
@@ -99,7 +100,7 @@ public class DeviceInfoLoader
     {
         try
         {
-            String deviceInfoJson = AssetUtil.getAssetAsString(deviceInfoFileName + DEVICE_FILE_EXTENSION);
+            String deviceInfoJson = AssetUtil.getAssetAsString(DEVICES_DIR_NAME + deviceInfoFileName + DEVICE_FILE_EXTENSION);
             DeviceInfo deviceInfo = moshi.adapter(DeviceInfo.class).fromJson(deviceInfoJson);
             if (deviceInfo != null) deviceInfo.runtimeInit(deviceInfoFileName);
             return deviceInfo;
