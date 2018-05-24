@@ -148,3 +148,4 @@ Done:
  - Fixed front camera orientation (again)
  - (DONE!) Take picture with ZenZoom camera button and focus with half press
  - (DONE!) Create specific gain maps for ZenZoom front camera
+ - Fixed gain map position for non 4:3 picture sizes
