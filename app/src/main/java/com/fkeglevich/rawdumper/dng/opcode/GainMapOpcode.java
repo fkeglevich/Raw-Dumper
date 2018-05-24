@@ -79,11 +79,13 @@ public class GainMapOpcode extends Opcode
         this.mapPointsV = bayerGainMap.numRows;
         this.mapPointsH = bayerGainMap.numColumns;
 
-        mapSpacingV = 1.0 / (virtualMapPointsV(rawImageSize) - 1);
+        double virtualMapPointsV = virtualMapPointsV(rawImageSize);
+
+        mapSpacingV = 1.0 / (virtualMapPointsV - 1);
         mapSpacingH = 1.0 / (this.mapPointsH - 1);
 
         mapOriginH  = 0;
-        mapOriginV  = 0;
+        mapOriginV  = -(mapPointsV / virtualMapPointsV - 1) / 2;
 
         mapPlanes   = 3;
         this.bayerGainMap = bayerGainMap;
@@ -129,13 +131,36 @@ public class GainMapOpcode extends Opcode
         }
         else
         {
-            for (int y = 0; y < mapPointsV; y++)
-                for (int x = 0; x < mapPointsH; x++)
-                {
-                    buffer.putFloat(bayerGainMap.red.values[y][x]);
-                    buffer.putFloat((bayerGainMap.greenRed.values[y][x] + bayerGainMap.greenBlue.values[y][x]) / 2f);
-                    buffer.putFloat(bayerGainMap.blue.values[y][x]);
-                }
+            if (DebugFlag.markGainMapCenter())
+            {
+                int halfPointV = mapPointsV / 2;
+                int halfPointH = mapPointsH / 2;
+                for (int y = 0; y < mapPointsV; y++)
+                    for (int x = 0; x < mapPointsH; x++)
+                    {
+                        if (x == halfPointH || y == halfPointV)
+                        {
+                            buffer.putFloat(0.2f);
+                            buffer.putFloat(0.2f);
+                            buffer.putFloat(0.2f);
+                            continue;
+                        }
+                        buffer.putFloat(bayerGainMap.red.values[y][x]);
+                        buffer.putFloat((bayerGainMap.greenRed.values[y][x] + bayerGainMap.greenBlue.values[y][x]) / 2f);
+                        buffer.putFloat(bayerGainMap.blue.values[y][x]);
+                    }
+            }
+            else
+            {
+                for (int y = 0; y < mapPointsV; y++)
+                    for (int x = 0; x < mapPointsH; x++)
+                    {
+                        buffer.putFloat(bayerGainMap.red.values[y][x]);
+                        buffer.putFloat((bayerGainMap.greenRed.values[y][x] + bayerGainMap.greenBlue.values[y][x]) / 2f);
+                        buffer.putFloat(bayerGainMap.blue.values[y][x]);
+                    }
+            }
+
         }
     }
 }
