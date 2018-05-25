@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
-import android.view.MotionEvent;
-
 import java.util.Arrays;
 import java.util.List;
 
