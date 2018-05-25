@@ -20,6 +20,8 @@ TODO list:
 
  - (IN PROGRESS) Optimize logcat reading, right now the GC is crying
 
+ - Disable modes button when opening the camera
+
  - Save features's values when closing camera
 
  - (IMPORTANT) Test the newer version of these devices:
