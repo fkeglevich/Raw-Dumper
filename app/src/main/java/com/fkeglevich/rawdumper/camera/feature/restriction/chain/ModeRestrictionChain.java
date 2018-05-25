@@ -16,6 +16,9 @@
 
 package com.fkeglevich.rawdumper.camera.feature.restriction.chain;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.fkeglevich.rawdumper.camera.action.PreviewActions;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
@@ -40,6 +43,7 @@ import java.util.List;
 public class ModeRestrictionChain extends RestrictionChain
 {
     private final PreviewActions previewActions;
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     public ModeRestrictionChain(PictureModeFeature modeFeature,
                                 PictureFormatFeature formatFeature,
@@ -67,12 +71,23 @@ public class ModeRestrictionChain extends RestrictionChain
     @Override
     protected void onBeforeChain()
     {
-        previewActions.stopPreview();
+        //previewActions.stopPreview();
     }
+
+    private int a = 0;
 
     @Override
     protected void onAfterChain()
     {
-        previewActions.startPreview();
+        /*if (a <= 1)
+        {
+            previewActions.startPreview();
+        }
+        else
+        {
+            handler.postDelayed(() -> previewActions.startPreview(), 500);
+        }
+        a++;*/
+        //previewActions.startPreview();
     }
 }

@@ -53,6 +53,9 @@ class FeatureControllerManager
         controllersList.add(controllerFactory.createWbController(reference));
         controllersList.add(controllerFactory.createManualWbController(reference));
         controllersList.add(controllerFactory.createWbMeteringController(reference));
+        controllersList.add(controllerFactory.createPictureSizeController(reference));
+        controllersList.add(controllerFactory.createPictureFormatController(reference));
+        controllersList.add(controllerFactory.createPictureModeController(reference));
         List<ValueMeteringController> meteringControllers = createMeteringControllers(reference);
         controllersList.add(controllerFactory.createCaptureButtonController(reference, meteringControllers));
     }

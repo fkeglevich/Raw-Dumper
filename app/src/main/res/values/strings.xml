@@ -133,5 +133,6 @@
     <string name="ev_button">EV</string>
     <string name="wb_button">WB</string>
     <string name="manual_temperature_text">K</string>
+    <string name="camera_resolution">Camera resolution</string>
 
 </resources>

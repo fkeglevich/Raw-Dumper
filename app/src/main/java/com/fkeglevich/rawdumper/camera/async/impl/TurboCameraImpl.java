@@ -106,6 +106,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         if (DebugFlag.useSmallestPicSize())
             pictureSizeFeature.setValue(pictureSizeFeature.getAvailableValues().get(0));
 
+        lowLevelCamera.getCameraActions().startPreview();
         ThreadUtil.simpleDelay(150);
     }
 

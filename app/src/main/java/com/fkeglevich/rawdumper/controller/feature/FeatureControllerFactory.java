@@ -223,6 +223,21 @@ public class FeatureControllerFactory
         return new ManualTemperatureController(reference);
     }
 
+    PictureSizeController createPictureSizeController(ActivityReference reference)
+    {
+        return new PictureSizeController(reference);
+    }
+
+    PictureFormatController createPictureFormatController(ActivityReference reference)
+    {
+        return new PictureFormatController(reference);
+    }
+
+    PictureModeController createPictureModeController(ActivityReference reference)
+    {
+        return new PictureModeController(reference);
+    }
+
     private ButtonController createButtonController(ActivityReference reference,
                                                            @IdRes int buttonId,
                                                            DisplayableFeatureUi adapter,

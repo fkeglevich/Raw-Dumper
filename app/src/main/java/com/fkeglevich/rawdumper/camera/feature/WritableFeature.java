@@ -19,6 +19,8 @@ package com.fkeglevich.rawdumper.camera.feature;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
+import com.fkeglevich.rawdumper.util.event.EventDispatcher;
+import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 
 /**
  * TODO: Add class header
@@ -30,6 +32,8 @@ public abstract class WritableFeature<T, A> extends Feature<T>
 {
     private ValueValidator<T, A> validator;
     private final boolean isMutable;
+
+    public EventDispatcher<Void> onValidatorChanged = new SimpleDispatcher<>();
 
     WritableFeature(Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, A> validator)
     {
@@ -73,6 +77,7 @@ public abstract class WritableFeature<T, A> extends Feature<T>
 
         validator = newValidator;
         setValue(newValue);
+        onValidatorChanged.dispatchEvent(null);
     }
 
     public boolean isMutable()
