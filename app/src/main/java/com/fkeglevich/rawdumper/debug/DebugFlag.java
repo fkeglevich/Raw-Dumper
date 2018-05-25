@@ -34,7 +34,7 @@ public class DebugFlag
     private static final DebugFlag FORCE_RETRY_PIPELINE     = new DebugFlag(false, false);
     private static final DebugFlag FORCE_RAW_ZENFONE_ZOOM   = new DebugFlag(false, false);
     private static final DebugFlag DISABLE_LOGCAT_SERVICE   = new DebugFlag(false, false);
-    private static final DebugFlag IGNORE_PIC_SIZE_MISMATCH = new DebugFlag(false, false);
+    private static final DebugFlag IGNORE_PIC_SIZE_MISMATCH = new DebugFlag(!false, false);
     private static final DebugFlag DONT_SAVE_PICTURES       = new DebugFlag(false, false);
     private static final DebugFlag ENABLE_EMULATOR          = new DebugFlag(false, false);
     private static final DebugFlag DONT_USE_GAIN_MAPS       = new DebugFlag(false, false);
