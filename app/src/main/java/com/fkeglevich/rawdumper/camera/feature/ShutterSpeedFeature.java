@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
 import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
@@ -45,17 +46,17 @@ public class ShutterSpeedFeature extends WritableFeature<ShutterSpeed, List<Shut
         Parameter<ShutterSpeed> ssParameter = ExposureParameterFactory.createSSParameter(exposureInfo);
         List<String> ssValues = exposureInfo.getShutterSpeedValues();
         List<ShutterSpeed> valueList = ValueCollectionFactory.decodeValueList(ssParameter, ssValues);
-        return new ShutterSpeedFeature(ssParameter, parameterCollection, valueList, cameraActions);
+        return new ShutterSpeedFeature(ssParameter, parameterCollection, valueList, cameraActions, IntelParameters.KEY_SHUTTER.equals(exposureInfo.getShutterSpeedParameter()));
     }
 
-    private ShutterSpeedFeature(Parameter<ShutterSpeed> parameter, ParameterCollection parameterCollection, List<ShutterSpeed> valueList, CameraActions cameraActions)
+    private ShutterSpeedFeature(Parameter<ShutterSpeed> parameter, ParameterCollection parameterCollection, List<ShutterSpeed> valueList, CameraActions cameraActions, boolean requiresICE)
     {
         super(parameter, parameterCollection, new ListValidator<>(valueList));
         this.cameraActions = cameraActions;
         if (getAvailableValues().contains(ShutterSpeed.AUTO))
             setValue(ShutterSpeed.AUTO);
-
-        getOnChanged().addListener(eventData -> performUpdate());
+        if (requiresICE)
+            getOnChanged().addListener(eventData -> performUpdate());
     }
 
     @Override
