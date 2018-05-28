@@ -86,6 +86,9 @@ public abstract class PresetController<T> extends FeatureController implements D
                 continue;
 
             button = iconMap.get(mode);
+            if (button == null)
+                continue;
+
             button.setVisibility(View.VISIBLE);
             button.setOnClickListener(button1 ->
             {
