@@ -44,6 +44,9 @@ public abstract class Feature<T> implements Available, DeltaParameter<T>
     {
         feature.getOnChanging().removeAllListeners();
         feature.getOnChanged().removeAllListeners();
+
+        if (feature instanceof WritableFeature)
+            ((WritableFeature)feature).onValidatorChanged.removeAllListeners();
     }
 
     Feature(Parameter<T> parameter, ParameterCollection parameterCollection)
