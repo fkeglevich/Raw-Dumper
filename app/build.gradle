@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.fkeglevich.rawdumper"
         testApplicationId "com.fkeglevich.rawdumper.tests"
         minSdkVersion 18
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode 6
         versionName "3.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -54,7 +54,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
     implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
     implementation 'com.andkulikov:transitionseverywhere:1.7.2'
@@ -65,10 +65,10 @@ dependencies {
         transitive = true
     }
     //required support lib modules
-    implementation 'com.android.support:appcompat-v7:25.4.0'
-    implementation 'com.android.support:recyclerview-v7:25.4.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:support-annotations:27.1.1'
-    implementation 'com.android.support:design:25.4.0'
+    implementation 'com.android.support:design:27.1.1'
 
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.2.3'
 }
