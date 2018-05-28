@@ -33,6 +33,14 @@ public class AsusParameters
     public static final String ASUS_XENON_BRIGHTNESS = "Xe_brightness";
     public static final String ASUS_XENON_EXPOSURE_TIME = "Xe_exposure_time";
 
+    public static final String ASUS_XENON_BLUE_GAIN_STR = "Xe_b_gain_str";
+    public static final String ASUS_XENON_RED_GAIN_STR = "Xe_r_gain_str";
+    public static final String ASUS_XENON_BLUE_GAIN = "Xe_b_gain";
+    public static final String ASUS_XENON_RED_GAIN = "Xe_r_gain";
+
+    public static final String ASUS_SET_BLUE_GAIN = "asus_set_b_gain";
+    public static final String ASUS_SET_RED_GAIN = "asus_set_r_gain";
+
     public static final String ASUS_MODE = "mode";
     public static final String ASUS_ULTRA_PIXELS = "ultra_pixels_mode";
 
