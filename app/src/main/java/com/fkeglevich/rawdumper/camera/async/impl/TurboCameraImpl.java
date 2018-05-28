@@ -114,7 +114,6 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     {
         isoFeature          = recyclerFactory.createIsoFeature();
         isoMeteringFeature  = recyclerFactory.createIsoMeteringFeature();
-        shutterSpeedFeature = recyclerFactory.createShutterSpeedFeature();
         ssMeteringFeature   = recyclerFactory.createSSMeteringFeature();
         evFeature           = recyclerFactory.createEVFeature();
         previewFeature      = recyclerFactory.createPreviewFeature();
@@ -130,6 +129,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         pictureFormatFeature    = virtualRecyclerFactory.createPictureFormatFeature();
         pictureSizeFeature      = virtualRecyclerFactory.createPictureSizeFeature();
         flashFeature            = virtualRecyclerFactory.createFlashFeature(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext());
+        shutterSpeedFeature     = virtualRecyclerFactory.createShutterSpeedFeature(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext());
     }
 
     private void createRestrictions()

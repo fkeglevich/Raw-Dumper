@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, Flávio Keglevich
+ * Copyright 2018, Flávio Keglevich
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,9 @@
 
 package com.fkeglevich.rawdumper.camera.action;
 
-/**
- * TODO: Add class header
- * <p>
- * Created by Flávio Keglevich on 28/10/17.
- */
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 
-public interface CameraActions extends AutoFocusAction, PreviewActions, PictureModeAction,
-        PictureFormatAction, TakePictureAction, DumpParametersAction, FlashAction, ShutterSpeedNotifier
+public interface ShutterSpeedNotifier
 {
+    void notifyShutterSpeed(ShutterSpeed value);
 }

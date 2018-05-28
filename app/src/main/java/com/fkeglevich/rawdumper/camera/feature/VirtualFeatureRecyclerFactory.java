@@ -20,6 +20,7 @@ import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Flash;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.parameter.CodeclessParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
@@ -73,6 +74,13 @@ public class VirtualFeatureRecyclerFactory extends FeatureRecyclerFactoryBase
     public WritableFeature<Flash, List<Flash>> createFlashFeature(ParameterCollection cameraParameterCollection, CameraContext cameraContext)
     {
         FlashFeature result = new FlashFeature(virtualParameterCollection, cameraParameterCollection, cameraActions, cameraContext);
+        registerFeature(result);
+        return result;
+    }
+
+    public WritableFeature<ShutterSpeed, List<ShutterSpeed>> createShutterSpeedFeature(ParameterCollection cameraParameterCollection, CameraContext cameraContext)
+    {
+        ShutterSpeedFeature result = ShutterSpeedFeature.create(cameraContext.getExposureInfo(), cameraParameterCollection, cameraActions);
         registerFeature(result);
         return result;
     }

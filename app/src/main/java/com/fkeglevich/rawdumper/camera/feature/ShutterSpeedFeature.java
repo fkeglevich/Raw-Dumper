@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import android.support.annotation.NonNull;
 
+import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
@@ -34,19 +35,32 @@ import java.util.List;
  * Created by Flávio Keglevich on 26/09/17.
  */
 
-public class ShutterSpeedFeature extends WritableFeature<ShutterSpeed, List<ShutterSpeed>>
+public class ShutterSpeedFeature extends WritableFeature<ShutterSpeed, List<ShutterSpeed>> implements VirtualFeature
 {
+    private final CameraActions cameraActions;
+
     @NonNull
-    static ShutterSpeedFeature create(ExposureInfo exposureInfo, ParameterCollection parameterCollection)
+    static ShutterSpeedFeature create(ExposureInfo exposureInfo, ParameterCollection parameterCollection, CameraActions cameraActions)
     {
         Parameter<ShutterSpeed> ssParameter = ExposureParameterFactory.createSSParameter(exposureInfo);
         List<String> ssValues = exposureInfo.getShutterSpeedValues();
         List<ShutterSpeed> valueList = ValueCollectionFactory.decodeValueList(ssParameter, ssValues);
-        return new ShutterSpeedFeature(ssParameter, parameterCollection, valueList);
+        return new ShutterSpeedFeature(ssParameter, parameterCollection, valueList, cameraActions);
     }
 
-    private ShutterSpeedFeature(Parameter<ShutterSpeed> parameter, ParameterCollection parameterCollection, List<ShutterSpeed> valueList)
+    private ShutterSpeedFeature(Parameter<ShutterSpeed> parameter, ParameterCollection parameterCollection, List<ShutterSpeed> valueList, CameraActions cameraActions)
     {
         super(parameter, parameterCollection, new ListValidator<>(valueList));
+        this.cameraActions = cameraActions;
+        if (getAvailableValues().contains(ShutterSpeed.AUTO))
+            setValue(ShutterSpeed.AUTO);
+
+        getOnChanged().addListener(eventData -> performUpdate());
+    }
+
+    @Override
+    public void performUpdate()
+    {
+        cameraActions.notifyShutterSpeed(getValue());
     }
 }

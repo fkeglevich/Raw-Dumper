@@ -65,13 +65,6 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
         return result;
     }
 
-    public WritableFeature<ShutterSpeed, List<ShutterSpeed>> createShutterSpeedFeature()
-    {
-        ShutterSpeedFeature result = ShutterSpeedFeature.create(cameraContext.getExposureInfo(), parameterCollection);
-        registerFeature(result);
-        return result;
-    }
-
     public Feature<Nullable<ShutterSpeed>> createSSMeteringFeature()
     {
         SSMeteringFeature result = new SSMeteringFeature(parameterCollection, cameraContext.getSensorInfo());

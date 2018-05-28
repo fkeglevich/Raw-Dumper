@@ -27,6 +27,7 @@ import com.fkeglevich.rawdumper.camera.data.DataFormat;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
@@ -214,6 +215,20 @@ public class LowLevelCameraActions implements CameraActions
             Camera.Parameters parameters = getCamera().getParameters();
             parameters.setFlashMode(flashValue.getParameterValue());
             getCamera().setParameters(parameters);
+        }
+    }
+
+    @Override
+    public void notifyShutterSpeed(ShutterSpeed value)
+    {
+        synchronized (lock)
+        {
+            if (cameraExtension.get().hasIntelFeatures())
+            {
+                Camera.Parameters parameters = getCamera().getParameters();
+                parameters.set("ae-mode", ShutterSpeed.AUTO.equals(value) ? "auto" :  "shutter-priority");
+                getCamera().setParameters(parameters);
+            }
         }
     }
 }
