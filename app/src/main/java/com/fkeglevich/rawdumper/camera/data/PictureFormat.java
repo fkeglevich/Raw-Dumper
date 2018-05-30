@@ -50,4 +50,30 @@ public class PictureFormat implements DataContainer<CaptureSize>
     {
         return availableSizes;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PictureFormat that = (PictureFormat) o;
+
+        if (fileFormat != that.fileFormat) return false;
+        return availableSizes.equals(that.availableSizes);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = fileFormat.hashCode();
+        result = 31 * result + availableSizes.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        return fileFormat.name();
+    }
 }
