@@ -20,5 +20,5 @@ import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 
 public interface ShutterSpeedNotifier
 {
-    void notifyShutterSpeed(ShutterSpeed value);
+    void notifyShutterSpeed(ShutterSpeed value, boolean requiresIntelCamera);
 }

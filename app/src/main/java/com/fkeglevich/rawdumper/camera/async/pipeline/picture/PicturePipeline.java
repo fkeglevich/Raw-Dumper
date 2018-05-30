@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 
 /**
  * TODO: Add class header
@@ -28,4 +29,7 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 public interface PicturePipeline
 {
     void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback);
+
+    default void updateShutterSpeed(ShutterSpeed shutterSpeed)
+    { }
 }

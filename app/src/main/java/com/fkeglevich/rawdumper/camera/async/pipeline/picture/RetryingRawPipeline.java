@@ -25,6 +25,7 @@ import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.CameraThread;
 import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.async.pipeline.picture.dummy.RetryingPipelineSimulator;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.io.Directories;
@@ -55,9 +56,11 @@ public class RetryingRawPipeline implements PicturePipeline
     private final Object                    lock;
     private final CameraContext             cameraContext;
     private final RestartableCamera         restartableCamera;
+    private final int                       minRetryingDelay;
 
     private Camera.Parameters               parameters = null;
     private boolean                         ignoreError = false;
+    private volatile int                    pipelineDelay;
 
     private final Camera.PictureCallback dummyJpegCallback = new Camera.PictureCallback()
     {
@@ -74,11 +77,13 @@ public class RetryingRawPipeline implements PicturePipeline
 
     RetryingRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, RestartableCamera restartableCamera)
     {
-        this.errorCallback      = createErrorCallback(cameraContext.getCameraInfo().getRetryPipelineDelay());
+        this.errorCallback      = createErrorCallback();
         this.cameraExtension    = cameraExtension;
         this.lock               = lock;
         this.cameraContext      = cameraContext;
         this.restartableCamera  = restartableCamera;
+        this.minRetryingDelay   = cameraContext.getCameraInfo().getRetryPipelineDelay();
+        this.pipelineDelay      = minRetryingDelay;
     }
 
     @Override
@@ -99,6 +104,22 @@ public class RetryingRawPipeline implements PicturePipeline
                 camera.setErrorCallback(errorCallback);
                 camera.takePicture(null, null, dummyJpegCallback);
             }
+        }
+    }
+
+    @Override
+    public void updateShutterSpeed(ShutterSpeed shutterSpeed)
+    {
+        if (shutterSpeed == null || ShutterSpeed.AUTO.equals(shutterSpeed))
+        {
+            pipelineDelay = minRetryingDelay;
+        }
+        else
+        {
+            int delay = (int)Math.ceil(shutterSpeed.getExposureInSeconds() * 1000);
+            if (delay < minRetryingDelay) delay = minRetryingDelay;
+
+            pipelineDelay = delay;
         }
     }
 
@@ -170,13 +191,13 @@ public class RetryingRawPipeline implements PicturePipeline
         });
     }
 
-    private Camera.ErrorCallback createErrorCallback(int retryDelay)
+    private Camera.ErrorCallback createErrorCallback()
     {
         return (error, camera) ->
         {
             if (ignoreError)
             {
-                ThreadUtil.simpleDelay(retryDelay);
+                ThreadUtil.simpleDelay(pipelineDelay);
                 restartCamera();
                 ignoreError = false;
             }

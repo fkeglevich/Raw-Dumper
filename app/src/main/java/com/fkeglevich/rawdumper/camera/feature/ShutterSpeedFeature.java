@@ -39,6 +39,7 @@ import java.util.List;
 public class ShutterSpeedFeature extends WritableFeature<ShutterSpeed, List<ShutterSpeed>> implements VirtualFeature
 {
     private final CameraActions cameraActions;
+    private final boolean requiresIntelCamera;
 
     @NonNull
     static ShutterSpeedFeature create(ExposureInfo exposureInfo, ParameterCollection parameterCollection, CameraActions cameraActions)
@@ -49,19 +50,21 @@ public class ShutterSpeedFeature extends WritableFeature<ShutterSpeed, List<Shut
         return new ShutterSpeedFeature(ssParameter, parameterCollection, valueList, cameraActions, IntelParameters.KEY_SHUTTER.equals(exposureInfo.getShutterSpeedParameter()));
     }
 
-    private ShutterSpeedFeature(Parameter<ShutterSpeed> parameter, ParameterCollection parameterCollection, List<ShutterSpeed> valueList, CameraActions cameraActions, boolean requiresICE)
+    private ShutterSpeedFeature(Parameter<ShutterSpeed> parameter, ParameterCollection parameterCollection, List<ShutterSpeed> valueList, CameraActions cameraActions, boolean requiresIntelCamera)
     {
         super(parameter, parameterCollection, new ListValidator<>(valueList));
         this.cameraActions = cameraActions;
+        this.requiresIntelCamera = requiresIntelCamera;
+
         if (getAvailableValues().contains(ShutterSpeed.AUTO))
             setValue(ShutterSpeed.AUTO);
-        if (requiresICE)
-            getOnChanged().addListener(eventData -> performUpdate());
+
+        getOnChanged().addListener(eventData -> performUpdate());
     }
 
     @Override
     public void performUpdate()
     {
-        cameraActions.notifyShutterSpeed(getValue());
+        cameraActions.notifyShutterSpeed(getValue(), requiresIntelCamera);
     }
 }

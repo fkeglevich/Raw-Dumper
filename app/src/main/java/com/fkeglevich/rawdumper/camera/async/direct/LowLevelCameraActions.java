@@ -51,6 +51,7 @@ public class LowLevelCameraActions implements CameraActions
     private final Object lock;
     private final PictureSizeLayer pictureSizeLayer;
     private final PipelineManager pipelineManager;
+    private final LowLevelSSNotifier ssNotifier = new LowLevelSSNotifier();
 
     //Mutable state fields
     private boolean isPreviewing;
@@ -189,6 +190,7 @@ public class LowLevelCameraActions implements CameraActions
         synchronized (lock)
         {
             WhiteBalanceService.getInstance().fixValue();
+            ssNotifier.updatePipelineShutterSpeed(pipelineManager.getPicturePipeline());
             pipelineManager.getPicturePipeline().takePicture(pictureCallback, exceptionCallback);
         }
     }
@@ -219,16 +221,11 @@ public class LowLevelCameraActions implements CameraActions
     }
 
     @Override
-    public void notifyShutterSpeed(ShutterSpeed value)
+    public void notifyShutterSpeed(ShutterSpeed value, boolean requiresIntelCamera)
     {
         synchronized (lock)
         {
-            if (cameraExtension.get().hasIntelFeatures())
-            {
-                Camera.Parameters parameters = getCamera().getParameters();
-                parameters.set("ae-mode", ShutterSpeed.AUTO.equals(value) ? "auto" :  "shutter-priority");
-                getCamera().setParameters(parameters);
-            }
+            ssNotifier.notifyShutterSpeed(value, requiresIntelCamera, cameraExtension);
         }
     }
 }

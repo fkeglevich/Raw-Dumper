@@ -339,7 +339,7 @@
             "uniqueCameraModel": "Asus ZenFone Zoom %s (front camera)",
             "opcodes": [],
             "retryOnError": true,
-            "retryPipelineDelay": 2000,
+            "retryPipelineDelay": 350,
             "sensor": {
                 "baseISO": 50,
                 "bayerPattern": "BGGR",
