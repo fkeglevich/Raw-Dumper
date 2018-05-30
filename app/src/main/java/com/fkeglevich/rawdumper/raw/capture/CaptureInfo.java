@@ -28,7 +28,6 @@ import com.fkeglevich.rawdumper.util.AppPackageUtil;
 import com.fkeglevich.rawdumper.util.StringUtil;
 
 import java.io.File;
-import java.nio.charset.Charset;
 
 /**
  * Created by Flávio Keglevich on 09/06/2017.

@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.raw.reprocessing;
 import android.util.Log;
 
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
-import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.io.async.IOThread;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.builder.FromI3av4FileBuilder;

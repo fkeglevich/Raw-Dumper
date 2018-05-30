@@ -27,8 +27,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
 public class GainMapCollectionLoaderTest
 {
 
