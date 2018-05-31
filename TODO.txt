@@ -151,3 +151,9 @@ Done:
  - (DONE!) Create specific gain maps for ZenZoom front camera
  - Fixed gain map position for non 4:3 picture sizes
  - Fixed "The focus button sometimes appears enabled when it shouldn't"
+ - OriginalRawFilename tag now is a UTF8 null-terminated string
+ - Added simple reprocessing capabilites for better testing
+ - Updated targetSdkVersion
+ - (DONE!) Enabled manual shutter speed to ZenZoom front camera
+ - (DONE!) Optimized taking photo delay for ZenZoom front camera/Zen2 with MM blobs
+ - Better displaying of shutter speeds less than 1/10000
