@@ -24,17 +24,14 @@ public class YuvUtil
 {
     public static void switchUVPlanes(byte[] yuv, int width, int height)
     {
-        final int length = yuv.length;
+        final int length = width * height * 3 / 2;
         final int size = width * height;
         byte temp;
-        for (int i1 = 0; i1 < length; i1 += 2)
+        for (int i = size; i < length; i += 2)
         {
-            if (i1 >= size)
-            {
-                temp = yuv[i1];
-                yuv[i1] = yuv[i1+1];
-                yuv[i1+1] = temp;
-            }
+            temp = yuv[i];
+            yuv[i] = yuv[i+1];
+            yuv[i+1] = temp;
         }
     }
 }
