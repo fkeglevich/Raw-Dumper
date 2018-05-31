@@ -37,15 +37,14 @@ Next features:
 
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
-    - Some changes were made to address this bug, should test again to see if it still happens
  - (MINOR) Currently using the manual focus slider crashes Zenfone Zoom camera
  - (MINOR) Zen2 front camera breaks exposure at ISO 800 and 1/60 Shutter Speed
  - (MINOR) YUV pictures aren't affected by rotation.
     I am not really sure if I'm going to properly implement YUV capture because the it takes at least 8 seconds
     to save a 13 mpix lossless WEBP picture when the logcat service is disabled.
-    Lossy webpy is also too slow and the memory requirements are also too high.
-    PNG capture is event slower.
-    I probably won't enable YUV capture due to performance problems.
+    Lossy webp is also too slow and the memory requirements are also too high.
+    PNG capture is even slower.
+    I probably won't enable YUV capture (right now) due to performance problems.
  
 Done:
 
