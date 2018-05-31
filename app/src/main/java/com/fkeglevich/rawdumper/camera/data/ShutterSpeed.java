@@ -84,7 +84,7 @@ public class ShutterSpeed implements Displayable
         {
             long roundedValue = Math.round(1.0 / getExposureInSeconds());
             if (roundedValue >= 10000)
-                return "1/" + (roundedValue / 1000) + "⁴";
+                return "1/" + (roundedValue / 1000) + "K";
             else
                 return "1/" + roundedValue;
         }
