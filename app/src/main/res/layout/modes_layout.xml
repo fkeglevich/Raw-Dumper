@@ -62,7 +62,8 @@
         android:layout_alignTop="@id/backButton"
         android:layout_alignBottom="@id/infoButton"
         android:layout_marginBottom="60dp"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="60dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
