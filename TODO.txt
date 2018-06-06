@@ -24,6 +24,8 @@ TODO list:
 
  - Save features's values when closing camera
 
+ - Take picture discarding the result
+
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
 	- Zenfone 5
