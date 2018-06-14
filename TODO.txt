@@ -158,3 +158,4 @@ Done:
  - (DONE!) Enabled manual shutter speed to ZenZoom front camera
  - (DONE!) Optimized taking photo delay for ZenZoom front camera/Zen2 with MM blobs
  - Better displaying of shutter speeds less than 1/10000
+ - Fixed a bug when a su shell doesn't open gracefully
