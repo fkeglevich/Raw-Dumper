@@ -103,8 +103,8 @@ public class ShellFactory
 
     synchronized boolean registerShell(int id, Shell.Interactive shell)
     {
-        requiresCreatingShellsState();
         if (errorFlag) return false;
+        requiresCreatingShellsState();
 
         if (shell == null)
         {
@@ -113,6 +113,7 @@ public class ShellFactory
             builderList.clear();
             creatingShells = false;
             dispatchError();
+            return false;
         }
 
         shellList.set(id, shell);
