@@ -36,15 +36,15 @@ public class Iso implements Displayable
     }
 
     /**
-     * Decodes a simple float-encoded ISO value
+     * Converts analog gain value to ISO value
      *
-     * @param value     The encoded ISO
+     * @param gain      The gain value
      * @param baseIso   The sensor's base ISO value
      * @return          The ISO value
      */
-    public static Iso decodeFloatIso(float value, int baseIso)
+    public static Iso decodeAnalogGain(float gain, int baseIso)
     {
-        return create(Math.round(baseIso * value));
+        return create(Math.round(baseIso * gain));
     }
 
     public static Iso create(int isoValue)

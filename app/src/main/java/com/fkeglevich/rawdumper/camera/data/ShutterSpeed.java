@@ -39,14 +39,14 @@ public class ShutterSpeed implements Displayable
     }
 
     /**
-     * Decodes integer encoded exposure time.
+     * Decodes integer microsecond exposure time.
      *
-     * @param value The exposure time
+     * @param value The microsecond exposure time
      * @return      A ShutterSpeed object containing the exposure time in seconds
      */
-    public static ShutterSpeed decodeIntegerExposureTime(int value)
+    public static ShutterSpeed decodeMicrosecondExposure(int value)
     {
-        return create(value / 1000000d);
+        return create(value / 1.0E06);
     }
 
     public static ShutterSpeed create(double exposureInSeconds)
