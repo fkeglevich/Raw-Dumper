@@ -121,9 +121,9 @@ public class MakerNoteInfoExtractor
 
         ByteBuffer wrapped = ByteBuffer.wrap(mknBytes, mknBytes.length - LAST_EXPOSUREITEM_DELTA, EXPOSURELIST_ITEM_SIZE);
         wrapped.order(makerNoteByteOrder);
-        info.exposureTime = ShutterSpeed.decodeIntegerExposureTime(wrapped.getInt());
+        info.exposureTime = ShutterSpeed.decodeMicrosecondExposure(wrapped.getInt());
         wrapped.getInt();
-        info.iso = Iso.decodeFloatIso(wrapped.getFloat(), baseISO);
+        info.iso = Iso.decodeAnalogGain(wrapped.getFloat(), baseISO);
         return true;
     }
 

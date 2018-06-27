@@ -101,7 +101,7 @@ public class ExposureParameterFactory
             else
             {
                 int numeric = Integer.parseInt(value);
-                return Nullable.of(numeric == 0 ? null : ShutterSpeed.decodeIntegerExposureTime(numeric));
+                return Nullable.of(numeric == 0 ? null : ShutterSpeed.decodeMicrosecondExposure(numeric));
             }
         });
     }
