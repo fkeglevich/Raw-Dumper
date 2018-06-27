@@ -4,7 +4,7 @@ TODO list:
    - Automatic discovery of raw image sizes
    - Automatic discovery of raw bayer pattern
 
- - (IN PROGRESS) Do a better calibration profile of the Toshiba and OV sensors of the Z00A
+ - (IN PROGRESS) Do a better D65 calibration profile of the Toshiba and OV sensors of the Z00A
 
  - (IN PROGRESS) (IMPORTANT) Add the ~recovering photos~ user case, if the app crashes
    - Note:  temporarily save EVERY important information just before taking the pictures.
@@ -23,6 +23,10 @@ TODO list:
  - Disable modes button when opening the camera
 
  - Save features's values when closing camera
+
+ - Zoom feature for Zenfone Zoom
+
+ - Delay setting the parameter when using the slider by a couple milliseconds
 
  - Take picture discarding the result
 
@@ -49,7 +53,6 @@ Known bugs:
     I probably won't enable YUV capture (right now) due to performance problems.
  
 Done:
-
  - The i3av4 header should always be saved in the DNG Exif MakerNote tag
  - Use a better default white balance (based on 5504K) for devices with known color matrices
  - Better compatible Exif extraction
