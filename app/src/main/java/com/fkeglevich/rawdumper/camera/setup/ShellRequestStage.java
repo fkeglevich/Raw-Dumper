@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.setup;
 
 import com.fkeglevich.rawdumper.camera.service.CameraServiceManager;
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.su.MainSUShell;
 
 /**
@@ -28,11 +29,14 @@ public class ShellRequestStage implements SetupStage
     @Override
     public void executeStage(SetupStageLink setupBase)
     {
-        if (!MainSUShell.getInstance().isRunning())
-            MainSUShell.getInstance().requestShell();
+        if (!DebugFlag.isDisableMandatoryRoot())
+        {
+            if (!MainSUShell.getInstance().isRunning())
+                MainSUShell.getInstance().requestShell();
 
-        if (setupBase.getDeviceInfo().needsLogcatServices())
-            CameraServiceManager.getInstance().prepare(setupBase.getDeviceInfo().needsHalDebugCommandFlag());
+            if (setupBase.getDeviceInfo().needsLogcatServices())
+                CameraServiceManager.getInstance().prepare(setupBase.getDeviceInfo().needsHalDebugCommandFlag());
+        }
 
         setupBase.setShellRequestToken();
         setupBase.processNextStage();

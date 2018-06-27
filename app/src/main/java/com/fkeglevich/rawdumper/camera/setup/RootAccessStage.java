@@ -33,6 +33,7 @@ public class RootAccessStage implements SetupStage
         {
             setupBase.setRootToken();
             setupBase.processNextStage();
+            return;
         }
 
         MandatoryRootManager permissionManager = setupBase.getPermissionManager();
