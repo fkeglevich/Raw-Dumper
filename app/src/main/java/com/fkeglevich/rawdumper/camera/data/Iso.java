@@ -47,9 +47,14 @@ public class Iso implements Displayable
         return create(Math.round(baseIso * gain));
     }
 
+    public static boolean isInvalidIso(int isoValue)
+    {
+        return isoValue <= 0;
+    }
+
     public static Iso create(int isoValue)
     {
-        if (isoValue <= 0)
+        if (isInvalidIso(isoValue))
             throw new RuntimeException("Invalid ISO value!");
 
         return new Iso(isoValue);

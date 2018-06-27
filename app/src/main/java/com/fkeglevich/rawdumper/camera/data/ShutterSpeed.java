@@ -49,9 +49,14 @@ public class ShutterSpeed implements Displayable
         return create(value / 1.0E06);
     }
 
+    public static boolean isInvalidExposure(double exposureInSeconds)
+    {
+        return exposureInSeconds <= 0 || Double.isNaN(exposureInSeconds) || Double.isInfinite(exposureInSeconds);
+    }
+
     public static ShutterSpeed create(double exposureInSeconds)
     {
-        if (exposureInSeconds <= 0)
+        if (isInvalidExposure(exposureInSeconds))
             throw new RuntimeException("Invalid exposure value!");
 
         return new ShutterSpeed(exposureInSeconds);

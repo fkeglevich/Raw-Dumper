@@ -40,9 +40,14 @@ public class Ev implements Displayable
         return create((float) directory.getDouble(ExifIFD0Directory.TAG_EXPOSURE_BIAS));
     }
 
+    public static boolean isInvalidEv(float evValue)
+    {
+        return Float.isNaN(evValue) || Float.isInfinite(evValue);
+    }
+
     public static Ev create(float evValue)
     {
-        if (Float.isNaN(evValue) || Float.isInfinite(evValue))
+        if (isInvalidEv(evValue))
             throw new IllegalArgumentException("Invalid EV value!");
 
         Ev result = new Ev(evValue);

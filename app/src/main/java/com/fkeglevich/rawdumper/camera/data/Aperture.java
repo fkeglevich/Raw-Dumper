@@ -28,9 +28,14 @@ public class Aperture implements Displayable
 {
     private static final DecimalFormat DEFAULT_FORMAT = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
 
+    public static boolean isInvalidAperture(double fNumber)
+    {
+        return fNumber < 0.0 || Double.isNaN(fNumber) || Double.isInfinite(fNumber);
+    }
+
     public static Aperture create(double fNumber)
     {
-        if (fNumber < 0 || Double.isNaN(fNumber) || Double.isInfinite(fNumber))
+        if (isInvalidAperture(fNumber))
             throw new IllegalArgumentException("Invalid aperture value!");
 
         return new Aperture(fNumber);
