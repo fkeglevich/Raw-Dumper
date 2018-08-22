@@ -10,7 +10,13 @@ TODO list:
    - Note:  temporarily save EVERY important information just before taking the pictures.
             So in a case of crash, the photos can be automatically recovered later
 
-- (FUTURE RELEASE) Simplify the code architecture
+ - (FUTURE RELEASE) Add simple tonemapping
+ - (FUTURE RELEASE) Proper black level calibration
+			
+ - (FUTURE RELEASE) Simplify the code architecture
+ - (FUTURE RELEASE) Use a simpler camera configuration scheme:
+   - Simple parameter setting, restriction and correction
+   - Better camera device encapsulating
 			
  - (FUTURE RELEASE) Auto rotate the ISO/SS choosers
  - (FUTURE RELEASE) Handle different types of makernotes
@@ -34,8 +40,8 @@ TODO list:
  - Take picture discarding the result (reset picture)
 
  - Two new camera actions:
-    - reset picture: taking a picture while discarding the result
-	- reset camera:  closing and re-opening the camera while preserving the configurations
+   - reset picture: taking a picture while discarding the result
+   - reset camera:  closing and re-opening the camera while preserving the configurations
 	
  - Restructure the camera access diagram
  
