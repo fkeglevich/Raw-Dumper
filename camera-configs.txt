@@ -1,0 +1,74 @@
+Exposure configs: (read-set)
+ - ISO: AUTO 50 100 200 400 800 1600
+ - SS:  AUTO 1/2 1/4 1/15 1/30 1/60
+ - EV:  -2 -1 0 1 2
+ 
+Exposure metering configs: (read-only)
+ - ISO
+ - SS
+ - EV
+ - Differential EV
+ - Aperture
+ 
+Focus modes:
+ - Auto:   AUTO, CF, INFINIY, MACRO, FIXED
+ - Manual: simple slider
+ 
+Data Formats:
+ - RAW
+ - JPG
+ - YUV
+ 
+File Formats:
+ - DNG  (RAW)
+ - JPEG (JPG)
+ - WEBP (YUV)
+ - PNG  (YUV)
+ 
+Picture Sizes:
+ - 4096x3072
+ - 2042x1500
+
+OBS:
+ - Picture size -> generates preview size
+   - PictureSize.getProperPreviewSize();
+ 
+ - Available picture sizes depends of the data format
+   - (RAW has less sizes available)
+
+CameraMode:
+ - Name resource ID
+ - Icon resource ID
+ - Data format list
+ - HaveMovieRecording
+
+   
+ Modes:
+   - Normal:
+      - RAW
+	    - 4128x3118 - 3:4 preview size 
+		- 2100x1532 - 3:4 preview size 
+	  - JPEG
+	    - 4096x3072 - 3:4 preview size 
+		- 2042x1500 - 3:4 preview size 
+	  - YUV
+	    - 4096x3072 - 3:4 preview size 
+		- 2042x1500 - 3:4 preview size 
+
+   - Low Light:
+      - RAW
+		- 2100x1532 - 3:4 preview size 
+	  - JPEG
+		- 2042x1500 - 3:4 preview size 
+	  - YUV
+		- 2042x1500 - 3:4 preview size
+
+   - Super Resoluion:
+	  - JPEG
+	    - 8128x6144 - 3:4 preview size 
+	    - 4096x3072 - 3:4 preview size
+		
+   - HDR:
+	  - JPEG
+	    - 4096x3072 - 3:4 preview size 
+		- 2042x1500 - 3:4 preview size 
