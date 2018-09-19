@@ -24,7 +24,9 @@ import android.widget.ImageButton;
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.DualLed;
 import com.fkeglevich.rawdumper.camera.data.Flash;
+import com.fkeglevich.rawdumper.camera.extension.LowLevelFlash;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
 
@@ -92,7 +94,16 @@ public class FlashController extends FeatureController
             if (selectedFlashIndex >= flashList.size())
                 selectedFlashIndex = 0;
 
-            flashFeature.setValue(flashList.get(selectedFlashIndex));
+            LowLevelFlash lowLevelFlash = new LowLevelFlash();
+            if (lowLevelFlash.isAvailable())
+            {
+                if (lowLevelFlash.getDualLedValue().getHighLedValue() == 0)
+                    lowLevelFlash.setDualLedValue(new DualLed(0, 10));
+                else
+                    lowLevelFlash.setDualLedValue(new DualLed(0, 0));
+            }
+
+            //flashFeature.setValue(flashList.get(selectedFlashIndex));
             updateButtonUi();
         });
     }
