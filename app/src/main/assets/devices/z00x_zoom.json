@@ -153,6 +153,9 @@
             },
             "hasKnownMakernote": false,
             "id": 0,
+            "logcatServices": [
+                "WhiteBalanceService"
+            ],
             "lens": {
                 "aperture": 2.0
             },
@@ -170,26 +173,26 @@
                 "binningRawImageSizes": [],
                 "bitsPerPixel": 10,
                 "blackLevel": [
-                    64.0,
-                    64.0,
-                    64.0,
-                    64.0
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
                 ],
                 "maker": "Panasonic",
                 "name": "MN34130",
                 "rawImageSizes": [
                     {
                         "height": 3120,
-                        "bytesPerLine": 8448,
-                        "paddedHeight": 3136,
-                        "bufferLength": 26492928,
-                        "paddedWidth": 4176,
-                        "paddedWidthBytes": 8352,
+                        "bytesPerLine": 4736,
+                        "paddedHeight": 3552,
+                        "bufferLength": 16822272,
+                        "paddedWidth": 4736,
+                        "paddedWidthBytes": 4736,
                         "width": 4160
                     }
                 ],
-                "storageBitsPerPixel": 16,
-                "whiteLevel": 1023
+                "storageBitsPerPixel": 8,
+                "whiteLevel": 255
             }
         },
         {
