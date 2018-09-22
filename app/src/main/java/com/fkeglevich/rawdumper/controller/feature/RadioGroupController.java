@@ -54,7 +54,7 @@ public abstract class RadioGroupController<T> extends FeatureController
     {
         this.reference = reference;
         this.radioGroup = radioGroup;
-        this.accentColor = ResourcesCompat.getColor(reference.weaklyGet().getResources(), R.color.accent, null);
+        this.accentColor = ResourcesCompat.getColor(reference.weaklyGet().getResources(), R.color.colorAccent, null);
         this.stateList = new ColorStateList(new int[][]
                 {
                         new int[]{-android.R.attr.state_checked},
