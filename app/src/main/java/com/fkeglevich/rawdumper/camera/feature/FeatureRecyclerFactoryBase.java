@@ -34,6 +34,7 @@ class FeatureRecyclerFactoryBase
         registeredFeatures.add(feature);
     }
 
+    @SuppressWarnings("unchecked")
     public void cleanUpAllFeatures()
     {
         for (Feature feature : registeredFeatures)
