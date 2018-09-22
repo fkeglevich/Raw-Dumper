@@ -38,13 +38,11 @@ public class GainMapOpcodeStacker
         double[] illuminantScale = captureInfo.makerNoteInfo.illuminantScale;
         if (map == null || illuminantScale == null) return;
 
-        //PerfInfo.start(TAG);
         BayerGainMap accGainMap = new BayerGainMap(map.get(ShadingIlluminant.A).numColumns, map.get(ShadingIlluminant.A).numRows);
         for (int i = 0; i < illuminantScale.length; i++)
         {
             if (illuminantScale[i] != 0)
             {
-                //Log.i(TAG, ShadingIlluminant.values()[i].name());
                 BayerGainMap gainMap = map.get(ShadingIlluminant.values()[i]).cloneMap();
                 gainMap.multiplyByScalar((float) illuminantScale[i]);
                 accGainMap.add(gainMap);
@@ -52,11 +50,7 @@ public class GainMapOpcodeStacker
         }
         if (captureInfo.invertRows)
             accGainMap.invertRows();
-        //Log.i(TAG, accGainMap.red.toString());
-        //Log.i(TAG, accGainMap.blue.toString());
-        //Log.i(TAG, accGainMap.greenRed.toString());
-        //Log.i(TAG, accGainMap.greenBlue.toString());
-        //PerfInfo.end("GainMapOpcodeWriter");
+
         GainMapOpcode opcode = new GainMapOpcode(captureInfo.imageSize, accGainMap);
         OpcodeListWriter.writeOpcodeList3Tag(tiffWriter, Collections.singletonList(opcode));
     }
