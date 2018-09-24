@@ -11,6 +11,7 @@ TODO list:
             So in a case of crash, the photos can be automatically recovered later
 
  - (FUTURE RELEASE) Add simple tonemapping
+ - (FUTURE RELEASE) Basic refactoring
 			
  - (FUTURE RELEASE) Simplify the code architecture
  - (FUTURE RELEASE) Use a simpler camera configuration scheme:
@@ -19,6 +20,10 @@ TODO list:
 			
  - (FUTURE RELEASE) Auto rotate the ISO/SS choosers
  - (FUTURE RELEASE) Handle different types of makernotes
+
+ - Show aperture below the current shutter speed value (handle display rotation)
+ 
+ - Add simple normal/low light button switch 
 
  - (IN PROGRESS) Collect adjusted white balance for many CCTs and create a polynomial function between them
    - Create function tint-temperature function for Zen2 rear camera
