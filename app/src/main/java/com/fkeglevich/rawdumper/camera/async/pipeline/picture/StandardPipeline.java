@@ -42,7 +42,6 @@ import java.util.Calendar;
 
 abstract class StandardPipeline extends PicturePipelineBase
 {
-    private final Handler uiHandler;
     private final CameraContext cameraContext;
     private final FilenameBuilder filenameBuilder;
 
@@ -51,7 +50,6 @@ abstract class StandardPipeline extends PicturePipelineBase
         super(cameraExtension, lock);
         this.cameraContext      = cameraContext;
         this.filenameBuilder    = new FilenameBuilder().isPicture().useFileFormat(fileFormat);
-        this.uiHandler          = new Handler(Looper.getMainLooper());
     }
 
     @Override

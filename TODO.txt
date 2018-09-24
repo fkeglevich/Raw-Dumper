@@ -41,7 +41,7 @@ TODO list:
 
  - (IN PROGRESS) Delay setting the parameter when using the slider by a couple milliseconds
 
- - Take picture discarding the result (reset picture)
+ - (IN PROGRESS) Take picture discarding the result (skip picture)
 
  - Two new camera actions:
    - reset picture: taking a picture while discarding the result

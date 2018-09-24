@@ -17,10 +17,13 @@
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
 import android.hardware.Camera;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.action.listener.PictureSkipListener;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.util.Mutable;
 
@@ -35,10 +38,13 @@ public abstract class PicturePipelineBase implements PicturePipeline
     private final Mutable<ICameraExtension> cameraExtension;
     private final Object lock;
 
+    final Handler uiHandler;
+
     PicturePipelineBase(Mutable<ICameraExtension> cameraExtension, Object lock)
     {
         this.cameraExtension = cameraExtension;
         this.lock = lock;
+        this.uiHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -47,10 +53,24 @@ public abstract class PicturePipelineBase implements PicturePipeline
         synchronized (lock)
         {
             final PipelineData pipelineData = new PipelineData();
-            Camera camera = cameraExtension.get().getCameraDevice();
-            setupCameraBefore(camera);
-            camera.takePicture(null, createRawCB(pipelineData), createJpegCB(pictureCallback, exceptionCallback, pipelineData));
+            configCamera().takePicture(null, createRawCB(pipelineData), createJpegCB(pictureCallback, exceptionCallback, pipelineData));
         }
+    }
+
+    @Override
+    public void skipPicture(PictureSkipListener skipCallback)
+    {
+        synchronized (lock)
+        {
+            configCamera().takePicture(null, createRawCB(new PipelineData()), createJpegCBForSkipping(skipCallback));
+        }
+    }
+
+    private Camera configCamera()
+    {
+        Camera camera = cameraExtension.get().getCameraDevice();
+        setupCameraBefore(camera);
+        return camera;
     }
 
     @NonNull
@@ -72,27 +92,21 @@ public abstract class PicturePipelineBase implements PicturePipeline
         };
     }
 
-    private Camera.PictureCallback createJpegCB(final PipelineData pipelineData)
-    {
-        return (data, camera) -> pipelineData.jpegData = data;
-    }
-
     @NonNull
-    private Camera.PictureCallback createPostViewCB(final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback, final PipelineData pipelineData)
+    private Camera.PictureCallback createJpegCBForSkipping(PictureSkipListener skipCallback)
     {
         return (data, camera) ->
         {
             synchronized (lock)
             {
-                processPipeline(pipelineData, pictureCallback, exceptionCallback);
+                startPreview();
+                uiHandler.post(skipCallback::onPictureSkipped);
             }
         };
     }
 
     protected void setupCameraBefore(Camera camera)
-    {
-        //no op
-    }
+    {   /*no op*/    }
 
     void startPreview()
     {

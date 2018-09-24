@@ -21,6 +21,7 @@ import android.hardware.Camera;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.action.listener.PictureSkipListener;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.CameraThread;
 import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
@@ -105,6 +106,26 @@ public class RetryingRawPipeline implements PicturePipeline
                 camera.takePicture(null, null, dummyJpegCallback);
             }
         }
+    }
+
+    @Override
+    public void skipPicture(PictureSkipListener skipCallback)
+    {
+        CameraThread.getInstance().restartCamera(restartableCamera, new AsyncOperation<Void>()
+        {
+            @Override
+            protected void execute(Void argument)
+            {
+                skipCallback.onPictureSkipped();
+            }
+        }, new AsyncOperation<MessageException>()
+        {
+            @Override
+            protected void execute(MessageException argument)
+            {
+                skipCallback.onPictureSkipped(); //We shouldn't ignore this error
+            }
+        });
     }
 
     @Override

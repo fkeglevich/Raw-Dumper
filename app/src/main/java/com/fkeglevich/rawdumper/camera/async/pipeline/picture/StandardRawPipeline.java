@@ -50,7 +50,6 @@ public class StandardRawPipeline extends PicturePipelineBase
 
     private final CameraContext cameraContext;
     private final byte[] buffer;
-    private final Handler uiHandler;
     private final MinDelay delay;
 
     private Camera.Parameters parameters = null;
@@ -60,7 +59,6 @@ public class StandardRawPipeline extends PicturePipelineBase
         super(cameraExtension, lock);
         this.cameraContext = cameraContext;
         this.buffer = buffer;
-        this.uiHandler = new Handler(Looper.getMainLooper());
         this.delay = new MinDelay(MINIMUM_DELAY_AFTER_START_PREVIEW);
     }
 

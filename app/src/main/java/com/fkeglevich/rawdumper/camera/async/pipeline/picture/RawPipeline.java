@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.action.listener.PictureSkipListener;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
@@ -52,6 +53,12 @@ public class RawPipeline implements PicturePipeline
     public void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
     {
         actualPipeline.takePicture(pictureCallback, exceptionCallback);
+    }
+
+    @Override
+    public void skipPicture(PictureSkipListener skipCallback)
+    {
+        actualPipeline.skipPicture(skipCallback);
     }
 
     @Override

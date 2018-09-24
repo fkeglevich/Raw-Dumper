@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
+import com.fkeglevich.rawdumper.camera.action.listener.PictureSkipListener;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 
 /**
@@ -29,6 +30,8 @@ import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 public interface PicturePipeline
 {
     void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback);
+
+    void skipPicture(PictureSkipListener skipCallback);
 
     default void updateShutterSpeed(ShutterSpeed shutterSpeed)
     { }
