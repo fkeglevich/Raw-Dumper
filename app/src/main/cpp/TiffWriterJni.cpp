@@ -136,7 +136,7 @@ JNIEXPORT jlong JNICALL
     JNIEXPORT jint JNICALL
     Java_com_fkeglevich_rawdumper_tiff_TiffWriter_setLongArrayFieldNative(JNIEnv *env, jobject instance, jlong pointer, jint tagName, jlongArray value, jboolean writeLen)
     {
-        long long* valueArr = env->GetLongArrayElements(value, 0);
+        jlong* valueArr = env->GetLongArrayElements(value, 0);
         int result = setArrayField(env, pointer, tagName, value, valueArr, writeLen);
         env->ReleaseLongArrayElements(value, valueArr, 0);
         return result;
