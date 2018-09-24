@@ -41,6 +41,7 @@ public class DebugFlag
     private static final DebugFlag USE_DEBUG_GAIN_MAP       = new DebugFlag(false, false);
     private static final DebugFlag USE_SMALLEST_PIC_SIZE    = new DebugFlag(false, false);
     private static final DebugFlag MARK_GAIN_MAP_CENTER     = new DebugFlag(false, false);
+    private static final DebugFlag IGNORE_ADV_BLACK_LEVEL   = new DebugFlag(false, false);
 
     private static boolean or(DebugFlag first, DebugFlag second)
     {
@@ -119,5 +120,10 @@ public class DebugFlag
     public static boolean markGainMapCenter()
     {
         return MARK_GAIN_MAP_CENTER.get();
+    }
+
+    public static boolean ignoreAdvancedBlackLevel()
+    {
+        return IGNORE_ADV_BLACK_LEVEL.get();
     }
 }
