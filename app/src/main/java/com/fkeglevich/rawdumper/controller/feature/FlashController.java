@@ -133,6 +133,9 @@ public class FlashController extends FeatureController
             current = Flash.OFF;
         }
 
+        if (current == Flash.SCREEN)
+            screenFlashController.startScreenFlash();
+
         selectedFlashIndex = flashList.indexOf(current);
     }
 
