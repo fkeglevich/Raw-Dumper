@@ -35,8 +35,6 @@ TODO list:
 
  - Disable modes button when opening the camera
 
- - Save features's values when closing camera
-
  - Zoom feature for Zenfone Zoom
 
  - (IN PROGRESS) Delay setting the parameter when using the slider by a couple milliseconds
@@ -182,3 +180,4 @@ Done:
  - Better displaying of shutter speeds less than 1/10000
  - Fixed a bug when a su shell doesn't open gracefully
  - (DONE!) Proper black level calibration
+ - (DONE!) Save features's values when closing camera

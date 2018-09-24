@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +37,17 @@ class FeatureRecyclerFactoryBase
     }
 
     @SuppressWarnings("unchecked")
-    public void cleanUpAllFeatures()
+    public void storeAndCleanupFeatures(CameraContext cameraContext)
     {
+        FeatureStore.getInstance().storeFeaturesData(cameraContext, registeredFeatures);
         for (Feature feature : registeredFeatures)
             Feature.clearEventDispatchers(feature);
 
         registeredFeatures.clear();
+    }
+
+    public void loadFeaturesData(CameraContext cameraContext)
+    {
+        FeatureStore.getInstance().loadFeaturesData(cameraContext, registeredFeatures);
     }
 }

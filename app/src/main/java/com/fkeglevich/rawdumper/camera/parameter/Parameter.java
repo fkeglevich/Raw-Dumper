@@ -24,7 +24,7 @@ package com.fkeglevich.rawdumper.camera.parameter;
 
 public abstract class Parameter<T> implements DeltaParameter<T>
 {
-    abstract String getKey();
+    abstract public String getKey();
 
     abstract ValueDecoder<T> getDecoder();
 

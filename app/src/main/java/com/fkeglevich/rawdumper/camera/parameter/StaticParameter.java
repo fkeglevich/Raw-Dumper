@@ -59,7 +59,7 @@ class StaticParameter<T> extends Parameter<T>
     }
 
     @Override
-    String getKey()
+    public String getKey()
     {
         return key;
     }

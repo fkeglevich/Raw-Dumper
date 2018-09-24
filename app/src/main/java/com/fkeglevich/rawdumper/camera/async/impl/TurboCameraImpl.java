@@ -106,6 +106,9 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         if (DebugFlag.useSmallestPicSize())
             pictureSizeFeature.setValue(pictureSizeFeature.getAvailableValues().get(0));
 
+        recyclerFactory.loadFeaturesData(lowLevelCamera.getCameraContext());
+        virtualRecyclerFactory.loadFeaturesData(lowLevelCamera.getCameraContext());
+
         lowLevelCamera.getCameraActions().startPreview();
         ThreadUtil.simpleDelay(150);
     }
@@ -228,8 +231,8 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     public void close()
     {
         CameraServiceManager.getInstance().disableFeatures();
-        recyclerFactory.cleanUpAllFeatures();
-        virtualRecyclerFactory.cleanUpAllFeatures();
+        recyclerFactory.storeAndCleanupFeatures(lowLevelCamera.getCameraContext());
+        virtualRecyclerFactory.storeAndCleanupFeatures(lowLevelCamera.getCameraContext());
         lowLevelCamera.close();
     }
 

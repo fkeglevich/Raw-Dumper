@@ -59,7 +59,7 @@ class RuntimeParameter<T> extends Parameter<T>
     }
 
     @Override
-    String getKey()
+    public String getKey()
     {
         if (key == null) throwUninitialized();
         return key;
