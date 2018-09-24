@@ -20,6 +20,7 @@ import android.support.annotation.Nullable;
 
 import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
+import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
 import com.fkeglevich.rawdumper.raw.gain.GainMapOpcodeStacker;
@@ -55,9 +56,12 @@ public class DngWriter
     {
         try
         {
-            writeMetadata(captureInfo);
+            ExifInfo exifInfo = new ExifInfo();
+            exifInfo.getExifDataFromCapture(captureInfo);
+
+            writeMetadata(captureInfo, exifInfo);
             writer.writeImageData(tiffWriter, imageData, captureInfo.invertRows);
-            writeExifInfo(captureInfo);
+            writeExifInfo(exifInfo);
         }
         finally
         {
@@ -71,10 +75,15 @@ public class DngWriter
         tiffWriter = null;
     }
 
-    private void writeMetadata(CaptureInfo captureInfo)
+    private void writeMetadata(CaptureInfo captureInfo, ExifInfo exifInfo)
     {
+        /*
+        ExifInfo exifInfo = new ExifInfo();
+        exifInfo.getExifDataFromCapture(captureInfo);
+         */
+
         writeBasicHeader(captureInfo.imageSize);
-        captureInfo.camera.getSensor().writeTiffTags(tiffWriter, captureInfo.invertRows);
+        captureInfo.camera.getSensor().writeTiffTags(tiffWriter, exifInfo, captureInfo.invertRows);
         captureInfo.camera.writeTiffTags(tiffWriter);
         captureInfo.device.writeTiffTags(tiffWriter);
         captureInfo.writeTiffTags(tiffWriter);
@@ -106,11 +115,11 @@ public class DngWriter
         DngDefaults.BACKWARD_VERSION.writeDngBackwardVersionTag(tiffWriter);
     }
 
-    private void writeExifInfo(CaptureInfo captureInfo)
+    private void writeExifInfo(ExifInfo exifInfo)
     {
         ExifWriter exifWriter = new ExifWriter();
         exifWriter.createEXIFDirectory(tiffWriter);
-        exifWriter.writeTiffExifTags(tiffWriter, captureInfo);
+        exifWriter.writeTiffExifTags(tiffWriter, exifInfo);
         exifWriter.closeEXIFDirectory(tiffWriter);
     }
 }

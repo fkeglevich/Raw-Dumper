@@ -187,4 +187,19 @@ public class ExifInfo
         if (focalLength != null)
             ExifTagWriter.writeFocalLengthTag(tiffWriter, focalLength);
     }
+
+    public Iso getIso()
+    {
+        return iso;
+    }
+
+    public ShutterSpeed getExposureTime()
+    {
+        return exposureTime;
+    }
+
+    public boolean hasExposureInfo()
+    {
+        return iso != null && exposureTime != null;
+    }
 }
