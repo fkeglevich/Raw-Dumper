@@ -11,7 +11,6 @@ TODO list:
             So in a case of crash, the photos can be automatically recovered later
 
  - (FUTURE RELEASE) Add simple tonemapping
- - (FUTURE RELEASE) Proper black level calibration
 			
  - (FUTURE RELEASE) Simplify the code architecture
  - (FUTURE RELEASE) Use a simpler camera configuration scheme:
@@ -27,7 +26,7 @@ TODO list:
    - update: this probably won't work as good as intended (maybe fallback to a fast Gray World AWB algorithm?)
 
  - (IN PROGRESS) Optimize logcat reading, right now the GC is crying
-   - This is necessary but hard to implement </3
+   - This is needed but hard to implement </3
 
  - Disable modes button when opening the camera
 
@@ -177,3 +176,4 @@ Done:
  - (DONE!) Optimized taking photo delay for ZenZoom front camera/Zen2 with MM blobs
  - Better displaying of shutter speeds less than 1/10000
  - Fixed a bug when a su shell doesn't open gracefully
+ - (DONE!) Proper black level calibration
