@@ -169,13 +169,13 @@
                 "bayerPattern": "GBRG",
                 "binningRawImageSizes": [],
                 "bitsPerPixel": 10,
-                "blackLevel": [
-                    64.0,
-                    64.0,
-                    64.0,
-                    64.0
-                ],
                 "blackLevelInfo": {
+                    "defaultValues": [
+                        64.0,
+                        64.0,
+                        64.0,
+                        64.0
+                    ],
                     "blackLevelMatrix": [
                         [
                             {
@@ -609,13 +609,13 @@
                 "bayerPattern": "BGGR",
                 "binningRawImageSizes": [],
                 "bitsPerPixel": 10,
-                "blackLevel": [
-                    16.0,
-                    16.0,
-                    16.0,
-                    16.0
-                ],
                 "blackLevelInfo": {
+                    "defaultValues": [
+                        16.0,
+                        16.0,
+                        16.0,
+                        16.0
+                    ],
                     "blackLevelMatrix":
                     [
                         [

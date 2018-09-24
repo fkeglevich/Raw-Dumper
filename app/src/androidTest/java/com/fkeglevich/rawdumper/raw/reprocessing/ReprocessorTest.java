@@ -26,7 +26,6 @@ import java.io.File;
 
 public class ReprocessorTest
 {
-
     @Test
     public void reprocessI3av4File() throws DeviceLoadException
     {

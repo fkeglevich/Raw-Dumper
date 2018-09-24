@@ -105,12 +105,14 @@
                 "bayerPattern": "GRBG",
                 "binningRawImageSizes": [],
                 "bitsPerPixel": 10,
-                "blackLevel": [
-                    64.0,
-                    64.0,
-                    64.0,
-                    64.0
-                ],
+                "blackLevelInfo": {
+                    "defaultValues": [
+                        64.0,
+                        64.0,
+                        64.0,
+                        64.0
+                    ]
+                },
                 "maker": "Unknown",
                 "name": "Unknown Sensor",
                 "rawImageSizes": [
@@ -217,12 +219,14 @@
                 "bayerPattern": "UNKNOWN",
                 "binningRawImageSizes": [],
                 "bitsPerPixel": 10,
-                "blackLevel": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0
-                ],
+                "blackLevelInfo": {
+                    "defaultValues": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
                 "maker": "Unknown",
                 "name": "Unknown Sensor",
                 "rawImageSizes": [],

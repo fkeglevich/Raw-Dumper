@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.hardware.Camera;
 import android.support.annotation.Keep;
 
-import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 import com.fkeglevich.rawdumper.raw.data.BayerPattern;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
@@ -54,8 +53,7 @@ public class SensorInfo
     private BayerPattern bayerPattern;
 
     private int whiteLevel;
-    private float[] blackLevel;
-    private BlackLevelInfo blackLevelInfo;
+    BlackLevelInfo blackLevelInfo;
 
     private int baseISO;
     private Integer integrationTimeScale;
@@ -89,7 +87,7 @@ public class SensorInfo
         tiffWriter.setField(TiffTag.TIFFTAG_CFALAYOUT,              DEFAULT_CFA_LAYOUT);
         tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL,             new long[] { whiteLevel }, true);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVELREPEATDIM,    DEFAULT_BLACK_LEVEL_REPEAT_DIM, false);
-        tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVEL,             getBlackLevelValues(exifInfo), true);
+        tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVEL,             blackLevelInfo.computeBlackLevel(exifInfo), true);
     }
 
     public RawImageSize getRawImageSizeFromSize(Camera.Size size)
@@ -107,11 +105,4 @@ public class SensorInfo
         binningRawImageSizes = new RawImageSize[0];
     }
 
-    private float[] getBlackLevelValues(ExifInfo exifInfo)
-    {
-        if (DebugFlag.ignoreAdvancedBlackLevel())
-            return blackLevel;
-
-        return (blackLevelInfo != null && exifInfo.hasExposureInfo()) ? blackLevelInfo.computeBlackLevel(exifInfo) : blackLevel;
-    }
 }

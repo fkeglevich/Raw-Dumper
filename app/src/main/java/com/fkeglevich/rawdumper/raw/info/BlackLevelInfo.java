@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.support.annotation.Keep;
 import android.util.Log;
 
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 
 import java.util.Arrays;
@@ -33,10 +34,14 @@ import java.util.Arrays;
 @SuppressWarnings("unused")
 public class BlackLevelInfo
 {
-    private BlackLevel[][] blackLevelMatrix;
+    BlackLevel[][] blackLevelMatrix;
+    float[] defaultValues;
 
     public float[] computeBlackLevel(ExifInfo exifInfo)
     {
+        if (DebugFlag.ignoreAdvancedBlackLevel() || blackLevelMatrix == null || !exifInfo.hasExposureInfo())
+            return defaultValues;
+
         int iso = exifInfo.getIso().getNumericValue();
         double exposureTime = exifInfo.getExposureTime().getExposureInSeconds();
 
