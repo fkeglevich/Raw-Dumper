@@ -69,6 +69,8 @@ public class OrientationUIController
         affectedViews.add(reference.findViewById(R.id.ssBox));
         affectedViews.add(reference.findViewById(R.id.isoBox));
 
+        affectedViews.add(reference.findViewById(R.id.apertureText));
+
         affectedViews.add(reference.findViewById(R.id.autoFocusBt));
         affectedViews.add(reference.findViewById(R.id.continuousFocusBt));
         affectedViews.add(reference.findViewById(R.id.macroFocusBt));

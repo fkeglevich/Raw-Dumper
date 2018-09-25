@@ -15,23 +15,24 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="84dp"
-    android:layout_above="@+id/captureButton"
+    android:layout_height="102dp"
+    android:layout_alignParentBottom="true"
     android:layout_alignParentStart="true"
+    android:layout_marginBottom="58dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:divider="@drawable/controls_divider"
+    android:gravity="center_horizontal"
     android:orientation="horizontal"
     android:paddingLeft="11dp"
     android:paddingRight="11dp"
-    android:paddingTop="14dp"
-    android:gravity="center"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:visibility="visible"
+    android:paddingTop="18dp"
     android:showDividers="middle"
-    android:divider="@drawable/controls_divider"
+    android:visibility="visible"
     tools:ignore="UnusedAttribute"
     tools:showIn="@layout/activity_main">
 
@@ -40,6 +41,7 @@
         android:id="@+id/isoBox"
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8sp"
         android:gravity="center"
         android:orientation="vertical"
         android:transformPivotX="28dp"
@@ -50,8 +52,8 @@
             android:id="@+id/isoBt"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/round_button"
             android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+            android:background="@drawable/round_button"
             android:elevation="2dp"
             android:text="@string/iso_button" />
 
@@ -60,35 +62,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ssBox"
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
-        android:transformPivotX="28dp"
-        android:transformPivotY="20dp">
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/shutterSpeedBt"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ssBox"
+            android:layout_width="@dimen/manual_controls_max_width"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/manual_controls_text_spacing"
-            android:background="@drawable/round_button"
-            android:elevation="2dp"
-            android:padding="8dp"
-            app:srcCompat="@drawable/ic_camera_black_24dp"
-            tools:showIn="@layout/activity_main" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:transformPivotX="28dp"
+            android:transformPivotY="20dp">
+
+            <ImageButton
+                android:id="@+id/shutterSpeedBt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:padding="8dp"
+                app:srcCompat="@drawable/ic_camera_black_24dp"
+                tools:showIn="@layout/activity_main" />
+
+            <TextView
+                android:id="@+id/ssText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/ssText"
+            android:id="@+id/apertureText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="ƒ/4.8"
             android:textColor="@android:color/white"
+            android:visibility="invisible"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -97,6 +116,7 @@
         android:id="@+id/evBox"
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8sp"
         android:gravity="center"
         android:orientation="vertical"
         android:transformPivotX="28dp"
@@ -106,8 +126,8 @@
             android:id="@+id/evBt"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/round_button"
             android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+            android:background="@drawable/round_button"
             android:elevation="2dp"
             android:text="@string/ev_button" />
 
@@ -116,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -124,6 +144,7 @@
         android:id="@+id/focusBox"
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8sp"
         android:gravity="center"
         android:orientation="vertical"
         android:transformPivotX="28dp"
@@ -133,10 +154,10 @@
             android:id="@+id/focusBt"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/round_button"
             android:layout_marginBottom="@dimen/manual_controls_text_spacing"
-            android:padding="8dp"
+            android:background="@drawable/round_button"
             android:elevation="2dp"
+            android:padding="8dp"
             app:srcCompat="@drawable/ic_filter_center_focus_black_24dp" />
 
         <TextView
@@ -144,7 +165,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -152,6 +173,7 @@
         android:id="@+id/wbBox"
         android:layout_width="@dimen/manual_controls_max_width"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8sp"
         android:gravity="center"
         android:orientation="vertical"
         android:transformPivotX="28dp"
@@ -161,8 +183,8 @@
             android:id="@+id/wbBt"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/round_button"
             android:layout_marginBottom="@dimen/manual_controls_text_spacing"
+            android:background="@drawable/round_button"
             android:elevation="2dp"
             android:text="@string/wb_button" />
 
@@ -171,7 +193,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
     </LinearLayout>
 
