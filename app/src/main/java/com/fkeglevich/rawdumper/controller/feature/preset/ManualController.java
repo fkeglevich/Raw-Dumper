@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.controller.feature.preset;
 
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
@@ -83,6 +84,10 @@ public abstract class ManualController<P, M> extends FeatureController
             getPresetFeature(camera).setValue(getDefaultPresetValue());
             showChooser();
         });
+
+        if (manualFeature.getValue() != getDisabledManualValue())
+            new Handler().post(manualButton::callOnClick);
+
         backButton.setOnClickListener(v ->
         {
             hideChooser();
