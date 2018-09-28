@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.feature;
+package com.fkeglevich.rawdumper.camera.feature2;
 
-public class NoFeature<T, A> extends WritableFeature<T, A>
+public class ListFeature
 {
-    NoFeature()
-    {
-        super(null, null, null);
-    }
-
-    @Override
-    public boolean isAvailable()
-    {
-        return false;
-    }
 }

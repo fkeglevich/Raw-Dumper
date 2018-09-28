@@ -24,19 +24,15 @@ import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
-import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
-import com.fkeglevich.rawdumper.camera.feature.Feature;
-import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.adapter.ButtonController;
 import com.fkeglevich.rawdumper.controller.adapter.DismissibleManagerAdapter;
 import com.fkeglevich.rawdumper.controller.adapter.ToastNotificationController;
 import com.fkeglevich.rawdumper.controller.adapter.WheelViewAdapter;
 import com.fkeglevich.rawdumper.ui.TouchFocusView;
-import com.fkeglevich.rawdumper.util.Nullable;
 import com.lantouzi.wheelview.WheelView;
 
 import java.util.List;

@@ -23,7 +23,7 @@ import android.widget.SeekBar;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.DataRange;
-import com.fkeglevich.rawdumper.camera.feature.ProportionFeature;
+import com.fkeglevich.rawdumper.camera.feature.RangeFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.feature.FeatureController;
 import com.transitionseverywhere.Fade;
@@ -47,7 +47,7 @@ public abstract class ManualController<P, M extends Comparable<M>> extends Featu
     private final Visibility manualChooserTransition;
     private final Visibility presetChooserTransition;
 
-    private ProportionFeature<M, DataRange<M>> manualFeature;
+    private RangeFeature<M, DataRange<M>> manualFeature;
     private P lastPreset = getDefaultPresetValue();
 
     public ManualController(View manualButton,
@@ -172,9 +172,9 @@ public abstract class ManualController<P, M extends Comparable<M>> extends Featu
     protected abstract M getDisabledManualValue();
 
     @SuppressWarnings("unchecked")
-    private ProportionFeature<M, DataRange<M>> getManualFeature(TurboCamera camera)
+    private RangeFeature<M, DataRange<M>> getManualFeature(TurboCamera camera)
     {
-        return (ProportionFeature<M,DataRange<M>>) camera.getRangeFeature((Class<M>) getDisabledManualValue().getClass());
+        return (RangeFeature<M,DataRange<M>>) camera.getRangeFeature((Class<M>) getDisabledManualValue().getClass());
     }
 
     @SuppressWarnings("unchecked")

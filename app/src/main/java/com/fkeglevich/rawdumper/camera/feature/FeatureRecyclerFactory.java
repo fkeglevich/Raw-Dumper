@@ -20,12 +20,11 @@ import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
 import com.fkeglevich.rawdumper.camera.data.Ev;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.util.Nullable;
-
-import java.util.List;
 
 /**
  * TODO: Add class header
@@ -51,12 +50,41 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
         this.cameraContext = cameraContext;
     }
 
-    public WritableFeature<Iso, List<Iso>> createIsoFeature()
+    /*
+    List features
+     */
+
+    public ListFeature<Iso> createIsoFeature()
     {
         IsoFeature result = IsoFeature.create(cameraContext.getExposureInfo(), parameterCollection);
         registerFeature(result);
         return result;
     }
+
+    public ListFeature<Ev> createEVFeature()
+    {
+        EvFeature result = EvFeature.create(parameterCollection);
+        registerFeature(result);
+        return result;
+    }
+
+    public ListFeature<FocusMode> createFocusFeature()
+    {
+        FocusFeature result = new FocusFeature(parameterCollection, cameraActions);
+        registerFeature(result);
+        return result;
+    }
+
+    public WhiteBalancePresetFeature createWhiteBalancePresetFeature()
+    {
+        WhiteBalancePresetFeature result = new WhiteBalancePresetFeature(parameterCollection);
+        registerFeature(result);
+        return result;
+    }
+
+    /*
+    Metering features
+     */
 
     public Feature<Nullable<Iso>> createIsoMeteringFeature()
     {
@@ -72,13 +100,6 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
         return result;
     }
 
-    public WritableFeature<Ev, List<Ev>> createEVFeature()
-    {
-        EvFeature result = EvFeature.create(parameterCollection);
-        registerFeature(result);
-        return result;
-    }
-
     public PreviewFeature createPreviewFeature()
     {
         PreviewFeature result = new PreviewFeature(parameterCollection);
@@ -86,23 +107,13 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
         return result;
     }
 
-    public FocusFeature createFocusFeature()
-    {
-        FocusFeature result = new FocusFeature(parameterCollection, cameraActions);
-        registerFeature(result);
-        return result;
-    }
+    /*
+    Range features
+     */
 
     public ManualFocusFeature createManualFocusFeature()
     {
         ManualFocusFeature result = new ManualFocusFeature(asyncParameterSender, parameterCollection);
-        registerFeature(result);
-        return result;
-    }
-
-    public WhiteBalancePresetFeature createWhiteBalancePresetFeature()
-    {
-        WhiteBalancePresetFeature result = new WhiteBalancePresetFeature(parameterCollection);
         registerFeature(result);
         return result;
     }

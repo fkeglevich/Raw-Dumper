@@ -19,16 +19,12 @@ package com.fkeglevich.rawdumper.controller.feature;
 import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
-import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
-import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
 import com.fkeglevich.rawdumper.controller.feature.preset.PresetMeteringController;
-
-import java.util.List;
 
 /**
  * Created by flavio on 22/11/17.

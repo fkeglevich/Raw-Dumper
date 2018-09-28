@@ -21,10 +21,31 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.Closeable;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCamera;
-import com.fkeglevich.rawdumper.camera.data.*;
+import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.data.DataRange;
+import com.fkeglevich.rawdumper.camera.data.Ev;
+import com.fkeglevich.rawdumper.camera.data.Flash;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
+import com.fkeglevich.rawdumper.camera.data.Iso;
+import com.fkeglevich.rawdumper.camera.data.ManualFocus;
+import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
+import com.fkeglevich.rawdumper.camera.data.PictureFormat;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.data.mode.ModeList;
-import com.fkeglevich.rawdumper.camera.feature.*;
+import com.fkeglevich.rawdumper.camera.feature.Feature;
+import com.fkeglevich.rawdumper.camera.feature.FeatureRecyclerFactory;
+import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
+import com.fkeglevich.rawdumper.camera.feature.ListFeature;
+import com.fkeglevich.rawdumper.camera.feature.PictureFormatFeature;
+import com.fkeglevich.rawdumper.camera.feature.PictureModeFeature;
+import com.fkeglevich.rawdumper.camera.feature.PictureSizeFeature;
+import com.fkeglevich.rawdumper.camera.feature.PreviewFeature;
+import com.fkeglevich.rawdumper.camera.feature.RangeFeature;
+import com.fkeglevich.rawdumper.camera.feature.VirtualFeatureRecyclerFactory;
+import com.fkeglevich.rawdumper.camera.feature.WhiteBalancePresetFeature;
+import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.feature.restriction.ExposureRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.FocusRestriction;
 import com.fkeglevich.rawdumper.camera.feature.restriction.WhiteBalanceRestriction;
@@ -132,16 +153,16 @@ public class TurboCameraImpl implements TurboCamera, Closeable
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> WritableFeature<T, List<T>> getListFeature(Class<T> dataType)
+    public <T> ListFeature<T> getListFeature(Class<T> dataType)
     {
-        return (WritableFeature<T, List<T>>) writableFeatures.get(dataType);
+        return (ListFeature<T>) writableFeatures.get(dataType);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends Comparable<T>> WritableFeature<T, DataRange<T>> getRangeFeature(Class<T> dataType)
+    public <T extends Comparable<T>> RangeFeature<T> getRangeFeature(Class<T> dataType)
     {
-        return (WritableFeature<T, DataRange<T>>) writableFeatures.get(dataType);
+        return (RangeFeature<T>) writableFeatures.get(dataType);
     }
 
     @Override

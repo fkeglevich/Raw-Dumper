@@ -28,22 +28,22 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
  * Created by Flávio Keglevich on 29/10/17.
  */
 
-public class RangeValidator<T extends Comparable<T>, A extends DataRange<T>> implements ValueValidator<T, A>
+public class RangeValidator<T extends Comparable<T>> implements ValueValidator<T, DataRange<T>>
 {
-    private final A range;
+    private final DataRange<T> range;
 
-    public static <T extends Comparable<T>, A extends DataRange<T>> RangeValidator<T, A> create(A dataRange)
+    public static <T extends Comparable<T>> RangeValidator<T> create(DataRange<T> dataRange)
     {
         return new RangeValidator<>(dataRange);
     }
 
     @NonNull
-    public static <T extends Comparable<T>, A extends DataRange<T>> RangeValidator<T, A> create(ParameterCollection parameterCollection, Parameter<A> parameter)
+    public static <T extends Comparable<T>> RangeValidator<T> create(ParameterCollection parameterCollection, Parameter<DataRange<T>> parameter)
     {
-        return new RangeValidator<>(parameterCollection.get(parameter));
+        return new RangeValidator<T>(parameterCollection.get(parameter));
     }
 
-    private RangeValidator(A range)
+    private RangeValidator(DataRange<T> range)
     {
         this.range = range;
     }
@@ -61,7 +61,7 @@ public class RangeValidator<T extends Comparable<T>, A extends DataRange<T>> imp
     }
 
     @Override
-    public A getAvailableValues()
+    public DataRange<T> getAvailableValues()
     {
         return range;
     }

@@ -32,7 +32,7 @@ import java.util.List;
  * Created by Flávio Keglevich on 28/10/17.
  */
 
-public class FocusFeature extends WritableFeature<FocusMode, List<FocusMode>> implements AutoFocusAction
+public class FocusFeature extends ListFeature<FocusMode> implements AutoFocusAction
 {
     private final AutoFocusAction autoFocusAction;
 

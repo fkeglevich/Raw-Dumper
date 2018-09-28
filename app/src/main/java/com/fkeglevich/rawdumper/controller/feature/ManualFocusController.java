@@ -22,8 +22,6 @@ import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
-import com.fkeglevich.rawdumper.camera.feature.ProportionFeature;
-import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.feature.preset.ManualController;
 
 /**

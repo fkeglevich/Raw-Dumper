@@ -18,15 +18,11 @@ package com.fkeglevich.rawdumper.camera.async;
 
 import com.fkeglevich.rawdumper.camera.action.TakePictureAction;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.DataRange;
-import com.fkeglevich.rawdumper.camera.data.Flash;
-import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
-import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
-import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
-import com.fkeglevich.rawdumper.camera.feature.ManualTemperatureFeature;
+import com.fkeglevich.rawdumper.camera.feature.ListFeature;
+import com.fkeglevich.rawdumper.camera.feature.RangeFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.util.Nullable;
 
@@ -40,8 +36,8 @@ import java.util.List;
 
 public interface TurboCamera extends TakePictureAction
 {
-    <T> WritableFeature<T, List<T>> getListFeature(Class<T> dataType);
-    <T extends Comparable<T>> WritableFeature<T, DataRange<T>> getRangeFeature(Class<T> dataType);
+    <T> ListFeature<T> getListFeature(Class<T> dataType);
+    <T extends Comparable<T>> RangeFeature<T> getRangeFeature(Class<T> dataType);
     <T> Feature<Nullable<T>> getMeteringFeature(Class<T> dataType);
 
     WritableFeature<Mode, List<Mode>> getPictureModeFeature();
