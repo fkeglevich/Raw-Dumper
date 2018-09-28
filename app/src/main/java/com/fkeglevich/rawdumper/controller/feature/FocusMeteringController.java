@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
@@ -33,23 +34,11 @@ import java.util.List;
  * Created by flavio on 22/11/17.
  */
 
-class FocusMeteringController extends PresetMeteringController<FocusMode, ManualFocus, ManualFocusRange>
+class FocusMeteringController extends PresetMeteringController<FocusMode, ManualFocus>
 {
     FocusMeteringController(TextView focusText)
     {
         super(focusText);
-    }
-
-    @Override
-    protected WritableFeature<FocusMode, List<FocusMode>> getPresetFeature(TurboCamera camera)
-    {
-        return camera.getFocusFeature();
-    }
-
-    @Override
-    protected WritableFeature<ManualFocus, ManualFocusRange> getManualFeature(TurboCamera camera)
-    {
-        return camera.getManualFocusFeature();
     }
 
     @Override
@@ -65,7 +54,7 @@ class FocusMeteringController extends PresetMeteringController<FocusMode, Manual
     }
 
     @Override
-    protected String getManualText(WritableFeature<ManualFocus, ManualFocusRange> manualFeature)
+    protected String getManualText(WritableFeature<ManualFocus, DataRange<ManualFocus>> manualFeature)
     {
         return ContextManager.getApplicationContext().getString(R.string.focus_manual);
     }

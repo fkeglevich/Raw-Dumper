@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.feature.ProportionFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.feature.FeatureController;
@@ -29,11 +30,13 @@ import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
 import com.transitionseverywhere.Visibility;
 
+import java.util.List;
+
 /**
  * TODO: add header comment
  * Created by Flávio Keglevich on 09/05/18.
  */
-public abstract class ManualController<P, M> extends FeatureController
+public abstract class ManualController<P, M extends Comparable<M>> extends FeatureController
 {
     private final View manualButton;
     private final View backButton;
@@ -44,7 +47,7 @@ public abstract class ManualController<P, M> extends FeatureController
     private final Visibility manualChooserTransition;
     private final Visibility presetChooserTransition;
 
-    private ProportionFeature<M, ?> manualFeature;
+    private ProportionFeature<M, DataRange<M>> manualFeature;
     private P lastPreset = getDefaultPresetValue();
 
     public ManualController(View manualButton,
@@ -69,7 +72,7 @@ public abstract class ManualController<P, M> extends FeatureController
     @Override
     protected void setup(TurboCamera camera)
     {
-        manualFeature = getManualFeature(camera);
+        manualFeature = this.<M>getManualFeature(camera);
         if (!(manualFeature.isAvailable() && getPresetFeature(camera).isAvailable()))
         {
             reset();
@@ -167,8 +170,18 @@ public abstract class ManualController<P, M> extends FeatureController
 
     protected abstract P getDefaultPresetValue();
     protected abstract M getDisabledManualValue();
-    protected abstract ProportionFeature<M,?> getManualFeature(TurboCamera camera);
-    protected abstract WritableFeature<P,?> getPresetFeature(TurboCamera camera);
+
+    @SuppressWarnings("unchecked")
+    private ProportionFeature<M, DataRange<M>> getManualFeature(TurboCamera camera)
+    {
+        return (ProportionFeature<M,DataRange<M>>) camera.getRangeFeature((Class<M>) getDisabledManualValue().getClass());
+    }
+
+    @SuppressWarnings("unchecked")
+    private WritableFeature<P, List<P>> getPresetFeature(TurboCamera camera)
+    {
+        return camera.getListFeature((Class<P>) getDefaultPresetValue().getClass());
+    }
 
     protected void setupCameraOnManualButtonClick(TurboCamera camera)
     { }

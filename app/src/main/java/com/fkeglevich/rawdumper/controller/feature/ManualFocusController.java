@@ -57,18 +57,6 @@ class ManualFocusController extends ManualController<FocusMode, ManualFocus>
     }
 
     @Override
-    protected ProportionFeature<ManualFocus, ?> getManualFeature(TurboCamera camera)
-    {
-        return camera.getManualFocusFeature();
-    }
-
-    @Override
-    protected WritableFeature<FocusMode, ?> getPresetFeature(TurboCamera camera)
-    {
-        return camera.getFocusFeature();
-    }
-
-    @Override
     protected void setupCameraOnManualButtonClick(TurboCamera camera)
     {
         //camera.getFocusFeature().cancelAutoFocus();

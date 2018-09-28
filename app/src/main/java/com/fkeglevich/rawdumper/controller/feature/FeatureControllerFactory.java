@@ -58,128 +58,68 @@ public class FeatureControllerFactory
 
     DisplayableFeatureController createISOController(ActivityReference reference)
     {
-        WheelView wheelView = (WheelView) reference.weaklyGet().findViewById(R.id.isoValueChooser);
+        WheelView wheelView = reference.weaklyGet().findViewById(R.id.isoValueChooser);
         WheelViewAdapter viewAdapter = new WheelViewAdapter(wheelView);
         ButtonController btController = createButtonController(reference, R.id.isoBt, viewAdapter,
                 wheelView, R.string.iso_changed_notification);
 
-        return new DisplayableFeatureController(btController)
-        {
-            @Override
-            protected WritableFeature selectFeature(TurboCamera camera)
-            {
-                return camera.getIsoFeature();
-            }
-        };
+        return new DisplayableFeatureController<>(btController, Iso.class);
     }
 
     DisplayableFeatureController createSSController(ActivityReference reference)
     {
-        WheelView wheelView = (WheelView) reference.weaklyGet().findViewById(R.id.ssValueChooser);
+        WheelView wheelView = reference.weaklyGet().findViewById(R.id.ssValueChooser);
         WheelViewAdapter viewAdapter = new WheelViewAdapter(wheelView);
         ButtonController btController = createButtonController(reference, R.id.shutterSpeedBt, viewAdapter,
                 wheelView, R.string.ss_changed_notification);
 
-        return new DisplayableFeatureController(btController)
-        {
-            @Override
-            protected WritableFeature selectFeature(TurboCamera camera)
-            {
-                return camera.getShutterSpeedFeature();
-            }
-        };
+        return new DisplayableFeatureController<>(btController, ShutterSpeed.class);
     }
 
     DisplayableFeatureController createEVController(ActivityReference reference)
     {
-        WheelView wheelView = (WheelView) reference.weaklyGet().findViewById(R.id.evValueChooser);
+        WheelView wheelView = reference.weaklyGet().findViewById(R.id.evValueChooser);
         WheelViewAdapter viewAdapter = new WheelViewAdapter(wheelView);
         ButtonController btController = createButtonController(reference, R.id.evBt, viewAdapter,
                 wheelView, R.string.ev_changed_notification);
 
-        return new DisplayableFeatureController(btController)
-        {
-            @Override
-            protected WritableFeature selectFeature(TurboCamera camera)
-            {
-                return camera.getEVFeature();
-            }
-        };
+        return new DisplayableFeatureController<>(btController, Ev.class);
     }
 
     FlashController createFlashController(ActivityReference reference)
     {
-        ImageButton flashButton = (ImageButton) reference.weaklyGet().findViewById(R.id.flashButton);
+        ImageButton flashButton = reference.weaklyGet().findViewById(R.id.flashButton);
         return new FlashController(flashButton, reference);
     }
 
     TouchFocusMeteringAreaController createTouchFocusController(ActivityReference reference)
     {
         View cameraSurfaceView = reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
-        TouchFocusView focusView = (TouchFocusView) reference.weaklyGet().findViewById(R.id.focusView);
+        TouchFocusView focusView = reference.weaklyGet().findViewById(R.id.focusView);
         return new TouchFocusMeteringAreaController(cameraSurfaceView, focusView, reference);
     }
 
     ValueMeteringController<Iso> createIsoMeteringController(ActivityReference reference)
     {
-        TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.isoText);
-        return new ValueMeteringController<Iso>(textView, Iso.AUTO)
-        {
-            @Override
-            protected Feature<Nullable<Iso>> getMeteringFeature(TurboCamera turboCamera)
-            {
-                return turboCamera.getIsoMeteringFeature();
-            }
-
-            @Override
-            protected Feature<Iso> getFallbackFeature(TurboCamera turboCamera)
-            {
-                return turboCamera.getIsoFeature();
-            }
-        };
+        TextView textView = reference.weaklyGet().findViewById(R.id.isoText);
+        return new ValueMeteringController<>(textView, Iso.AUTO);
     }
 
     ValueMeteringController<ShutterSpeed> createSSMeteringController(ActivityReference reference)
     {
-        TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.ssText);
-        return new ValueMeteringController<ShutterSpeed>(textView, ShutterSpeed.AUTO)
-        {
-            @Override
-            protected Feature<Nullable<ShutterSpeed>> getMeteringFeature(TurboCamera turboCamera)
-            {
-                return turboCamera.getSSMeteringFeature();
-            }
-
-            @Override
-            protected Feature<ShutterSpeed> getFallbackFeature(TurboCamera turboCamera)
-            {
-                return turboCamera.getShutterSpeedFeature();
-            }
-        };
+        TextView textView = reference.weaklyGet().findViewById(R.id.ssText);
+        return new ValueMeteringController<>(textView, ShutterSpeed.AUTO);
     }
 
     ValueMeteringController<Ev> createEvMeteringController(ActivityReference reference)
     {
-        TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.evText);
-        return new ValueMeteringController<Ev>(textView, Ev.DEFAULT)
-        {
-            @Override
-            protected Feature<Nullable<Ev>> getMeteringFeature(TurboCamera turboCamera)
-            {
-                return null;
-            }
-
-            @Override
-            protected Feature<Ev> getFallbackFeature(TurboCamera turboCamera)
-            {
-                return turboCamera.getEVFeature();
-            }
-        };
+        TextView textView = reference.weaklyGet().findViewById(R.id.evText);
+        return new ValueMeteringController<>(textView, Ev.DEFAULT);
     }
 
     FocusMeteringController createFocusMeteringController(ActivityReference reference)
     {
-        TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.focusText);
+        TextView textView = reference.weaklyGet().findViewById(R.id.focusText);
         return new FocusMeteringController(textView);
     }
 
@@ -188,13 +128,13 @@ public class FeatureControllerFactory
         View captureButton = reference.weaklyGet().findViewById(R.id.captureButton);
         View pictureLayer = reference.weaklyGet().findViewById(R.id.captureLayer);
         View progressBar = reference.weaklyGet().findViewById(R.id.progressBar);
-        CameraPreview cameraPreview = (CameraPreview) reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
+        CameraPreview cameraPreview = reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
         return new TakePictureController(captureButton, pictureLayer, cameraPreview, meteringControllers, progressBar, reference);
     }
 
     FocusController createFocusController(ActivityReference reference)
     {
-        CameraPreview cameraPreview = (CameraPreview) reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
+        CameraPreview cameraPreview = reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
         FocusController result = new FocusController(reference, dismissibleManager, cameraPreview);
         dismissibleManager.addDismissible(result);
         return result;
@@ -214,7 +154,7 @@ public class FeatureControllerFactory
 
     WhiteBalanceMeteringController createWbMeteringController(ActivityReference reference)
     {
-        TextView textView = (TextView) reference.weaklyGet().findViewById(R.id.wbText);
+        TextView textView = reference.weaklyGet().findViewById(R.id.wbText);
         return new WhiteBalanceMeteringController(textView);
     }
 

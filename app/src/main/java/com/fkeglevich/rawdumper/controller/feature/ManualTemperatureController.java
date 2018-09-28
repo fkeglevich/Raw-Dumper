@@ -71,16 +71,4 @@ public class ManualTemperatureController extends ManualController<WhiteBalancePr
     {
         return ManualTemperature.DISABLED;
     }
-
-    @Override
-    protected ProportionFeature<ManualTemperature, ?> getManualFeature(TurboCamera camera)
-    {
-        return camera.getManualTemperatureFeature();
-    }
-
-    @Override
-    protected WritableFeature<WhiteBalancePreset, ?> getPresetFeature(TurboCamera camera)
-    {
-        return camera.getWhiteBalancePresetFeature();
-    }
 }

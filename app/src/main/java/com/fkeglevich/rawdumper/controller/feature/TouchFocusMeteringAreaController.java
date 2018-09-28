@@ -27,11 +27,14 @@ import com.fkeglevich.rawdumper.activity.KeyEventData;
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
+import com.fkeglevich.rawdumper.camera.data.DataRange;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
+import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.helper.PreviewHelper;
 import com.fkeglevich.rawdumper.ui.TouchFocusView;
 import com.fkeglevich.rawdumper.ui.UiUtil;
@@ -130,8 +133,8 @@ public class TouchFocusMeteringAreaController extends FeatureController
     protected void setup(TurboCamera camera)
     {
         previewFeature = camera.getPreviewFeature();
-        focusFeature = camera.getFocusFeature();
-        ManualFocusFeature manualFocusFeature = camera.getManualFocusFeature();
+        focusFeature = (FocusFeature) camera.getListFeature(FocusMode.class);
+        WritableFeature<ManualFocus, DataRange<ManualFocus>> manualFocusFeature = camera.getRangeFeature(ManualFocus.class);
 
         if (focusFeature.isAvailable())
             focusFeature.getOnChanging().addListener(eventData ->

@@ -36,7 +36,7 @@ public class FocusController extends PresetController<FocusMode>
 
     FocusController(ActivityReference reference, OnClickNotifier clickNotifier, CameraPreview cameraPreview)
     {
-        super(reference, clickNotifier);
+        super(reference, clickNotifier, FocusMode.class);
         this.cameraPreview = cameraPreview;
     }
 
@@ -50,12 +50,6 @@ public class FocusController extends PresetController<FocusMode>
         putIconMap(reference, FocusMode.INFINITY,             R.id.infinityFocusBt);
         putIconMap(reference, FocusMode.FIXED,                R.id.fixedFocusBt);
         putIconMap(reference, FocusMode.EDOF,                 R.id.edofFocusBt);
-    }
-
-    @Override
-    protected WritableFeature<FocusMode, List<FocusMode>> selectFeature(TurboCamera camera)
-    {
-        return camera.getFocusFeature();
     }
 
     @Override

@@ -33,7 +33,7 @@ public class WhiteBalancePresetController extends PresetController<WhiteBalanceP
 {
     WhiteBalancePresetController(ActivityReference reference, OnClickNotifier clickNotifier)
     {
-        super(reference, clickNotifier);
+        super(reference, clickNotifier, WhiteBalancePreset.class);
     }
 
     @Override
@@ -47,12 +47,6 @@ public class WhiteBalancePresetController extends PresetController<WhiteBalanceP
         putIconMap(reference, WhiteBalancePreset.CLOUDY,            R.id.cloudyWbBt);
         putIconMap(reference, WhiteBalancePreset.TWILIGHT,          R.id.twilightWbBt);
         putIconMap(reference, WhiteBalancePreset.SHADE,             R.id.shadeWbBt);
-    }
-
-    @Override
-    protected WritableFeature<WhiteBalancePreset, List<WhiteBalancePreset>> selectFeature(TurboCamera camera)
-    {
-        return camera.getWhiteBalancePresetFeature();
     }
 
     @Override
