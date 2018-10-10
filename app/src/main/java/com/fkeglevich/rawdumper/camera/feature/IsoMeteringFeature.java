@@ -54,7 +54,7 @@ public class IsoMeteringFeature extends Feature<Nullable<Iso>>
         {
             Double gain = SensorGainMeteringService.getInstance().getValue();
             if (gain != null)
-                return Nullable.of(Iso.create((int)Math.round(gain * sensorInfo.getBaseISO())));
+                return Nullable.of(Iso.decodeAnalogGain(gain, sensorInfo.getBaseISO()));
         }
         return Nullable.of(null);
     }
