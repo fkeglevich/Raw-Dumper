@@ -8,7 +8,7 @@ android {
         testApplicationId "com.fkeglevich.rawdumper.tests"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 6
+        versionCode 7
         versionName "3.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
