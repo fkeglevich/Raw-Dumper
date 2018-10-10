@@ -42,17 +42,17 @@ class Decoders
 
     static
     {
-        dispatcher.put(String.class,            String::toString);
-        dispatcher.put(Integer.TYPE,            Integer::parseInt);
-        dispatcher.put(Float.TYPE,              Float::parseFloat);
-        dispatcher.put(CaptureSize.class,       CaptureSize::parse);
-        dispatcher.put(Flash.class,             createParameterValueDecoder(Flash.values(), Flash.OFF));
-        dispatcher.put(FocusMode.class,         createParameterValueDecoder(FocusMode.values(), FocusMode.AUTO));
-        dispatcher.put(WhiteBalancePreset.class,createParameterValueDecoder(WhiteBalancePreset.values(), WhiteBalancePreset.AUTO));
-        dispatcher.put(ManualFocus.class,       ManualFocus::parse);
-        dispatcher.put(ManualFocusRange.class,  ManualFocusRange::parse);
-        dispatcher.put(ManualTemperature.class, ManualTemperature::parse);
-        dispatcher.put(ManualTemperatureRange.class, ManualTemperatureRange::parse);
+        dispatcher.put(String.class,                    String::toString);
+        dispatcher.put(Integer.TYPE,                    Integer::parseInt);
+        dispatcher.put(Float.TYPE,                      Float::parseFloat);
+        dispatcher.put(CaptureSize.class,               CaptureSize::parse);
+        dispatcher.put(Flash.class,                     createParameterValueDecoder(Flash.values(), Flash.OFF));
+        dispatcher.put(FocusMode.class,                 createParameterValueDecoder(FocusMode.values(), FocusMode.AUTO));
+        dispatcher.put(WhiteBalancePreset.class,        createParameterValueDecoder(WhiteBalancePreset.values(), WhiteBalancePreset.AUTO));
+        dispatcher.put(ManualFocus.class,               ManualFocus::parse);
+        dispatcher.put(ManualFocusRange.class,          ManualFocusRange::parse);
+        dispatcher.put(ManualTemperature.class,         ManualTemperature::parse);
+        dispatcher.put(ManualTemperatureRange.class,    ManualTemperatureRange::parse);
     }
 
     @SuppressWarnings("unchecked")

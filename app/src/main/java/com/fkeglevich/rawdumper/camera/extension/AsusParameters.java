@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.extension;
 
-import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
@@ -48,7 +47,7 @@ public class AsusParameters
     public static final String ASUS_IMAGE_OPTIMIZE = "image_optimize";
 
     public static final Parameter<ManualFocus> MANUAL_FOCUS = ParameterFactory.createAsyncEvent("set_manual_focus", ManualFocus.class);
-    public static final Parameter<DataRange<ManualFocus>> MANUAL_FOCUS_RANGE = ParameterFactory.createReadOnly("focus_range_values", DataRange.class);
+    public static final Parameter<ManualFocusRange> MANUAL_FOCUS_RANGE = ParameterFactory.createReadOnly("focus_range_values", ManualFocusRange.class);
 
     public static final Parameter<ManualTemperature> MANUAL_TEMPERATURE = ParameterFactory.createAsyncEvent("asus_color_temp", ManualTemperature.class);
 }

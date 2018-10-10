@@ -22,7 +22,6 @@ import com.fkeglevich.rawdumper.camera.async.Closeable;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCamera;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;

@@ -21,8 +21,6 @@ import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
 
-import java.util.List;
-
 import static com.fkeglevich.rawdumper.camera.extension.VirtualParameters.PICTURE_FORMAT;
 
 /**
@@ -31,7 +29,7 @@ import static com.fkeglevich.rawdumper.camera.extension.VirtualParameters.PICTUR
  * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class PictureFormatFeature extends WritableFeature<PictureFormat, List<PictureFormat>> implements VirtualFeature
+public class PictureFormatFeature extends ListFeature<PictureFormat> implements VirtualFeature
 {
     private final CameraActions cameraActions;
 

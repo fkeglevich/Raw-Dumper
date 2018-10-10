@@ -21,15 +21,13 @@ import com.fkeglevich.rawdumper.camera.extension.Parameters;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
 
-import java.util.List;
-
 /**
  * TODO: Add class header
  * <p>
  * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class PictureSizeFeature extends WritableFeature<CaptureSize, List<CaptureSize>> implements VirtualFeature
+public class PictureSizeFeature extends ListFeature<CaptureSize> implements VirtualFeature
 {
     PictureSizeFeature(ParameterCollection parameterCollection)
     {

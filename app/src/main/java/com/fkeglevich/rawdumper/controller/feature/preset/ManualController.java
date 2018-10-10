@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
-import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.feature.RangeFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.feature.FeatureController;
@@ -47,7 +46,7 @@ public abstract class ManualController<P, M extends Comparable<M>> extends Featu
     private final Visibility manualChooserTransition;
     private final Visibility presetChooserTransition;
 
-    private RangeFeature<M, DataRange<M>> manualFeature;
+    private RangeFeature<M> manualFeature;
     private P lastPreset = getDefaultPresetValue();
 
     public ManualController(View manualButton,
@@ -172,9 +171,9 @@ public abstract class ManualController<P, M extends Comparable<M>> extends Featu
     protected abstract M getDisabledManualValue();
 
     @SuppressWarnings("unchecked")
-    private RangeFeature<M, DataRange<M>> getManualFeature(TurboCamera camera)
+    private RangeFeature<M> getManualFeature(TurboCamera camera)
     {
-        return (RangeFeature<M,DataRange<M>>) camera.getRangeFeature((Class<M>) getDisabledManualValue().getClass());
+        return camera.getRangeFeature((Class<M>) getDisabledManualValue().getClass());
     }
 
     @SuppressWarnings("unchecked")

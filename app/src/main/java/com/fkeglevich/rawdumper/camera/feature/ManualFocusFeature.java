@@ -32,7 +32,8 @@ public class ManualFocusFeature extends RangeFeature<ManualFocus>
 {
     ManualFocusFeature(AsyncParameterSender asyncParameterSender, ParameterCollection parameterCollection)
     {
-        super(asyncParameterSender, AsusParameters.MANUAL_FOCUS, parameterCollection, RangeValidator.create(parameterCollection, AsusParameters.MANUAL_FOCUS_RANGE));
+        super(asyncParameterSender, AsusParameters.MANUAL_FOCUS, parameterCollection,
+                RangeValidator.create(parameterCollection, AsusParameters.MANUAL_FOCUS_RANGE));
     }
 
     @Override

@@ -36,7 +36,7 @@ import java.util.List;
  * Created by Flávio Keglevich on 26/09/17.
  */
 
-public class ShutterSpeedFeature extends WritableFeature<ShutterSpeed, List<ShutterSpeed>> implements VirtualFeature
+public class ShutterSpeedFeature extends ListFeature<ShutterSpeed> implements VirtualFeature
 {
     private final CameraActions cameraActions;
     private final boolean requiresIntelCamera;

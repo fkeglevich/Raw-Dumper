@@ -38,7 +38,7 @@ public class RangeValidator<T extends Comparable<T>> implements ValueValidator<T
     }
 
     @NonNull
-    public static <T extends Comparable<T>> RangeValidator<T> create(ParameterCollection parameterCollection, Parameter<DataRange<T>> parameter)
+    public static <T extends Comparable<T>> RangeValidator<T> create(ParameterCollection parameterCollection, Parameter<? extends DataRange<T>> parameter)
     {
         return new RangeValidator<T>(parameterCollection.get(parameter));
     }
