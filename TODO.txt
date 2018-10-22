@@ -174,3 +174,5 @@ Done:
  - Fixed a bug when a su shell doesn't open gracefully
  - (DONE!) Proper black level calibration
  - (DONE!) Save features's values when closing camera
+ - Updated gradle version and targetSdkVersion
+ - (DONE!) Fixed a bug when starting the app in certain ROMs (like BORETS)
