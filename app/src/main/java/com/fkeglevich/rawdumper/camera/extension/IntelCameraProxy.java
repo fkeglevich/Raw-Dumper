@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.extension;
 
 import android.hardware.Camera;
+import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -62,6 +63,7 @@ class IntelCameraProxy implements ICameraExtension
     {
         this.instance = instance;
         initializeMethods(intelCameraClass);
+        Log.i(IntelCameraProxy.class.getSimpleName(), "Intel Camera Extensions loaded!");
     }
 
     private void initializeMethods(Class<Object> intelCameraClass)
