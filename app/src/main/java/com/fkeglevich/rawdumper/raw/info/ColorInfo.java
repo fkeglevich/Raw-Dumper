@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.support.annotation.Keep;
 
+import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
@@ -50,10 +51,21 @@ public class ColorInfo
     private CalibrationIlluminant calibrationIlluminant1;
     private CalibrationIlluminant calibrationIlluminant2;
 
-    public void writeTiffTags(TiffWriter tiffWriter)
+    public void writeTiffTags(TiffWriter tiffWriter, CaptureInfo captureInfo)
     {
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1,           colorMatrix1, true);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX2,           colorMatrix2, true);
+        if (captureInfo.makerNoteInfo != null && captureInfo.makerNoteInfo.colorMatrix != null)
+        {
+            float[] cc = captureInfo.makerNoteInfo.colorMatrix;
+            safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1, MathUtil.multiply3x3Matrices(colorMatrix1, cc), true);
+            //safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1, MathUtil.multiply3x3Matrices(cc, colorMatrix1), true);
+            safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX2, MathUtil.multiply3x3Matrices(colorMatrix2, cc), true);
+            //safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX2, MathUtil.multiply3x3Matrices(cc, colorMatrix2), true);
+        }
+        else
+        {
+            safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1, colorMatrix1, true);
+            safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX2, colorMatrix2, true);
+        }
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_FORWARDMATRIX1,         forwardMatrix1, true);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_FORWARDMATRIX2,         forwardMatrix2, true);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_CAMERACALIBRATION1,     cameraCalibration1, true);
