@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.extension;
 
 import android.hardware.Camera;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -50,16 +51,11 @@ class IntelCameraProxy implements ICameraExtension
     private Method startContinuousShootingMethod;
     private Method stopContinuousShootingMethod;
 
-    static IntelCameraProxy createNew(Class<Object> intelCameraClass, int cameraId)
+    static IntelCameraProxy createNew(Class<Object> intelCameraClass, int cameraId) throws Exception
     {
         Object instance;
-        try
-        {
-            instance = intelCameraClass.getConstructor(int.class).newInstance(cameraId);
-            return new IntelCameraProxy(intelCameraClass, instance);
-        }
-        catch (Exception e)
-        {   return null;    }
+        instance = intelCameraClass.getConstructor(int.class).newInstance(cameraId);
+        return new IntelCameraProxy(intelCameraClass, instance);
     }
 
     private IntelCameraProxy(Class<Object> intelCameraClass, Object instance)

@@ -37,6 +37,8 @@ import static android.content.Context.MODE_PRIVATE;
  * devices and 64 bits pointers in XYZ devices; using IntelCameraExtensionLoader permits handling
  * both cases gracefully.
  *
+ * In some ROMs the Extension Library fails to load at all, this case is also handled.
+ *
  * Created by Flávio Keglevich on 30/07/2017.
  */
 
@@ -62,15 +64,15 @@ public class IntelCameraExtensionLoader
     @SuppressWarnings("unchecked")
     private static ICameraExtension extendedOpenCamera(int cameraId)
     {
-        if (intelCameraClassCache != null)
-            return IntelCameraProxy.createNew(intelCameraClassCache, cameraId);
-
-        File intelCameraJar = new File(INTEL_CAMERA_PATH);
-        if (!intelCameraJar.exists())
-            return DummyCameraProxy.createNew(cameraId);
-
         try
         {
+            if (intelCameraClassCache != null)
+                return IntelCameraProxy.createNew(intelCameraClassCache, cameraId);
+
+            File intelCameraJar = new File(INTEL_CAMERA_PATH);
+            if (!intelCameraJar.exists())
+                return DummyCameraProxy.createNew(cameraId);
+
             File dexOutputDir = getDexCacheDir();
             DexClassLoader classloader = new DexClassLoader(intelCameraJar.getAbsolutePath(), dexOutputDir.getAbsolutePath(), null, IntelCameraExtensionLoader.class.getClassLoader());
             intelCameraClassCache = (Class<Object>) classloader.loadClass(INTEL_CAMERA_CLASS_NAME);
