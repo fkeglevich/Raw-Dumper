@@ -76,7 +76,7 @@ public class IntelCameraExtensionLoader
             intelCameraClassCache = (Class<Object>) classloader.loadClass(INTEL_CAMERA_CLASS_NAME);
             return IntelCameraProxy.createNew(intelCameraClassCache, cameraId);
         }
-        catch (Exception e)
+        catch (Exception | UnsatisfiedLinkError ignored)
         {
             return DummyCameraProxy.createNew(cameraId);
         }
