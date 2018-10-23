@@ -53,31 +53,33 @@ public class ColorInfo
 
     public void writeTiffTags(TiffWriter tiffWriter, CaptureInfo captureInfo)
     {
-        if (captureInfo.makerNoteInfo != null && captureInfo.makerNoteInfo.colorMatrix != null)
-        {
-            float[] cc = captureInfo.makerNoteInfo.colorMatrix;
-            safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1, MathUtil.multiply3x3Matrices(colorMatrix1, cc), true);
-            //safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1, MathUtil.multiply3x3Matrices(cc, colorMatrix1), true);
-            safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX2, MathUtil.multiply3x3Matrices(colorMatrix2, cc), true);
-            //safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX2, MathUtil.multiply3x3Matrices(cc, colorMatrix2), true);
-        }
-        else
-        {
-            safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1, colorMatrix1, true);
-            safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX2, colorMatrix2, true);
-        }
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_FORWARDMATRIX1,         forwardMatrix1, true);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_FORWARDMATRIX2,         forwardMatrix2, true);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CAMERACALIBRATION1,     cameraCalibration1, true);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CAMERACALIBRATION2,     cameraCalibration2, true);
+        safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1,           processColorMatrix(colorMatrix1, captureInfo));
+        safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX2,           processColorMatrix(colorMatrix2, captureInfo));
+        safeWriteField(tiffWriter, TiffTag.TIFFTAG_FORWARDMATRIX1,         forwardMatrix1);
+        safeWriteField(tiffWriter, TiffTag.TIFFTAG_FORWARDMATRIX2,         forwardMatrix2);
+        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CAMERACALIBRATION1,     cameraCalibration1);
+        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CAMERACALIBRATION2,     cameraCalibration2);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_CALIBRATIONILLUMINANT1, calibrationIlluminant1);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_CALIBRATIONILLUMINANT2, calibrationIlluminant2);
     }
 
-    private void safeWriteField(TiffWriter writer, int tag, float[] data, boolean writeLength)
+    private static float[] processColorMatrix(float[] colorMatrix, CaptureInfo captureInfo)
+    {
+        if (captureInfo.useAlternativeColorMatrix &&
+                captureInfo.makerNoteInfo != null &&
+                captureInfo.makerNoteInfo.colorMatrix != null)
+        {
+            float[] ccm = captureInfo.makerNoteInfo.colorMatrix;
+            return MathUtil.multiply3x3Matrices(colorMatrix, ccm);
+        }
+        else
+            return colorMatrix;
+    }
+
+    private void safeWriteField(TiffWriter writer, int tag, float[] data)
     {
         if (data != null)
-            writer.setField(tag, data, writeLength);
+            writer.setField(tag, data, true);
     }
 
     private void safeWriteField(TiffWriter writer, int tag, CalibrationIlluminant illuminant)
