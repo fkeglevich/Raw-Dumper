@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.util;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by Flávio Keglevich on 22/04/2017.
  * TODO: Add a class header comment!
@@ -47,28 +49,17 @@ public class MathUtil
                                 v[0]*m[6] + v[1]*m[7] + v[2]*m[8]};
     }
 
-    public static float[] multiply3x3Matrices(float[] a, float[] b)
+    @NonNull
+    public static float[] multiply3x3Matrices(@NonNull float[] a, @NonNull float[] b)
     {
-        /*
-
-        [0 1 2
-         3 4 5 ]
-
-        3 * i + j
-
-         */
         float[] result = new float[9];
         int i, j, k;
+
         for(i = 0; i < 3; i++)
-        {
-            for(j = 0; j < 3; j++)
-            {
-                for(k = 0; k < 3; k++)
-                {
-                    result[3 * i + j] +=  a[3 * i + k] *  b[ 3 * k + j];
-                }
-            }
-        }
+            for (j = 0; j < 3; j++)
+                for (k = 0; k < 3; k++)
+                    result[3*i + j] += a[3*i + k] * b[3*k + j];
+
         return result;
     }
 
