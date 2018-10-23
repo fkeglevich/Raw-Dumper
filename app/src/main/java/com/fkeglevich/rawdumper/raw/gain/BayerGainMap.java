@@ -77,6 +77,19 @@ public class BayerGainMap
         greenBlue.multiplyByScalar(value);
     }
 
+    public void dividePointWise(BayerGainMap b)
+    {
+        isValid();
+        b.isValid();
+        Assert.assertEquals(numColumns, b.numColumns);
+        Assert.assertEquals(numRows,    b.numRows);
+
+        red.dividePointWise(b.red);
+        blue.dividePointWise(b.blue);
+        greenRed.dividePointWise(b.greenRed);
+        greenBlue.dividePointWise(b.greenBlue);
+    }
+
     public void invertRows()
     {
         isValid();
