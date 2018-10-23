@@ -51,6 +51,8 @@ public class ColorInfo
     private CalibrationIlluminant calibrationIlluminant1;
     private CalibrationIlluminant calibrationIlluminant2;
 
+    private float[] toneCurve;
+
     public void writeTiffTags(TiffWriter tiffWriter, CaptureInfo captureInfo)
     {
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1,           processColorMatrix(colorMatrix1, captureInfo));
@@ -61,6 +63,7 @@ public class ColorInfo
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_CAMERACALIBRATION2,     cameraCalibration2);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_CALIBRATIONILLUMINANT1, calibrationIlluminant1);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_CALIBRATIONILLUMINANT2, calibrationIlluminant2);
+        safeWriteField(tiffWriter, TiffTag.TIFFTAG_PROFILETONECURVE,       toneCurve);
     }
 
     private static float[] processColorMatrix(float[] colorMatrix, CaptureInfo captureInfo)
