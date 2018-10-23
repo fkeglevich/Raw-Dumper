@@ -176,3 +176,4 @@ Done:
  - (DONE!) Save features's values when closing camera
  - Updated gradle version and targetSdkVersion
  - (DONE!) Fixed a bug when starting the app in certain ROMs (like BORETS)
+ - (DONE!) Added new simple tone curve profiles
