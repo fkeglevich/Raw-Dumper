@@ -53,6 +53,8 @@ public class CaptureInfo
     public byte[] rawDataBytes                  = null;
     public File relatedI3av4File                = null;
     public boolean invertRows                   = false;
+    public boolean keepLensVignetting           = false;
+    public boolean useAlternativeColorMatrix    = false;
 
     public boolean isValid()
     {
