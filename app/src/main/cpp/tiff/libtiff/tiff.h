@@ -465,6 +465,7 @@ typedef enum {
 #define TIFFTAG_FORWARDMATRIX1		50964 /* &maps wb camera colors to XYZ D50 */
 #define TIFFTAG_FORWARDMATRIX2		50965 /* &maps wb camera colors to XYZ D50 */
 #define TIFFTAG_NOISEPROFILE		51041 /* &describes the amount of noise */
+#define TIFFTAG_PROFILETONECURVE	50940 /* &describes the default tone curve applied */
 
 #define TIFFTAG_OPCODELIST1			51008 /* &first list of opcodes applied */
 #define TIFFTAG_OPCODELIST2			51009 /* &second list of opcodes applied */
