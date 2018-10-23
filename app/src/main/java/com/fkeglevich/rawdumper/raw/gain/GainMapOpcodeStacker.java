@@ -48,10 +48,22 @@ public class GainMapOpcodeStacker
                 accGainMap.add(gainMap);
             }
         }
+
+        if (captureInfo.keepLensVignetting)
+            restoreLensVignetting(accGainMap, map.get(ShadingIlluminant.D65));
+
         if (captureInfo.invertRows)
             accGainMap.invertRows();
 
         GainMapOpcode opcode = new GainMapOpcode(captureInfo.imageSize, accGainMap);
         OpcodeListWriter.writeOpcodeList3Tag(tiffWriter, Collections.singletonList(opcode));
+    }
+
+    private static void restoreLensVignetting(BayerGainMap accGainMap, BayerGainMap D65Map)
+    {
+        accGainMap.red.dividePointWise(D65Map.greenRed);
+        accGainMap.blue.dividePointWise(D65Map.greenRed);
+        accGainMap.greenRed.dividePointWise(D65Map.greenRed);
+        accGainMap.greenBlue.dividePointWise(D65Map.greenRed);
     }
 }
