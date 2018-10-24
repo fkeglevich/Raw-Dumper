@@ -74,7 +74,7 @@ public class OrientationManager
             orientationListener.enable();
     }
 
-    public ImageOrientation getImageOrientation(CameraContext cameraContext)
+    public ImageOrientation getImageOrientation(CameraContext cameraContext, boolean flipHorizontally)
     {
         int cameraOrientation = cameraContext.getCameraInfo().getOrientation();
         int facing = cameraContext.getCameraInfo().getFacing();
@@ -90,7 +90,7 @@ public class OrientationManager
         else
             degrees = (cameraOrientation + orientation + 180) % 360;
 
-        return degreesToOrientation(degrees, facing == CAMERA_FACING_FRONT /*&& invertRows == true*/);
+        return degreesToOrientation(degrees, flipHorizontally);
     }
 
     @NonNull
