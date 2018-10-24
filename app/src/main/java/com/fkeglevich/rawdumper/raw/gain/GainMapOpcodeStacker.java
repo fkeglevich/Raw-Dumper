@@ -49,10 +49,10 @@ public class GainMapOpcodeStacker
             }
         }
 
-        if (captureInfo.keepLensVignetting)
+        if (captureInfo.rawSettings.keepLensVignetting)
             restoreLensVignetting(accGainMap, map.get(ShadingIlluminant.D65));
 
-        if (captureInfo.invertRows)
+        if (captureInfo.shouldInvertRows())
             accGainMap.invertRows();
 
         GainMapOpcode opcode = new GainMapOpcode(captureInfo.imageSize, accGainMap);

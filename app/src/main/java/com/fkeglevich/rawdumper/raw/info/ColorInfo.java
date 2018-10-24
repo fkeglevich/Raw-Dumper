@@ -68,7 +68,7 @@ public class ColorInfo
 
     private static float[] processColorMatrix(float[] colorMatrix, CaptureInfo captureInfo)
     {
-        if (captureInfo.useAlternativeColorMatrix &&
+        if (captureInfo.rawSettings.useAlternativeColorMatrix &&
                 captureInfo.makerNoteInfo != null &&
                 captureInfo.makerNoteInfo.colorMatrix != null)
         {

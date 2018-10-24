@@ -60,7 +60,7 @@ public class DngWriter
             exifInfo.getExifDataFromCapture(captureInfo);
 
             writeMetadata(captureInfo, exifInfo);
-            writer.writeImageData(tiffWriter, imageData, captureInfo.invertRows);
+            writer.writeImageData(tiffWriter, imageData, captureInfo.shouldInvertRows());
             writeExifInfo(exifInfo);
         }
         finally
@@ -83,7 +83,7 @@ public class DngWriter
          */
 
         writeBasicHeader(captureInfo.imageSize);
-        captureInfo.camera.getSensor().writeTiffTags(tiffWriter, exifInfo, captureInfo.invertRows);
+        captureInfo.camera.getSensor().writeTiffTags(tiffWriter, exifInfo, captureInfo.shouldInvertRows());
         captureInfo.camera.writeTiffTags(tiffWriter);
         captureInfo.device.writeTiffTags(tiffWriter);
         captureInfo.writeTiffTags(tiffWriter);

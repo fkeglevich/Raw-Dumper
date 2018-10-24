@@ -16,10 +16,12 @@
 
 package com.fkeglevich.rawdumper.raw.capture.builder;
 
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.pipeline.filename.FilenameBuilder;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.io.Directories;
 import com.fkeglevich.rawdumper.raw.capture.DateInfo;
+import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 import java.io.File;
 
@@ -32,11 +34,14 @@ import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 
 public abstract class CommonBuilder extends ACaptureInfoBuilder
 {
+    private final DeviceInfo deviceInfo;
+
     DateInfo dateInfo;
 
-    CommonBuilder()
+    CommonBuilder(CameraContext cameraContext)
     {
-        super();
+        super(cameraContext);
+        this.deviceInfo = cameraContext.getDeviceInfo();
     }
 
     abstract void initDateInfo();
@@ -62,9 +67,8 @@ public abstract class CommonBuilder extends ACaptureInfoBuilder
     }
 
     @Override
-    public void buildInvertRows()
+    public void buildDevice()
     {
-        if (captureInfo.camera != null)
-            captureInfo.invertRows = captureInfo.camera.getFacing() == CAMERA_FACING_FRONT;
+        captureInfo.device = deviceInfo;
     }
 }
