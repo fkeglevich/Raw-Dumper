@@ -35,6 +35,7 @@ public class DummyCameraContext extends CameraContext
     {
         this.deviceInfo = deviceInfo;
         this.cameraSelector = new DummyCameraSelector(deviceInfo, cameraId);
+        this.getRawSettings().useOrientationFromPhone = false;
     }
 
     @Override
