@@ -37,7 +37,7 @@ public class Reprocessor
 
     public void reprocessI3av4File(DeviceInfo deviceInfo, File i3av4File)
     {
-        FromI3av4FileBuilder captureInfoBuilder = new FromI3av4FileBuilder(deviceInfo, i3av4File);
+        FromI3av4FileBuilder captureInfoBuilder = new FromI3av4FileBuilder(/*deviceInfo*/null, i3av4File);
         CaptureInfo captureInfo = captureInfoBuilder.build();
         IOThread.getIOAccess().saveDng(captureInfo, new AsyncOperation<Void>()
         {
