@@ -10,7 +10,6 @@ TODO list:
    - Note:  temporarily save EVERY important information just before taking the pictures.
             So in a case of crash, the photos can be automatically recovered later
 
- - (FUTURE RELEASE) Add simple tonemapping
  - (IN PROGRESS) Basic refactoring
 			
  - (FUTURE RELEASE) Simplify the code architecture
