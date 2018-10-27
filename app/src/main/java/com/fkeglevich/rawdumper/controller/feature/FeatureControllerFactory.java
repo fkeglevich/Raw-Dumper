@@ -187,4 +187,9 @@ public class FeatureControllerFactory
         dismissibleManager.addDismissible(result);
         return result;
     }
+
+    FeatureController createSwitchsController(ActivityReference reference)
+    {
+        return new SwitchesController(reference);
+    }
 }
