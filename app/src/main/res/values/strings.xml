@@ -129,5 +129,9 @@
     <string name="wb_button">WB</string>
     <string name="manual_temperature_text">K</string>
     <string name="camera_resolution">Camera resolution</string>
+    <string name="raw_format_options">Raw format options (beta)</string>
+    <string name="keep_lens_vignetting">Keep lens vignetting</string>
+    <string name="use_alternative_color_profile">Use alternative color profile</string>
+    <string name="save_as_flipped">Flip front camera pictures</string>
 
 </resources>
