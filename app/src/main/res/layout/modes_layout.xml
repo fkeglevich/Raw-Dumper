@@ -63,7 +63,7 @@
         android:layout_alignBottom="@id/infoButton"
         android:layout_marginBottom="60dp"
         android:layout_marginTop="60dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,39 +71,79 @@
             android:orientation="vertical"
             android:showDividers="middle"
             android:divider="@drawable/controls_divider">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Picture Mode"
+                android:text="@string/raw_format_options"
                 android:textColor="@android:color/white"
+                android:layout_marginBottom="10dp"
                 android:textSize="20sp"/>
-            <RadioGroup
+
+            <Switch
+                android:id="@+id/klvSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="10dp"
+                android:text="@string/keep_lens_vignetting" />
+
+            <Switch
+                android:id="@+id/ccmSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="10dp"
+                android:text="@string/use_alternative_color_profile" />
+
+            <Switch
+                android:id="@+id/safSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="10dp"
+                android:text="@string/save_as_flipped" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/pictureModeRg"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="File format"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"/>
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/pictureFormatRg"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/camera_resolution"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"/>
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/pictureSizeRg"/>
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Picture Mode"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"/>
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/pictureModeRg"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="File format"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"/>
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/pictureFormatRg"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/camera_resolution"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"/>
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/pictureSizeRg"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

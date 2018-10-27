@@ -22,8 +22,6 @@ import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
-import com.fkeglevich.rawdumper.camera.feature.ProportionFeature;
-import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.feature.preset.ManualController;
 
 /**
@@ -54,18 +52,6 @@ class ManualFocusController extends ManualController<FocusMode, ManualFocus>
     protected ManualFocus getDisabledManualValue()
     {
         return ManualFocus.DISABLED;
-    }
-
-    @Override
-    protected ProportionFeature<ManualFocus, ?> getManualFeature(TurboCamera camera)
-    {
-        return camera.getManualFocusFeature();
-    }
-
-    @Override
-    protected WritableFeature<FocusMode, ?> getPresetFeature(TurboCamera camera)
-    {
-        return camera.getFocusFeature();
     }
 
     @Override

@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
-import com.fkeglevich.rawdumper.camera.data.ManualFocusRange;
 import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.RangeValidator;
@@ -29,11 +28,12 @@ import com.fkeglevich.rawdumper.camera.parameter.value.RangeValidator;
  * Created by Flávio Keglevich on 29/10/17.
  */
 
-public class ManualFocusFeature extends ProportionFeature<ManualFocus, ManualFocusRange>
+public class ManualFocusFeature extends RangeFeature<ManualFocus>
 {
     ManualFocusFeature(AsyncParameterSender asyncParameterSender, ParameterCollection parameterCollection)
     {
-        super(asyncParameterSender, AsusParameters.MANUAL_FOCUS, parameterCollection, RangeValidator.create(parameterCollection, AsusParameters.MANUAL_FOCUS_RANGE));
+        super(asyncParameterSender, AsusParameters.MANUAL_FOCUS, parameterCollection,
+                RangeValidator.create(parameterCollection, AsusParameters.MANUAL_FOCUS_RANGE));
     }
 
     @Override

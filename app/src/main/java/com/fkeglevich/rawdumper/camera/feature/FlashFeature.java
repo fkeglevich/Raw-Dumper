@@ -35,7 +35,7 @@ import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
  * Created by Flávio Keglevich on 13/10/17.
  */
 
-public class FlashFeature extends WritableFeature<Flash, List<Flash>> implements VirtualFeature
+public class FlashFeature extends ListFeature<Flash> implements VirtualFeature
 {
     private final CameraActions cameraActions;
     private final List<Flash> originalList;

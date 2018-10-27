@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.controller.feature.preset;
 import android.widget.TextView;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterChangeEvent;
@@ -34,24 +35,29 @@ import static com.fkeglevich.rawdumper.controller.feature.ValueMeteringControlle
  * TODO: add header comment
  * Created by Flávio Keglevich on 06/05/18.
  */
-public abstract class PresetMeteringController<P extends Displayable, M, MR> extends FeatureController
+public abstract class PresetMeteringController<P extends Displayable, M extends Comparable<M>> extends FeatureController
 {
     private final TextView textView;
+    private final Class<P> presetClass;
+    private final Class<M> manualClass;
     private WritableFeature<P, List<P>> presetFeature;
-    private WritableFeature<M, MR> manualFeature;
+    private WritableFeature<M, DataRange<M>> manualFeature;
     private EventListener<ParameterChangeEvent<P>> presetListener = eventData -> updateText(false);
     private EventListener<ParameterChangeEvent<M>> manualListener = eventData -> updateText(false);
 
+    @SuppressWarnings("unchecked")
     public PresetMeteringController(TextView textView)
     {
         this.textView = textView;
+        this.presetClass = (Class<P>) getUnavailableValue().getClass();
+        this.manualClass = (Class<M>) getDisabledManualValue().getClass();
         updateText(false);
     }
 
     @Override
     protected void setup(TurboCamera camera)
     {
-        presetFeature = getPresetFeature(camera);
+        presetFeature = camera.getListFeature(presetClass);
         if (!presetFeature.isAvailable())
         {
             reset();
@@ -61,7 +67,7 @@ public abstract class PresetMeteringController<P extends Displayable, M, MR> ext
 
         presetFeature.getOnChanged().addListener(presetListener);
 
-        manualFeature = getManualFeature(camera);
+        manualFeature = camera.getRangeFeature(manualClass);
         if (manualFeature.isAvailable())
             manualFeature.getOnChanged().addListener(manualListener);
         else
@@ -127,11 +133,8 @@ public abstract class PresetMeteringController<P extends Displayable, M, MR> ext
         }
     }
 
-    protected abstract WritableFeature<P, List<P>> getPresetFeature(TurboCamera camera);
-    protected abstract WritableFeature<M, MR> getManualFeature(TurboCamera camera);
-
     protected abstract P getUnavailableValue();
     protected abstract P getDefaultValue();
-    protected abstract String getManualText(WritableFeature<M, MR> manualFeature);
+    protected abstract String getManualText(WritableFeature<M, DataRange<M>> manualFeature);
     protected abstract M getDisabledManualValue();
 }

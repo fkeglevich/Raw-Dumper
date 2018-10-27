@@ -18,12 +18,8 @@ package com.fkeglevich.rawdumper.controller.feature;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
-import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
-import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.feature.preset.PresetController;
-
-import java.util.List;
 
 /**
  * TODO: add header comment
@@ -33,7 +29,7 @@ public class WhiteBalancePresetController extends PresetController<WhiteBalanceP
 {
     WhiteBalancePresetController(ActivityReference reference, OnClickNotifier clickNotifier)
     {
-        super(reference, clickNotifier);
+        super(reference, clickNotifier, WhiteBalancePreset.class);
     }
 
     @Override
@@ -47,12 +43,6 @@ public class WhiteBalancePresetController extends PresetController<WhiteBalanceP
         putIconMap(reference, WhiteBalancePreset.CLOUDY,            R.id.cloudyWbBt);
         putIconMap(reference, WhiteBalancePreset.TWILIGHT,          R.id.twilightWbBt);
         putIconMap(reference, WhiteBalancePreset.SHADE,             R.id.shadeWbBt);
-    }
-
-    @Override
-    protected WritableFeature<WhiteBalancePreset, List<WhiteBalancePreset>> selectFeature(TurboCamera camera)
-    {
-        return camera.getWhiteBalancePresetFeature();
     }
 
     @Override

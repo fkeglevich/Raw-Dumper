@@ -35,10 +35,8 @@ import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 public class FromRawAndJpegBuilder extends CommonBuilder
 {
-    private final DeviceInfo device;
     private final CameraSizePair pair;
     private final Camera.Parameters parameters;
-    private final ImageOrientation orientation;
     private final byte[] rawDataBytes;
     private final byte[] extraJpegBytes;
 
@@ -47,21 +45,17 @@ public class FromRawAndJpegBuilder extends CommonBuilder
     public FromRawAndJpegBuilder(CameraContext cameraContext, Camera.Parameters parameters,
                                  byte[] rawDataBytes, byte[] extraJpegBytes)
     {
-        this(cameraContext.getDeviceInfo(), CameraSizePair.createFromParameters(parameters,
+        this(cameraContext, CameraSizePair.createFromParameters(parameters,
                 cameraContext.getCameraInfo()), parameters,
-                OrientationManager.getInstance().getImageOrientation(cameraContext),
                 rawDataBytes, extraJpegBytes);
     }
 
-    private FromRawAndJpegBuilder(DeviceInfo device, CameraSizePair cameraSizePair,
-                                  Camera.Parameters parameters, ImageOrientation orientation,
-                                  byte[] rawDataBytes, byte[] extraJpegBytes)
+    private FromRawAndJpegBuilder(CameraContext cameraContext, CameraSizePair cameraSizePair,
+                                  Camera.Parameters parameters, byte[] rawDataBytes, byte[] extraJpegBytes)
     {
-        super();
-        this.device = device;
+        super(cameraContext);
         this.pair = cameraSizePair;
         this.parameters = parameters;
-        this.orientation = orientation;
         this.rawDataBytes = rawDataBytes;
         this.extraJpegBytes = extraJpegBytes;
         initDateInfo();
@@ -82,12 +76,6 @@ public class FromRawAndJpegBuilder extends CommonBuilder
     void initDateInfo()
     {
         dateInfo = DateInfo.createFromCurrentTime();
-    }
-
-    @Override
-    public void buildDevice()
-    {
-        captureInfo.device = device;
     }
 
     @Override
@@ -112,12 +100,6 @@ public class FromRawAndJpegBuilder extends CommonBuilder
     public void buildOriginalRawFilename()
     {
         captureInfo.originalRawFilename = generateRawFilename();
-    }
-
-    @Override
-    public void buildOrientation()
-    {
-        captureInfo.orientation = orientation;
     }
 
     @Override

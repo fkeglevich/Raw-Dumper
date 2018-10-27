@@ -60,6 +60,16 @@ public class GainMap
                 values[row][col] *= value;
     }
 
+    public void dividePointWise(GainMap b)
+    {
+        Assert.assertEquals(numColumns, b.numColumns);
+        Assert.assertEquals(numRows,    b.numRows);
+
+        for (int row = 0; row < numRows; row++)
+            for (int col = 0; col < numColumns; col++)
+                values[row][col] /= b.values[row][col];
+    }
+
     public void invertRows()
     {
         int halfRows = numRows / 2;

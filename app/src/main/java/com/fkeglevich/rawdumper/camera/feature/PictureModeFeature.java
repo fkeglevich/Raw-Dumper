@@ -30,7 +30,7 @@ import java.util.List;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class PictureModeFeature extends WritableFeature<Mode, List<Mode>> implements VirtualFeature
+public class PictureModeFeature extends ListFeature<Mode> implements VirtualFeature
 {
     private final CameraActions cameraActions;
 

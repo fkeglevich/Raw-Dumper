@@ -19,14 +19,11 @@ package com.fkeglevich.rawdumper.raw.capture.builder;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
-import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.capture.DateInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfo;
-import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
-import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 import java.io.File;
 
@@ -39,41 +36,33 @@ import java.io.File;
 
 public class FromI3av4FileBuilder extends CommonBuilder
 {
-    private final DeviceInfo device;
     private final File relatedI3av4File;
     private final CameraSizePair pair;
     private final Camera.Parameters parameters;
-    private final ImageOrientation orientation;
 
     private MakerNoteInfo makerNoteInfo;
 
     public FromI3av4FileBuilder(CameraContext cameraContext, File relatedI3av4File, Camera.Parameters parameters)
     {
-        this(cameraContext.getDeviceInfo(), CameraSizePair.createFromParameters(parameters,
-                cameraContext.getCameraInfo()), relatedI3av4File, parameters,
-                OrientationManager.getInstance().getImageOrientation(cameraContext));
-    }
-
-    private FromI3av4FileBuilder(DeviceInfo device, CameraSizePair cameraSizePair, File relatedI3av4File, Camera.Parameters parameters, ImageOrientation orientation)
-    {
-        super();
-        this.device = device;
-        this.pair = cameraSizePair;
+        super(cameraContext);
+        this.pair = getBestCameraSizePair(cameraContext, relatedI3av4File, parameters);
         this.relatedI3av4File = relatedI3av4File;
         this.parameters = parameters;
-        this.orientation = orientation;
         initDateInfo();
         initMakerNoteInfo();
     }
 
-    public FromI3av4FileBuilder(DeviceInfo device, File relatedI3av4File, Camera.Parameters parameters)
+    private CameraSizePair getBestCameraSizePair(CameraContext cameraContext, File relatedI3av4File, Camera.Parameters parameters)
     {
-        this(device, new CameraSizePairList(device).getBestPair(relatedI3av4File.length()), relatedI3av4File, parameters, ImageOrientation.TOPLEFT);
+        if (parameters != null)
+            return CameraSizePair.createFromParameters(parameters, cameraContext.getCameraInfo());
+        else
+            return new CameraSizePairList(cameraContext.getDeviceInfo()).getBestPair(relatedI3av4File.length());
     }
 
-    public FromI3av4FileBuilder(DeviceInfo device, File relatedI3av4File)
+    public FromI3av4FileBuilder(CameraContext cameraContext, File relatedI3av4File)
     {
-        this(device, relatedI3av4File, null);
+        this(cameraContext, relatedI3av4File, null);
     }
 
     private void initMakerNoteInfo()
@@ -90,12 +79,6 @@ public class FromI3av4FileBuilder extends CommonBuilder
     void initDateInfo()
     {
         dateInfo = DateInfo.createFromFilename(relatedI3av4File.getName());
-    }
-
-    @Override
-    public void buildDevice()
-    {
-        captureInfo.device = device;
     }
 
     @Override
@@ -120,12 +103,6 @@ public class FromI3av4FileBuilder extends CommonBuilder
     public void buildOriginalRawFilename()
     {
         captureInfo.originalRawFilename = relatedI3av4File.getName();
-    }
-
-    @Override
-    public void buildOrientation()
-    {
-        captureInfo.orientation = orientation;
     }
 
     @Override

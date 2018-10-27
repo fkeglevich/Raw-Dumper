@@ -56,6 +56,7 @@ class FeatureControllerManager
         controllersList.add(controllerFactory.createPictureSizeController(reference));
         controllersList.add(controllerFactory.createPictureFormatController(reference));
         controllersList.add(controllerFactory.createPictureModeController(reference));
+        controllersList.add(controllerFactory.createSwitchsController(reference));
         List<ValueMeteringController> meteringControllers = createMeteringControllers(reference);
         controllersList.add(controllerFactory.createCaptureButtonController(reference, meteringControllers));
     }

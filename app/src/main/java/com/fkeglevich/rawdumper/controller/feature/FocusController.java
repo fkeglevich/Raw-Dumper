@@ -18,13 +18,9 @@ package com.fkeglevich.rawdumper.controller.feature;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
-import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.CameraPreview;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
-import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.feature.preset.PresetController;
-
-import java.util.List;
 
 /**
  * Created by flavio on 21/11/17.
@@ -36,7 +32,7 @@ public class FocusController extends PresetController<FocusMode>
 
     FocusController(ActivityReference reference, OnClickNotifier clickNotifier, CameraPreview cameraPreview)
     {
-        super(reference, clickNotifier);
+        super(reference, clickNotifier, FocusMode.class);
         this.cameraPreview = cameraPreview;
     }
 
@@ -50,12 +46,6 @@ public class FocusController extends PresetController<FocusMode>
         putIconMap(reference, FocusMode.INFINITY,             R.id.infinityFocusBt);
         putIconMap(reference, FocusMode.FIXED,                R.id.fixedFocusBt);
         putIconMap(reference, FocusMode.EDOF,                 R.id.edofFocusBt);
-    }
-
-    @Override
-    protected WritableFeature<FocusMode, List<FocusMode>> selectFeature(TurboCamera camera)
-    {
-        return camera.getFocusFeature();
     }
 
     @Override

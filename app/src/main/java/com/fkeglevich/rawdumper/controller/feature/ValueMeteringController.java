@@ -33,7 +33,7 @@ import com.fkeglevich.rawdumper.util.event.EventListener;
  * Created by Flávio Keglevich on 29/10/17.
  */
 
-public abstract class ValueMeteringController<T extends Displayable> extends FeatureController
+public class ValueMeteringController<T extends Displayable> extends FeatureController
 {
     public static final int AUTO_VALUE_TEXT_COLOR      = 0xFFFFFFFF;
     public static final int MANUAL_VALUE_TEXT_COLOR    = 0xFFFFFF00;
@@ -149,6 +149,15 @@ public abstract class ValueMeteringController<T extends Displayable> extends Fea
         return meteringFeature.getValue();
     }
 
-    protected abstract Feature<Nullable<T>> getMeteringFeature(TurboCamera turboCamera);
-    protected abstract Feature<T> getFallbackFeature(TurboCamera turboCamera);
+    @SuppressWarnings("unchecked")
+    private Feature<T> getFallbackFeature(TurboCamera turboCamera)
+    {
+        return turboCamera.getListFeature((Class<T>) defaultValue.getClass());
+    }
+
+    @SuppressWarnings("unchecked")
+    private Feature<Nullable<T>> getMeteringFeature(TurboCamera turboCamera)
+    {
+        return turboCamera.getMeteringFeature((Class<T>) defaultValue.getClass());
+    }
 }

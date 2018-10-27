@@ -84,7 +84,7 @@
         \nLink: https://material.io/icons
         \nLicense: https://github.com/google/material-design-icons/blob/master/LICENSE
         \n
-        \nThe code used to transform CCT and tint to CIE xy coordinates was ported to Java from Adobe's DNG SDK
+        \nThe code used to transform CCT and tint to CIE xy coordinates was ported to Java from Adobe\'s DNG SDK
         \n
         \nAdobe DNG Software Development Kit (SDK) 1.4
         \nCopyright © 2017 Adobe
@@ -129,5 +129,9 @@
     <string name="wb_button">WB</string>
     <string name="manual_temperature_text">K</string>
     <string name="camera_resolution">Camera resolution</string>
+    <string name="raw_format_options">Raw format options (beta)</string>
+    <string name="keep_lens_vignetting">Keep lens vignetting</string>
+    <string name="use_alternative_color_profile">Use alternative color profile</string>
+    <string name="save_as_flipped">Flip front camera pictures</string>
 
 </resources>

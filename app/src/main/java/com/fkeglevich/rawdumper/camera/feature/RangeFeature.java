@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.feature;
 
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
+import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
@@ -27,11 +28,11 @@ import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
  * Created by Flávio Keglevich on 09/05/17.
  */
 
-public abstract class ProportionFeature<T, A> extends WritableFeature<T, A>
+public abstract class RangeFeature<T extends Comparable<T>> extends WritableFeature<T, DataRange<T>>
 {
     private final AsyncParameterSender asyncParameterSender;
 
-    ProportionFeature(AsyncParameterSender asyncParameterSender, Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, A> validator)
+    RangeFeature(AsyncParameterSender asyncParameterSender, Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, DataRange<T>> validator)
     {
         super(featureParameter, parameterCollection, validator);
         this.asyncParameterSender = asyncParameterSender;

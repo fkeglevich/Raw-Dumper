@@ -122,5 +122,9 @@
     <string name="wb_button">WB</string>
     <string name="manual_temperature_text">K</string>
     <string name="camera_resolution">Resolução da câmera</string>
+    <string name="raw_format_options">Opções do formato RAW (beta)</string>
+    <string name="keep_lens_vignetting">Manter vinheta da lente</string>
+    <string name="use_alternative_color_profile">Usar perfil de cores alternativo</string>
+    <string name="save_as_flipped">Inverter fotos tiradas com a câmera frontal</string>
 
 </resources>

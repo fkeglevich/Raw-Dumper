@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.capture;
 
 import android.hardware.Camera;
 
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
@@ -37,6 +38,7 @@ import java.io.File;
 public class CaptureInfo
 {
     //Required fields
+    public CameraContext cameraContext          = null;
     public DeviceInfo device                    = null;
     public ExtraCameraInfo camera               = null;
     public DateInfo date                        = null;
@@ -44,7 +46,7 @@ public class CaptureInfo
     public RawImageSize imageSize               = null;
     public String originalRawFilename           = null;
     public String destinationRawFilename        = null;
-    public ImageOrientation orientation         = null;
+    public RawSettings rawSettings              = new RawSettings();
 
     //Optional fields
     public MakerNoteInfo makerNoteInfo          = null;
@@ -52,7 +54,6 @@ public class CaptureInfo
     public byte[] extraJpegBytes                = null;
     public byte[] rawDataBytes                  = null;
     public File relatedI3av4File                = null;
-    public boolean invertRows                   = false;
 
     public boolean isValid()
     {
@@ -62,14 +63,18 @@ public class CaptureInfo
                 whiteBalanceInfo        != null &&
                 imageSize               != null &&
                 originalRawFilename     != null &&
-                destinationRawFilename  != null &&
-                orientation             != null;
+                destinationRawFilename  != null;
     }
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
         tiffWriter.setField(TiffTag.TIFFTAG_ORIGINALRAWFILENAME, StringUtil.getUTFBytesNullTerminated(originalRawFilename), true);
-        tiffWriter.setField(TiffTag.TIFFTAG_ORIENTATION, orientation.getExifCode());
         tiffWriter.setField(TiffTag.TIFFTAG_SOFTWARE, AppPackageUtil.getAppNameWithVersion());
+        rawSettings.writeTiffTags(tiffWriter, this);
+    }
+
+    public boolean shouldInvertRows()
+    {
+        return rawSettings.shouldInvertRows(this);
     }
 }

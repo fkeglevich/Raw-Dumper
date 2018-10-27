@@ -18,36 +18,21 @@ package com.fkeglevich.rawdumper.controller.feature;
 
 import android.widget.TextView;
 
-import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
-import com.fkeglevich.rawdumper.camera.data.ManualTemperatureRange;
 import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.feature.preset.PresetMeteringController;
-
-import java.util.List;
 
 /**
  * TODO: add header comment
  * Created by Flávio Keglevich on 06/05/18.
  */
-public class WhiteBalanceMeteringController extends PresetMeteringController<WhiteBalancePreset, ManualTemperature, ManualTemperatureRange>
+public class WhiteBalanceMeteringController extends PresetMeteringController<WhiteBalancePreset, ManualTemperature>
 {
     WhiteBalanceMeteringController(TextView textView)
     {
         super(textView);
-    }
-
-    @Override
-    protected WritableFeature<WhiteBalancePreset, List<WhiteBalancePreset>> getPresetFeature(TurboCamera camera)
-    {
-        return camera.getWhiteBalancePresetFeature();
-    }
-
-    @Override
-    protected WritableFeature<ManualTemperature, ManualTemperatureRange> getManualFeature(TurboCamera camera)
-    {
-        return camera.getManualTemperatureFeature();
     }
 
     @Override
@@ -63,7 +48,7 @@ public class WhiteBalanceMeteringController extends PresetMeteringController<Whi
     }
 
     @Override
-    protected String getManualText(WritableFeature<ManualTemperature, ManualTemperatureRange> manualFeature)
+    protected String getManualText(WritableFeature<ManualTemperature, DataRange<ManualTemperature>> manualFeature)
     {
         return manualFeature.getValue().displayValue();
     }

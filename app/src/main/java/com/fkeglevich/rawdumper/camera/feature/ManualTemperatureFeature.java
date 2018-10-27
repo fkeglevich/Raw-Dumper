@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.camera.feature;
 import android.support.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
+import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperatureRange;
 import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
@@ -32,12 +33,12 @@ import com.fkeglevich.rawdumper.util.MathUtil;
  * TODO: add header comment
  * Created by Flávio Keglevich on 06/05/18.
  */
-public class ManualTemperatureFeature extends ProportionFeature<ManualTemperature, ManualTemperatureRange>
+public class ManualTemperatureFeature extends RangeFeature<ManualTemperature>
 {
     private final int[] temperatureRange;
 
     @NonNull
-    private static ValueValidator<ManualTemperature, ManualTemperatureRange> createRangeValidator(ColorInfo colorInfo)
+    private static ValueValidator<ManualTemperature, DataRange<ManualTemperature>> createRangeValidator(ColorInfo colorInfo)
     {
         return RangeValidator.create(ManualTemperatureRange.getFrom(colorInfo));
     }

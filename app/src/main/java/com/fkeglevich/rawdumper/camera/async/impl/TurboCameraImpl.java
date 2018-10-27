@@ -24,7 +24,10 @@ import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCamera;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Flash;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.Iso;
+import com.fkeglevich.rawdumper.camera.data.ManualFocus;
+import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
@@ -33,12 +36,12 @@ import com.fkeglevich.rawdumper.camera.data.mode.ModeList;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FeatureRecyclerFactory;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
-import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
-import com.fkeglevich.rawdumper.camera.feature.ManualTemperatureFeature;
+import com.fkeglevich.rawdumper.camera.feature.ListFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureFormatFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureModeFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureSizeFeature;
 import com.fkeglevich.rawdumper.camera.feature.PreviewFeature;
+import com.fkeglevich.rawdumper.camera.feature.RangeFeature;
 import com.fkeglevich.rawdumper.camera.feature.VirtualFeatureRecyclerFactory;
 import com.fkeglevich.rawdumper.camera.feature.WhiteBalancePresetFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
@@ -48,10 +51,13 @@ import com.fkeglevich.rawdumper.camera.feature.restriction.WhiteBalanceRestricti
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.ModeRestrictionChain;
 import com.fkeglevich.rawdumper.camera.service.CameraServiceManager;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
+import com.fkeglevich.rawdumper.raw.capture.RawSettings;
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * TODO: Add class header
@@ -65,18 +71,8 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private final FeatureRecyclerFactory recyclerFactory;
     private final VirtualFeatureRecyclerFactory virtualRecyclerFactory;
 
-    private WritableFeature<Iso, List<Iso>>                     isoFeature;
-    private Feature<Nullable<Iso>>                              isoMeteringFeature;
-    private WritableFeature<ShutterSpeed, List<ShutterSpeed>>   shutterSpeedFeature;
-    private Feature<Nullable<ShutterSpeed>>                     ssMeteringFeature;
-    private WritableFeature<Ev, List<Ev>>                       evFeature;
-    private WritableFeature<Flash, List<Flash>>                 flashFeature;
     private PreviewFeature                                      previewFeature;
     private PictureSizeFeature                                  pictureSizeFeature;
-    private FocusFeature                                        focusFeature;
-    private ManualFocusFeature                                  manualFocusFeature;
-    private WhiteBalancePresetFeature                           whiteBalancePresetFeature;
-    private ManualTemperatureFeature                            manualTemperatureFeature;
     private PictureModeFeature                                  pictureModeFeature;
     private PictureFormatFeature                                pictureFormatFeature;
 
@@ -85,6 +81,9 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private ModeRestrictionChain                                modeRestrictionChain;
     private WhiteBalanceRestriction                             whiteBalanceRestriction;
     private final ModeList modeList;
+
+    private final Map<Class, WritableFeature>   writableFeatures = new HashMap<>();
+    private final Map<Class, Feature>           meteringFeatures = new HashMap<>();
 
     public TurboCameraImpl(LowLevelCamera lowLevelCamera)
     {
@@ -99,6 +98,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
 
         createFeatures();
         createVirtualFeatures();
+        createMeteringFeatures();
         createRestrictions();
         //mode format
         pictureModeFeature.setValue(pictureModeFeature.getAvailableValues().get(0));
@@ -115,15 +115,25 @@ public class TurboCameraImpl implements TurboCamera, Closeable
 
     private void createFeatures()
     {
-        isoFeature          = recyclerFactory.createIsoFeature();
-        isoMeteringFeature  = recyclerFactory.createIsoMeteringFeature();
-        ssMeteringFeature   = recyclerFactory.createSSMeteringFeature();
-        evFeature           = recyclerFactory.createEVFeature();
-        previewFeature      = recyclerFactory.createPreviewFeature();
-        focusFeature        = recyclerFactory.createFocusFeature();
-        manualFocusFeature  = recyclerFactory.createManualFocusFeature();
-        whiteBalancePresetFeature = recyclerFactory.createWhiteBalancePresetFeature();
-        manualTemperatureFeature  = recyclerFactory.createManualTemperatureFeature();
+        writableFeatures.put(Iso.class, recyclerFactory.createIsoFeature());
+        writableFeatures.put(Ev.class, recyclerFactory.createEVFeature());
+        writableFeatures.put(FocusMode.class, recyclerFactory.createFocusFeature());
+        writableFeatures.put(WhiteBalancePreset.class, recyclerFactory.createWhiteBalancePresetFeature());
+
+        writableFeatures.put(ManualFocus.class, recyclerFactory.createManualFocusFeature());
+        writableFeatures.put(ManualTemperature.class, recyclerFactory.createManualTemperatureFeature());
+
+        //Virtual features
+        writableFeatures.put(Flash.class, virtualRecyclerFactory.createFlashFeature(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext()));
+        writableFeatures.put(ShutterSpeed.class, virtualRecyclerFactory.createShutterSpeedFeature(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext()));
+
+        previewFeature = recyclerFactory.createPreviewFeature();
+    }
+
+    private void createMeteringFeatures()
+    {
+        meteringFeatures.put(Iso.class, recyclerFactory.createIsoMeteringFeature());
+        meteringFeatures.put(ShutterSpeed.class, recyclerFactory.createSSMeteringFeature());
     }
 
     private void createVirtualFeatures()
@@ -131,76 +141,35 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         pictureModeFeature      = virtualRecyclerFactory.createPictureModeFeature(modeList.getAvailableValues());
         pictureFormatFeature    = virtualRecyclerFactory.createPictureFormatFeature();
         pictureSizeFeature      = virtualRecyclerFactory.createPictureSizeFeature();
-        flashFeature            = virtualRecyclerFactory.createFlashFeature(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext());
-        shutterSpeedFeature     = virtualRecyclerFactory.createShutterSpeedFeature(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext());
     }
 
     private void createRestrictions()
     {
-        exposureRestriction     = new ExposureRestriction(isoFeature, shutterSpeedFeature, evFeature);
-        focusRestriction        = new FocusRestriction(focusFeature, manualFocusFeature);
+        exposureRestriction     = new ExposureRestriction(getListFeature(Iso.class), getListFeature(ShutterSpeed.class), getListFeature(Ev.class));
+        focusRestriction        = new FocusRestriction((FocusFeature) getListFeature(FocusMode.class), getRangeFeature(ManualFocus.class));
         modeRestrictionChain    = new ModeRestrictionChain(pictureModeFeature, pictureFormatFeature, pictureSizeFeature, previewFeature, lowLevelCamera.getCameraActions());
-        whiteBalanceRestriction = new WhiteBalanceRestriction(whiteBalancePresetFeature, manualTemperatureFeature);
+        whiteBalanceRestriction = new WhiteBalanceRestriction((WhiteBalancePresetFeature) getListFeature(WhiteBalancePreset.class), getRangeFeature(ManualTemperature.class));
     }
 
     @Override
-    public WritableFeature<Iso, List<Iso>> getIsoFeature()
+    @SuppressWarnings("unchecked")
+    public <T> ListFeature<T> getListFeature(Class<T> dataType)
     {
-        return isoFeature;
+        return (ListFeature<T>) writableFeatures.get(dataType);
     }
 
     @Override
-    public Feature<Nullable<Iso>> getIsoMeteringFeature()
+    @SuppressWarnings("unchecked")
+    public <T extends Comparable<T>> RangeFeature<T> getRangeFeature(Class<T> dataType)
     {
-        return isoMeteringFeature;
+        return (RangeFeature<T>) writableFeatures.get(dataType);
     }
 
     @Override
-    public WritableFeature<ShutterSpeed, List<ShutterSpeed>> getShutterSpeedFeature()
+    @SuppressWarnings("unchecked")
+    public <T> Feature<Nullable<T>> getMeteringFeature(Class<T> dataType)
     {
-        return shutterSpeedFeature;
-    }
-
-    @Override
-    public Feature<Nullable<ShutterSpeed>> getSSMeteringFeature()
-    {
-        return ssMeteringFeature;
-    }
-
-    @Override
-    public WritableFeature<Ev, List<Ev>> getEVFeature()
-    {
-        return evFeature;
-    }
-
-    @Override
-    public WritableFeature<Flash, List<Flash>> getFlashFeature()
-    {
-        return flashFeature;
-    }
-
-    @Override
-    public FocusFeature getFocusFeature()
-    {
-        return focusFeature;
-    }
-
-    @Override
-    public ManualFocusFeature getManualFocusFeature()
-    {
-        return manualFocusFeature;
-    }
-
-    @Override
-    public WritableFeature<WhiteBalancePreset, List<WhiteBalancePreset>> getWhiteBalancePresetFeature()
-    {
-        return whiteBalancePresetFeature;
-    }
-
-    @Override
-    public ManualTemperatureFeature getManualTemperatureFeature()
-    {
-        return manualTemperatureFeature;
+        return (Feature<Nullable<T>>)meteringFeatures.get(dataType);
     }
 
     @Override
@@ -225,6 +194,12 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     public Feature<CaptureSize> getPreviewFeature()
     {
         return previewFeature;
+    }
+
+    @Override
+    public RawSettings getRawSettings()
+    {
+        return lowLevelCamera.getCameraContext().getRawSettings();
     }
 
     @Override

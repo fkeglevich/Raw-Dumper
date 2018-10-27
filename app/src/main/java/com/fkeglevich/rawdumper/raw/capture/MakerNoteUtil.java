@@ -70,7 +70,7 @@ public class MakerNoteUtil
     public static byte[] readFromJpegBytes(byte[] jpegBytes)
     {
         BufferedInputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(jpegBytes));
-        byte[] mknBytes = null;
+        byte[] mknBytes = new byte[0];
         try
         {
             Metadata metadata = ImageMetadataReader.readMetadata(inputStream, jpegBytes.length);

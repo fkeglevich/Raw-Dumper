@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, Flávio Keglevich
+ * Copyright 2018, Flávio Keglevich
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,21 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.extension.Parameters;
+import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
-import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
+import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 
-/**
- * TODO: Add class header
- * <p>
- * Created by Flávio Keglevich on 05/10/17.
- */
+import java.util.List;
 
-public class PreviewFeature extends ListFeature<CaptureSize>
+public class ListFeature<T> extends WritableFeature<T, List<T>>
 {
-    PreviewFeature(ParameterCollection parameterCollection)
+    ListFeature(Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, List<T>> validator)
     {
-        super(  Parameters.PREVIEW_SIZE, parameterCollection,
-                ListValidator.createFromListParameter(parameterCollection, Parameters.PREVIEW_SIZE_VALUES));
+        super(featureParameter, parameterCollection, validator);
+    }
+
+    ListFeature(Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, List<T>> validator, boolean isMutable)
+    {
+        super(featureParameter, parameterCollection, validator, isMutable);
     }
 }

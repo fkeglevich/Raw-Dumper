@@ -33,7 +33,6 @@ import com.fkeglevich.rawdumper.util.Nullable;
 public class ExposureParameterFactory
 {
     private static final ValueDecoder<Iso> BASIC_ISO_DECODER = value -> Iso.create(Integer.parseInt(value));
-
     private static final ValueEncoder<Iso> BASIC_ISO_ENCODER = value -> "" + value.getNumericValue();
 
     public static Parameter<Iso> createIsoParameter(ExposureInfo exposureInfo)
@@ -115,7 +114,14 @@ public class ExposureParameterFactory
             if (value == null || encodedAuto == null || encodedAuto.equals(value))
                 return auto;
 
-            return actualDecoder.decode(value);
+            try
+            {
+                return actualDecoder.decode(value);
+            }
+            catch (Exception nfe)
+            {
+                return auto;
+            }
         };
     }
 

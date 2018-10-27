@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.dng;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
@@ -60,7 +61,7 @@ public class DngWriter
             exifInfo.getExifDataFromCapture(captureInfo);
 
             writeMetadata(captureInfo, exifInfo);
-            writer.writeImageData(tiffWriter, imageData, captureInfo.invertRows);
+            writer.writeImageData(tiffWriter, imageData, captureInfo.shouldInvertRows());
             writeExifInfo(exifInfo);
         }
         finally
@@ -82,14 +83,16 @@ public class DngWriter
         exifInfo.getExifDataFromCapture(captureInfo);
          */
 
+        Log.i("RawSettings", captureInfo.rawSettings.toString());
+
         writeBasicHeader(captureInfo.imageSize);
-        captureInfo.camera.getSensor().writeTiffTags(tiffWriter, exifInfo, captureInfo.invertRows);
+        captureInfo.camera.getSensor().writeTiffTags(tiffWriter, exifInfo, captureInfo.shouldInvertRows());
         captureInfo.camera.writeTiffTags(tiffWriter);
         captureInfo.device.writeTiffTags(tiffWriter);
         captureInfo.writeTiffTags(tiffWriter);
 
         captureInfo.date.writeTiffTags(tiffWriter);
-        captureInfo.camera.getColor().writeTiffTags(tiffWriter);
+        captureInfo.camera.getColor().writeTiffTags(tiffWriter, captureInfo);
         captureInfo.camera.getNoise().writeTiffTags(tiffWriter);
         captureInfo.whiteBalanceInfo.writeTiffTags(tiffWriter);
 

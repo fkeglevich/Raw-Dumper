@@ -65,7 +65,7 @@ public class FlashController extends FeatureController
     @Override
     protected void setup(TurboCamera camera)
     {
-        flashFeature = camera.getFlashFeature();
+        flashFeature = camera.getListFeature(Flash.class);
         if (!flashFeature.isAvailable())
         {
             reset();

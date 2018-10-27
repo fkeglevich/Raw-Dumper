@@ -42,9 +42,9 @@ public class Iso implements Displayable
      * @param baseIso   The sensor's base ISO value
      * @return          The ISO value
      */
-    public static Iso decodeAnalogGain(float gain, int baseIso)
+    public static Iso decodeAnalogGain(double gain, int baseIso)
     {
-        return create(Math.round(baseIso * gain));
+        return create((int)Math.round(baseIso * gain));
     }
 
     public static boolean isInvalidIso(int isoValue)

@@ -18,18 +18,13 @@ package com.fkeglevich.rawdumper.camera.async;
 
 import com.fkeglevich.rawdumper.camera.action.TakePictureAction;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
-import com.fkeglevich.rawdumper.camera.data.Ev;
-import com.fkeglevich.rawdumper.camera.data.Flash;
-import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
-import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
-import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
-import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
-import com.fkeglevich.rawdumper.camera.feature.ManualFocusFeature;
-import com.fkeglevich.rawdumper.camera.feature.ManualTemperatureFeature;
+import com.fkeglevich.rawdumper.camera.feature.ListFeature;
+import com.fkeglevich.rawdumper.camera.feature.RangeFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
+import com.fkeglevich.rawdumper.raw.capture.RawSettings;
 import com.fkeglevich.rawdumper.util.Nullable;
 
 import java.util.List;
@@ -42,22 +37,15 @@ import java.util.List;
 
 public interface TurboCamera extends TakePictureAction
 {
-    WritableFeature<Iso, List<Iso>> getIsoFeature();
-    Feature<Nullable<Iso>> getIsoMeteringFeature();
-    WritableFeature<ShutterSpeed, List<ShutterSpeed>> getShutterSpeedFeature();
-    Feature<Nullable<ShutterSpeed>> getSSMeteringFeature();
-    WritableFeature<Ev, List<Ev>> getEVFeature();
-    WritableFeature<Flash, List<Flash>> getFlashFeature();
-
-    FocusFeature getFocusFeature();
-    ManualFocusFeature getManualFocusFeature();
-
-    WritableFeature<WhiteBalancePreset, List<WhiteBalancePreset>> getWhiteBalancePresetFeature();
-    ManualTemperatureFeature getManualTemperatureFeature();
+    <T> ListFeature<T> getListFeature(Class<T> dataType);
+    <T extends Comparable<T>> RangeFeature<T> getRangeFeature(Class<T> dataType);
+    <T> Feature<Nullable<T>> getMeteringFeature(Class<T> dataType);
 
     WritableFeature<Mode, List<Mode>> getPictureModeFeature();
     WritableFeature<PictureFormat, List<PictureFormat>> getPictureFormatFeature();
     WritableFeature<CaptureSize, List<CaptureSize>> getPictureSizeFeature();
 
     Feature<CaptureSize> getPreviewFeature();
+
+    RawSettings getRawSettings();
 }

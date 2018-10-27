@@ -105,7 +105,7 @@
             android:id="@+id/apertureText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ƒ/4.8"
+            android:text="ƒ/2.0"
             android:textColor="@android:color/white"
             android:visibility="invisible"
             android:textSize="12sp" />

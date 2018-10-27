@@ -31,9 +31,10 @@ import java.util.List;
  * Created by Flávio Keglevich on 19/10/17.
  */
 
-public abstract class DisplayableFeatureController<T extends Displayable> extends FeatureController
+public class DisplayableFeatureController<T extends Displayable> extends FeatureController
 {
     private final DisplayableFeatureUi featureUi;
+    private final Class<T> dataType;
     private WritableFeature<T, List<T>> feature;
 
     private boolean ignoreOnChangedListener = false;
@@ -51,16 +52,17 @@ public abstract class DisplayableFeatureController<T extends Displayable> extend
         }
     };
 
-    DisplayableFeatureController(DisplayableFeatureUi featureUi)
+    DisplayableFeatureController(DisplayableFeatureUi featureUi, Class<T> dataType)
     {
         this.featureUi = featureUi;
+        this.dataType = dataType;
         this.feature = null;
     }
 
     @Override
     protected void setup(TurboCamera camera)
     {
-        feature = selectFeature(camera);
+        feature = camera.getListFeature(dataType);
         if (!feature.isAvailable())
         {
             reset();
@@ -120,6 +122,4 @@ public abstract class DisplayableFeatureController<T extends Displayable> extend
     {
         featureUi.setSelectedIndex(feature.getAvailableValues().indexOf(feature.getValue()));
     }
-
-    protected abstract WritableFeature<T, List<T>> selectFeature(TurboCamera camera);
 }

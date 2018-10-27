@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.capture.builder;
 
+import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 
 /**
@@ -27,9 +28,11 @@ public abstract class ACaptureInfoBuilder
 {
     CaptureInfo captureInfo;
 
-    public ACaptureInfoBuilder()
+    ACaptureInfoBuilder(CameraContext cameraContext)
     {
         captureInfo = new CaptureInfo();
+        captureInfo.cameraContext = cameraContext;
+        captureInfo.rawSettings.getDataFrom(cameraContext.getRawSettings());
     }
 
     //Building required fields
@@ -40,7 +43,6 @@ public abstract class ACaptureInfoBuilder
     public abstract void buildImageSize();
     public abstract void buildOriginalRawFilename();
     public abstract void buildDestinationRawFilename();
-    public abstract void buildOrientation();
 
     //Building optional fields
     public abstract void buildMakerNoteInfo();
@@ -48,7 +50,6 @@ public abstract class ACaptureInfoBuilder
     public abstract void buildExtraJpegBytes();
     public abstract void buildRawDataBytes();
     public abstract void buildRelatedI3av4File();
-    public abstract void buildInvertRows();
 
     public CaptureInfo build()
     {
@@ -59,13 +60,11 @@ public abstract class ACaptureInfoBuilder
         buildImageSize();
         buildOriginalRawFilename();
         buildDestinationRawFilename();
-        buildOrientation();
         buildMakerNoteInfo();
         buildCaptureParameters();
         buildExtraJpegBytes();
         buildRawDataBytes();
         buildRelatedI3av4File();
-        buildInvertRows();
         return captureInfo;
     }
 }

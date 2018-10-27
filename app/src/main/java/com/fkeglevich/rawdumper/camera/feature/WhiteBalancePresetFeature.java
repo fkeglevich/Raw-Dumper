@@ -27,7 +27,7 @@ import java.util.List;
  * TODO: add header comment
  * Created by Flávio Keglevich on 06/05/18.
  */
-public class WhiteBalancePresetFeature extends WritableFeature<WhiteBalancePreset, List<WhiteBalancePreset>>
+public class WhiteBalancePresetFeature extends ListFeature<WhiteBalancePreset>
 {
     WhiteBalancePresetFeature(ParameterCollection parameterCollection)
     {

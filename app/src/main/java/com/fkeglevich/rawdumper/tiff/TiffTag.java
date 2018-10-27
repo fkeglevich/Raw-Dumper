@@ -97,6 +97,7 @@ public class TiffTag
     public static final int TIFFTAG_FORWARDMATRIX1          = 50964;
     public static final int TIFFTAG_FORWARDMATRIX2          = 50965;
     public static final int TIFFTAG_NOISEPROFILE            = 51041;
+    public static final int TIFFTAG_PROFILETONECURVE        = 50940;
 
     public static final int TIFFTAG_OPCODELIST1             = 51008;
     public static final int TIFFTAG_OPCODELIST2             = 51009;

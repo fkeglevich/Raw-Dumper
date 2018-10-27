@@ -45,6 +45,7 @@ public abstract class PresetController<T> extends FeatureController implements D
     private final OnClickNotifier clickNotifier;
     private final Map<T, View> iconMap;
     private final View mainButton;
+    private Class<T> presetClass;
     private final View chooser;
     private final View manualChooser;
     private final Fade fadeTransition;
@@ -52,9 +53,10 @@ public abstract class PresetController<T> extends FeatureController implements D
     private WritableFeature<T, List<T>> feature;
     private View lastToggled = null;
 
-    protected PresetController(ActivityReference reference, OnClickNotifier clickNotifier)
+    protected PresetController(ActivityReference reference, OnClickNotifier clickNotifier, Class<T> presetClass)
     {
         mainButton = reference.findViewById(getMainButtonId());
+        this.presetClass = presetClass;
         buttonDisabledStateController = new ButtonDisabledStateController(mainButton, false);
         fadeTransition = new Fade();
         iconMap = new HashMap<>();
@@ -70,7 +72,7 @@ public abstract class PresetController<T> extends FeatureController implements D
     @Override
     protected void setup(TurboCamera camera)
     {
-        feature = selectFeature(camera);
+        feature = camera.getListFeature(presetClass);
         if (!feature.isAvailable())
         {
             reset();
@@ -185,7 +187,7 @@ public abstract class PresetController<T> extends FeatureController implements D
     }
 
     protected abstract void initializeIconMap(ActivityReference reference);
-    protected abstract WritableFeature<T, List<T>> selectFeature(TurboCamera camera);
+
     protected abstract int getManualChooserId();
     protected abstract int getMainButtonId();
     protected abstract int getMainChooser();

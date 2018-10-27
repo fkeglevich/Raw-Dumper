@@ -16,9 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.feature.restriction;
 
+import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
-import com.fkeglevich.rawdumper.camera.feature.ManualTemperatureFeature;
 import com.fkeglevich.rawdumper.camera.feature.WhiteBalancePresetFeature;
+import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 
 /**
  * TODO: add header comment
@@ -26,7 +27,7 @@ import com.fkeglevich.rawdumper.camera.feature.WhiteBalancePresetFeature;
  */
 public class WhiteBalanceRestriction
 {
-    public WhiteBalanceRestriction(WhiteBalancePresetFeature whiteBalanceFeature, ManualTemperatureFeature manualFeature)
+    public WhiteBalanceRestriction(WhiteBalancePresetFeature whiteBalanceFeature, WritableFeature<ManualTemperature, DataRange<ManualTemperature>> manualFeature)
     {
         whiteBalanceFeature.getOnChanging().addListener(eventData ->
         {

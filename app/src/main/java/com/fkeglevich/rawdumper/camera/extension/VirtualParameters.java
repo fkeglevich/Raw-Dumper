@@ -29,6 +29,6 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
 
 public class VirtualParameters
 {
-    public static final Parameter<Mode>         PICTURE_MODE    = ParameterFactory.createCodecless("picture-mode");
+    public static final Parameter<Mode>             PICTURE_MODE    = ParameterFactory.createCodecless("picture-mode");
     public static final Parameter<PictureFormat>    PICTURE_FORMAT  = ParameterFactory.createCodecless("picture-format");
 }

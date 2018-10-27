@@ -33,7 +33,7 @@ import java.util.List;
  * Created by Flávio Keglevich on 26/09/17.
  */
 
-public class EvFeature extends WritableFeature<Ev, List<Ev>>
+public class EvFeature extends ListFeature<Ev>
 {
     @NonNull
     static EvFeature create(ParameterCollection parameterCollection)
