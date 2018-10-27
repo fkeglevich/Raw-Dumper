@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.camera.feature;
 import android.util.SparseArray;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.raw.capture.RawSettings;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ class FeatureStore
     private static final FeatureStore instance = new FeatureStore();
 
     private SparseArray<Map<String, Object>> store = new SparseArray<>();
+    private SparseArray<RawSettings> rawSettingsStore = new SparseArray<>();
     
     static FeatureStore getInstance()
     {
@@ -43,6 +45,9 @@ class FeatureStore
             if (feature.isAvailable())
                 map.put(feature.parameter.getKey(), feature.getValue());
         }
+
+        RawSettings rawSettings = getRawSettingsForCamera(cameraContext);
+        rawSettings.getDataFrom(cameraContext.getRawSettings());
     }
 
     @SuppressWarnings("unchecked")
@@ -59,6 +64,9 @@ class FeatureStore
                     writableFeature.setValue(value);
             }
         }
+
+        RawSettings rawSettings = getRawSettingsForCamera(cameraContext);
+        cameraContext.getRawSettings().getDataFrom(rawSettings);
     }
 
     private Map<String, Object> getMapForCamera(CameraContext cameraContext)
@@ -68,5 +76,14 @@ class FeatureStore
             store.put(cameraId, new HashMap<>());
 
         return store.get(cameraId);
+    }
+
+    private RawSettings getRawSettingsForCamera(CameraContext cameraContext)
+    {
+        int cameraId = cameraContext.getCameraInfo().getId();
+        if (rawSettingsStore.get(cameraId) == null)
+            rawSettingsStore.put(cameraId, new RawSettings());
+
+        return rawSettingsStore.get(cameraId);
     }
 }
