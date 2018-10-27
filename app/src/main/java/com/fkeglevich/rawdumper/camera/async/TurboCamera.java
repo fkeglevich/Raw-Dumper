@@ -24,6 +24,7 @@ import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.ListFeature;
 import com.fkeglevich.rawdumper.camera.feature.RangeFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
+import com.fkeglevich.rawdumper.raw.capture.RawSettings;
 import com.fkeglevich.rawdumper.util.Nullable;
 
 import java.util.List;
@@ -45,4 +46,6 @@ public interface TurboCamera extends TakePictureAction
     WritableFeature<CaptureSize, List<CaptureSize>> getPictureSizeFeature();
 
     Feature<CaptureSize> getPreviewFeature();
+
+    RawSettings getRawSettings();
 }

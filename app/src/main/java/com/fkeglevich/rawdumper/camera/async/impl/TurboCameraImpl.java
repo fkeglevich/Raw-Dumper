@@ -51,6 +51,7 @@ import com.fkeglevich.rawdumper.camera.feature.restriction.WhiteBalanceRestricti
 import com.fkeglevich.rawdumper.camera.feature.restriction.chain.ModeRestrictionChain;
 import com.fkeglevich.rawdumper.camera.service.CameraServiceManager;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
+import com.fkeglevich.rawdumper.raw.capture.RawSettings;
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 
@@ -193,6 +194,12 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     public Feature<CaptureSize> getPreviewFeature()
     {
         return previewFeature;
+    }
+
+    @Override
+    public RawSettings getRawSettings()
+    {
+        return lowLevelCamera.getCameraContext().getRawSettings();
     }
 
     @Override
