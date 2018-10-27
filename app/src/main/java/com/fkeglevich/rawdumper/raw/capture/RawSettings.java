@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
+import android.support.annotation.NonNull;
+
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
@@ -51,5 +53,23 @@ public class RawSettings
     {
         boolean isFrontCamera = captureInfo.cameraContext.getCameraInfo().getFacing() == CAMERA_FACING_FRONT;
         return isFrontCamera && shouldInvertFrontCameraRows;
+    }
+
+    public void getDataFrom(RawSettings rawSettings)
+    {
+        shouldInvertFrontCameraRows = rawSettings.shouldInvertFrontCameraRows;
+        keepLensVignetting          = rawSettings.keepLensVignetting;
+        useAlternativeColorMatrix   = rawSettings.useAlternativeColorMatrix;
+        useOrientationFromPhone     = rawSettings.useOrientationFromPhone;
+    }
+
+    @NonNull
+    @Override
+    public String toString()
+    {
+        return "[RawSettings shouldInvertFrontCameraRows=" + shouldInvertFrontCameraRows + ", " +
+                "keepLensVignetting=" + keepLensVignetting + ", " +
+                "useAlternativeColorMatrix=" + useAlternativeColorMatrix + ", " +
+                "useOrientationFromPhone=" + useOrientationFromPhone + "]";
     }
 }
