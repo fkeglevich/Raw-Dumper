@@ -37,6 +37,8 @@ import java.util.List;
  */
 public abstract class ManualController<P, M extends Comparable<M>> extends FeatureController
 {
+    private static final int DELAY_MILLIS = 100;
+
     private final View manualButton;
     private final View backButton;
     private final SeekBar seekBar;
@@ -49,6 +51,24 @@ public abstract class ManualController<P, M extends Comparable<M>> extends Featu
     private RangeFeature<M> manualFeature;
     private P lastPreset = getDefaultPresetValue();
 
+    private final Handler handler;
+    private final Runnable timedRunnable = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (dirty && manualButton.getVisibility() == View.VISIBLE)
+            {
+                //listener.onSelected(progress);
+                updateManualProportion(progress);
+                dirty = false;
+            }
+            handler.postDelayed(this, DELAY_MILLIS);
+        }
+    };
+    private int progress = 0;
+    private boolean dirty = false;
+
     public ManualController(View manualButton,
                             View backButton,
                             View manualChooser,
@@ -60,6 +80,7 @@ public abstract class ManualController<P, M extends Comparable<M>> extends Featu
         this.manualChooser = manualChooser;
         this.seekBar       = seekBar;
         this.presetChooser = presetChooser;
+        this.handler       = new Handler();
 
         manualChooserTransition = new Fade();
         manualChooserTransition.setDuration(300L);
@@ -100,12 +121,16 @@ public abstract class ManualController<P, M extends Comparable<M>> extends Featu
             }
         });
 
+        handler.post(timedRunnable);
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
         {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
-                updateManualProportion(progress);
+                //updateManualProportion(progress);
+                ManualController.this.progress = progress;
+                dirty = true;
             }
 
             @Override
@@ -163,7 +188,9 @@ public abstract class ManualController<P, M extends Comparable<M>> extends Featu
         TransitionManager.beginDelayedTransition((ViewGroup) presetChooser, presetChooserTransition);
         presetChooser.setVisibility(View.INVISIBLE);
 
-        updateManualProportion(seekBar.getProgress());
+        //updateManualProportion(seekBar.getProgress());
+        progress = seekBar.getProgress();
+        dirty = true;
         onShowChooser();
     }
 
