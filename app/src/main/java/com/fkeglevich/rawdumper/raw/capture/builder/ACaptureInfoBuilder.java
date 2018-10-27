@@ -32,6 +32,7 @@ public abstract class ACaptureInfoBuilder
     {
         captureInfo = new CaptureInfo();
         captureInfo.cameraContext = cameraContext;
+        captureInfo.rawSettings.getDataFrom(cameraContext.getRawSettings());
     }
 
     //Building required fields
