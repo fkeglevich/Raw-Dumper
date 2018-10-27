@@ -33,8 +33,6 @@ TODO list:
 
  - Zoom feature for Zenfone Zoom
 
- - (IN PROGRESS) Delay setting the parameter when using the slider by a couple milliseconds
-
  - (IN PROGRESS) Take picture discarding the result (skip picture)
 	
  - Restructure the camera access diagram
@@ -176,3 +174,5 @@ Done:
  - Updated gradle version and targetSdkVersion
  - (DONE!) Fixed a bug when starting the app in certain ROMs (like BORETS)
  - (DONE!) Added new simple tone curve profiles
+ - (DONE) Delay setting the parameter when using the slider by a couple milliseconds
+ - (DONE!) Added some simple RAW settings switches
