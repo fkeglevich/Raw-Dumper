@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.dng;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
@@ -81,6 +82,8 @@ public class DngWriter
         ExifInfo exifInfo = new ExifInfo();
         exifInfo.getExifDataFromCapture(captureInfo);
          */
+
+        Log.i("RawSettings", captureInfo.rawSettings.toString());
 
         writeBasicHeader(captureInfo.imageSize);
         captureInfo.camera.getSensor().writeTiffTags(tiffWriter, exifInfo, captureInfo.shouldInvertRows());
