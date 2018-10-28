@@ -31,8 +31,6 @@ import com.fkeglevich.rawdumper.ui.ModesInterface;
 @SuppressWarnings("unused")
 public class MainActivity extends ModularActivity
 {
-    private ModesInterface modesInterface;
-    //private DrawerController drawerController;
     private CameraLifetimeController cameraLifetimeController;
     private OrientationUIController orientationUIController;
 
@@ -42,9 +40,7 @@ public class MainActivity extends ModularActivity
         getWindow().getDecorView().setBackground(null);
         getWindow().setBackgroundDrawable(null);
         setContentView(R.layout.activity_main);
-        modesInterface = new ModesInterface(reference);
 
-        //drawerController = new DrawerController(reference);
         cameraLifetimeController = new CameraLifetimeController(reference);
         orientationUIController = new OrientationUIController(reference);
     }

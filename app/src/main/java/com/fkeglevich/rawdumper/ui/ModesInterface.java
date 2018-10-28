@@ -23,6 +23,9 @@ import android.widget.RelativeLayout;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
+import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
+import com.fkeglevich.rawdumper.controller.feature.FeatureController;
 import com.fkeglevich.rawdumper.ui.dialog.AboutDialog;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
@@ -33,17 +36,18 @@ import com.transitionseverywhere.TransitionManager;
  * Created by Flávio Keglevich on 03/05/2017.
  */
 
-public class ModesInterface
+public class ModesInterface extends FeatureController
 {
     private final ActivityReference activityReference;
     private RelativeLayout modesLayout;
     private Fade fadeTransition = new Fade();
     private AboutDialog aboutDialog;
+    private ButtonDisabledStateController modesButtonController;
 
     public ModesInterface(ActivityReference activityReference)
     {
         this.activityReference = activityReference;
-        modesLayout = (RelativeLayout) this.activityReference.weaklyGet().findViewById(R.id.modesLayout);
+        modesLayout = this.activityReference.weaklyGet().findViewById(R.id.modesLayout);
         aboutDialog = new AboutDialog(this.activityReference.weaklyGet());
         fadeTransition.setDuration(150L);
 
@@ -66,13 +70,14 @@ public class ModesInterface
     {
         AppCompatActivity compatActivity = activityReference.weaklyGet();
 
-        ImageButton modesButton = (ImageButton)compatActivity.findViewById(R.id.modesButton);
+        ImageButton modesButton = compatActivity.findViewById(R.id.modesButton);
+        modesButtonController = new ButtonDisabledStateController(modesButton, false);
         modesButton.setOnClickListener(v -> setIsVisible(true));
 
-        ImageButton backButton = (ImageButton)compatActivity.findViewById(R.id.backButton);
+        ImageButton backButton = compatActivity.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> setIsVisible(false));
 
-        ImageButton infoButton = (ImageButton)compatActivity.findViewById(R.id.infoButton);
+        ImageButton infoButton = compatActivity.findViewById(R.id.infoButton);
         infoButton.setOnClickListener(v -> aboutDialog.showDialog(activityReference.weaklyGet()));
     }
 
@@ -86,5 +91,29 @@ public class ModesInterface
                 setIsVisible(false);
             }
         });
+    }
+
+    @Override
+    protected void setup(TurboCamera camera)
+    {
+        enable();
+    }
+
+    @Override
+    protected void reset()
+    {
+        disable();
+    }
+
+    @Override
+    protected void disable()
+    {
+        modesButtonController.disableAnimated();
+    }
+
+    @Override
+    protected void enable()
+    {
+        modesButtonController.enableAnimated();
     }
 }

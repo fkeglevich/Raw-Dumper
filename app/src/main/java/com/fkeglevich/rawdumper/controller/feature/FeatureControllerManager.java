@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.controller.feature;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.ui.ModesInterface;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 
 import java.util.ArrayList;
@@ -57,6 +58,8 @@ class FeatureControllerManager
         controllersList.add(controllerFactory.createPictureFormatController(reference));
         controllersList.add(controllerFactory.createPictureModeController(reference));
         controllersList.add(controllerFactory.createSwitchsController(reference));
+        controllersList.add(new ModesInterface(reference));
+
         List<ValueMeteringController> meteringControllers = createMeteringControllers(reference);
         controllersList.add(controllerFactory.createCaptureButtonController(reference, meteringControllers));
     }
