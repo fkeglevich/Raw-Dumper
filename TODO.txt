@@ -11,6 +11,8 @@ TODO list:
             So in a case of crash, the photos can be automatically recovered later
 
  - (IN PROGRESS) Basic refactoring
+
+ - (IN PROGRESS) Using DNG SDK to generate the RAW files
 			
  - (FUTURE RELEASE) Simplify the code architecture
  - (FUTURE RELEASE) Use a simpler camera configuration scheme:
@@ -28,8 +30,6 @@ TODO list:
 
  - (IN PROGRESS) Optimize logcat reading, right now the GC is crying
    - This is needed but hard to implement </3
-
- - Disable modes button when opening the camera
 
  - Zoom feature for Zenfone Zoom
 
@@ -176,3 +176,4 @@ Done:
  - (DONE!) Added new simple tone curve profiles
  - (DONE) Delay setting the parameter when using the slider by a couple milliseconds
  - (DONE!) Added some simple RAW settings switches
+ - (DONE!) Disable modes button when opening the camera
