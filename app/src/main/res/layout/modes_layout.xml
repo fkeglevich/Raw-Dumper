@@ -132,18 +132,18 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:id="@+id/pictureFormatRg"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/camera_resolution"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"/>
-                <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/pictureSizeRg"/>
             </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/camera_resolution"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"/>
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/pictureSizeRg"/>
         </LinearLayout>
     </ScrollView>
 
