@@ -40,10 +40,15 @@ add_library( tiff SHARED            src/main/cpp/tiff/libtiff/tif_dirread.c
                                 	src/main/cpp/tiff/libtiff/tif_strip.c
                                 	src/main/cpp/tiff/port/lfind.c)
 
-add_library( tiff-writer SHARED src/main/cpp/TiffWriterJni.cpp)
+add_library( tiff-writer SHARED 	src/main/cpp/TiffWriterJni.cpp)
+
+add_library( dng-writer SHARED 		src/main/cpp/DngWriterJni.cpp
+									src/main/cpp/ExifWriterJni.cpp)
 
 find_library( log-lib log )
 
 add_subdirectory(src/main/cpp/dng_sdk)
 
-target_link_libraries( tiff-writer tiff dng-sdk ${log-lib} )
+target_link_libraries( tiff-writer tiff ${log-lib} )
+
+target_link_libraries( dng-writer dng-sdk ${log-lib} )
