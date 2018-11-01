@@ -25,9 +25,10 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.exif.TiffExifTagWriter;
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
 import com.fkeglevich.rawdumper.raw.info.LensInfo;
-import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
+import com.fkeglevich.rawdumper.exif.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import java.io.BufferedInputStream;
@@ -42,6 +43,8 @@ import java.util.GregorianCalendar;
 
 public class ExifInfo
 {
+    private static final byte[] exifVersion = new byte[]{48, 50, 50, 48};
+
     private GregorianCalendar dateTimeOriginal   = null;
     private Iso iso                              = null;
     private ShutterSpeed exposureTime            = null;
@@ -160,32 +163,36 @@ public class ExifInfo
 
     public void writeTiffExifTags(TiffWriter tiffWriter)
     {
+        ExifTagWriter exifWriter = new TiffExifTagWriter(tiffWriter);
+
+        exifWriter.writeExifVersionTag(exifVersion);
+
         if (dateTimeOriginal != null)
         {
-            ExifTagWriter.writeDateTimeOriginalTags(tiffWriter, dateTimeOriginal);
-            ExifTagWriter.writeDateTimeDigitizedTags(tiffWriter, dateTimeOriginal);
+            exifWriter.writeDateTimeOriginalTags(dateTimeOriginal);
+            exifWriter.writeDateTimeDigitizedTags(dateTimeOriginal);
         }
 
         if (iso != null)
-            ExifTagWriter.writeISOTag(tiffWriter, iso);
+            exifWriter.writeISOTag(iso);
 
         if (exposureTime != null)
-            ExifTagWriter.writeExposureTimeTags(tiffWriter, exposureTime);
+            exifWriter.writeExposureTimeTags(exposureTime);
 
         if (aperture != null)
-            ExifTagWriter.writeApertureTags(tiffWriter, aperture);
+            exifWriter.writeApertureTags(aperture);
 
         if (originalMakerNote != null)
-            ExifTagWriter.writeMakerNoteTag(tiffWriter, originalMakerNote);
+            exifWriter.writeMakerNoteTag(originalMakerNote);
 
         if (exposureBias != null)
-            ExifTagWriter.writeExposureBiasTag(tiffWriter, exposureBias);
+            exifWriter.writeExposureBiasTag(exposureBias);
 
         if (flash != null && flash != ExifFlash.UNKNOWN)
-            ExifTagWriter.writeFlashTag(tiffWriter, flash);
+            exifWriter.writeFlashTag(flash);
 
         if (focalLength != null)
-            ExifTagWriter.writeFocalLengthTag(tiffWriter, focalLength);
+            exifWriter.writeFocalLengthTag(focalLength);
     }
 
     public Iso getIso()

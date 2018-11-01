@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, Flávio Keglevich
+ * Copyright 2018, Flávio Keglevich
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.tiff;
+package com.fkeglevich.rawdumper.exif;
 
 /**
  * Collection of some values of Exif Tags.

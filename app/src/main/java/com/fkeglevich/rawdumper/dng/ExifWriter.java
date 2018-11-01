@@ -17,7 +17,7 @@
 package com.fkeglevich.rawdumper.dng;
 
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
-import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
+import com.fkeglevich.rawdumper.exif.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -29,8 +29,6 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 class ExifWriter
 {
-    private static final byte[] exifVersion = new byte[]{48, 50, 50, 48};
-
     void createEXIFDirectory(TiffWriter tiffWriter)
     {
         tiffWriter.createEXIFDirectory();
@@ -38,7 +36,6 @@ class ExifWriter
 
     void writeTiffExifTags(TiffWriter tiffWriter, ExifInfo exifInfo)
     {
-        ExifTagWriter.writeExifVersionTag(tiffWriter, exifVersion);
         exifInfo.writeTiffExifTags(tiffWriter);
     }
 
