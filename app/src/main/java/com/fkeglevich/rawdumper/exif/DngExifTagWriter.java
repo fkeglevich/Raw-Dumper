@@ -64,7 +64,7 @@ public class DngExifTagWriter implements ExifTagWriter
     }
 
     @Override
-    public void writeDateTimeDigitizedTags(Calendar dateTimeOriginal)
+    public void writeDateTimeDigitizedTags(Calendar dateTimeDigitized)
     {
         //not implemented yet
     }

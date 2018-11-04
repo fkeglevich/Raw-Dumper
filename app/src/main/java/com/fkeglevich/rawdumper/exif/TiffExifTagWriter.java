@@ -72,12 +72,12 @@ public class TiffExifTagWriter implements ExifTagWriter
     }
 
     @Override
-    public void writeDateTimeDigitizedTags(Calendar dateTimeOriginal)
+    public void writeDateTimeDigitizedTags(Calendar dateTimeDigitized)
     {
         int result;
-        result = tiffWriter.setField(ExifTag.EXIFTAG_DATETIMEDIGITIZED, TagFormatter.formatCalendarTag(dateTimeOriginal));
+        result = tiffWriter.setField(ExifTag.EXIFTAG_DATETIMEDIGITIZED, TagFormatter.formatCalendarTag(dateTimeDigitized));
         if (result == 0) return;
-            tiffWriter.setField(ExifTag.EXIFTAG_SUBSECTIMEDIGITIZED, "" + dateTimeOriginal.get(Calendar.MILLISECOND));
+            tiffWriter.setField(ExifTag.EXIFTAG_SUBSECTIMEDIGITIZED, "" + dateTimeDigitized.get(Calendar.MILLISECOND));
     }
 
     @Override

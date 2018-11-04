@@ -33,7 +33,7 @@ public interface ExifTagWriter
 
     void writeDateTimeOriginalTags(Calendar dateTimeOriginal);
 
-    void writeDateTimeDigitizedTags(Calendar dateTimeOriginal);
+    void writeDateTimeDigitizedTags(Calendar dateTimeDigitized);
 
     void writeApertureTags(double aperture);
 
