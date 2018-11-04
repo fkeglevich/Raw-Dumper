@@ -45,12 +45,47 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeDateTimeOriginalTagsNative(JNIEnv *env,
+                                                                                        jobject instance,
+                                                                                        jlong pointer,
+                                                                                        jstring dateIso8601_)
+    {
+        const char *dateIso8601 = env->GetStringUTFChars(dateIso8601_, 0);
+        ((dng_exif *) pointer)->fDateTimeOriginal.Decode_ISO_8601(dateIso8601);
+        env->ReleaseStringUTFChars(dateIso8601_, dateIso8601);
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeDateTimeDigitizedTagsNative(JNIEnv *env,
+                                                                                         jobject instance,
+                                                                                         jlong pointer,
+                                                                                         jstring dateIso8601_)
+    {
+        const char *dateIso8601 = env->GetStringUTFChars(dateIso8601_, 0);
+        ((dng_exif *) pointer)->fDateTimeDigitized.Decode_ISO_8601(dateIso8601);
+        env->ReleaseStringUTFChars(dateIso8601_, dateIso8601);
+    }
+
+    JNIEXPORT void JNICALL
     Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeApertureTagsNative(JNIEnv *env,
                                                                                 jobject instance,
                                                                                 jlong pointer,
                                                                                 jdouble aperture)
     {
         ((dng_exif *) pointer)->SetApertureValue(aperture);
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeExifVersionTagNative(JNIEnv *env,
+                                                                                  jobject instance,
+                                                                                  jlong pointer,
+                                                                                  jbyteArray exifVersion_)
+    {
+        jbyte *exifVersion = env->GetByteArrayElements(exifVersion_, NULL);
+        uint32 intVersion;
+        memcpy(&intVersion, exifVersion, 4);
+        ((dng_exif *) pointer)->fExifVersion = intVersion;
+        env->ReleaseByteArrayElements(exifVersion_, exifVersion, 0);
     }
 
     JNIEXPORT void JNICALL

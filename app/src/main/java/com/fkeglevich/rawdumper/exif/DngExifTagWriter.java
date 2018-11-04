@@ -20,6 +20,7 @@ import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
+import com.fkeglevich.rawdumper.util.DateUtil;
 
 import java.util.Calendar;
 
@@ -34,7 +35,10 @@ public class DngExifTagWriter implements ExifTagWriter
 
     private native void writeExposureTimeTagsNative(long pointer, double exposureTime);
     private native void writeISOTagNative(long pointer, int iso);
+    private native void writeDateTimeOriginalTagsNative(long pointer, String dateIso8601);
+    private native void writeDateTimeDigitizedTagsNative(long pointer, String dateIso8601);
     private native void writeApertureTagsNative(long pointer, double aperture);
+    private native void writeExifVersionTagNative(long pointer, byte[] exifVersion);
     private native void writeExposureBiasTagNative(long pointer, float bias);
     private native void writeFlashTagNative(long pointer, short exifValue);
     private native void writeFocalLengthTagNative(long pointer, float focalLength);
@@ -60,13 +64,13 @@ public class DngExifTagWriter implements ExifTagWriter
     @Override
     public void writeDateTimeOriginalTags(Calendar dateTimeOriginal)
     {
-        //not implemented yet
+        writeDateTimeOriginalTagsNative(nativeHandle, DateUtil.calendarToIso8601(dateTimeOriginal));
     }
 
     @Override
     public void writeDateTimeDigitizedTags(Calendar dateTimeDigitized)
     {
-        //not implemented yet
+        writeDateTimeDigitizedTagsNative(nativeHandle, DateUtil.calendarToIso8601(dateTimeDigitized));
     }
 
     @Override
@@ -78,7 +82,7 @@ public class DngExifTagWriter implements ExifTagWriter
     @Override
     public void writeExifVersionTag(byte[] exifVersion)
     {
-        throw new RuntimeException();
+        writeExifVersionTagNative(nativeHandle, exifVersion);
     }
 
     @Override
