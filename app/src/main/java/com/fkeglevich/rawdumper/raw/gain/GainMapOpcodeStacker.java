@@ -16,8 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
-import com.fkeglevich.rawdumper.dng.opcode.GainMapOpcode;
-import com.fkeglevich.rawdumper.dng.opcode.OpcodeListWriter;
+import com.fkeglevich.rawdumper.dng.tiffwriter.opcode.GainMapOpcode;
+import com.fkeglevich.rawdumper.dng.tiffwriter.opcode.OpcodeListWriter;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 

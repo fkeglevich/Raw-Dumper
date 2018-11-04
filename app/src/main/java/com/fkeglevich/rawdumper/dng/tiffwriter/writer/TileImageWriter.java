@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng.writer;
+package com.fkeglevich.rawdumper.dng.tiffwriter.writer;
 
-import com.fkeglevich.rawdumper.dng.ADngImageWriter;
+import com.fkeglevich.rawdumper.dng.tiffwriter.ADngImageWriter;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
@@ -25,34 +25,51 @@ import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import java.io.IOException;
 
 /**
- * Writes an uncompressed image to a DNG file in scanline mode.
- *
- * Created by Flávio Keglevich on 17/04/2017.
+ * Created by Flávio Keglevich on 27/08/2017.
+ * TODO: Add a class header comment!
  */
 
-public class ScanlineImageWriter extends ADngImageWriter
+public class TileImageWriter extends ADngImageWriter
 {
-    private byte[] buffer;
+    private static final double DIMENSION_MULTIPLE = 16.0;
+    private static final int FIRST_TILE_ID = 0;
+
+    private int tileWidth;
+    private int tileHeight;
 
     @Override
     protected void init(TiffWriter tiffWriter, RawImageSize rawImageSize)
     {
         tiffWriter.setField(TiffTag.TIFFTAG_COMPRESSION, TiffTag.COMPRESSION_NONE);
-        buffer = rawImageSize.buildValidRowBuffer();
+
+        tileWidth   = calculateTileDimension(rawImageSize.getPaddedWidth());
+        tileHeight  = calculateTileDimension(rawImageSize.getPaddedHeight());
+
+        tiffWriter.setField(TiffTag.TIFFTAG_TILEWIDTH, (long)tileWidth);
+        tiffWriter.setField(TiffTag.TIFFTAG_TILELENGTH, (long)tileHeight);
     }
 
     @Override
     protected void writeImageData(TiffWriter tiffWriter, RawImageData imageData, boolean invertRows) throws IOException
     {
         init(tiffWriter, imageData.getSize());
+
+        int bytesPerPixel = imageData.getSize().getBytesPerPixel();
+        byte[] buffer = new byte[tileWidth * tileHeight * bytesPerPixel];
+
         int paddedHeight = imageData.getSize().getPaddedHeight();
+        int tileBytesPerLine = tileWidth * bytesPerPixel;
 
         for (int row = 0; row < paddedHeight; row++)
-        {
-            imageData.copyValidRowToBuffer(invertRows ? (paddedHeight - 1 - row): row, buffer);
-            tiffWriter.writeScanline(buffer, row);
-        }
+            imageData.copyValidRowToBuffer(invertRows ? (paddedHeight - 1 - row): row, buffer, tileBytesPerLine * row);
 
+
+        tiffWriter.writeRawTile(FIRST_TILE_ID, buffer, buffer.length);
         tiffWriter.writeDirectory();
+    }
+
+    private int calculateTileDimension(int dimension)
+    {
+        return (int) (Math.ceil(dimension / DIMENSION_MULTIPLE) * DIMENSION_MULTIPLE);
     }
 }
