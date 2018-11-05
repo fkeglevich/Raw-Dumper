@@ -43,6 +43,7 @@ add_library( tiff SHARED            src/main/cpp/tiff/libtiff/tif_dirread.c
 add_library( tiff-writer SHARED 	src/main/cpp/TiffWriterJni.cpp)
 
 add_library( dng-writer SHARED 		src/main/cpp/DngWriterJni.cpp
+									src/main/cpp/DngNegativeJni.cpp
 									src/main/cpp/ExifWriterJni.cpp)
 
 find_library( log-lib log )

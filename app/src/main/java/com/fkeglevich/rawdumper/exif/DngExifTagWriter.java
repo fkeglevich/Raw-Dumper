@@ -31,7 +31,7 @@ public class DngExifTagWriter implements ExifTagWriter
         System.loadLibrary("dng-writer");
     }
 
-    private long nativeHandle = 0;
+    private final long nativeHandle;
 
     private native void writeExposureTimeTagsNative(long pointer, double exposureTime);
     private native void writeISOTagNative(long pointer, int iso);
@@ -42,6 +42,11 @@ public class DngExifTagWriter implements ExifTagWriter
     private native void writeExposureBiasTagNative(long pointer, float bias);
     private native void writeFlashTagNative(long pointer, short exifValue);
     private native void writeFocalLengthTagNative(long pointer, float focalLength);
+
+    DngExifTagWriter(long nativeHandle)
+    {
+        this.nativeHandle = nativeHandle;
+    }
 
     @Override
     public void writeExposureTimeTags(ShutterSpeed shutterSpeed)

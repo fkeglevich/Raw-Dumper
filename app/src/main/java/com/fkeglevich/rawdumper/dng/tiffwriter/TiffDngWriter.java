@@ -89,6 +89,7 @@ public class TiffDngWriter implements DngWriter
 
         writeBasicHeader(captureInfo.imageSize);
         captureInfo.camera.getSensor().writeTiffTags(tiffWriter, exifInfo, captureInfo.shouldInvertRows());
+
         captureInfo.camera.writeTiffTags(tiffWriter);
         captureInfo.device.writeTiffTags(tiffWriter);
         captureInfo.writeTiffTags(tiffWriter);

@@ -43,7 +43,7 @@
         uint32 width = 4000;
         uint32 height = 3000;
 
-        dng_rect imageRect(static_cast<uint32>(height), static_cast<uint32>(width));
+        dng_rect imageRect(height, width);
 
         AutoPtr<dng_image> dngImage(new dng_simple_image(imageRect, 3, ttShort, dngHost.Allocator()));
 
@@ -80,7 +80,6 @@
         dngNegative->SetBlackLevel(0);
         dngNegative->SetNoiseReductionApplied(dng_urational(0, 1));
         dngNegative->SetBaseOrientation(dng_orientation::Normal());
-
         // -----------------------------------------------------------------------------------------
         // Fixed properties
 
@@ -106,6 +105,8 @@
         dngNegative->BuildStage2Image(dngHost);
         dngNegative->BuildStage3Image(dngHost);
         dngNegative->SynchronizeMetadata();
+
+        //dngNegative->SetMakerNote()
         //dngNegative->RebuildIPTC(true);//, false);
 
         dng_image_preview thumbnail;
@@ -115,8 +116,8 @@
         render.SetMaximumSize(256);
         thumbnail.fImage.Reset(render.Render());
 
-        dng_exif *negExif;
-        negExif->SetExposureTime();
+        //dng_exif *negExif;
+        //negExif->SetExposureTime();
 
         //dng_preview_list* previewList = new dng_preview_list();
 
@@ -133,10 +134,27 @@
 //};
 
 extern "C"
-JNIEXPORT void JNICALL
-Java_com_fkeglevich_rawdumper_dng2_DngWriter2_dummy(JNIEnv *env, jobject instance)
 {
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngWriter2_dummy(JNIEnv *env, jobject instance)
+    {
+        dummy();
+    }
 
-    dummy();
+    JNIEXPORT jlong JNICALL
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngWriter2_openNative(JNIEnv *env, jclass type,
+                                                                   jstring filePath_)
+    {
+        dng_host dngHost;
+        dngHost.SetSaveLinearDNG(false);
 
+        //dngNegative(dngHost.Make_dng_negative());
+
+        const char *filePath = env->GetStringUTFChars(filePath_, 0);
+
+        // TODO
+
+        env->ReleaseStringUTFChars(filePath_, filePath);
+        return 0;
+    }
 }

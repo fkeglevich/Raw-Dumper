@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng2;
+package com.fkeglevich.rawdumper.dng.dngsdk;
 
-public class DngWriter2
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class DngNegativeTest
 {
-    private static final String TAG = "DngWriter2";
-    private static final boolean LOG_ERRORS = true;
-
-    static
+    @Test
+    public void dummyTest()
     {
-        System.loadLibrary("dng-writer");
+        DngNegative asd = new DngNegative();
+        asd.dispose();
     }
-
-    private long pointer = 0;
-
-    public native void dummy();
 }

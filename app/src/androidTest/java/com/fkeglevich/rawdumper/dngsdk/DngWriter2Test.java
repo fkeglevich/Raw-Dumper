@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng2;
+package com.fkeglevich.rawdumper.dngsdk;
+
+import com.fkeglevich.rawdumper.dng.dngsdk.DngWriter2;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class DngWriter2Test
 {
@@ -26,6 +26,6 @@ public class DngWriter2Test
     @Test
     public void dummy()
     {
-        new DngWriter2().dummy();
+        new DngWriter2(0).dummy();
     }
 }
