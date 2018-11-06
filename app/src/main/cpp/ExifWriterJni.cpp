@@ -40,8 +40,6 @@ extern "C"
                                                                           jlong pointer, jint iso)
     {
         ((dng_exif *) pointer)->fISOSpeedRatings[0] = (uint32)iso;
-        ((dng_exif *) pointer)->fISOSpeedRatings[1] = (uint32)iso;
-        ((dng_exif *) pointer)->fISOSpeedRatings[2] = (uint32)iso;
     }
 
     JNIEXPORT void JNICALL
