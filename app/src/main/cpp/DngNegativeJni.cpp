@@ -273,8 +273,6 @@ extern "C"
                                                                                jfloatArray colorMatrix2_,
                                                                                jfloatArray forwardMatrix1_,
                                                                                jfloatArray forwardMatrix2_,
-                                                                               jfloatArray cameraCalibration1_,
-                                                                               jfloatArray cameraCalibration2_,
                                                                                jint calibrationIlluminant1,
                                                                                jint calibrationIlluminant2,
                                                                                jfloatArray toneCurve_)

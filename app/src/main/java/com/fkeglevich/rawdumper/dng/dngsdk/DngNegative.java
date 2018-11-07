@@ -37,7 +37,6 @@ public class DngNegative
     private native void setImageSizeAndOrientationNative(long pointer, int width, int height, int orientationExifCode);
     private native void addColorProfileNative(long pointer, String name, float[] colorMatrix1, float[] colorMatrix2,
                                         float[] forwardMatrix1, float[] forwardMatrix2,
-                                        float[] cameraCalibration1, float[] cameraCalibration2,
                                         int calibrationIlluminant1, int calibrationIlluminant2,
                                         float[] toneCurve);
     private native void writeImageToFileNative(long pointer, String fileName, int width, int height, byte[] imageData);
@@ -80,13 +79,11 @@ public class DngNegative
 
     public void addColorProfile(String name, float[] colorMatrix1, float[] colorMatrix2,
                                 float[] forwardMatrix1, float[] forwardMatrix2,
-                                float[] cameraCalibration1, float[] cameraCalibration2,
                                 CalibrationIlluminant calibrationIlluminant1, CalibrationIlluminant calibrationIlluminant2,
                                 float[] toneCurve)
     {
         addColorProfileNative(pointer, name, colorMatrix1, colorMatrix2,
                 forwardMatrix1, forwardMatrix2,
-                cameraCalibration1, cameraCalibration2,
                 calibrationIlluminant1 != null ? calibrationIlluminant1.getExifCode() : 0,
                 calibrationIlluminant2 != null ? calibrationIlluminant2.getExifCode() : 0,
                 toneCurve);

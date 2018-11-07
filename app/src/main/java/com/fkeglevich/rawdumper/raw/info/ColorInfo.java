@@ -74,7 +74,6 @@ public class ColorInfo
         negative.addColorProfile(EMBEDDED_PROFILE_NAME,
                 processColorMatrix(colorMatrix1, captureInfo), processColorMatrix(colorMatrix2, captureInfo),
                 forwardMatrix1, forwardMatrix2,
-                cameraCalibration1, cameraCalibration2,
                 calibrationIlluminant1, calibrationIlluminant2,
                 toneCurve);
     }
