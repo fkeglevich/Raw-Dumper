@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.exif;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
 import com.fkeglevich.rawdumper.util.DateUtil;
 
@@ -43,9 +44,9 @@ public class DngExifTagWriter implements ExifTagWriter
     private native void writeFlashTagNative(long pointer, short exifValue);
     private native void writeFocalLengthTagNative(long pointer, float focalLength);
 
-    DngExifTagWriter(long nativeHandle)
+    public DngExifTagWriter(DngNegative negative)
     {
-        this.nativeHandle = nativeHandle;
+        this.nativeHandle = negative.getExifHandle();
     }
 
     @Override
