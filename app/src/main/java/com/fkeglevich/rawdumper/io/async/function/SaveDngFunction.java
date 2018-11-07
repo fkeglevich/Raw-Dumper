@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.io.async.function;
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.dng.DngWriter;
+import com.fkeglevich.rawdumper.dng.dngsdk.DngWriter2;
 import com.fkeglevich.rawdumper.dng.tiffwriter.TiffDngWriter;
 import com.fkeglevich.rawdumper.dng.tiffwriter.writer.StripImageWriter;
 import com.fkeglevich.rawdumper.io.async.IOUtil;
@@ -44,7 +45,7 @@ public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Void, Me
         if (DebugFlag.dontSavePictures()) return null;
         if (!captureInfo.isValid()) throw new IllegalArgumentException("Invalid capture info!");
 
-        DngWriter writer = TiffDngWriter.open(captureInfo.destinationRawFilename);
+        /*DngWriter writer = TiffDngWriter.open(captureInfo.destinationRawFilename);
         if (writer != null)
         {
             RawImageData rawImageData = null;
@@ -69,7 +70,28 @@ public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Void, Me
         else
         {
             throw new SaveFileException();
+        }*/
+
+        DngWriter2 writer = new DngWriter2();
+        RawImageData rawImageData = null;
+        try
+        {
+            rawImageData = buildRawImageData(captureInfo);
+            writer.write(captureInfo, rawImageData);
+            IOUtil.scanFileWithMediaScanner(captureInfo.destinationRawFilename);
+            if (captureInfo.relatedI3av4File != null)
+                captureInfo.relatedI3av4File.delete();
         }
+        catch (IOException ioe)
+        {
+            throw new SaveFileException();
+        }
+        finally
+        {
+            if (rawImageData != null)
+                closeRawImageData(rawImageData);
+        }
+
         return null;
     }
 
