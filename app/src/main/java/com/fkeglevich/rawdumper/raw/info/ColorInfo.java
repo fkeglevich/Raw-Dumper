@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.support.annotation.Keep;
 
+import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
@@ -35,6 +36,8 @@ import com.fkeglevich.rawdumper.util.MathUtil;
 @SuppressWarnings("unused")
 public class ColorInfo
 {
+    private static final String EMBEDDED_PROFILE_NAME = "Embedded";
+
     private float[] colorMatrix1;
     private float[] colorMatrix2;
 
@@ -64,6 +67,16 @@ public class ColorInfo
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_CALIBRATIONILLUMINANT1, calibrationIlluminant1);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_CALIBRATIONILLUMINANT2, calibrationIlluminant2);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_PROFILETONECURVE,       toneCurve);
+    }
+
+    public void writeInfoTo(DngNegative negative, CaptureInfo captureInfo)
+    {
+        negative.addColorProfile(EMBEDDED_PROFILE_NAME,
+                processColorMatrix(colorMatrix1, captureInfo), processColorMatrix(colorMatrix2, captureInfo),
+                forwardMatrix1, forwardMatrix2,
+                cameraCalibration1, cameraCalibration2,
+                calibrationIlluminant1, calibrationIlluminant2,
+                toneCurve);
     }
 
     private static float[] processColorMatrix(float[] colorMatrix, CaptureInfo captureInfo)

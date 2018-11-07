@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.dng.dngsdk;
 
+import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
+
 public class DngNegative
 {
     static
@@ -33,6 +35,13 @@ public class DngNegative
     private native void setSensorInfoNative(long pointer, int whiteLevel, float[] blackLevels, int bayerPhase);
     private native void setCameraNeutralNative(long pointer, float[] cameraNeutral);
     private native void setImageSizeAndOrientationNative(long pointer, int width, int height, int orientationExifCode);
+    private native void addColorProfileNative(long pointer, String name, float[] colorMatrix1, float[] colorMatrix2,
+                                        float[] forwardMatrix1, float[] forwardMatrix2,
+                                        float[] cameraCalibration1, float[] cameraCalibration2,
+                                        int calibrationIlluminant1, int calibrationIlluminant2,
+                                        float[] toneCurve);
+    private native void writeImageToFileNative(long pointer, String fileName, int width, int height, byte[] imageData);
+    private native long getExifHandleNative(long pointer);
 
     public DngNegative()
     {
@@ -67,5 +76,29 @@ public class DngNegative
     public void setImageSizeAndOrientation(int width, int height, int orientationExifCode)
     {
         setImageSizeAndOrientationNative(pointer, width, height, orientationExifCode);
+    }
+
+    public void addColorProfile(String name, float[] colorMatrix1, float[] colorMatrix2,
+                                float[] forwardMatrix1, float[] forwardMatrix2,
+                                float[] cameraCalibration1, float[] cameraCalibration2,
+                                CalibrationIlluminant calibrationIlluminant1, CalibrationIlluminant calibrationIlluminant2,
+                                float[] toneCurve)
+    {
+        addColorProfileNative(pointer, name, colorMatrix1, colorMatrix2,
+                forwardMatrix1, forwardMatrix2,
+                cameraCalibration1, cameraCalibration2,
+                calibrationIlluminant1 != null ? calibrationIlluminant1.getExifCode() : 0,
+                calibrationIlluminant2 != null ? calibrationIlluminant2.getExifCode() : 0,
+                toneCurve);
+    }
+
+    public void writeImageToFile(String fileName, int width, int height, byte[] imageData)
+    {
+        writeImageToFileNative(pointer, fileName, width, height, imageData);
+    }
+
+    public long getExifHandle()
+    {
+        return getExifHandleNative(pointer);
     }
 }
