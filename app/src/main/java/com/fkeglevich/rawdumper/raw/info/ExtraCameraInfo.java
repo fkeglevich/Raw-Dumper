@@ -23,6 +23,7 @@ import android.support.annotation.Keep;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
+import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.raw.gain.BayerGainMap;
 import com.fkeglevich.rawdumper.raw.gain.ShadingIlluminant;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
@@ -87,6 +88,11 @@ public class ExtraCameraInfo
     {
         tiffWriter.setField(TiffTag.TIFFTAG_MODEL, String.format(Locale.US, model, Build.MODEL));
         tiffWriter.setField(TiffTag.TIFFTAG_UNIQUECAMERAMODEL, String.format(Locale.US, uniqueCameraModel, Build.MODEL));
+    }
+
+    public void writeInfoTo(DngNegative negative)
+    {
+        negative.setModel(String.format(Locale.US, uniqueCameraModel, Build.MODEL));
     }
 
     public int getId()

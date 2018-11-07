@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.hardware.Camera;
 import android.support.annotation.Keep;
 
+import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 import com.fkeglevich.rawdumper.raw.data.BayerPattern;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
@@ -88,6 +89,11 @@ public class SensorInfo
         tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL,             new long[] { whiteLevel }, true);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVELREPEATDIM,    DEFAULT_BLACK_LEVEL_REPEAT_DIM, false);
         tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVEL,             blackLevelInfo.computeBlackLevel(exifInfo), true);
+    }
+
+    public void writeInfoTo(DngNegative negative, ExifInfo exifInfo, boolean invertRows)
+    {
+        negative.setSensorInfo(whiteLevel, blackLevelInfo.computeBlackLevel(exifInfo), invertRows ? bayerPattern.invertVertically().getPhase() : bayerPattern.getPhase());
     }
 
     public RawImageSize getRawImageSizeFromSize(Camera.Size size)

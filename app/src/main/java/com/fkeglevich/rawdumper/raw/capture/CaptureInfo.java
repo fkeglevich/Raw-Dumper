@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.raw.capture;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
+import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
@@ -71,6 +72,12 @@ public class CaptureInfo
         tiffWriter.setField(TiffTag.TIFFTAG_ORIGINALRAWFILENAME, StringUtil.getUTFBytesNullTerminated(originalRawFilename), true);
         tiffWriter.setField(TiffTag.TIFFTAG_SOFTWARE, AppPackageUtil.getAppNameWithVersion());
         rawSettings.writeTiffTags(tiffWriter, this);
+    }
+
+    public void writeInfoTo(DngNegative negative)
+    {
+        negative.setOriginalRawFileName(originalRawFilename);
+        //negative.setSoftware(AppPackageUtil.getAppNameWithVersion());
     }
 
     public boolean shouldInvertRows()
