@@ -16,17 +16,17 @@
 
 package com.fkeglevich.rawdumper.dng.dngsdk;
 
-import com.fkeglevich.rawdumper.dng.DngWriter;
-import com.fkeglevich.rawdumper.dng.tiffwriter.ADngImageWriter;
+import android.util.Log;
+
+import com.fkeglevich.rawdumper.debug.PerfInfo;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import java.io.IOException;
 
-public class DngWriter2 implements DngWriter
+public class DngWriter2
 {
     private static final String TAG = "DngWriter2";
     private static final boolean LOG_ERRORS = true;
@@ -39,39 +39,65 @@ public class DngWriter2 implements DngWriter
     public static native long openNative(String filePath);
     public native void dummy();
 
-    public static DngWriter2 open(String filepath)
+    public void write(CaptureInfo captureInfo, RawImageData imageData) throws IOException
     {
-        long pointer = openNative(filepath);
-        return (pointer != 0) ? new DngWriter2(pointer) : null;
-    }
-
-    private long pointer = 0;
-
-    public DngWriter2(long pointer)
-    {
-        this.pointer = pointer;
-    }
-
-    @Override
-    public void write(CaptureInfo captureInfo, ADngImageWriter writer, RawImageData imageData) throws IOException
-    {
-        /*try
+        DngNegative negative = new DngNegative();
+        try
         {
             ExifInfo exifInfo = new ExifInfo();
             exifInfo.getExifDataFromCapture(captureInfo);
 
-            writeMetadata(captureInfo, exifInfo);
-            writer.writeImageData(tiffWriter, imageData, captureInfo.shouldInvertRows());
-            writeExifInfo(exifInfo);
+            writeMetadata(captureInfo, exifInfo, negative);
+
+            exifInfo.writeInfoTo(negative);
+
+            // Start writing image
+            RawImageSize imageSize = imageData.getSize();
+            PerfInfo.start("BufferTime");
+            byte[] buffer = new byte[imageSize.getPaddedWidth() * imageSize.getPaddedHeight() * imageSize.getBytesPerPixel()];
+
+
+            int paddedHeight = imageSize.getPaddedHeight();
+            int widthBytes = imageSize.getPaddedWidth() * imageSize.getBytesPerPixel();
+
+            for (int row = 0; row < paddedHeight; row++)
+                imageData.copyValidRowToBuffer(captureInfo.shouldInvertRows() ? (paddedHeight - 1 - row): row, buffer, widthBytes * row);
+
+            PerfInfo.end("BufferTime");
+
+            PerfInfo.start("SaveAndCompress");
+            negative.writeImageToFile(captureInfo.destinationRawFilename,
+                    imageSize.getPaddedWidth(), imageSize.getPaddedHeight(), buffer);
+            PerfInfo.end("SaveAndCompress");
+            // End writing image
         }
         finally
         {
-            close();
-        }*/
+            negative.dispose();
+        }
     }
 
-    private void writeBasicHeader(RawImageSize rawImageSize)
+    private void writeMetadata(CaptureInfo captureInfo, ExifInfo exifInfo, DngNegative negative)
     {
+        Log.i("RawSettings", captureInfo.rawSettings.toString());
 
+        negative.setImageSizeAndOrientation(captureInfo.imageSize.getPaddedWidth(), captureInfo.imageSize.getPaddedHeight(), captureInfo.rawSettings.getOrientationCode(captureInfo));
+
+        captureInfo.camera.getSensor().writeInfoTo(negative, exifInfo, captureInfo.shouldInvertRows());
+        captureInfo.camera.writeInfoTo(negative);
+        captureInfo.writeInfoTo(negative);
+
+        //captureInfo.date.writeTiffTags(tiffWriter);
+        captureInfo.camera.getColor().writeInfoTo(negative, captureInfo);
+        // FUTURE: captureInfo.camera.getNoise().writeTiffTags(tiffWriter);
+        captureInfo.whiteBalanceInfo.writeInfoTo(negative);
+
+        /*if (!DebugFlag.dontUseGainMaps())
+        {
+            if (captureInfo.camera.getGainMapCollection() != null)
+                GainMapOpcodeStacker.write(captureInfo, tiffWriter);
+            else if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)
+                captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter);
+        }*/
     }
 }

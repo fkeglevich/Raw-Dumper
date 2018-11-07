@@ -26,6 +26,7 @@
 #include "dng_sdk/source/dng_color_space.h"
 #include "dng_sdk/source/dng_image_writer.h"
 #include "dng_sdk/source/dng_file_stream.h"
+#include "dng_sdk/source/dng_tone_curve.h"
 #include "dng_sdk/source/dng_camera_profile.h"
 
 //extern "C"
@@ -49,6 +50,8 @@
 
 
         dng_pixel_buffer buffer; image->GetPixelBuffer(buffer);
+
+
 
         //memcpy(imageBuffer, dstData, width * height * sizeof(uint16));
 
@@ -88,6 +91,7 @@
         prof->SetColorMatrix1(static_cast<dng_matrix>(camXYZ));
         prof->SetCalibrationIlluminant1(lsD65);
         prof->SetWasReadFromDNG(true);
+
         dngNegative->AddProfile(prof);
 
         AutoPtr<dng_image> castImage(dynamic_cast<dng_image*>(image));
@@ -99,12 +103,17 @@
         dngNegative->SynchronizeMetadata();
 
         /*
-        Missing:
-         Colors
-         Exif
+         Missing:
+
+         ~Colors
+         ~Exif
+         CameraCalibration tags
+         Camera Info in exif
+         Software in exif
          Makernote
          Opcodes
          Previews
+         Noise
          */
 
 
@@ -134,6 +143,16 @@
         //delete[] dstData;
     }
 //};
+
+dng_matrix_3by3 get3x3Matrix(JNIEnv *env, jfloatArray matrix3x3)
+{
+    jfloat *raw = env->GetFloatArrayElements(matrix3x3, NULL);
+    dng_matrix_3by3 dngMatrix(raw[0], raw[1], raw[2],
+                              raw[3], raw[4], raw[5],
+                              raw[6], raw[7], raw[8]);
+    env->ReleaseFloatArrayElements(matrix3x3, raw, 0);
+    return dngMatrix;
+}
 
 extern "C"
 {
@@ -171,7 +190,6 @@ extern "C"
         initializeHost();
         dng_negative *negative = globalHost.Make_dng_negative();
         setDefaultValues(negative);
-        dummy2();
         return (jlong) negative;
     }
 
@@ -246,4 +264,87 @@ extern "C"
         ((dng_negative*) pointer)->SetBaseOrientation(orientation);
     }
 
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_addColorProfileNative(JNIEnv *env,
+                                                                               jobject instance,
+                                                                               jlong pointer,
+                                                                               jstring name_,
+                                                                               jfloatArray colorMatrix1_,
+                                                                               jfloatArray colorMatrix2_,
+                                                                               jfloatArray forwardMatrix1_,
+                                                                               jfloatArray forwardMatrix2_,
+                                                                               jfloatArray cameraCalibration1_,
+                                                                               jfloatArray cameraCalibration2_,
+                                                                               jint calibrationIlluminant1,
+                                                                               jint calibrationIlluminant2,
+                                                                               jfloatArray toneCurve_)
+    {
+        AutoPtr<dng_camera_profile> profile(new dng_camera_profile);
+
+        const char *name = env->GetStringUTFChars(name_, 0);
+        profile->SetName(name);
+        env->ReleaseStringUTFChars(name_, name);
+
+        if (colorMatrix1_ != NULL)
+            profile->SetColorMatrix1(get3x3Matrix(env, colorMatrix1_));
+
+        if (colorMatrix2_ != NULL)
+            profile->SetColorMatrix2(get3x3Matrix(env, colorMatrix2_));
+
+        if (forwardMatrix1_ != NULL)
+            profile->SetForwardMatrix1(get3x3Matrix(env, forwardMatrix1_));
+
+        if (forwardMatrix2_ != NULL)
+            profile->SetForwardMatrix2(get3x3Matrix(env, forwardMatrix2_));
+
+        if (calibrationIlluminant1 != lsUnknown)
+            profile->SetCalibrationIlluminant1((uint32) calibrationIlluminant1);
+
+        if (calibrationIlluminant2 != lsUnknown)
+            profile->SetCalibrationIlluminant2((uint32) calibrationIlluminant2);
+
+        profile->SetWasReadFromDNG(true);
+
+        ((dng_negative*) pointer)->AddProfile(profile);
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_writeImageToFileNative(JNIEnv *env,
+                                                                                jobject instance,
+                                                                                jlong pointer,
+                                                                                jstring fileName_,
+                                                                                jint width,
+                                                                                jint height,
+                                                                                jbyteArray imageData_)
+    {
+
+        jbyte *imageData = env->GetByteArrayElements(imageData_, NULL);
+
+        dng_rect imageRect((uint32) height, ((uint32) width));
+        dng_simple_image* image = new dng_simple_image(imageRect, 1, ttShort, globalHost.Allocator());
+
+        dng_pixel_buffer buffer; image->GetPixelBuffer(buffer);
+        memcpy(buffer.fData, imageData, width * height * sizeof(uint16));
+        env->ReleaseByteArrayElements(imageData_, imageData, 0);
+
+        AutoPtr<dng_image> castImage(dynamic_cast<dng_image*>(image));
+        ((dng_negative*) pointer)->SetStage1Image(castImage);
+
+        ((dng_negative*) pointer)->SynchronizeMetadata();
+
+        const char *fileName = env->GetStringUTFChars(fileName_, 0);
+        dng_image_writer writer;
+        dng_file_stream stream("/sdcard/dummy3.dng", true);
+        writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer));// , NULL, dngVersion_1_4_0_0, true);
+        env->ReleaseStringUTFChars(fileName_, fileName);
+
+    }
+
+    JNIEXPORT jlong JNICALL
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_getExifHandleNative(JNIEnv *env,
+                                                                             jobject instance,
+                                                                             jlong pointer)
+    {
+        return (jlong ) ((dng_negative*) pointer)->GetExif();
+    }
 }
