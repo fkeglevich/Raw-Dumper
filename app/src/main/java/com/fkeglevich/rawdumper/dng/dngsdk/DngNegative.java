@@ -45,6 +45,7 @@ public class DngNegative
                                         int calibrationIlluminant1, int calibrationIlluminant2,
                                         float[] toneCurve);
     private native void setOpcodeList3Native(long pointer, byte[] bytes);
+    private native void setNoiseProfileNative(long pointer, double[] noiseProfile);
     private native void writeImageToFileNative(long pointer, String fileName, int width, int height, byte[] imageData);
     private native long getExifHandleNative(long pointer);
 
@@ -111,6 +112,11 @@ public class DngNegative
         //We don't even bother writing if the opcode list is empty
         if (opcodes.size() > 0)
             setOpcodeList3Native(pointer, OpcodeListWriter.toByteArray(opcodes));
+    }
+
+    public void setNoiseProfile(double[] noiseProfile)
+    {
+        setNoiseProfileNative(pointer, noiseProfile);
     }
 
     public void writeImageToFile(String fileName, int width, int height, byte[] imageData)

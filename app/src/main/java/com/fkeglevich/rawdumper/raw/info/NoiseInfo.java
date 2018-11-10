@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.support.annotation.Keep;
 
+import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
@@ -37,5 +38,11 @@ public class NoiseInfo
     {
         if (noiseProfile != null && noiseProfile.length > 0)
             tiffWriter.setField(TiffTag.TIFFTAG_NOISEPROFILE, noiseProfile, true);
+    }
+
+    public void writeInfo(DngNegative negative)
+    {
+        if (noiseProfile != null && noiseProfile.length > 0)
+            negative.setNoiseProfile(noiseProfile);
     }
 }

@@ -91,7 +91,7 @@ public class DngWriter2
 
         //captureInfo.date.writeTiffTags(tiffWriter);
         captureInfo.camera.getColor().writeInfoTo(negative, captureInfo);
-        // FUTURE: captureInfo.camera.getNoise().writeTiffTags(tiffWriter);
+        captureInfo.camera.getNoise().writeInfo(negative);
         captureInfo.whiteBalanceInfo.writeInfoTo(negative);
 
         if (!DebugFlag.dontUseGainMaps())

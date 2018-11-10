@@ -115,6 +115,7 @@
          ~Tonecurves
          ~CameraCalibration tags
          ~Opcodes
+         ~Noise
 
          Full opcodelists1 e 2
 
@@ -123,7 +124,7 @@
          Makernote
 
          Previews
-         Noise
+
          */
 
 
@@ -361,13 +362,37 @@ extern "C"
                                                                               jbyteArray bytes_)
     {
         int numBytes = env->GetArrayLength(bytes_);
-        jbyte *bytes = env->GetByteArrayElements(bytes_, NULL);
 
+        jbyte *bytes = env->GetByteArrayElements(bytes_, NULL);
         dng_memory_stream gainMapStream(globalHost.Allocator());
         gainMapStream.Put(bytes, (uint32) numBytes);
-        ((dng_negative*) pointer)->OpcodeList3().Parse(globalHost, gainMapStream, (uint32) numBytes, 0);
-
         env->ReleaseByteArrayElements(bytes_, bytes, 0);
+
+        ((dng_negative*) pointer)->OpcodeList3().Parse(globalHost, gainMapStream, (uint32) numBytes, 0);
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setNoiseProfileNative(JNIEnv *env,
+                                                                               jobject instance,
+                                                                               jlong pointer,
+                                                                               jdoubleArray noiseProfile)
+    {
+        dng_std_vector<dng_noise_function> noiseFunctions;
+        int len = env->GetArrayLength(noiseProfile);
+        if (len % 2 != 0)
+            return;
+
+        jdouble *raw = env->GetDoubleArrayElements(noiseProfile, NULL);
+
+        for (int i = 0; i < len; i += 2)
+        {
+            dng_noise_function function(raw[i], raw[i + 1]);
+            noiseFunctions.push_back(function);
+        }
+
+        env->ReleaseDoubleArrayElements(noiseProfile, raw, 0);
+
+        ((dng_negative*) pointer)->SetNoiseProfile(dng_noise_profile(noiseFunctions));
     }
 
     JNIEXPORT void JNICALL
