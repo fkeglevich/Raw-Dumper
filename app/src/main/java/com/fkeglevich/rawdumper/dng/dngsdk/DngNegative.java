@@ -35,6 +35,7 @@ public class DngNegative
     private native void setSensorInfoNative(long pointer, int whiteLevel, float[] blackLevels, int bayerPhase);
     private native void setCameraNeutralNative(long pointer, float[] cameraNeutral);
     private native void setImageSizeAndOrientationNative(long pointer, int width, int height, int orientationExifCode);
+    private native void setCameraCalibrationNative(long pointer, float[] cameraCalibration1, float[] cameraCalibration2);
     private native void addColorProfileNative(long pointer, String name, float[] colorMatrix1, float[] colorMatrix2,
                                         float[] forwardMatrix1, float[] forwardMatrix2,
                                         int calibrationIlluminant1, int calibrationIlluminant2,
@@ -75,6 +76,11 @@ public class DngNegative
     public void setImageSizeAndOrientation(int width, int height, int orientationExifCode)
     {
         setImageSizeAndOrientationNative(pointer, width, height, orientationExifCode);
+    }
+
+    public void setCameraCalibration(float[] cameraCalibration1, float[] cameraCalibration2)
+    {
+        setCameraCalibrationNative(pointer, cameraCalibration1, cameraCalibration2);
     }
 
     public void addColorProfile(String name, float[] colorMatrix1, float[] colorMatrix2,

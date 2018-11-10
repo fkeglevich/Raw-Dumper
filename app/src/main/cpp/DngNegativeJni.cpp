@@ -109,7 +109,9 @@
 
          ~Colors
          ~Exif
-         CameraCalibration tags
+         ~Tonecurves
+         ~CameraCalibration tags
+
          Camera Info in exif
          Software in exif
          Makernote
@@ -286,6 +288,19 @@ extern "C"
         ((dng_negative*) pointer)->SetDefaultCropSize((uint32) width, (uint32) height);
         ((dng_negative*) pointer)->SetActiveArea(rect);
         ((dng_negative*) pointer)->SetBaseOrientation(orientation);
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setCameraCalibrationNative(JNIEnv *env,
+                                                                                    jobject instance,
+                                                                                    jlong pointer,
+                                                                                    jfloatArray cameraCalibration1_,
+                                                                                    jfloatArray cameraCalibration2_)
+    {
+        if (cameraCalibration1_ != NULL)
+            ((dng_negative*) pointer)->SetCameraCalibration1(get3x3Matrix(env, cameraCalibration1_));
+        if (cameraCalibration2_ != NULL)
+            ((dng_negative*) pointer)->SetCameraCalibration2(get3x3Matrix(env, cameraCalibration2_));
     }
 
     JNIEXPORT void JNICALL

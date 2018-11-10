@@ -71,6 +71,7 @@ public class ColorInfo
 
     public void writeInfoTo(DngNegative negative, CaptureInfo captureInfo)
     {
+        negative.setCameraCalibration(cameraCalibration1, cameraCalibration2);
         negative.addColorProfile(EMBEDDED_PROFILE_NAME,
                 processColorMatrix(colorMatrix1, captureInfo), processColorMatrix(colorMatrix2, captureInfo),
                 forwardMatrix1, forwardMatrix2,
