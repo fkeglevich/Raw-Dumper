@@ -55,7 +55,7 @@ public class OpcodeListWriter
             tiffWriter.setField(tag, toByteArray(opcodes), true);
     }
 
-    private static byte[] toByteArray(List<Opcode> opcodes)
+    public static byte[] toByteArray(List<Opcode> opcodes)
     {
         ByteBuffer buffer = ByteBuffer.allocate(calculateTotalSize(opcodes));
         buffer.order(ByteOrder.BIG_ENDIAN); //opcodelists are ALWAYS stored in big endian byte order

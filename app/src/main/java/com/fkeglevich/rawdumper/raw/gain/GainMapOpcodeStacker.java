@@ -16,6 +16,9 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
+import android.support.annotation.Nullable;
+
+import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.dng.tiffwriter.opcode.GainMapOpcode;
 import com.fkeglevich.rawdumper.dng.tiffwriter.opcode.OpcodeListWriter;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
@@ -34,9 +37,26 @@ public class GainMapOpcodeStacker
 
     public static void write(CaptureInfo captureInfo, TiffWriter tiffWriter)
     {
+        GainMapOpcode opcode = generateStackedOpcode(captureInfo);
+        if (opcode == null) return;
+
+        OpcodeListWriter.writeOpcodeList3Tag(tiffWriter, Collections.singletonList(opcode));
+    }
+
+    public static void write(CaptureInfo captureInfo, DngNegative negative)
+    {
+        GainMapOpcode opcode = generateStackedOpcode(captureInfo);
+        if (opcode == null) return;
+
+        negative.setOpcodeList3(Collections.singletonList(opcode));
+    }
+
+    @Nullable
+    private static GainMapOpcode generateStackedOpcode(CaptureInfo captureInfo)
+    {
         Map<ShadingIlluminant, BayerGainMap> map = captureInfo.camera.getGainMapCollection();
         double[] illuminantScale = captureInfo.makerNoteInfo.illuminantScale;
-        if (map == null || illuminantScale == null) return;
+        if (map == null || illuminantScale == null) return null;
 
         BayerGainMap accGainMap = new BayerGainMap(map.get(ShadingIlluminant.A).numColumns, map.get(ShadingIlluminant.A).numRows);
         for (int i = 0; i < illuminantScale.length; i++)
@@ -56,7 +76,7 @@ public class GainMapOpcodeStacker
             accGainMap.invertRows();
 
         GainMapOpcode opcode = new GainMapOpcode(captureInfo.imageSize, accGainMap);
-        OpcodeListWriter.writeOpcodeList3Tag(tiffWriter, Collections.singletonList(opcode));
+        return opcode;
     }
 
     private static void restoreLensVignetting(BayerGainMap accGainMap, BayerGainMap D65Map)

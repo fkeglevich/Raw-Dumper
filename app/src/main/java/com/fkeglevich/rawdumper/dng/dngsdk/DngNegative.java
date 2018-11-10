@@ -16,7 +16,11 @@
 
 package com.fkeglevich.rawdumper.dng.dngsdk;
 
+import com.fkeglevich.rawdumper.dng.tiffwriter.opcode.Opcode;
+import com.fkeglevich.rawdumper.dng.tiffwriter.opcode.OpcodeListWriter;
 import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
+
+import java.util.List;
 
 public class DngNegative
 {
@@ -40,6 +44,7 @@ public class DngNegative
                                         float[] forwardMatrix1, float[] forwardMatrix2,
                                         int calibrationIlluminant1, int calibrationIlluminant2,
                                         float[] toneCurve);
+    private native void setOpcodeList3Native(long pointer, byte[] bytes);
     private native void writeImageToFileNative(long pointer, String fileName, int width, int height, byte[] imageData);
     private native long getExifHandleNative(long pointer);
 
@@ -93,6 +98,19 @@ public class DngNegative
                 calibrationIlluminant1 != null ? calibrationIlluminant1.getExifCode() : 0,
                 calibrationIlluminant2 != null ? calibrationIlluminant2.getExifCode() : 0,
                 toneCurve);
+    }
+
+    public void setOpcodeList3(byte[] opcodeList)
+    {
+        if (opcodeList != null)
+            setOpcodeList3Native(pointer, opcodeList);
+    }
+
+    public void setOpcodeList3(List<Opcode> opcodes)
+    {
+        //We don't even bother writing if the opcode list is empty
+        if (opcodes.size() > 0)
+            setOpcodeList3Native(pointer, OpcodeListWriter.toByteArray(opcodes));
     }
 
     public void writeImageToFile(String fileName, int width, int height, byte[] imageData)

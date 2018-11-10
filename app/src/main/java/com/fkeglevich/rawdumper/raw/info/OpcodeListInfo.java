@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.support.annotation.Keep;
 
+import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.AssetUtil;
@@ -54,6 +55,17 @@ public class OpcodeListInfo
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST1, opcodeList1Cache);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST2, opcodeList2Cache);
         safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST3, opcodeList3Cache);
+    }
+
+    public void writeInfoTo(DngNegative negative)
+    {
+        opcodeList1Cache = updateOpcodeListCache(opcodeList1Cache, opcodeList1File);
+        opcodeList2Cache = updateOpcodeListCache(opcodeList2Cache, opcodeList2File);
+        opcodeList3Cache = updateOpcodeListCache(opcodeList3Cache, opcodeList3File);
+
+        //negative.setOpcodeList1(opcodeList1Cache);
+        //negative.setOpcodeList2(opcodeList2Cache);
+        negative.setOpcodeList3(opcodeList3Cache);
     }
 
     private void safeWriteField(TiffWriter writer, int tag, byte[] data)

@@ -18,11 +18,13 @@ package com.fkeglevich.rawdumper.dng.dngsdk;
 
 import android.util.Log;
 
+import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.debug.PerfInfo;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
+import com.fkeglevich.rawdumper.raw.gain.GainMapOpcodeStacker;
 
 import java.io.IOException;
 
@@ -92,12 +94,12 @@ public class DngWriter2
         // FUTURE: captureInfo.camera.getNoise().writeTiffTags(tiffWriter);
         captureInfo.whiteBalanceInfo.writeInfoTo(negative);
 
-        /*if (!DebugFlag.dontUseGainMaps())
+        if (!DebugFlag.dontUseGainMaps())
         {
             if (captureInfo.camera.getGainMapCollection() != null)
-                GainMapOpcodeStacker.write(captureInfo, tiffWriter);
+                GainMapOpcodeStacker.write(captureInfo, negative);
             else if (captureInfo.camera.getOpcodes() != null && captureInfo.camera.getOpcodes().length >= 1)
-                captureInfo.camera.getOpcodes()[0].writeTiffTags(tiffWriter);
-        }*/
+                captureInfo.camera.getOpcodes()[0].writeInfoTo(negative);
+        }
     }
 }

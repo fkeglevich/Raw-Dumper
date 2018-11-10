@@ -29,6 +29,9 @@
 #include "dng_sdk/source/dng_tone_curve.h"
 #include "dng_sdk/source/dng_camera_profile.h"
 #include "dng_sdk/source/dng_point.h"
+#include "dng_sdk/source/dng_gain_map.h"
+#include "dng_sdk/source/dng_opcodes.h"
+#include "dng_sdk/source/dng_memory_stream.h"
 #include <android/log.h>
 
 //extern "C"
@@ -111,11 +114,14 @@
          ~Exif
          ~Tonecurves
          ~CameraCalibration tags
+         ~Opcodes
+
+         Full opcodelists1 e 2
 
          Camera Info in exif
          Software in exif
          Makernote
-         Opcodes
+
          Previews
          Noise
          */
@@ -346,6 +352,22 @@ extern "C"
         profile->SetWasReadFromDNG(true);
 
         ((dng_negative*) pointer)->AddProfile(profile);
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setOpcodeList3Native(JNIEnv *env,
+                                                                              jobject instance,
+                                                                              jlong pointer,
+                                                                              jbyteArray bytes_)
+    {
+        int numBytes = env->GetArrayLength(bytes_);
+        jbyte *bytes = env->GetByteArrayElements(bytes_, NULL);
+
+        dng_memory_stream gainMapStream(globalHost.Allocator());
+        gainMapStream.Put(bytes, (uint32) numBytes);
+        ((dng_negative*) pointer)->OpcodeList3().Parse(globalHost, gainMapStream, (uint32) numBytes, 0);
+
+        env->ReleaseByteArrayElements(bytes_, bytes, 0);
     }
 
     JNIEXPORT void JNICALL
