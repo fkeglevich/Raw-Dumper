@@ -19,7 +19,6 @@ package com.fkeglevich.rawdumper.camera.extension;
 import android.hardware.Camera;
 import android.util.Log;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**

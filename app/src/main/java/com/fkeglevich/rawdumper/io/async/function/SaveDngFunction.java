@@ -18,10 +18,7 @@ package com.fkeglevich.rawdumper.io.async.function;
 
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
-import com.fkeglevich.rawdumper.dng.DngWriter;
 import com.fkeglevich.rawdumper.dng.dngsdk.DngWriter2;
-import com.fkeglevich.rawdumper.dng.tiffwriter.TiffDngWriter;
-import com.fkeglevich.rawdumper.dng.tiffwriter.writer.StripImageWriter;
 import com.fkeglevich.rawdumper.io.async.IOUtil;
 import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;

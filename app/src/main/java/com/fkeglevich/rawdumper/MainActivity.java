@@ -21,7 +21,6 @@ import android.os.Bundle;
 import com.fkeglevich.rawdumper.activity.ModularActivity;
 import com.fkeglevich.rawdumper.controller.feature.CameraLifetimeController;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationUIController;
-import com.fkeglevich.rawdumper.ui.ModesInterface;
 
 /**
  * Created by Flávio Keglevich on 29/08/2017.

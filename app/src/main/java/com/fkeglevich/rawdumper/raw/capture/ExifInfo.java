@@ -27,10 +27,10 @@ import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.exif.DngExifTagWriter;
+import com.fkeglevich.rawdumper.exif.ExifTagWriter;
 import com.fkeglevich.rawdumper.exif.TiffExifTagWriter;
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
 import com.fkeglevich.rawdumper.raw.info.LensInfo;
-import com.fkeglevich.rawdumper.exif.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.AppPackageUtil;
 

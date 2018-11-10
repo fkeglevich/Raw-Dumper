@@ -17,7 +17,6 @@
 package com.fkeglevich.rawdumper.dng.tiffwriter;
 
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
-import com.fkeglevich.rawdumper.exif.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
 

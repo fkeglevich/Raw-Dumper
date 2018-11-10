@@ -20,7 +20,6 @@ import android.support.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
-import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
