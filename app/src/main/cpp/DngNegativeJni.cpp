@@ -28,6 +28,8 @@
 #include "dng_sdk/source/dng_file_stream.h"
 #include "dng_sdk/source/dng_tone_curve.h"
 #include "dng_sdk/source/dng_camera_profile.h"
+#include "dng_sdk/source/dng_point.h"
+#include <android/log.h>
 
 //extern "C"
 //{
@@ -152,6 +154,28 @@ dng_matrix_3by3 get3x3Matrix(JNIEnv *env, jfloatArray matrix3x3)
                               raw[6], raw[7], raw[8]);
     env->ReleaseFloatArrayElements(matrix3x3, raw, 0);
     return dngMatrix;
+}
+
+dng_tone_curve getToneCurve(JNIEnv *env, jfloatArray toneCurve)
+{
+    dng_tone_curve result; result.SetInvalid();
+    int len = env->GetArrayLength(toneCurve);
+    if (len % 2 != 0)
+    {
+        result.SetNull();
+        return result;
+    }
+
+    jfloat *raw = env->GetFloatArrayElements(toneCurve, NULL);
+
+    for (int i = 0; i < len; i += 2)
+    {
+        dng_point_real64 point(raw[i + 1], raw[i]);
+        result.fCoord.push_back(point);
+    }
+
+    env->ReleaseFloatArrayElements(toneCurve, raw, 0);
+    return result;
 }
 
 extern "C"
@@ -300,6 +324,9 @@ extern "C"
 
         if (calibrationIlluminant2 != lsUnknown)
             profile->SetCalibrationIlluminant2((uint32) calibrationIlluminant2);
+
+        if (toneCurve_ != NULL)
+            profile->SetToneCurve(getToneCurve(env, toneCurve_));
 
         profile->SetWasReadFromDNG(true);
 
