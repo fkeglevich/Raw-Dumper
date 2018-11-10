@@ -11,8 +11,6 @@ TODO list:
             So in a case of crash, the photos can be automatically recovered later
 
  - (IN PROGRESS) Basic refactoring
-
- - (IN PROGRESS) Using DNG SDK to generate the RAW files
 			
  - (FUTURE RELEASE) Simplify the code architecture
  - (FUTURE RELEASE) Use a simpler camera configuration scheme:
@@ -44,8 +42,6 @@ TODO list:
 Next features:
  - Selection of picture size
  - Night Mode with raw pictures
- - Save pictures using the DNG SDK
-   - Advantages: compression and DNG files that-always-work
  - Gain-based white balance
 
 Known bugs:
@@ -177,3 +173,5 @@ Done:
  - (DONE) Delay setting the parameter when using the slider by a couple milliseconds
  - (DONE!) Added some simple RAW settings switches
  - (DONE!) Disable modes button when opening the camera
+ - (DONE!) Using DNG SDK to generate the RAW files
+   (compression and DNG files that-always-work)
