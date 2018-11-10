@@ -44,4 +44,13 @@ public interface ExifTagWriter
     void writeFlashTag(ExifFlash flash);
 
     void writeFocalLengthTag(float focalLength);
+
+    default void writeSoftwareTag(String software)
+    {  /*no op*/  }
+
+    default void writeMakeTag(String make)
+    {  /*no op*/  }
+
+    default void writeModelTag(String model)
+    {  /*no op*/  }
 }

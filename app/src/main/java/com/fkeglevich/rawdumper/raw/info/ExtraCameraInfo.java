@@ -86,7 +86,7 @@ public class ExtraCameraInfo
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
-        tiffWriter.setField(TiffTag.TIFFTAG_MODEL, String.format(Locale.US, model, Build.MODEL));
+        tiffWriter.setField(TiffTag.TIFFTAG_MODEL, getModel());
         tiffWriter.setField(TiffTag.TIFFTAG_UNIQUECAMERAMODEL, String.format(Locale.US, uniqueCameraModel, Build.MODEL));
     }
 
@@ -178,6 +178,11 @@ public class ExtraCameraInfo
     public boolean isCanBePatched()
     {
         return canBePatched;
+    }
+
+    public String getModel()
+    {
+        return String.format(Locale.US, model, Build.MODEL);
     }
 
     public List<String> getLogcatServices()

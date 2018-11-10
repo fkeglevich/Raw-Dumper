@@ -116,13 +116,12 @@
          ~CameraCalibration tags
          ~Opcodes
          ~Noise
+         ~Camera Info in exif
+         ~Software in exif
 
          Full opcodelists1 e 2
 
-         Camera Info in exif
-         Software in exif
          Makernote
-
          Previews
 
          */

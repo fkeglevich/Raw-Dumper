@@ -113,4 +113,37 @@ extern "C"
     {
         ((dng_exif *) pointer)->fFocalLength.Set_real64(focalLength);
     }
+
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeSoftwareTagNative(JNIEnv *env,
+                                                                               jobject instance,
+                                                                               jlong nativeHandle,
+                                                                               jstring software_)
+    {
+        const char *software = env->GetStringUTFChars(software_, 0);
+        ((dng_exif *) nativeHandle)->fSoftware.Set_UTF8(software);
+        env->ReleaseStringUTFChars(software_, software);
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeMakeTagNative(JNIEnv *env,
+                                                                           jobject instance,
+                                                                           jlong nativeHandle,
+                                                                           jstring make_)
+    {
+        const char *make = env->GetStringUTFChars(make_, 0);
+        ((dng_exif *) nativeHandle)->fMake.Set_UTF8(make);
+        env->ReleaseStringUTFChars(make_, make);
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeModelTagNative(JNIEnv *env,
+                                                                            jobject instance,
+                                                                            jlong nativeHandle,
+                                                                            jstring model_)
+    {
+        const char *model = env->GetStringUTFChars(model_, 0);
+        ((dng_exif *) nativeHandle)->fModel.Set_UTF8(model);
+        env->ReleaseStringUTFChars(model_, model);
+    }
 };

@@ -32,6 +32,7 @@ import com.fkeglevich.rawdumper.raw.data.ExifFlash;
 import com.fkeglevich.rawdumper.raw.info.LensInfo;
 import com.fkeglevich.rawdumper.exif.ExifTagWriter;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;
+import com.fkeglevich.rawdumper.util.AppPackageUtil;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -55,6 +56,8 @@ public class ExifInfo
     private Ev exposureBias                      = null;
     private ExifFlash flash                      = null;
     private Float focalLength                    = null;
+    private String make                          = null;
+    private String model                         = null;
 
     public void getExifDataFromCapture(CaptureInfo captureInfo)
     {
@@ -84,6 +87,12 @@ public class ExifInfo
             if (captureInfo.makerNoteInfo != null)
                 getSomeDataFrom(captureInfo.makerNoteInfo);
         }
+
+        if (captureInfo.camera != null)
+            model = captureInfo.camera.getModel();
+
+        if (captureInfo.device != null)
+            make = captureInfo.device.getManufacturer();
     }
 
     private void getSomeDataFrom(DateInfo dateInfo)
@@ -205,6 +214,14 @@ public class ExifInfo
 
         if (focalLength != null)
             exifWriter.writeFocalLengthTag(focalLength);
+
+        if (make != null)
+            exifWriter.writeMakeTag(make);
+
+        if (model != null)
+            exifWriter.writeModelTag(model);
+
+        exifWriter.writeSoftwareTag(AppPackageUtil.getAppNameWithVersion());
     }
 
     public Iso getIso()

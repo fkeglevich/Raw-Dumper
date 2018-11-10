@@ -61,7 +61,7 @@ public class DeviceInfo
 
     public void writeTiffTags(TiffWriter tiffWriter)
     {
-        tiffWriter.setField(TiffTag.TIFFTAG_MAKE, manufacturer);
+        tiffWriter.setField(TiffTag.TIFFTAG_MAKE, getManufacturer());
     }
 
     public String getDeviceFileName()
@@ -89,5 +89,10 @@ public class DeviceInfo
     public boolean needsHalDebugCommandFlag()
     {
         return needHalDebugCommandFlag;
+    }
+
+    public String getManufacturer()
+    {
+        return manufacturer;
     }
 }

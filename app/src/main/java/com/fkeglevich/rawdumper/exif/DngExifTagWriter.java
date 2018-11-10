@@ -43,6 +43,9 @@ public class DngExifTagWriter implements ExifTagWriter
     private native void writeExposureBiasTagNative(long pointer, float bias);
     private native void writeFlashTagNative(long pointer, short exifValue);
     private native void writeFocalLengthTagNative(long pointer, float focalLength);
+    private native void writeSoftwareTagNative(long nativeHandle, String software);
+    private native void writeMakeTagNative(long nativeHandle, String make);
+    private native void writeModelTagNative(long nativeHandle, String model);
 
     public DngExifTagWriter(DngNegative negative)
     {
@@ -107,5 +110,23 @@ public class DngExifTagWriter implements ExifTagWriter
     public void writeFocalLengthTag(float focalLength)
     {
         writeFocalLengthTagNative(nativeHandle, focalLength);
+    }
+
+    @Override
+    public void writeSoftwareTag(String software)
+    {
+        writeSoftwareTagNative(nativeHandle, software);
+    }
+
+    @Override
+    public void writeMakeTag(String make)
+    {
+        writeMakeTagNative(nativeHandle, make);
+    }
+
+    @Override
+    public void writeModelTag(String model)
+    {
+        writeModelTagNative(nativeHandle, model);
     }
 }
