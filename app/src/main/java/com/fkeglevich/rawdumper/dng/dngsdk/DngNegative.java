@@ -128,4 +128,9 @@ public class DngNegative
     {
         return getExifHandleNative(pointer);
     }
+
+    public long getNativeHandle()
+    {
+        return pointer;
+    }
 }

@@ -32,7 +32,6 @@
 #include "dng_sdk/source/dng_gain_map.h"
 #include "dng_sdk/source/dng_opcodes.h"
 #include "dng_sdk/source/dng_memory_stream.h"
-#include <android/log.h>
 
 //extern "C"
 //{
@@ -106,7 +105,7 @@
         //dngNegative->BuildStage2Image(dngHost);
         //dngNegative->BuildStage3Image(dngHost);
         dngNegative->SynchronizeMetadata();
-
+        //dngNegative->Metadata().SetMakerNote()
         /*
          Missing:
 
@@ -120,12 +119,11 @@
          ~Software in exif
 
          Full opcodelists1 e 2
-
-         Makernote
+         Adobe compliant Makernotes
          Previews
 
          */
-
+        //dngNegative->SetMakerNote()
 
         //dngNegative->SetMakerNote()
         //dngNegative->RebuildIPTC(true);//, false);
@@ -395,6 +393,22 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeMakerNoteTagNative(JNIEnv *env,
+                                                                                jobject instance,
+                                                                                jlong nativeHandle,
+                                                                                jbyteArray makerNote_)
+    {
+        int numBytes = env->GetArrayLength(makerNote_);
+        jbyte *makerNote = env->GetByteArrayElements(makerNote_, NULL);
+
+        AutoPtr<dng_memory_block> data (globalHost.Allocate ((uint32) numBytes));
+        memcpy(data.Get()->Buffer(), makerNote, numBytes);
+        ((dng_negative*) nativeHandle)->SetPrivateData(data);
+
+        env->ReleaseByteArrayElements(makerNote_, makerNote, 0);
+    }
+
+    JNIEXPORT void JNICALL
     Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_writeImageToFileNative(JNIEnv *env,
                                                                                 jobject instance,
                                                                                 jlong pointer,
@@ -420,7 +434,7 @@ extern "C"
 
         const char *fileName = env->GetStringUTFChars(fileName_, 0);
         dng_image_writer writer;
-        dng_file_stream stream("/sdcard/dummy3.dng", true);
+        dng_file_stream stream(fileName, true);
         writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer));// , NULL, dngVersion_1_4_0_0, true);
         env->ReleaseStringUTFChars(fileName_, fileName);
 

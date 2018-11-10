@@ -33,9 +33,11 @@ public class DngExifTagWriter implements ExifTagWriter
     }
 
     private final long nativeHandle;
+    private final DngNegative negative;
 
     private native void writeExposureTimeTagsNative(long pointer, double exposureTime);
     private native void writeISOTagNative(long pointer, int iso);
+    private native void writeMakerNoteTagNative(long nativeHandle, byte[] makerNote);
     private native void writeDateTimeOriginalTagsNative(long pointer, String dateIso8601);
     private native void writeDateTimeDigitizedTagsNative(long pointer, String dateIso8601);
     private native void writeApertureTagsNative(long pointer, double aperture);
@@ -50,6 +52,7 @@ public class DngExifTagWriter implements ExifTagWriter
     public DngExifTagWriter(DngNegative negative)
     {
         this.nativeHandle = negative.getExifHandle();
+        this.negative = negative;
     }
 
     @Override
@@ -67,7 +70,7 @@ public class DngExifTagWriter implements ExifTagWriter
     @Override
     public void writeMakerNoteTag(byte[] makerNote)
     {
-        //not implemented yet (probably unsupported by DNG SDK)
+        writeMakerNoteTagNative(negative.getNativeHandle(), makerNote);
     }
 
     @Override

@@ -22,6 +22,7 @@
 
 #include <jni.h>
 #include "dng_sdk/source/dng_host.h"
+#include "dng_sdk/source/dng_negative.h"
 #include "dng_sdk/source/dng_exif.h"
 
 extern "C"
