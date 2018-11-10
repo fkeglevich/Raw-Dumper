@@ -21,8 +21,6 @@ import android.support.annotation.Keep;
 import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.MathUtil;
 
 /**
@@ -56,19 +54,6 @@ public class ColorInfo
 
     private float[] toneCurve;
 
-    public void writeTiffTags(TiffWriter tiffWriter, CaptureInfo captureInfo)
-    {
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1,           processColorMatrix(colorMatrix1, captureInfo));
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX2,           processColorMatrix(colorMatrix2, captureInfo));
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_FORWARDMATRIX1,         forwardMatrix1);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_FORWARDMATRIX2,         forwardMatrix2);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CAMERACALIBRATION1,     cameraCalibration1);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CAMERACALIBRATION2,     cameraCalibration2);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CALIBRATIONILLUMINANT1, calibrationIlluminant1);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CALIBRATIONILLUMINANT2, calibrationIlluminant2);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_PROFILETONECURVE,       toneCurve);
-    }
-
     public void writeInfoTo(DngNegative negative, CaptureInfo captureInfo)
     {
         negative.setCameraCalibration(cameraCalibration1, cameraCalibration2);
@@ -90,18 +75,6 @@ public class ColorInfo
         }
         else
             return colorMatrix;
-    }
-
-    private void safeWriteField(TiffWriter writer, int tag, float[] data)
-    {
-        if (data != null)
-            writer.setField(tag, data, true);
-    }
-
-    private void safeWriteField(TiffWriter writer, int tag, CalibrationIlluminant illuminant)
-    {
-        if (illuminant != null)
-            writer.setField(tag, illuminant.getExifCode());
     }
 
     public double[] calculateSimpleAsShotNeutral(double x, double y)

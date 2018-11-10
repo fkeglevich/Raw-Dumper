@@ -38,9 +38,6 @@ public class DngWriter2
         System.loadLibrary("dng-writer");
     }
 
-    public static native long openNative(String filePath);
-    public native void dummy();
-
     public void write(CaptureInfo captureInfo, RawImageData imageData) throws IOException
     {
         DngNegative negative = new DngNegative();

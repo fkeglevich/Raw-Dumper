@@ -26,8 +26,6 @@ import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
 import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.raw.gain.BayerGainMap;
 import com.fkeglevich.rawdumper.raw.gain.ShadingIlluminant;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,12 +80,6 @@ public class ExtraCameraInfo
         orientation             = cameraInfo.orientation;
         canDisableShutterSound  = cameraInfo.canDisableShutterSound;
         gainMapCollection       = GainMapAssetLoader.load(gainMapFile);
-    }
-
-    public void writeTiffTags(TiffWriter tiffWriter)
-    {
-        tiffWriter.setField(TiffTag.TIFFTAG_MODEL, getModel());
-        tiffWriter.setField(TiffTag.TIFFTAG_UNIQUECAMERAMODEL, String.format(Locale.US, uniqueCameraModel, Build.MODEL));
     }
 
     public void writeInfoTo(DngNegative negative)

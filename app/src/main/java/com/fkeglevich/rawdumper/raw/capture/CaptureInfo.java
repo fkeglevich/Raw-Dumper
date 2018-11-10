@@ -23,10 +23,6 @@ import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
-import com.fkeglevich.rawdumper.util.AppPackageUtil;
-import com.fkeglevich.rawdumper.util.StringUtil;
 
 import java.io.File;
 
@@ -64,13 +60,6 @@ public class CaptureInfo
                 imageSize               != null &&
                 originalRawFilename     != null &&
                 destinationRawFilename  != null;
-    }
-
-    public void writeTiffTags(TiffWriter tiffWriter)
-    {
-        tiffWriter.setField(TiffTag.TIFFTAG_ORIGINALRAWFILENAME, StringUtil.getUTFBytesNullTerminated(originalRawFilename), true);
-        tiffWriter.setField(TiffTag.TIFFTAG_SOFTWARE, AppPackageUtil.getAppNameWithVersion());
-        rawSettings.writeTiffTags(tiffWriter, this);
     }
 
     public void writeInfoTo(DngNegative negative)

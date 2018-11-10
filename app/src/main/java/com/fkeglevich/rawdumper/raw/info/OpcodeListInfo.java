@@ -19,8 +19,6 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.support.annotation.Keep;
 
 import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.AssetUtil;
 
 import java.io.IOException;
@@ -46,17 +44,6 @@ public class OpcodeListInfo
 
     private Double temperature;
 
-    public void writeTiffTags(TiffWriter tiffWriter)
-    {
-        opcodeList1Cache = updateOpcodeListCache(opcodeList1Cache, opcodeList1File);
-        opcodeList2Cache = updateOpcodeListCache(opcodeList2Cache, opcodeList2File);
-        opcodeList3Cache = updateOpcodeListCache(opcodeList3Cache, opcodeList3File);
-
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST1, opcodeList1Cache);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST2, opcodeList2Cache);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_OPCODELIST3, opcodeList3Cache);
-    }
-
     public void writeInfoTo(DngNegative negative)
     {
         opcodeList1Cache = updateOpcodeListCache(opcodeList1Cache, opcodeList1File);
@@ -66,12 +53,6 @@ public class OpcodeListInfo
         //negative.setOpcodeList1(opcodeList1Cache);
         //negative.setOpcodeList2(opcodeList2Cache);
         negative.setOpcodeList3(opcodeList3Cache);
-    }
-
-    private void safeWriteField(TiffWriter writer, int tag, byte[] data)
-    {
-        if (data != null)
-            writer.setField(tag, data, true);
     }
 
     private byte[] updateOpcodeListCache(byte[] cache, String resourceNam)

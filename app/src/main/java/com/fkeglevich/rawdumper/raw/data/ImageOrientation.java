@@ -18,8 +18,6 @@ package com.fkeglevich.rawdumper.raw.data;
 
 import android.support.annotation.Keep;
 
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-
 /**
  * Enumerates the possible image orientations for the DNG files.
  *
@@ -29,14 +27,14 @@ import com.fkeglevich.rawdumper.tiff.TiffTag;
 @Keep
 public enum ImageOrientation
 {
-    TOPLEFT(TiffTag.ORIENTATION_TOPLEFT,    "Top left"),
-    TOPRIGHT(TiffTag.ORIENTATION_TOPRIGHT,  "Top right"),
-    BOTRIGHT(TiffTag.ORIENTATION_BOTRIGHT,  "Bottom right"),
-    BOTLEFT(TiffTag.ORIENTATION_BOTLEFT,    "Bottom left"),
-    LEFTTOP(TiffTag.ORIENTATION_LEFTTOP,    "Left top"),
-    RIGHTTOP(TiffTag.ORIENTATION_RIGHTTOP,  "Right top"),
-    RIGHTBOT(TiffTag.ORIENTATION_RIGHTBOT,  "Right bottom"),
-    LEFTBOT(TiffTag.ORIENTATION_LEFTBOT,    "Left bottom");
+    TOPLEFT (1, "Top left"),
+    TOPRIGHT(2, "Top right"),
+    BOTRIGHT(3, "Bottom right"),
+    BOTLEFT (4, "Bottom left"),
+    LEFTTOP (5, "Left top"),
+    RIGHTTOP(6, "Right top"),
+    RIGHTBOT(7, "Right bottom"),
+    LEFTBOT (8, "Left bottom");
 
     private final int exifCode;
     private final String stringCode;

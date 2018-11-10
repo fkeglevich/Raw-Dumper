@@ -24,8 +24,6 @@ import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
 import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.ColorUtil;
 import com.fkeglevich.rawdumper.util.MathUtil;
 
@@ -94,11 +92,6 @@ public class WhiteBalanceInfo
     private WhiteBalanceInfo(float[] asShotNeutral)
     {
         this.asShotNeutral = asShotNeutral;
-    }
-
-    public void writeTiffTags(TiffWriter tiffWriter)
-    {
-        tiffWriter.setField(TiffTag.TIFFTAG_ASSHOTNEUTRAL, asShotNeutral, true);
     }
 
     public void writeInfoTo(DngNegative negative)

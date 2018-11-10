@@ -16,9 +16,6 @@
 
 package com.fkeglevich.rawdumper.dng;
 
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
-
 /**
  * A simple enum that represents different DNG versions.
  *
@@ -43,15 +40,5 @@ public enum DngVersion
     public byte[] asBytes()
     {
         return bytes;
-    }
-
-    public void writeDngVersionTag(TiffWriter writer)
-    {
-        writer.setField(TiffTag.TIFFTAG_DNGVERSION, asBytes(), false);
-    }
-
-    public void writeDngBackwardVersionTag(TiffWriter writer)
-    {
-        writer.setField(TiffTag.TIFFTAG_DNGBACKWARDVERSION, asBytes(), false);
     }
 }

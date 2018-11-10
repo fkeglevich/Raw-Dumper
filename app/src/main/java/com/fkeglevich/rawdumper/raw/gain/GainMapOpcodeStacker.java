@@ -20,9 +20,7 @@ import android.support.annotation.Nullable;
 
 import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
 import com.fkeglevich.rawdumper.dng.opcode.GainMapOpcode;
-import com.fkeglevich.rawdumper.dng.opcode.OpcodeListWriter;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import java.util.Collections;
 import java.util.Map;
@@ -34,14 +32,6 @@ import java.util.Map;
 public class GainMapOpcodeStacker
 {
     private static final String TAG = "GainMapOpcodeWriter";
-
-    public static void write(CaptureInfo captureInfo, TiffWriter tiffWriter)
-    {
-        GainMapOpcode opcode = generateStackedOpcode(captureInfo);
-        if (opcode == null) return;
-
-        OpcodeListWriter.writeOpcodeList3Tag(tiffWriter, Collections.singletonList(opcode));
-    }
 
     public static void write(CaptureInfo captureInfo, DngNegative negative)
     {

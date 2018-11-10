@@ -175,3 +175,4 @@ Done:
  - (DONE!) Disable modes button when opening the camera
  - (DONE!) Using DNG SDK to generate the RAW files
    (compression and DNG files that-always-work)
+ - (DONE!) Remove LibTiff
