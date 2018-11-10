@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng.tiffwriter.opcode;
+package com.fkeglevich.rawdumper.dng.opcode;
 
-import com.fkeglevich.rawdumper.dng.tiffwriter.DngVersion;
+import com.fkeglevich.rawdumper.dng.DngVersion;
 
 import java.nio.ByteBuffer;
 

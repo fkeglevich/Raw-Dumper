@@ -16,8 +16,8 @@
 
 package com.fkeglevich.rawdumper.dng.dngsdk;
 
-import com.fkeglevich.rawdumper.dng.tiffwriter.opcode.Opcode;
-import com.fkeglevich.rawdumper.dng.tiffwriter.opcode.OpcodeListWriter;
+import com.fkeglevich.rawdumper.dng.opcode.Opcode;
+import com.fkeglevich.rawdumper.dng.opcode.OpcodeListWriter;
 import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
 
 import java.util.List;

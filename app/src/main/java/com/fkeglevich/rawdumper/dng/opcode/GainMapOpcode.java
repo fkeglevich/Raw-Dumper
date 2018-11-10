@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng.tiffwriter.opcode;
+package com.fkeglevich.rawdumper.dng.opcode;
 
 import com.fkeglevich.rawdumper.debug.DebugFlag;
-import com.fkeglevich.rawdumper.dng.tiffwriter.DngVersion;
+import com.fkeglevich.rawdumper.dng.DngVersion;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.gain.BayerGainMap;
 

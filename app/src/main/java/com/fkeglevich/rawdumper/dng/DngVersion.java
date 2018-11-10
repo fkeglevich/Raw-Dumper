@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng.tiffwriter;
+package com.fkeglevich.rawdumper.dng;
 
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 import com.fkeglevich.rawdumper.tiff.TiffWriter;

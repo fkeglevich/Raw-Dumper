@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.dng.tiffwriter;
 
+import com.fkeglevich.rawdumper.dng.DngVersion;
 import com.fkeglevich.rawdumper.tiff.TiffTag;
 
 /**
