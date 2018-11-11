@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUNIX_ENV=1 -DqDNGBigEndian=0 -DqDNGThreadSafe=1 -DqDNGUseLibJPEG=0 -DqDNGUseXMP=0 -DqDNGValidate=0 -DqDNGValidateTarget=1 -DqAndroid=1 -Wsign-compare -Wno-reorder -Wframe-larger-than=20000 -Wno-unused-parameter -Wno-ignored-qualifiers")
-
-# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  ${LOCAL_CFLAGS}")
-
 add_library( dng-sdk SHARED         source/dng_1d_function.cpp
 									source/dng_1d_table.cpp
 									source/dng_abort_sniffer.cpp
@@ -79,26 +75,4 @@ TARGET_COMPILE_DEFINITIONS( dng-sdk PUBLIC
 
 find_library( libz-lib z )
 
-TARGET_LINK_LIBRARIES( dng-sdk PRIVATE ${libz-lib} ) #xmp-sdk ${JPEG_LIBRARIES} ${ZLIB_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
-
-#-DqWinOS=0 -DqMacOS=0 -DqLinux=1   # platform for dng-sdk
-#-DqDNGThreadSafe=1                 # we're thread-safe - will use pthreads
-#                           -DqDNG64Bit=1                      # set manually to support 64bit platforms (todo: add test)
-#-DqDNGDebug=0                      # do not compile debug code
-#-DqDNGValidateTarget=0             # do not build dng_validate-binary
-#-DqDNGUseLibJPEG=1                 # use libjpeg
-#-DqDNGXMPFiles=0 -DqDNGXMPDocOps=0 # build minimal XMP-set
-#-DqDNGUseStdInt=1 )                # Must be set to 1, else do not compile under Linux.
-
-#TARGET_COMPILE_OPTIONS( dng-sdk PRIVATE -fexceptions )
-
-#TARGET_LINK_LIBRARIES( dng-sdk PRIVATE ) #xmp-sdk ${JPEG_LIBRARIES} ${ZLIB_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
-
-#TARGET_INCLUDE_DIRECTORIES( dng-sdk INTERFACE source )
-
-
-#-DUNIX_ENV=1 -DqDNGBigEndian=0 -DqDNGThreadSafe=1 \
-#-DqDNGUseLibJPEG=1 -DqDNGUseXMP=0 -DqDNGValidate=0 \
-#-DqDNGValidateTarget=1 -DqAndroid=1 \
-#-Wsign-compare -Wno-reorder -Wframe-larger-than=20000
-
+TARGET_LINK_LIBRARIES( dng-sdk PRIVATE ${libz-lib} )
