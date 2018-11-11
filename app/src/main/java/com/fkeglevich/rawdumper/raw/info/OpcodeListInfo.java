@@ -50,8 +50,8 @@ public class OpcodeListInfo
         opcodeList2Cache = updateOpcodeListCache(opcodeList2Cache, opcodeList2File);
         opcodeList3Cache = updateOpcodeListCache(opcodeList3Cache, opcodeList3File);
 
-        //negative.setOpcodeList1(opcodeList1Cache);
-        //negative.setOpcodeList2(opcodeList2Cache);
+        negative.setOpcodeList1(opcodeList1Cache);
+        negative.setOpcodeList2(opcodeList2Cache);
         negative.setOpcodeList3(opcodeList3Cache);
     }
 

@@ -44,9 +44,9 @@ public class DngNegative
                                         float[] forwardMatrix1, float[] forwardMatrix2,
                                         int calibrationIlluminant1, int calibrationIlluminant2,
                                         float[] toneCurve);
-    private native void setOpcodeList3Native(long pointer, byte[] bytes);
+    private native void setOpcodeListNative(long pointer, byte[] bytes, int listType);
     private native void setNoiseProfileNative(long pointer, double[] noiseProfile);
-    private native void writeImageToFileNative(long pointer, String fileName, int width, int height, byte[] imageData);
+    private native void writeImageToFileNative(long pointer, String fileName, int width, int height, byte[] imageData, boolean uncompressed);
     private native long getExifHandleNative(long pointer);
 
     public DngNegative()
@@ -101,17 +101,29 @@ public class DngNegative
                 toneCurve);
     }
 
+    public void setOpcodeList1(byte[] opcodeList)
+    {
+        if (opcodeList != null)
+            setOpcodeListNative(pointer, opcodeList, 1);
+    }
+
+    public void setOpcodeList2(byte[] opcodeList)
+    {
+        if (opcodeList != null)
+            setOpcodeListNative(pointer, opcodeList, 2);
+    }
+
     public void setOpcodeList3(byte[] opcodeList)
     {
         if (opcodeList != null)
-            setOpcodeList3Native(pointer, opcodeList);
+            setOpcodeListNative(pointer, opcodeList, 3);
     }
 
     public void setOpcodeList3(List<Opcode> opcodes)
     {
         //We don't even bother writing if the opcode list is empty
         if (opcodes.size() > 0)
-            setOpcodeList3Native(pointer, OpcodeListWriter.toByteArray(opcodes));
+            setOpcodeList3(OpcodeListWriter.toByteArray(opcodes));
     }
 
     public void setNoiseProfile(double[] noiseProfile)
@@ -119,9 +131,9 @@ public class DngNegative
         setNoiseProfileNative(pointer, noiseProfile);
     }
 
-    public void writeImageToFile(String fileName, int width, int height, byte[] imageData)
+    public void writeImageToFile(String fileName, int width, int height, byte[] imageData, boolean uncompressed)
     {
-        writeImageToFileNative(pointer, fileName, width, height, imageData);
+        writeImageToFileNative(pointer, fileName, width, height, imageData, uncompressed);
     }
 
     public long getExifHandle()

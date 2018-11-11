@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+/**
+ * Native implementation of the DngNegative class
+ *
+ * Created by Flávio Keglevich on 01/11/2018.
+ */
+
 #include <jni.h>
 #include "dng_sdk/source/dng_host.h"
 #include "dng_sdk/source/dng_simple_image.h"
@@ -32,125 +38,6 @@
 #include "dng_sdk/source/dng_gain_map.h"
 #include "dng_sdk/source/dng_opcodes.h"
 #include "dng_sdk/source/dng_memory_stream.h"
-
-//extern "C"
-//{
-    void dummy2()
-    {
-        dng_host dngHost;
-        dngHost.SetSaveLinearDNG(false);
-
-        uint32 width = 4000;
-        uint32 height = 3000;
-
-        dng_rect imageRect(height, width);
-
-        //if (4 > 3)
-        //    return;
-
-        //AutoPtr<dng_simple_image> dngImage(new dng_simple_image(imageRect, 1, ttShort, dngHost.Allocator()));
-
-        dng_simple_image* image = new dng_simple_image(imageRect, 1, ttShort, dngHost.Allocator());
-
-
-        dng_pixel_buffer buffer; image->GetPixelBuffer(buffer);
-
-
-
-        //memcpy(imageBuffer, dstData, width * height * sizeof(uint16));
-
-        AutoPtr<dng_negative> dngNegative(dngHost.Make_dng_negative());
-
-                dngNegative->SetDefaultScale(dng_urational(1, 1), dng_urational(1, 1));
-
-                // -- Sizes
-                dngNegative->SetDefaultCropOrigin(0, 0);
-                dngNegative->SetDefaultCropSize(width, height);
-                dngNegative->SetActiveArea(imageRect);
-
-                dngNegative->SetModelName("Dummy");
-                            //dngNegative->SetLocalName("Dummy");
-                dngNegative->SetOriginalRawFileName("dummy.dng");
-
-                dngNegative->SetColorChannels(3);
-                dngNegative->SetColorKeys(colorKeyRed, colorKeyGreen, colorKeyBlue);
-
-                dngNegative->SetBayerMosaic(0);
-
-                dngNegative->SetWhiteLevel(1023);
-                dngNegative->SetQuadBlacks(0,0,0,0);
-
-                dng_vector_3 cameraNeutral(0,0,0);
-                dngNegative->SetCameraNeutral(cameraNeutral);
-
-                dngNegative->SetNoiseReductionApplied(dng_urational(0, 1));
-
-                //Orientatin
-                dngNegative->SetBaseOrientation(dng_orientation::Normal());
-
-        //Profile
-        AutoPtr<dng_camera_profile> prof(new dng_camera_profile);
-        prof->SetName("dummy profile");
-        dng_matrix_3by3 camXYZ(1.0f, 1.0f, 1.0f);
-        prof->SetColorMatrix1(static_cast<dng_matrix>(camXYZ));
-        prof->SetCalibrationIlluminant1(lsD65);
-        prof->SetWasReadFromDNG(true);
-
-        dngNegative->AddProfile(prof);
-
-        AutoPtr<dng_image> castImage(dynamic_cast<dng_image*>(image));
-        dngNegative->SetStage1Image(castImage);
-
-        //dngNegative->SetStage1Image(image);
-        //dngNegative->BuildStage2Image(dngHost);
-        //dngNegative->BuildStage3Image(dngHost);
-        dngNegative->SynchronizeMetadata();
-        //dngNegative->Metadata().SetMakerNote()
-        /*
-         Missing:
-
-         ~Colors
-         ~Exif
-         ~Tonecurves
-         ~CameraCalibration tags
-         ~Opcodes
-         ~Noise
-         ~Camera Info in exif
-         ~Software in exif
-
-         Full opcodelists1 e 2
-         Adobe compliant Makernotes
-         Previews
-
-         */
-        //dngNegative->SetMakerNote()
-
-        //dngNegative->SetMakerNote()
-        //dngNegative->RebuildIPTC(true);//, false);
-
-        /*dng_image_preview thumbnail;
-        dng_render render(dngHost, *dngNegative);
-        render.SetFinalSpace(dng_space_sRGB::Get());
-        render.SetFinalPixelType(ttByte);
-        render.SetMaximumSize(256);
-        thumbnail.fImage.Reset(render.Render());*/
-
-        //dng_exif *negExif;
-        //negExif->SetExposureTime();
-
-        //dng_preview_list* previewList = new dng_preview_list();
-
-        //AutoPtr<dng_preview> prev((dng_preview)thumbnail);
-        //previewList->Append(prev);
-
-        dng_image_writer writer;
-        dng_file_stream stream("/sdcard/dummy2.dng", true);
-        //writer.WriteDNG(dngHost, stream, *dngNegative.Get(), previewList, 1400, false);
-        writer.WriteDNG(dngHost, stream, *dngNegative.Get());
-
-        //delete[] dstData;
-    }
-//};
 
 dng_matrix_3by3 get3x3Matrix(JNIEnv *env, jfloatArray matrix3x3)
 {
@@ -214,8 +101,7 @@ extern "C"
     }
 
     JNIEXPORT jlong JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_nativeConstructor(JNIEnv *env,
-                                                                           jobject instance)
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_nativeConstructor(JNIEnv *env, jobject instance)
     {
         initializeHost();
         dng_negative *negative = globalHost.Make_dng_negative();
@@ -240,8 +126,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setOriginalRawFileNameNative(JNIEnv *env,
-                                                                                      jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setOriginalRawFileNameNative(JNIEnv *env, jobject instance,
                                                                                       jlong pointer,
                                                                                       jstring fileName_)
     {
@@ -251,8 +136,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setSensorInfoNative(JNIEnv *env,
-                                                                             jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setSensorInfoNative(JNIEnv *env, jobject instance,
                                                                              jlong pointer,
                                                                              jint whiteLevel,
                                                                              jfloatArray blackLevels_,
@@ -266,8 +150,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setCameraNeutralNative(JNIEnv *env,
-                                                                                jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setCameraNeutralNative(JNIEnv *env, jobject instance,
                                                                                 jlong pointer,
                                                                                 jfloatArray cameraNeutral_)
     {
@@ -278,8 +161,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setImageSizeAndOrientationNative(JNIEnv *env,
-                                                                              jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setImageSizeAndOrientationNative(JNIEnv *env, jobject instance,
                                                                               jlong pointer,
                                                                               jint width,
                                                                               jint height,
@@ -295,8 +177,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setCameraCalibrationNative(JNIEnv *env,
-                                                                                    jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setCameraCalibrationNative(JNIEnv *env, jobject instance,
                                                                                     jlong pointer,
                                                                                     jfloatArray cameraCalibration1_,
                                                                                     jfloatArray cameraCalibration2_)
@@ -308,8 +189,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_addColorProfileNative(JNIEnv *env,
-                                                                               jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_addColorProfileNative(JNIEnv *env, jobject instance,
                                                                                jlong pointer,
                                                                                jstring name_,
                                                                                jfloatArray colorMatrix1_,
@@ -353,24 +233,33 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setOpcodeList3Native(JNIEnv *env,
-                                                                              jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setOpcodeListNative(JNIEnv *env, jobject instance,
                                                                               jlong pointer,
-                                                                              jbyteArray bytes_)
+                                                                              jbyteArray bytes_,
+                                                                              jint listType)
     {
         int numBytes = env->GetArrayLength(bytes_);
 
         jbyte *bytes = env->GetByteArrayElements(bytes_, NULL);
-        dng_memory_stream gainMapStream(globalHost.Allocator());
-        gainMapStream.Put(bytes, (uint32) numBytes);
+        dng_memory_stream opcodeListStream(globalHost.Allocator());
+        opcodeListStream.Put(bytes, (uint32) numBytes);
         env->ReleaseByteArrayElements(bytes_, bytes, 0);
 
-        ((dng_negative*) pointer)->OpcodeList3().Parse(globalHost, gainMapStream, (uint32) numBytes, 0);
+        switch (listType)
+        {
+            case 1:
+                ((dng_negative*) pointer)->OpcodeList1().Parse(globalHost, opcodeListStream, (uint32) numBytes, 0);
+                break;
+            case 2:
+                ((dng_negative*) pointer)->OpcodeList2().Parse(globalHost, opcodeListStream, (uint32) numBytes, 0);
+                break;
+            default:
+                ((dng_negative*) pointer)->OpcodeList3().Parse(globalHost, opcodeListStream, (uint32) numBytes, 0);
+        }
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setNoiseProfileNative(JNIEnv *env,
-                                                                               jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setNoiseProfileNative(JNIEnv *env, jobject instance,
                                                                                jlong pointer,
                                                                                jdoubleArray noiseProfile)
     {
@@ -393,29 +282,35 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeMakerNoteTagNative(JNIEnv *env,
-                                                                                jobject instance,
+    Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeMakerNoteTagNative(JNIEnv *env, jobject instance,
                                                                                 jlong nativeHandle,
                                                                                 jbyteArray makerNote_)
     {
         int numBytes = env->GetArrayLength(makerNote_);
         jbyte *makerNote = env->GetByteArrayElements(makerNote_, NULL);
 
-        AutoPtr<dng_memory_block> data (globalHost.Allocate ((uint32) numBytes));
-        memcpy(data.Get()->Buffer(), makerNote, numBytes);
-        ((dng_negative*) nativeHandle)->SetPrivateData(data);
+        AutoPtr<dng_memory_stream> mknStream(new dng_memory_stream(globalHost.Allocator()));
+        mknStream->SetBigEndian();                      //The stream should be big endian
+        mknStream->Put("Adobe\0MakN", 10);              //These chars mark the makernotes
+        mknStream->Put_uint32((uint32) numBytes);       //Write the original length of the makernotes
+        mknStream->Put("II", 2);                        //Assuming the makernote is always small endian
+        mknStream->Put_uint32(0);                       //Assuming the makernote has no offset
+        mknStream->Put(makerNote, (uint32) numBytes);   //Put the actual makernote data
+
+        AutoPtr<dng_memory_block> mknBlock(mknStream->AsMemoryBlock(globalHost.Allocator()));
+        ((dng_negative*) nativeHandle)->SetPrivateData(mknBlock);
 
         env->ReleaseByteArrayElements(makerNote_, makerNote, 0);
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_writeImageToFileNative(JNIEnv *env,
-                                                                                jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_writeImageToFileNative(JNIEnv *env, jobject instance,
                                                                                 jlong pointer,
                                                                                 jstring fileName_,
                                                                                 jint width,
                                                                                 jint height,
-                                                                                jbyteArray imageData_)
+                                                                                jbyteArray imageData_,
+                                                                                jboolean uncompressed)
     {
 
         jbyte *imageData = env->GetByteArrayElements(imageData_, NULL);
@@ -435,14 +330,13 @@ extern "C"
         const char *fileName = env->GetStringUTFChars(fileName_, 0);
         dng_image_writer writer;
         dng_file_stream stream(fileName, true);
-        writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer) , NULL, dngVersion_SaveDefault, false);
+        writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer) , NULL, dngVersion_SaveDefault, uncompressed);
         env->ReleaseStringUTFChars(fileName_, fileName);
 
     }
 
     JNIEXPORT jlong JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_getExifHandleNative(JNIEnv *env,
-                                                                             jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_getExifHandleNative(JNIEnv *env, jobject instance,
                                                                              jlong pointer)
     {
         return (jlong ) ((dng_negative*) pointer)->GetExif();
