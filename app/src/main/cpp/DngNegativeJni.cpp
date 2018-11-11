@@ -435,7 +435,7 @@ extern "C"
         const char *fileName = env->GetStringUTFChars(fileName_, 0);
         dng_image_writer writer;
         dng_file_stream stream(fileName, true);
-        writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer));// , NULL, dngVersion_1_4_0_0, true);
+        writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer) , NULL, dngVersion_SaveDefault, false);
         env->ReleaseStringUTFChars(fileName_, fileName);
 
     }
