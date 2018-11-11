@@ -28,7 +28,7 @@ public class RawSettings
 {
     public volatile boolean shouldInvertFrontCameraRows = true;
     public volatile boolean keepLensVignetting          = false;
-    public volatile boolean useAlternativeColorMatrix   = false;
+    public volatile boolean compressRawFiles            = true;
     public volatile boolean useOrientationFromPhone     = true;
 
     public int getOrientationCode(CaptureInfo captureInfo)
@@ -52,7 +52,7 @@ public class RawSettings
     {
         shouldInvertFrontCameraRows = rawSettings.shouldInvertFrontCameraRows;
         keepLensVignetting          = rawSettings.keepLensVignetting;
-        useAlternativeColorMatrix   = rawSettings.useAlternativeColorMatrix;
+        compressRawFiles            = rawSettings.compressRawFiles;
         useOrientationFromPhone     = rawSettings.useOrientationFromPhone;
     }
 
@@ -62,7 +62,7 @@ public class RawSettings
     {
         return "[RawSettings shouldInvertFrontCameraRows=" + shouldInvertFrontCameraRows + ", " +
                 "keepLensVignetting=" + keepLensVignetting + ", " +
-                "useAlternativeColorMatrix=" + useAlternativeColorMatrix + ", " +
+                "compressRawFiles=" + compressRawFiles + ", " +
                 "useOrientationFromPhone=" + useOrientationFromPhone + "]";
     }
 }

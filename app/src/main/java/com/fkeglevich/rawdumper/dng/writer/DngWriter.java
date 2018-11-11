@@ -57,7 +57,7 @@ public class DngWriter
             PerfInfo.end("BufferTime");
 
             PerfInfo.start("SaveAndCompress");
-            negative.writeImageToFile(captureInfo.destinationRawFilename, imageSize.getPaddedWidth(), imageSize.getPaddedHeight(), buffer, false);
+            negative.writeImageToFile(captureInfo.destinationRawFilename, imageSize.getPaddedWidth(), imageSize.getPaddedHeight(), buffer, !captureInfo.rawSettings.compressRawFiles);
             PerfInfo.end("SaveAndCompress");
             // End writing image
         }

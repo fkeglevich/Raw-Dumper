@@ -89,12 +89,12 @@
                 android:text="@string/keep_lens_vignetting" />
 
             <Switch
-                android:id="@+id/ccmSwitch"
+                android:id="@+id/cmpSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="10dp"
-                android:text="@string/use_alternative_color_profile" />
+                android:text="@string/compress_raw_files" />
 
             <Switch
                 android:id="@+id/safSwitch"

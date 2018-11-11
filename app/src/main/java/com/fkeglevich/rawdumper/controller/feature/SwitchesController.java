@@ -26,7 +26,7 @@ import com.fkeglevich.rawdumper.raw.capture.RawSettings;
 
 class SwitchesController extends FeatureController
 {
-    private static final int[] IDS = new int[]{R.id.klvSwitch, R.id.ccmSwitch, R.id.safSwitch};
+    private static final int[] IDS = new int[]{R.id.klvSwitch, R.id.cmpSwitch, R.id.safSwitch};
 
     private final ActivityReference reference;
 
@@ -41,7 +41,7 @@ class SwitchesController extends FeatureController
         RawSettings rawSettings = camera.getRawSettings();
 
         setupSwitch(R.id.klvSwitch, rawSettings.keepLensVignetting, rawSettings);
-        setupSwitch(R.id.ccmSwitch, rawSettings.useAlternativeColorMatrix, rawSettings);
+        setupSwitch(R.id.cmpSwitch, rawSettings.compressRawFiles, rawSettings);
         setupSwitch(R.id.safSwitch, rawSettings.shouldInvertFrontCameraRows, rawSettings);
 
         enable();
@@ -79,8 +79,8 @@ class SwitchesController extends FeatureController
                     rawSettings.keepLensVignetting = isChecked;
                     break;
 
-                case R.id.ccmSwitch:
-                    rawSettings.useAlternativeColorMatrix = isChecked;
+                case R.id.cmpSwitch:
+                    rawSettings.compressRawFiles = isChecked;
                     break;
 
                 case R.id.safSwitch:
