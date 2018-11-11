@@ -17,6 +17,8 @@
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
 import android.hardware.Camera;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
@@ -76,6 +78,8 @@ public class RetryingRawPipeline implements PicturePipeline
     private PictureListener nextPictureCallback;
     private PictureExceptionListener nextExceptionCallback;
 
+    final Handler uiHandler;
+
     RetryingRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, RestartableCamera restartableCamera)
     {
         this.errorCallback      = createErrorCallback();
@@ -85,6 +89,7 @@ public class RetryingRawPipeline implements PicturePipeline
         this.restartableCamera  = restartableCamera;
         this.minRetryingDelay   = cameraContext.getCameraInfo().getRetryPipelineDelay();
         this.pipelineDelay      = minRetryingDelay;
+        this.uiHandler          = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -167,7 +172,7 @@ public class RetryingRawPipeline implements PicturePipeline
         File[] files = Directories.getPartialPicturesDirectory().listFiles();
         if (files.length != 1)
         {
-            nextExceptionCallback.onException(new SaveFileException());
+            uiHandler.post(() -> nextExceptionCallback.onException(new SaveFileException()));
             return;
         }
 
