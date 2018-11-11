@@ -37,10 +37,6 @@ TODO list:
 
  - Optimize the DNG creation process (especially memory performance)
 
- - Make the DNGPrivateData tag adobe-compliant
-
- - Add new CCM-based color profiles automagically
-
  - Create DNG with thumbnails
 
  - (IMPORTANT) Test the newer version of these devices:
@@ -185,3 +181,5 @@ Done:
    (compression and DNG files that-always-work)
  - (DONE!) Remove LibTiff
  - Fixed not-so-rare threading-related crash
+ - (DONE!) Make the DNGPrivateData tag adobe-compliant
+ - (DONE!) Add new CCM-based color profiles automagically

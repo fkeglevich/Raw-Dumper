@@ -23,6 +23,8 @@ import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
 import com.fkeglevich.rawdumper.util.MathUtil;
 
+import static com.fkeglevich.rawdumper.util.MathUtil.multiply3x3Matrices;
+
 /**
  * Represents a collection of color matrices and calibration
  * illuminants that composes the color profile of the DNG files.
@@ -34,7 +36,7 @@ import com.fkeglevich.rawdumper.util.MathUtil;
 @SuppressWarnings("unused")
 public class ColorInfo
 {
-    private static final String EMBEDDED_PROFILE_NAME = "Embedded";
+    private static final String EMBEDDED_PROFILE_NAME = "As Shot";
 
     private float[] colorMatrix1;
     private float[] colorMatrix2;
@@ -58,23 +60,34 @@ public class ColorInfo
     {
         negative.setCameraCalibration(cameraCalibration1, cameraCalibration2);
         negative.addColorProfile(EMBEDDED_PROFILE_NAME,
-                processColorMatrix(colorMatrix1, captureInfo), processColorMatrix(colorMatrix2, captureInfo),
+                colorMatrix1, colorMatrix2,
+                forwardMatrix1, forwardMatrix2,
+                calibrationIlluminant1, calibrationIlluminant2,
+                toneCurve);
+        if (captureInfo.makerNoteInfo != null && captureInfo.makerNoteInfo.colorMatrix != null)
+        {
+            float[] ccm = captureInfo.makerNoteInfo.colorMatrix;
+            addCCMProfile(negative, ccm);
+            addMixedCCMProfile(negative, ccm);
+        }
+    }
+
+    private void addMixedCCMProfile(DngNegative negative, float[] ccm)
+    {
+        negative.addColorProfile("CCM Mixed Profile",
+                multiply3x3Matrices(colorMatrix1, ccm), multiply3x3Matrices(colorMatrix2, ccm),
                 forwardMatrix1, forwardMatrix2,
                 calibrationIlluminant1, calibrationIlluminant2,
                 toneCurve);
     }
 
-    private static float[] processColorMatrix(float[] colorMatrix, CaptureInfo captureInfo)
+    private void addCCMProfile(DngNegative negative, float[] ccm)
     {
-        if (captureInfo.rawSettings.useAlternativeColorMatrix &&
-                captureInfo.makerNoteInfo != null &&
-                captureInfo.makerNoteInfo.colorMatrix != null)
-        {
-            float[] ccm = captureInfo.makerNoteInfo.colorMatrix;
-            return MathUtil.multiply3x3Matrices(colorMatrix, ccm);
-        }
-        else
-            return colorMatrix;
+        negative.addColorProfile("CCM Profile",
+                ccm, ccm,
+                null, null,
+                calibrationIlluminant1, calibrationIlluminant2,
+                null);
     }
 
     public double[] calculateSimpleAsShotNeutral(double x, double y)
