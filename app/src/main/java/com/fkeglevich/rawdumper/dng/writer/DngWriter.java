@@ -30,13 +30,6 @@ import java.io.IOException;
 
 public class DngWriter
 {
-    private static final String TAG = "DngWriter";
-
-    static
-    {
-        System.loadLibrary("dng-writer");
-    }
-
     public void write(CaptureInfo captureInfo, RawImageData imageData) throws IOException
     {
         DngNegative negative = new DngNegative();
