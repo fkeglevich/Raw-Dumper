@@ -34,7 +34,7 @@ public class SwitchButtonController extends FeatureController
     private final ButtonDisabledStateController disabledStateController;
     private final CameraManager cameraManager;
 
-    public SwitchButtonController(View switchButton, final CameraManager cameraManager, final CameraPreview cameraPreview)
+    SwitchButtonController(View switchButton, final CameraManager cameraManager, final CameraPreview cameraPreview)
     {
         switchButton.setOnClickListener(v ->
         {

@@ -42,10 +42,9 @@
         \n
         \nAs seguintes bibliotecas Open Source são utilizadas:
         \n
-        \nLibTIFF
-        \nCopyright © 1988-1997 Sam Leffler
-        \nCopyright © 1991-1997 Silicon Graphics, Inc.
-        \nLicença: http://www.simplesystems.org/libtiff/misc.html
+        \nAdobe DNG Software Development Kit (SDK) 1.4
+        \nCopyright © 2017 Adobe
+        \nLink e Licença: http://supportdownloads.adobe.com/detail.jsp?ftpID=5474
         \n
         \nLibsuperuser
         \nCopyright © 2012-2015 Jorrit "Chainfire" Jongma
@@ -79,10 +78,6 @@
         \nLicença: https://github.com/google/material-design-icons/blob/master/LICENSE
         \n
         \nO código para transformar CCT e tint para coordenadas CIE xy foi portado para Java a partir do DNG SDK da Adobe.
-        \n
-        \nAdobe DNG Software Development Kit (SDK) 1.4
-        \nCopyright © 2017 Adobe
-        \nLink e Licença: http://supportdownloads.adobe.com/detail.jsp?ftpID=5474
     </string>
     <string name="error_saving_file">Erro ao salvar o arquivo</string>
     <string name="ev_changed_notification">EV mudou para <xliff:g id="newValue">%s</xliff:g></string>
@@ -124,7 +119,7 @@
     <string name="camera_resolution">Resolução da câmera</string>
     <string name="raw_format_options">Opções do formato RAW (beta)</string>
     <string name="keep_lens_vignetting">Manter vinheta da lente</string>
-    <string name="use_alternative_color_profile">Usar perfil de cores alternativo</string>
+    <string name="compress_raw_files">Habilitar compressão</string>
     <string name="save_as_flipped">Inverter fotos tiradas com a câmera frontal</string>
 
 </resources>

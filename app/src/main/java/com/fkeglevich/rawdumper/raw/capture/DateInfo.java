@@ -16,10 +16,6 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
-import com.fkeglevich.rawdumper.tiff.TagFormatter;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
-
 import java.util.GregorianCalendar;
 
 /**
@@ -76,17 +72,6 @@ public class DateInfo
     private DateInfo(GregorianCalendar captureDate)
     {
         this.captureDate = captureDate;
-    }
-
-    /**
-     * Write all information contained by this object as Tiff tags.
-     *
-     * @param tiffWriter    The TiffWriter used to actually write the tags
-     */
-    public void writeTiffTags(TiffWriter tiffWriter)
-    {
-        if (getCaptureDate() != null)
-            tiffWriter.setField(TiffTag.TIFFTAG_DATETIME, TagFormatter.formatCalendarTag(getCaptureDate()));
     }
 
     /**

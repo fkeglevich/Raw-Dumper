@@ -23,10 +23,9 @@ import android.support.annotation.Keep;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.gain.BayerGainMap;
 import com.fkeglevich.rawdumper.raw.gain.ShadingIlluminant;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,10 +82,9 @@ public class ExtraCameraInfo
         gainMapCollection       = GainMapAssetLoader.load(gainMapFile);
     }
 
-    public void writeTiffTags(TiffWriter tiffWriter)
+    public void writeInfoTo(DngNegative negative)
     {
-        tiffWriter.setField(TiffTag.TIFFTAG_MODEL, String.format(Locale.US, model, Build.MODEL));
-        tiffWriter.setField(TiffTag.TIFFTAG_UNIQUECAMERAMODEL, String.format(Locale.US, uniqueCameraModel, Build.MODEL));
+        negative.setModel(String.format(Locale.US, uniqueCameraModel, Build.MODEL));
     }
 
     public int getId()
@@ -172,6 +170,11 @@ public class ExtraCameraInfo
     public boolean isCanBePatched()
     {
         return canBePatched;
+    }
+
+    public String getModel()
+    {
+        return String.format(Locale.US, model, Build.MODEL);
     }
 
     public List<String> getLogcatServices()

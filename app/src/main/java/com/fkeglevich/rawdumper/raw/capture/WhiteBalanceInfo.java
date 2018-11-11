@@ -21,10 +21,9 @@ import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
 import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.ColorUtil;
 import com.fkeglevich.rawdumper.util.MathUtil;
 
@@ -95,8 +94,8 @@ public class WhiteBalanceInfo
         this.asShotNeutral = asShotNeutral;
     }
 
-    public void writeTiffTags(TiffWriter tiffWriter)
+    public void writeInfoTo(DngNegative negative)
     {
-        tiffWriter.setField(TiffTag.TIFFTAG_ASSHOTNEUTRAL, asShotNeutral, true);
+        negative.setCameraNeutral(asShotNeutral);
     }
 }

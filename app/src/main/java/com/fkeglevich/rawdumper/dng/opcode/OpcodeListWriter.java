@@ -16,9 +16,6 @@
 
 package com.fkeglevich.rawdumper.dng.opcode;
 
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.List;
@@ -33,29 +30,7 @@ import static com.fkeglevich.rawdumper.util.DataSize.INT_SIZE;
 
 public class OpcodeListWriter
 {
-    public static void writeOpcodeList1Tag(TiffWriter tiffWriter, List<Opcode> opcodes)
-    {
-        writeOpcodeListTag(tiffWriter, opcodes, TiffTag.TIFFTAG_OPCODELIST1);
-    }
-
-    public static void writeOpcodeList2Tag(TiffWriter tiffWriter, List<Opcode> opcodes)
-    {
-        writeOpcodeListTag(tiffWriter, opcodes, TiffTag.TIFFTAG_OPCODELIST2);
-    }
-
-    public static void writeOpcodeList3Tag(TiffWriter tiffWriter, List<Opcode> opcodes)
-    {
-        writeOpcodeListTag(tiffWriter, opcodes, TiffTag.TIFFTAG_OPCODELIST3);
-    }
-
-    private static void writeOpcodeListTag(TiffWriter tiffWriter, List<Opcode> opcodes, int tag)
-    {
-        //We don't even bother writing the tag if the opcodelist is empty
-        if (opcodes.size() > 0)
-            tiffWriter.setField(tag, toByteArray(opcodes), true);
-    }
-
-    private static byte[] toByteArray(List<Opcode> opcodes)
+    public static byte[] toByteArray(List<Opcode> opcodes)
     {
         ByteBuffer buffer = ByteBuffer.allocate(calculateTotalSize(opcodes));
         buffer.order(ByteOrder.BIG_ENDIAN); //opcodelists are ALWAYS stored in big endian byte order

@@ -111,7 +111,7 @@ public class CameraLifetimeController
     private SwitchButtonController createSwitchButtonController()
     {
         View switchButton = reference.weaklyGet().findViewById(R.id.camSwitchButton);
-        CameraPreview textureView = (CameraPreview) reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
+        CameraPreview textureView = reference.weaklyGet().findViewById(R.id.cameraSurfaceView);
         return new SwitchButtonController(switchButton, cameraManager, textureView);
     }
 }

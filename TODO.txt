@@ -29,24 +29,24 @@ TODO list:
  - (IN PROGRESS) Optimize logcat reading, right now the GC is crying
    - This is needed but hard to implement </3
 
- - Disable modes button when opening the camera
-
  - Zoom feature for Zenfone Zoom
 
  - (IN PROGRESS) Take picture discarding the result (skip picture)
 	
  - Restructure the camera access diagram
- 
+
+ - Optimize the DNG creation process (especially memory performance)
+
+ - Create DNG with thumbnails
+
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
 	- Zenfone 5
 
 Next features:
- - Selection of picture size
  - Night Mode with raw pictures
- - Save pictures using the DNG SDK
-   - Advantages: compression and DNG files that-always-work
  - Gain-based white balance
+ - Slow Sync Flash
 
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
@@ -176,3 +176,12 @@ Done:
  - (DONE!) Added new simple tone curve profiles
  - (DONE) Delay setting the parameter when using the slider by a couple milliseconds
  - (DONE!) Added some simple RAW settings switches
+ - (DONE!) Disable modes button when opening the camera
+ - (DONE!) Using DNG SDK to generate the RAW files
+   (compression and DNG files that-always-work)
+ - (DONE!) Remove LibTiff
+ - Fixed not-so-rare threading-related crash
+ - (DONE!) Make the DNGPrivateData tag adobe-compliant
+ - (DONE!) Add new CCM-based color profiles automagically
+ - (DONE!) Add new raw compression switch
+ - (DONE!) Selection of picture size

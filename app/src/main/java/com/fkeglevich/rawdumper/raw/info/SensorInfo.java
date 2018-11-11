@@ -19,11 +19,10 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.hardware.Camera;
 import android.support.annotation.Keep;
 
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 import com.fkeglevich.rawdumper.raw.data.BayerPattern;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 /**
  * Stores specific information and implementation details
@@ -78,16 +77,9 @@ public class SensorInfo
         return integrationTimeScale;
     }
 
-    public void writeTiffTags(TiffWriter tiffWriter, ExifInfo exifInfo, boolean invertRows)
+    public void writeInfoTo(DngNegative negative, ExifInfo exifInfo, boolean invertRows)
     {
-        tiffWriter.setField(TiffTag.TIFFTAG_BITSPERSAMPLE,          storageBitsPerPixel);
-        tiffWriter.setField(TiffTag.TIFFTAG_CFAREPEATPATTERNDIM,    DEFAULT_CFA_REPEAT_PATTERN_DIM, false);
-        tiffWriter.setField(TiffTag.TIFFTAG_CFAPATTERN,             invertRows ? bayerPattern.invertVertically().getBytePattern() : bayerPattern.getBytePattern(), false);
-        tiffWriter.setField(TiffTag.TIFFTAG_CFAPLANECOLOR,          DEFAULT_CFA_PLANE_COLOR, true);
-        tiffWriter.setField(TiffTag.TIFFTAG_CFALAYOUT,              DEFAULT_CFA_LAYOUT);
-        tiffWriter.setField(TiffTag.TIFFTAG_WHITELEVEL,             new long[] { whiteLevel }, true);
-        tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVELREPEATDIM,    DEFAULT_BLACK_LEVEL_REPEAT_DIM, false);
-        tiffWriter.setField(TiffTag.TIFFTAG_BLACKLEVEL,             blackLevelInfo.computeBlackLevel(exifInfo), true);
+        negative.setSensorInfo(whiteLevel, blackLevelInfo.computeBlackLevel(exifInfo), invertRows ? bayerPattern.invertVertically().getPhase() : bayerPattern.getPhase());
     }
 
     public RawImageSize getRawImageSizeFromSize(Camera.Size size)

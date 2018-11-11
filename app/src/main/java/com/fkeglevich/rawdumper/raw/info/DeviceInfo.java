@@ -19,8 +19,6 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.support.annotation.Keep;
 
 import com.fkeglevich.rawdumper.debug.DebugFlag;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 /**
  * Contains device-specific information used to create DNG files.
@@ -59,11 +57,6 @@ public class DeviceInfo
         return dumpDirectoryLocation;
     }
 
-    public void writeTiffTags(TiffWriter tiffWriter)
-    {
-        tiffWriter.setField(TiffTag.TIFFTAG_MAKE, manufacturer);
-    }
-
     public String getDeviceFileName()
     {
         return deviceFileName;
@@ -89,5 +82,10 @@ public class DeviceInfo
     public boolean needsHalDebugCommandFlag()
     {
         return needHalDebugCommandFlag;
+    }
+
+    public String getManufacturer()
+    {
+        return manufacturer;
     }
 }

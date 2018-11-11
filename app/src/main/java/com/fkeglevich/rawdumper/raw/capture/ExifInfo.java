@@ -25,10 +25,12 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
+import com.fkeglevich.rawdumper.exif.DngExifTagWriter;
+import com.fkeglevich.rawdumper.exif.ExifTagWriter;
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
 import com.fkeglevich.rawdumper.raw.info.LensInfo;
-import com.fkeglevich.rawdumper.tiff.ExifTagWriter;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
+import com.fkeglevich.rawdumper.util.AppPackageUtil;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -42,6 +44,8 @@ import java.util.GregorianCalendar;
 
 public class ExifInfo
 {
+    private static final byte[] exifVersion = new byte[]{48, 50, 50, 48};
+
     private GregorianCalendar dateTimeOriginal   = null;
     private Iso iso                              = null;
     private ShutterSpeed exposureTime            = null;
@@ -50,6 +54,8 @@ public class ExifInfo
     private Ev exposureBias                      = null;
     private ExifFlash flash                      = null;
     private Float focalLength                    = null;
+    private String make                          = null;
+    private String model                         = null;
 
     public void getExifDataFromCapture(CaptureInfo captureInfo)
     {
@@ -79,6 +85,12 @@ public class ExifInfo
             if (captureInfo.makerNoteInfo != null)
                 getSomeDataFrom(captureInfo.makerNoteInfo);
         }
+
+        if (captureInfo.camera != null)
+            model = captureInfo.camera.getModel();
+
+        if (captureInfo.device != null)
+            make = captureInfo.device.getManufacturer();
     }
 
     private void getSomeDataFrom(DateInfo dateInfo)
@@ -158,34 +170,50 @@ public class ExifInfo
         return success;
     }
 
-    public void writeTiffExifTags(TiffWriter tiffWriter)
+    public void writeInfoTo(DngNegative negative)
     {
+        ExifTagWriter exifWriter = new DngExifTagWriter(negative);
+        writeTags(exifWriter);
+    }
+
+    private void writeTags(ExifTagWriter exifWriter)
+    {
+        exifWriter.writeExifVersionTag(exifVersion);
+
         if (dateTimeOriginal != null)
         {
-            ExifTagWriter.writeDateTimeOriginalTags(tiffWriter, dateTimeOriginal);
-            ExifTagWriter.writeDateTimeDigitizedTags(tiffWriter, dateTimeOriginal);
+            exifWriter.writeDateTimeOriginalTags(dateTimeOriginal);
+            exifWriter.writeDateTimeDigitizedTags(dateTimeOriginal);
         }
 
         if (iso != null)
-            ExifTagWriter.writeISOTag(tiffWriter, iso);
+            exifWriter.writeISOTag(iso);
 
         if (exposureTime != null)
-            ExifTagWriter.writeExposureTimeTags(tiffWriter, exposureTime);
+            exifWriter.writeExposureTimeTags(exposureTime);
 
         if (aperture != null)
-            ExifTagWriter.writeApertureTags(tiffWriter, aperture);
+            exifWriter.writeApertureTags(aperture);
 
         if (originalMakerNote != null)
-            ExifTagWriter.writeMakerNoteTag(tiffWriter, originalMakerNote);
+            exifWriter.writeMakerNoteTag(originalMakerNote);
 
         if (exposureBias != null)
-            ExifTagWriter.writeExposureBiasTag(tiffWriter, exposureBias);
+            exifWriter.writeExposureBiasTag(exposureBias);
 
         if (flash != null && flash != ExifFlash.UNKNOWN)
-            ExifTagWriter.writeFlashTag(tiffWriter, flash);
+            exifWriter.writeFlashTag(flash);
 
         if (focalLength != null)
-            ExifTagWriter.writeFocalLengthTag(tiffWriter, focalLength);
+            exifWriter.writeFocalLengthTag(focalLength);
+
+        if (make != null)
+            exifWriter.writeMakeTag(make);
+
+        if (model != null)
+            exifWriter.writeModelTag(model);
+
+        exifWriter.writeSoftwareTag(AppPackageUtil.getAppNameWithVersion());
     }
 
     public Iso getIso()

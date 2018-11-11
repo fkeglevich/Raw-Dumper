@@ -18,8 +18,7 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.support.annotation.Keep;
 
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 
 /**
  * Contains all noise-related information about a camera.
@@ -33,9 +32,9 @@ public class NoiseInfo
 {
     private double[] noiseProfile;
 
-    public void writeTiffTags(TiffWriter tiffWriter)
+    public void writeInfo(DngNegative negative)
     {
         if (noiseProfile != null && noiseProfile.length > 0)
-            tiffWriter.setField(TiffTag.TIFFTAG_NOISEPROFILE, noiseProfile, true);
+            negative.setNoiseProfile(noiseProfile);
     }
 }

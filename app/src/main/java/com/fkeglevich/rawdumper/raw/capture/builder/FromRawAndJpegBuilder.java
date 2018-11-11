@@ -19,14 +19,11 @@ package com.fkeglevich.rawdumper.raw.capture.builder;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
-import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.capture.DateInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfo;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteInfoExtractor;
 import com.fkeglevich.rawdumper.raw.capture.MakerNoteUtil;
 import com.fkeglevich.rawdumper.raw.capture.WhiteBalanceInfo;
-import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
-import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 /**
  * Created by Flávio Keglevich on 25/08/2017.

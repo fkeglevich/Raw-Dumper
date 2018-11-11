@@ -21,8 +21,6 @@ import android.support.annotation.NonNull;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 
@@ -30,15 +28,10 @@ public class RawSettings
 {
     public volatile boolean shouldInvertFrontCameraRows = true;
     public volatile boolean keepLensVignetting          = false;
-    public volatile boolean useAlternativeColorMatrix   = false;
+    public volatile boolean compressRawFiles            = true;
     public volatile boolean useOrientationFromPhone     = true;
 
-    public void writeTiffTags(TiffWriter tiffWriter, CaptureInfo captureInfo)
-    {
-        tiffWriter.setField(TiffTag.TIFFTAG_ORIENTATION, getOrientationCode(captureInfo));
-    }
-
-    private int getOrientationCode(CaptureInfo captureInfo)
+    public int getOrientationCode(CaptureInfo captureInfo)
     {
         if (useOrientationFromPhone)
         {
@@ -59,7 +52,7 @@ public class RawSettings
     {
         shouldInvertFrontCameraRows = rawSettings.shouldInvertFrontCameraRows;
         keepLensVignetting          = rawSettings.keepLensVignetting;
-        useAlternativeColorMatrix   = rawSettings.useAlternativeColorMatrix;
+        compressRawFiles            = rawSettings.compressRawFiles;
         useOrientationFromPhone     = rawSettings.useOrientationFromPhone;
     }
 
@@ -69,7 +62,7 @@ public class RawSettings
     {
         return "[RawSettings shouldInvertFrontCameraRows=" + shouldInvertFrontCameraRows + ", " +
                 "keepLensVignetting=" + keepLensVignetting + ", " +
-                "useAlternativeColorMatrix=" + useAlternativeColorMatrix + ", " +
+                "compressRawFiles=" + compressRawFiles + ", " +
                 "useOrientationFromPhone=" + useOrientationFromPhone + "]";
     }
 }

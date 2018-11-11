@@ -8,13 +8,13 @@ android {
         testApplicationId "com.fkeglevich.rawdumper.tests"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 7
-        versionName "3.2.1"
+        versionCode 8
+        versionName "3.3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
                 //arguments "-DANDROID_TOOLCHAIN=gcc"
-                cppFlags "-std=c++11 -fexceptions -fpermissive -fopenmp -DAVOID_TABLES -O3 -fstrict-aliasing -fprefetch-loop-arrays"
+                cppFlags "-std=c++11 -fexceptions -fpermissive -fopenmp -DAVOID_TABLES -O3 -fstrict-aliasing"
             }
             ndk {
                 abiFilters 'x86', 'x86_64'

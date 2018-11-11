@@ -18,11 +18,12 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.support.annotation.Keep;
 
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
-import com.fkeglevich.rawdumper.tiff.TiffTag;
-import com.fkeglevich.rawdumper.tiff.TiffWriter;
 import com.fkeglevich.rawdumper.util.MathUtil;
+
+import static com.fkeglevich.rawdumper.util.MathUtil.multiply3x3Matrices;
 
 /**
  * Represents a collection of color matrices and calibration
@@ -35,6 +36,10 @@ import com.fkeglevich.rawdumper.util.MathUtil;
 @SuppressWarnings("unused")
 public class ColorInfo
 {
+    private static final String EMBEDDED_PROFILE_NAME   = "As Shot";
+    private static final String CCM_MIXED_PROFILE       = "CCM Mixed Profile";
+    private static final String CCM_PROFILE             = "CCM Profile";
+
     private float[] colorMatrix1;
     private float[] colorMatrix2;
 
@@ -53,42 +58,48 @@ public class ColorInfo
 
     private float[] toneCurve;
 
-    public void writeTiffTags(TiffWriter tiffWriter, CaptureInfo captureInfo)
+    public void writeInfoTo(DngNegative negative, CaptureInfo captureInfo)
     {
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX1,           processColorMatrix(colorMatrix1, captureInfo));
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_COLORMATRIX2,           processColorMatrix(colorMatrix2, captureInfo));
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_FORWARDMATRIX1,         forwardMatrix1);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_FORWARDMATRIX2,         forwardMatrix2);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CAMERACALIBRATION1,     cameraCalibration1);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CAMERACALIBRATION2,     cameraCalibration2);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CALIBRATIONILLUMINANT1, calibrationIlluminant1);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_CALIBRATIONILLUMINANT2, calibrationIlluminant2);
-        safeWriteField(tiffWriter, TiffTag.TIFFTAG_PROFILETONECURVE,       toneCurve);
-    }
-
-    private static float[] processColorMatrix(float[] colorMatrix, CaptureInfo captureInfo)
-    {
-        if (captureInfo.rawSettings.useAlternativeColorMatrix &&
-                captureInfo.makerNoteInfo != null &&
-                captureInfo.makerNoteInfo.colorMatrix != null)
+        negative.setCameraCalibration(cameraCalibration1, cameraCalibration2);
+        if (captureInfo.makerNoteInfo != null && captureInfo.makerNoteInfo.colorMatrix != null)
         {
             float[] ccm = captureInfo.makerNoteInfo.colorMatrix;
-            return MathUtil.multiply3x3Matrices(colorMatrix, ccm);
+
+            addAsShotProfile(negative);
+            addMixedCCMProfile(negative, ccm);
+            addCCMProfile(negative, ccm);
         }
         else
-            return colorMatrix;
+        {
+            addAsShotProfile(negative);
+        }
     }
 
-    private void safeWriteField(TiffWriter writer, int tag, float[] data)
+    private void addAsShotProfile(DngNegative negative)
     {
-        if (data != null)
-            writer.setField(tag, data, true);
+        negative.addColorProfile(ColorInfo.EMBEDDED_PROFILE_NAME,
+                colorMatrix1, colorMatrix2,
+                forwardMatrix1, forwardMatrix2,
+                calibrationIlluminant1, calibrationIlluminant2,
+                toneCurve);
     }
 
-    private void safeWriteField(TiffWriter writer, int tag, CalibrationIlluminant illuminant)
+    private void addMixedCCMProfile(DngNegative negative, float[] ccm)
     {
-        if (illuminant != null)
-            writer.setField(tag, illuminant.getExifCode());
+        negative.addColorProfile(ColorInfo.CCM_MIXED_PROFILE,
+                multiply3x3Matrices(colorMatrix1, ccm), multiply3x3Matrices(colorMatrix2, ccm),
+                forwardMatrix1, forwardMatrix2,
+                calibrationIlluminant1, calibrationIlluminant2,
+                toneCurve);
+    }
+
+    private void addCCMProfile(DngNegative negative, float[] ccm)
+    {
+        negative.addColorProfile(ColorInfo.CCM_PROFILE,
+                ccm, ccm,
+                null, null,
+                calibrationIlluminant1, calibrationIlluminant2,
+                null);
     }
 
     public double[] calculateSimpleAsShotNeutral(double x, double y)

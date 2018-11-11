@@ -25,8 +25,6 @@ import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 import java.io.File;
 
-import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
-
 /**
  * Created by Flávio Keglevich on 25/08/2017.
  * TODO: Add a class header comment!
