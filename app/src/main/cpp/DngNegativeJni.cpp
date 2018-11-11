@@ -101,7 +101,7 @@ extern "C"
     }
 
     JNIEXPORT jlong JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_nativeConstructor(JNIEnv *env, jobject instance)
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_nativeConstructor(JNIEnv *env, jobject instance)
     {
         initializeHost();
         dng_negative *negative = globalHost.Make_dng_negative();
@@ -110,14 +110,14 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_nativeDispose(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_nativeDispose(JNIEnv *env, jobject instance,
                                                                        jlong pointer)
     {
         delete ((dng_negative*) pointer);
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setModelNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setModelNative(JNIEnv *env, jobject instance,
                                                                         jlong pointer, jstring model_)
     {
         const char *model = env->GetStringUTFChars(model_, 0);
@@ -126,7 +126,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setOriginalRawFileNameNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setOriginalRawFileNameNative(JNIEnv *env, jobject instance,
                                                                                       jlong pointer,
                                                                                       jstring fileName_)
     {
@@ -136,7 +136,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setSensorInfoNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setSensorInfoNative(JNIEnv *env, jobject instance,
                                                                              jlong pointer,
                                                                              jint whiteLevel,
                                                                              jfloatArray blackLevels_,
@@ -150,7 +150,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setCameraNeutralNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setCameraNeutralNative(JNIEnv *env, jobject instance,
                                                                                 jlong pointer,
                                                                                 jfloatArray cameraNeutral_)
     {
@@ -161,7 +161,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setImageSizeAndOrientationNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setImageSizeAndOrientationNative(JNIEnv *env, jobject instance,
                                                                               jlong pointer,
                                                                               jint width,
                                                                               jint height,
@@ -177,7 +177,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setCameraCalibrationNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setCameraCalibrationNative(JNIEnv *env, jobject instance,
                                                                                     jlong pointer,
                                                                                     jfloatArray cameraCalibration1_,
                                                                                     jfloatArray cameraCalibration2_)
@@ -189,7 +189,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_addColorProfileNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_addColorProfileNative(JNIEnv *env, jobject instance,
                                                                                jlong pointer,
                                                                                jstring name_,
                                                                                jfloatArray colorMatrix1_,
@@ -233,7 +233,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setOpcodeListNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setOpcodeListNative(JNIEnv *env, jobject instance,
                                                                               jlong pointer,
                                                                               jbyteArray bytes_,
                                                                               jint listType)
@@ -259,7 +259,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_setNoiseProfileNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setNoiseProfileNative(JNIEnv *env, jobject instance,
                                                                                jlong pointer,
                                                                                jdoubleArray noiseProfile)
     {
@@ -304,7 +304,7 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_writeImageToFileNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_writeImageToFileNative(JNIEnv *env, jobject instance,
                                                                                 jlong pointer,
                                                                                 jstring fileName_,
                                                                                 jint width,
@@ -336,7 +336,7 @@ extern "C"
     }
 
     JNIEXPORT jlong JNICALL
-    Java_com_fkeglevich_rawdumper_dng_dngsdk_DngNegative_getExifHandleNative(JNIEnv *env, jobject instance,
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_getExifHandleNative(JNIEnv *env, jobject instance,
                                                                              jlong pointer)
     {
         return (jlong ) ((dng_negative*) pointer)->GetExif();
