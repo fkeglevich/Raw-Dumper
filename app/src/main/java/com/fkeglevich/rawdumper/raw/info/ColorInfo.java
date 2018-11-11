@@ -36,7 +36,9 @@ import static com.fkeglevich.rawdumper.util.MathUtil.multiply3x3Matrices;
 @SuppressWarnings("unused")
 public class ColorInfo
 {
-    private static final String EMBEDDED_PROFILE_NAME = "As Shot";
+    private static final String EMBEDDED_PROFILE_NAME   = "As Shot";
+    private static final String CCM_MIXED_PROFILE       = "CCM Mixed Profile";
+    private static final String CCM_PROFILE             = "CCM Profile";
 
     private float[] colorMatrix1;
     private float[] colorMatrix2;
@@ -59,22 +61,32 @@ public class ColorInfo
     public void writeInfoTo(DngNegative negative, CaptureInfo captureInfo)
     {
         negative.setCameraCalibration(cameraCalibration1, cameraCalibration2);
-        negative.addColorProfile(EMBEDDED_PROFILE_NAME,
+        if (captureInfo.makerNoteInfo != null && captureInfo.makerNoteInfo.colorMatrix != null)
+        {
+            float[] ccm = captureInfo.makerNoteInfo.colorMatrix;
+
+            addAsShotProfile(negative);
+            addMixedCCMProfile(negative, ccm);
+            addCCMProfile(negative, ccm);
+        }
+        else
+        {
+            addAsShotProfile(negative);
+        }
+    }
+
+    private void addAsShotProfile(DngNegative negative)
+    {
+        negative.addColorProfile(ColorInfo.EMBEDDED_PROFILE_NAME,
                 colorMatrix1, colorMatrix2,
                 forwardMatrix1, forwardMatrix2,
                 calibrationIlluminant1, calibrationIlluminant2,
                 toneCurve);
-        if (captureInfo.makerNoteInfo != null && captureInfo.makerNoteInfo.colorMatrix != null)
-        {
-            float[] ccm = captureInfo.makerNoteInfo.colorMatrix;
-            addCCMProfile(negative, ccm);
-            addMixedCCMProfile(negative, ccm);
-        }
     }
 
     private void addMixedCCMProfile(DngNegative negative, float[] ccm)
     {
-        negative.addColorProfile("CCM Mixed Profile",
+        negative.addColorProfile(ColorInfo.CCM_MIXED_PROFILE,
                 multiply3x3Matrices(colorMatrix1, ccm), multiply3x3Matrices(colorMatrix2, ccm),
                 forwardMatrix1, forwardMatrix2,
                 calibrationIlluminant1, calibrationIlluminant2,
@@ -83,7 +95,7 @@ public class ColorInfo
 
     private void addCCMProfile(DngNegative negative, float[] ccm)
     {
-        negative.addColorProfile("CCM Profile",
+        negative.addColorProfile(ColorInfo.CCM_PROFILE,
                 ccm, ccm,
                 null, null,
                 calibrationIlluminant1, calibrationIlluminant2,
