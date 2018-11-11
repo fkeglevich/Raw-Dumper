@@ -31,7 +31,6 @@ import java.io.IOException;
 public class DngWriter2
 {
     private static final String TAG = "DngWriter2";
-    private static final boolean LOG_ERRORS = true;
 
     static
     {
@@ -65,8 +64,7 @@ public class DngWriter2
             PerfInfo.end("BufferTime");
 
             PerfInfo.start("SaveAndCompress");
-            negative.writeImageToFile(captureInfo.destinationRawFilename,
-                    imageSize.getPaddedWidth(), imageSize.getPaddedHeight(), buffer, false);
+            negative.writeImageToFile(captureInfo.destinationRawFilename, imageSize.getPaddedWidth(), imageSize.getPaddedHeight(), buffer, false);
             PerfInfo.end("SaveAndCompress");
             // End writing image
         }
@@ -86,7 +84,6 @@ public class DngWriter2
         captureInfo.camera.writeInfoTo(negative);
         captureInfo.writeInfoTo(negative);
 
-        //captureInfo.date.writeTiffTags(tiffWriter);
         captureInfo.camera.getColor().writeInfoTo(negative, captureInfo);
         captureInfo.camera.getNoise().writeInfo(negative);
         captureInfo.whiteBalanceInfo.writeInfoTo(negative);
