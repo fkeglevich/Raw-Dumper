@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.raw.capture;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
-import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;

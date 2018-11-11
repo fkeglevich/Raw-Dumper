@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng.dngsdk;
+package com.fkeglevich.rawdumper.dng.writer;
 
 import android.util.Log;
 
@@ -28,9 +28,9 @@ import com.fkeglevich.rawdumper.raw.gain.GainMapOpcodeStacker;
 
 import java.io.IOException;
 
-public class DngWriter2
+public class DngWriter
 {
-    private static final String TAG = "DngWriter2";
+    private static final String TAG = "DngWriter";
 
     static
     {

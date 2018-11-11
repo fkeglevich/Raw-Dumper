@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.io.async.function;
 
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
-import com.fkeglevich.rawdumper.dng.dngsdk.DngWriter2;
+import com.fkeglevich.rawdumper.dng.writer.DngWriter;
 import com.fkeglevich.rawdumper.io.async.IOUtil;
 import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
@@ -69,7 +69,7 @@ public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Void, Me
             throw new SaveFileException();
         }*/
 
-        DngWriter2 writer = new DngWriter2();
+        DngWriter writer = new DngWriter();
         RawImageData rawImageData = null;
         try
         {

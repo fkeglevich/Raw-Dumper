@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.dng.dngsdk;
+package com.fkeglevich.rawdumper.dng.writer;
 
 import com.fkeglevich.rawdumper.dng.opcode.Opcode;
 import com.fkeglevich.rawdumper.dng.opcode.OpcodeListWriter;

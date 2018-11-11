@@ -21,7 +21,7 @@ import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.data.WhiteBalancePreset;
 import com.fkeglevich.rawdumper.camera.service.available.WhiteBalanceService;
-import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.util.ColorUtil;

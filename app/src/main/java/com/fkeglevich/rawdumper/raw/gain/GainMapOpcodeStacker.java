@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.raw.gain;
 
 import android.support.annotation.Nullable;
 
-import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.dng.opcode.GainMapOpcode;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 

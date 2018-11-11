@@ -25,7 +25,7 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
-import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.exif.DngExifTagWriter;
 import com.fkeglevich.rawdumper.exif.ExifTagWriter;
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;

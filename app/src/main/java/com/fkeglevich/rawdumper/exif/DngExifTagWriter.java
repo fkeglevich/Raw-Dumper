@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.exif;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
-import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.data.ExifFlash;
 import com.fkeglevich.rawdumper.util.DateUtil;
 

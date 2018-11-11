@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.support.annotation.Keep;
 
-import com.fkeglevich.rawdumper.dng.dngsdk.DngNegative;
+import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 
 /**
  * Contains all noise-related information about a camera.
