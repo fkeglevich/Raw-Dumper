@@ -34,7 +34,15 @@ TODO list:
  - (IN PROGRESS) Take picture discarding the result (skip picture)
 	
  - Restructure the camera access diagram
- 
+
+ - Optimize the DNG creation process (especially memory performance)
+
+ - Make the DNGPrivateData tag adobe-compliant
+
+ - Add new CCM-based color profiles automagically
+
+ - Create DNG with thumbnails
+
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
 	- Zenfone 5
@@ -176,3 +184,4 @@ Done:
  - (DONE!) Using DNG SDK to generate the RAW files
    (compression and DNG files that-always-work)
  - (DONE!) Remove LibTiff
+ - Fixed not-so-rare threading-related crash
