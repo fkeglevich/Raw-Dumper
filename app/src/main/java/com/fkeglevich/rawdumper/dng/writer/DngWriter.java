@@ -44,7 +44,7 @@ public class DngWriter
 
             // Start writing image
             RawImageSize imageSize = imageData.getSize();
-            PerfInfo.start("BufferTime");
+            //PerfInfo.start("BufferTime");
             byte[] buffer = new byte[imageSize.getPaddedWidth() * imageSize.getPaddedHeight() * imageSize.getBytesPerPixel()];
 
 
@@ -54,11 +54,11 @@ public class DngWriter
             for (int row = 0; row < paddedHeight; row++)
                 imageData.copyValidRowToBuffer(captureInfo.shouldInvertRows() ? (paddedHeight - 1 - row): row, buffer, widthBytes * row);
 
-            PerfInfo.end("BufferTime");
+            //PerfInfo.end("BufferTime");
 
-            PerfInfo.start("SaveAndCompress");
+            //PerfInfo.start("SaveAndCompress");
             negative.writeImageToFile(captureInfo.destinationRawFilename, imageSize.getPaddedWidth(), imageSize.getPaddedHeight(), buffer, !captureInfo.rawSettings.compressRawFiles);
-            PerfInfo.end("SaveAndCompress");
+            //PerfInfo.end("SaveAndCompress");
             // End writing image
         }
         finally
