@@ -36,6 +36,7 @@ TODO list:
  - Restructure the camera access diagram
 
  - Optimize the DNG creation process (especially memory performance)
+   - Use multithreading
 
  - Create DNG with thumbnails
 
