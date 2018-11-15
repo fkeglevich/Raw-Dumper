@@ -42,33 +42,6 @@ public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Void, Me
         if (DebugFlag.dontSavePictures()) return null;
         if (!captureInfo.isValid()) throw new IllegalArgumentException("Invalid capture info!");
 
-        /*DngWriter writer = TiffDngWriter.open(captureInfo.destinationRawFilename);
-        if (writer != null)
-        {
-            RawImageData rawImageData = null;
-            try
-            {
-                rawImageData = buildRawImageData(captureInfo);
-                writer.write(captureInfo, new StripImageWriter(), rawImageData);
-                IOUtil.scanFileWithMediaScanner(captureInfo.destinationRawFilename);
-                if (captureInfo.relatedI3av4File != null)
-                    captureInfo.relatedI3av4File.delete();
-            }
-            catch (IOException ioe)
-            {
-                throw new SaveFileException();
-            }
-            finally
-            {
-                if (rawImageData != null)
-                    closeRawImageData(rawImageData);
-            }
-        }
-        else
-        {
-            throw new SaveFileException();
-        }*/
-
         DngWriter writer = new DngWriter();
         RawImageData rawImageData = null;
         try
