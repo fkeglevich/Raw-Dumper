@@ -35,7 +35,7 @@ TODO list:
 	
  - Restructure the camera access diagram
 
- - Optimize the DNG creation process (especially memory performance)
+ - Optimize the DNG creation process
    - Use multithreading
 
  - Create DNG with thumbnails
@@ -51,7 +51,6 @@ Next features:
 
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
- - (MINOR) Currently using the manual focus slider crashes Zenfone Zoom camera
  - (MINOR) Zen2 front camera breaks exposure at ISO 800 and 1/60 Shutter Speed
  - (MINOR) YUV pictures aren't affected by rotation.
     I am not really sure if I'm going to properly implement YUV capture because the it takes at least 8 seconds
@@ -186,3 +185,5 @@ Done:
  - (DONE!) Add new CCM-based color profiles automagically
  - (DONE!) Add new raw compression switch
  - (DONE!) Selection of picture size
+ - (DONE!) Optimize the DNG creation memory performance
+ - Fixed "Currently using the manual focus slider crashes Zenfone Zoom camera"
