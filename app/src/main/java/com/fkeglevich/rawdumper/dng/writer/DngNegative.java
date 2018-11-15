@@ -46,7 +46,8 @@ public class DngNegative
                                         float[] toneCurve);
     private native void setOpcodeListNative(long pointer, byte[] bytes, int listType);
     private native void setNoiseProfileNative(long pointer, double[] noiseProfile);
-    private native void writeImageToFileNative(long pointer, String fileName, int width, int height, byte[] imageData, boolean uncompressed);
+    private native void writeImageToFileNative(long pointer, String fileName, int width, int height, int bpl,
+                                               boolean shouldInvertRows, byte[] imageData, boolean uncompressed);
     private native long getExifHandleNative(long pointer);
 
     public DngNegative()
@@ -131,9 +132,9 @@ public class DngNegative
         setNoiseProfileNative(pointer, noiseProfile);
     }
 
-    public void writeImageToFile(String fileName, int width, int height, byte[] imageData, boolean uncompressed)
+    public void writeImageToFile(String fileName, int width, int height, int bpl, boolean shouldInvertRows, byte[] imageData, boolean uncompressed)
     {
-        writeImageToFileNative(pointer, fileName, width, height, imageData, uncompressed);
+        writeImageToFileNative(pointer, fileName, width, height, bpl, shouldInvertRows, imageData, uncompressed);
     }
 
     public long getExifHandle()

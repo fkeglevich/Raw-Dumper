@@ -53,6 +53,12 @@ public class ArrayRawImageData extends RawImageData
         System.arraycopy(array, getOffset(), buffer, start, getSize().getBufferLength());
     }
 
+    @Override
+    public byte[] getLowLevelBuffer()
+    {
+        return array;
+    }
+
     /**
      * Closes the object and release any system resources it holds.
      * <p>

@@ -44,7 +44,7 @@ public class RawPipeline implements PicturePipeline
     private PicturePipeline chooseRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, byte[] buffer, RestartableCamera restartableCamera)
     {
         if (cameraContext.getCameraInfo().isRetryOnError() || DebugFlag.isForceRetryingPipeline())
-            return new RetryingRawPipeline(cameraExtension, lock, cameraContext, restartableCamera);
+            return new RetryingRawPipeline(cameraExtension, lock, cameraContext, restartableCamera, buffer);
         else
             return new StandardRawPipeline(cameraExtension, lock, cameraContext, buffer);
     }

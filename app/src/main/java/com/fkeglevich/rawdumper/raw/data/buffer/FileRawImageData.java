@@ -30,11 +30,13 @@ import java.io.RandomAccessFile;
 public class FileRawImageData extends RawImageData
 {
     private final RandomAccessFile file;
+    private final byte[] extraBuffer;
 
-    public FileRawImageData(RawImageSize size, String filepath) throws IOException
+    public FileRawImageData(RawImageSize size, String filepath, byte[] extraBuffer) throws IOException
     {
         super(size);
         this.file = new RandomAccessFile(filepath, "r");
+        this.extraBuffer = extraBuffer;
         getFile().seek(getFile().length() - size.getBufferLength());
         setOffset((int) getFile().getFilePointer());
     }
@@ -51,6 +53,14 @@ public class FileRawImageData extends RawImageData
     {
         getFile().seek(getOffset());
         getFile().read(buffer, start, getSize().getBufferLength());
+    }
+
+    @Override
+    public byte[] getLowLevelBuffer() throws IOException
+    {
+        byte[] result = extraBuffer == null ? new byte[getSize().getBufferLength()] : extraBuffer;
+        copyAllImageDataToBuffer(result);
+        return result;
     }
 
     public RandomAccessFile getFile()

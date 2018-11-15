@@ -309,6 +309,8 @@ extern "C"
                                                                                 jstring fileName_,
                                                                                 jint width,
                                                                                 jint height,
+                                                                                jint bpl,
+                                                                                jboolean shouldInvertRows,
                                                                                 jbyteArray imageData_,
                                                                                 jboolean uncompressed)
     {
@@ -319,7 +321,21 @@ extern "C"
         dng_simple_image* image = new dng_simple_image(imageRect, 1, ttShort, globalHost.Allocator());
 
         dng_pixel_buffer buffer; image->GetPixelBuffer(buffer);
-        memcpy(buffer.fData, imageData, width * height * sizeof(uint16));
+
+        size_t widthBytes = width * sizeof(uint16);
+
+        uint16 *targetBuffer = (uint16*) buffer.fData;
+        if (shouldInvertRows)
+        {
+            for (int row = 0; row < height; row++)
+                memcpy(targetBuffer + (row * width), imageData + ((height - 1 - row) * bpl), widthBytes);
+        }
+        else
+        {
+            for (int row = 0; row < height; row++)
+                memcpy(targetBuffer + (row * width), imageData + (row * bpl), widthBytes);
+        }
+
         env->ReleaseByteArrayElements(imageData_, imageData, 0);
 
         AutoPtr<dng_image> castImage(dynamic_cast<dng_image*>(image));

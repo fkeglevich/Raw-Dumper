@@ -42,9 +42,10 @@ public class FromI3av4FileBuilder extends CommonBuilder
 
     private MakerNoteInfo makerNoteInfo;
 
-    public FromI3av4FileBuilder(CameraContext cameraContext, File relatedI3av4File, Camera.Parameters parameters)
+    public FromI3av4FileBuilder(CameraContext cameraContext, File relatedI3av4File, Camera.Parameters parameters, byte[] extraBuffer)
     {
         super(cameraContext);
+        captureInfo.extraBuffer = extraBuffer;
         this.pair = getBestCameraSizePair(cameraContext, relatedI3av4File, parameters);
         this.relatedI3av4File = relatedI3av4File;
         this.parameters = parameters;
@@ -62,7 +63,7 @@ public class FromI3av4FileBuilder extends CommonBuilder
 
     public FromI3av4FileBuilder(CameraContext cameraContext, File relatedI3av4File)
     {
-        this(cameraContext, relatedI3av4File, null);
+        this(cameraContext, relatedI3av4File, null, null);
     }
 
     private void initMakerNoteInfo()

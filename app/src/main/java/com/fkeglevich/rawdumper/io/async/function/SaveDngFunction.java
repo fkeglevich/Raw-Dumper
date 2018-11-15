@@ -80,6 +80,6 @@ public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Void, Me
         if (captureInfo.rawDataBytes != null)
             return new ArrayRawImageData(captureInfo.imageSize, captureInfo.rawDataBytes);
         else
-            return new FileRawImageData(captureInfo.imageSize, captureInfo.relatedI3av4File.getAbsolutePath());
+            return new FileRawImageData(captureInfo.imageSize, captureInfo.relatedI3av4File.getAbsolutePath(), captureInfo.extraBuffer);
     }
 }

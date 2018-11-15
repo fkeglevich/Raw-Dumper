@@ -49,6 +49,7 @@ public class CaptureInfo
     public Camera.Parameters captureParameters  = null;
     public byte[] extraJpegBytes                = null;
     public byte[] rawDataBytes                  = null;
+    public byte[] extraBuffer                   = null;
     public File relatedI3av4File                = null;
 
     public boolean isValid()

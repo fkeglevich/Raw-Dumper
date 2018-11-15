@@ -70,4 +70,6 @@ public abstract class RawImageData implements Closeable
     {
         return getOffset() + getSize().getBytesPerLine() * row;
     }
+
+    public abstract byte[] getLowLevelBuffer() throws IOException;
 }

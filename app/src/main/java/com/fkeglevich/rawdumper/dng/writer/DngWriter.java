@@ -37,29 +37,17 @@ public class DngWriter
         {
             ExifInfo exifInfo = new ExifInfo();
             exifInfo.getExifDataFromCapture(captureInfo);
-
             writeMetadata(captureInfo, exifInfo, negative);
-
             exifInfo.writeInfoTo(negative);
 
-            // Start writing image
             RawImageSize imageSize = imageData.getSize();
-            //PerfInfo.start("BufferTime");
-            byte[] buffer = new byte[imageSize.getPaddedWidth() * imageSize.getPaddedHeight() * imageSize.getBytesPerPixel()];
-
-
-            int paddedHeight = imageSize.getPaddedHeight();
-            int widthBytes = imageSize.getPaddedWidth() * imageSize.getBytesPerPixel();
-
-            for (int row = 0; row < paddedHeight; row++)
-                imageData.copyValidRowToBuffer(captureInfo.shouldInvertRows() ? (paddedHeight - 1 - row): row, buffer, widthBytes * row);
-
-            //PerfInfo.end("BufferTime");
 
             //PerfInfo.start("SaveAndCompress");
-            negative.writeImageToFile(captureInfo.destinationRawFilename, imageSize.getPaddedWidth(), imageSize.getPaddedHeight(), buffer, !captureInfo.rawSettings.compressRawFiles);
+            negative.writeImageToFile(captureInfo.destinationRawFilename,
+                    imageSize.getPaddedWidth(), imageSize.getPaddedHeight(),
+                    imageSize.getBytesPerLine(), captureInfo.shouldInvertRows(),
+                    imageData.getLowLevelBuffer(), !captureInfo.rawSettings.compressRawFiles);
             //PerfInfo.end("SaveAndCompress");
-            // End writing image
         }
         finally
         {

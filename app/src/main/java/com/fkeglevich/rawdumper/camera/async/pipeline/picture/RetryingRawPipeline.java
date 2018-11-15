@@ -60,6 +60,7 @@ public class RetryingRawPipeline implements PicturePipeline
     private final CameraContext             cameraContext;
     private final RestartableCamera         restartableCamera;
     private final int                       minRetryingDelay;
+    private final byte[] buffer;
 
     private Camera.Parameters               parameters = null;
     private boolean                         ignoreError = false;
@@ -78,15 +79,16 @@ public class RetryingRawPipeline implements PicturePipeline
     private PictureListener nextPictureCallback;
     private PictureExceptionListener nextExceptionCallback;
 
-    final Handler uiHandler;
+    private final Handler uiHandler;
 
-    RetryingRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, RestartableCamera restartableCamera)
+    RetryingRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, RestartableCamera restartableCamera, byte[] buffer)
     {
         this.errorCallback      = createErrorCallback();
         this.cameraExtension    = cameraExtension;
         this.lock               = lock;
         this.cameraContext      = cameraContext;
         this.restartableCamera  = restartableCamera;
+        this.buffer             = buffer;
         this.minRetryingDelay   = cameraContext.getCameraInfo().getRetryPipelineDelay();
         this.pipelineDelay      = minRetryingDelay;
         this.uiHandler          = new Handler(Looper.getMainLooper());
@@ -177,7 +179,7 @@ public class RetryingRawPipeline implements PicturePipeline
         }
 
         File i3av4File = files[0];
-        ACaptureInfoBuilder captureInfoBuilder = new FromI3av4FileBuilder(cameraContext, i3av4File, parameters);
+        ACaptureInfoBuilder captureInfoBuilder = new FromI3av4FileBuilder(cameraContext, i3av4File, parameters, buffer);
         CaptureInfo captureInfo = captureInfoBuilder.build();
 
         IOThread.getIOAccess().saveDng(captureInfo, new AsyncOperation<Void>()
