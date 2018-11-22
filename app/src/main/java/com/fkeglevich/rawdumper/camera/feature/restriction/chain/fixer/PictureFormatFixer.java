@@ -33,9 +33,18 @@ import java.util.List;
 public class PictureFormatFixer implements FeatureValueFixer<Mode, PictureFormat, List<PictureFormat>>
 {
     @Override
-    public PictureFormat fixValue(ValueValidator<PictureFormat, List<PictureFormat>> newValidator, PictureFormat ignoredFormat, Mode ignoredMode)
+    public PictureFormat fixValue(ValueValidator<PictureFormat, List<PictureFormat>> newValidator, PictureFormat toBeFixed, Mode ignored)
     {
         Assert.assertTrue(!newValidator.getAvailableValues().isEmpty());
+        List<PictureFormat> availableValues = newValidator.getAvailableValues();
+
+        if (toBeFixed != null)
+            for (PictureFormat format : availableValues)
+            {
+                if (format.getFileFormat().equals(toBeFixed.getFileFormat()))
+                    return format;
+            }
+
         return newValidator.getAvailableValues().get(0);
     }
 }
