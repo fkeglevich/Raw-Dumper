@@ -191,4 +191,8 @@ public class IntelParameters
     public static final String SHARPNESS_MODE_NORMAL = "normal";
     public static final String SHARPNESS_MODE_SOFT = "soft";
     public static final String SHARPNESS_MODE_HARD = "hard";
+
+    // Extra continuous burst parameters
+    public static final String CONTINUOUS_BURST_NUM = "continuous-burst-num";
+    public static final String CONTINUOUS_BURST_FPS = "continuous-burst-fps";
 }
