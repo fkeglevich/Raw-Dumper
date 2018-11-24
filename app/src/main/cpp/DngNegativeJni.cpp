@@ -21,6 +21,7 @@
  */
 
 #include <jni.h>
+#include <omp.h>
 #include "dng_sdk/source/dng_host.h"
 #include "dng_sdk/source/dng_simple_image.h"
 #include "dng_sdk/source/dng_tag_values.h"
@@ -38,6 +39,63 @@
 #include "dng_sdk/source/dng_gain_map.h"
 #include "dng_sdk/source/dng_opcodes.h"
 #include "dng_sdk/source/dng_memory_stream.h"
+#include "dng_sdk/source/dng_area_task.h"
+#include <android/log.h>
+#include <sys/time.h>
+#include <math.h>
+
+typedef unsigned long long timestamp_t;
+
+static timestamp_t get_timestamp ()
+{
+    struct timeval now;
+    gettimeofday (&now, NULL);
+    return now.tv_usec + (timestamp_t) now.tv_sec * 1000000;
+}
+
+class OpenMPHost : public dng_host
+{
+    public:
+        OpenMPHost(dng_memory_allocator *allocator = NULL, dng_abort_sniffer *sniffer = NULL) {}
+        ~OpenMPHost(void) {}
+
+    public:
+        virtual void PerformAreaTask(dng_area_task &task, const dng_rect &area)
+        {
+            dng_point tileSize (task.FindTileSize (area));
+
+            int numThreads = omp_get_max_threads();
+            int widthPerThread = (int)ceil(((double) area.W()) / numThreads);
+
+            timestamp_t t0 = get_timestamp();
+
+            __android_log_print(ANDROID_LOG_DEBUG, "OpenMPHost", "total area: %d %d %d %d", area.l, area.t, area.r, area.b);
+
+            const int tileSizeH = tileSize.h, tileSizeV = tileSize.v;
+            const int areaTop = area.t, areaWidth = area.W(), areaHeight = area.H();
+
+            task.Start ((uint32) numThreads, tileSize, &Allocator (), Sniffer());
+
+            #pragma omp parallel for num_threads(numThreads) schedule(static) default(shared)
+            for (int x = 0; x < areaWidth; x += widthPerThread)
+            {
+                dng_rect taskArea(areaTop, x, areaHeight, (x + widthPerThread) < areaWidth ? (x + widthPerThread) : areaWidth);
+                task.ProcessOnThread ((uint32) omp_get_thread_num(), taskArea, dng_point(tileSizeV, tileSizeH), Sniffer());
+                __android_log_print(ANDROID_LOG_DEBUG, "OpenMPHost", "per thread area: %d %d %d %d", taskArea.l, taskArea.t, taskArea.r, taskArea.b);
+            }
+
+            task.Finish ((uint32) numThreads);
+
+            timestamp_t t1 = get_timestamp();
+            double secs = (t1 - t0) / 1000000.0L;
+            __android_log_print(ANDROID_LOG_DEBUG, "OpenMPHost", "Compression only time: %f", secs * 1000.0);
+        }
+
+        uint32 PerformAreaTaskThreads() override
+        {
+            return (uint32) omp_get_max_threads();
+        }
+};
 
 dng_matrix_3by3 get3x3Matrix(JNIEnv *env, jfloatArray matrix3x3)
 {
@@ -73,7 +131,7 @@ dng_tone_curve getToneCurve(JNIEnv *env, jfloatArray toneCurve)
 
 extern "C"
 {
-    dng_host globalHost;
+    OpenMPHost globalHost;
     bool hostWasInitialized = false;
 
     void initializeHost()
@@ -303,6 +361,8 @@ extern "C"
         env->ReleaseByteArrayElements(makerNote_, makerNote, 0);
     }
 
+
+
     JNIEXPORT void JNICALL
     Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_writeImageToFileNative(JNIEnv *env, jobject instance,
                                                                                 jlong pointer,
@@ -314,6 +374,8 @@ extern "C"
                                                                                 jbyteArray imageData_,
                                                                                 jboolean uncompressed)
     {
+
+        timestamp_t t0 = get_timestamp();
 
         jbyte *imageData = env->GetByteArrayElements(imageData_, NULL);
 
@@ -338,17 +400,28 @@ extern "C"
 
         env->ReleaseByteArrayElements(imageData_, imageData, 0);
 
+        timestamp_t t1 = get_timestamp();
+        double secs = (t1 - t0) / 1000000.0L;
+        __android_log_print(ANDROID_LOG_DEBUG, "Perf", "memcpy time: %f", secs * 1000.0);
+
         AutoPtr<dng_image> castImage(dynamic_cast<dng_image*>(image));
         ((dng_negative*) pointer)->SetStage1Image(castImage);
 
+        t0 = get_timestamp();
         ((dng_negative*) pointer)->SynchronizeMetadata();
+        t1 = get_timestamp();
+        secs = (t1 - t0) / 1000000.0L;
+        __android_log_print(ANDROID_LOG_DEBUG, "Perf", "SynchronizeMetadata time: %f", secs * 1000.0);
 
+        t0 = get_timestamp();
         const char *fileName = env->GetStringUTFChars(fileName_, 0);
         dng_image_writer writer;
         dng_file_stream stream(fileName, true);
         writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer) , NULL, dngVersion_SaveDefault, uncompressed);
         env->ReleaseStringUTFChars(fileName_, fileName);
-
+        t1 = get_timestamp();
+        secs = (t1 - t0) / 1000000.0L;
+        __android_log_print(ANDROID_LOG_DEBUG, "Perf", "WriteDNG time: %f", secs * 1000.0);
     }
 
     JNIEXPORT jlong JNICALL
