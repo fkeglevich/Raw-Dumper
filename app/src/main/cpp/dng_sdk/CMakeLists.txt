@@ -70,8 +70,8 @@ TARGET_COMPILE_DEFINITIONS( dng-sdk PUBLIC
 		UNIX_ENV=1 qDNGBigEndian=0 qDNGThreadSafe=1
 		qDNGUseLibJPEG=0 qDNGUseXMP=0 qDNGValidate=0
 		qDNGValidateTarget=0 qAndroid=1 qDNGUseStdInt=1
-		fsanitize=unsigned-integer-overflow
-		Wsign-compare Wno-reorder Wframe-larger-than=20000 )
+		fsanitize=unsigned_integer_overflow
+		Wsign_compare Wno_reorder Wframe_larger_than=20000 )
 
 find_library( libz-lib z )
 
