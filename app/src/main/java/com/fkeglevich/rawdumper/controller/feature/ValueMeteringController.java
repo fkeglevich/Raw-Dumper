@@ -37,7 +37,7 @@ public class ValueMeteringController<T extends Displayable> extends FeatureContr
 {
     public static final int AUTO_VALUE_TEXT_COLOR      = 0xFFFFFFFF;
     public static final int MANUAL_VALUE_TEXT_COLOR    = 0xFFFFFF00;
-    public static final int METERING_DELAY_MILLIS      = 100;
+    public static final int METERING_DELAY_MILLIS      = 200;
 
     private final EventListener<ParameterChangeEvent<T>> fallbackChangedListener = eventData -> updateViewFromMetering();
 
