@@ -60,7 +60,7 @@ class OpenMPHost : public dng_host
         ~OpenMPHost(void) {}
 
     public:
-        virtual void PerformAreaTask(dng_area_task &task, const dng_rect &area)
+        virtual void PerformAreaTask(dng_area_task &task, const dng_rect &area) override
         {
             dng_point tileSize (task.FindTileSize (area));
 
@@ -360,8 +360,6 @@ extern "C"
 
         env->ReleaseByteArrayElements(makerNote_, makerNote, 0);
     }
-
-
 
     JNIEXPORT void JNICALL
     Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_writeImageToFileNative(JNIEnv *env, jobject instance,
