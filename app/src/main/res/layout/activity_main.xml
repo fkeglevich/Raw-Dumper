@@ -65,6 +65,22 @@
         android:elevation="2dp"
         app:srcCompat="@drawable/ic_cached_black_24dp"/>
 
+    <ImageButton
+        android:id="@+id/llSwitchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/round_button"
+        android:padding="8dp"
+        android:elevation="2dp"
+        android:tint="#000000"
+        android:tintMode="src_atop"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_brightness_3_white_24dp"/>
+
     <include layout="@layout/main_control_buttons"
         android:id="@+id/mainControls"/>
 
