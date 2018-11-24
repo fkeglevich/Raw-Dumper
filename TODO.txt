@@ -36,7 +36,6 @@ TODO list:
  - Restructure the camera access diagram
 
  - Optimize the DNG creation process
-   - (IN PROGRESS) Use multithreading
    - Don't calculate checksums
 
  - Create DNG with thumbnails
@@ -189,3 +188,4 @@ Done:
  - (DONE!) Selection of picture size
  - (DONE!) Optimize the DNG creation memory performance
  - Fixed "Currently using the manual focus slider crashes Zenfone Zoom camera"
+ - (DONE!) Use multithreading in the DNG creation process
