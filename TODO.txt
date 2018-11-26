@@ -44,11 +44,16 @@ TODO list:
 	- Razr I
 	- Zenfone 5
 
+- (IN PROGRESS) Flash focus
+	- remove these hardcoded values
+	- remove the appearing of notification toasts
+	- make the focus feature virtual
+	- add small pad between the focus buttons
+
 Next features:
  - Night Mode with raw pictures
  - Gain-based white balance
  - Slow Sync Flash
- - Flash focus
 
 Known bugs:
  - (MINOR) When displaying dialog alerts, the app can get out from fullscreen state if the user switches to another app
