@@ -41,10 +41,9 @@ public class ListValidator<V> implements ValueValidator<V, List<V>>
     }
 
     @NonNull
-    @SuppressWarnings("unchecked")
     public static <V> ListValidator<V> createInvalid()
     {
-        return new ListValidator<>(Collections.<V>emptyList());
+        return new ListValidator<>(Collections.emptyList());
     }
 
     public ListValidator(List<V> valueList)
