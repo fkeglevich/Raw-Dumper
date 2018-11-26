@@ -35,7 +35,6 @@ import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.data.mode.ModeList;
 import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FeatureRecyclerFactory;
-import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ListFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureFormatFeature;
 import com.fkeglevich.rawdumper.camera.feature.PictureModeFeature;
