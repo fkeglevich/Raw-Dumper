@@ -16,14 +16,23 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
+
 import com.fkeglevich.rawdumper.camera.action.AutoFocusAction;
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
+import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
+import com.fkeglevich.rawdumper.util.event.EventDispatcher;
+import com.fkeglevich.rawdumper.util.event.HandlerDispatcher;
+import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,11 +43,28 @@ import java.util.List;
 
 public class FocusFeature extends ListFeature<FocusMode> implements AutoFocusAction
 {
-    private final AutoFocusAction autoFocusAction;
+    public EventDispatcher<Void> onStartAutoFocus = new SimpleDispatcher<>();
+    public EventDispatcher<Boolean> onAutoFocusResult = new HandlerDispatcher<>(Looper.getMainLooper());
 
-    FocusFeature(ParameterCollection parameterCollection, AutoFocusAction autoFocusAction)
+    private final AutoFocusAction autoFocusAction;
+    private final Handler handler = new Handler(Looper.myLooper());
+
+    @NonNull
+    private static ListValidator<FocusMode> getValidator(ParameterCollection parameterCollection, ListFeature<Flash> flashFeature)
     {
-        super(Parameters.FOCUS_MODE, parameterCollection, ListValidator.createFromListParameter(parameterCollection, Parameters.FOCUS_MODE_VALUES));
+        ListValidator<FocusMode> validator = ListValidator.createFromListParameter(parameterCollection, Parameters.FOCUS_MODE_VALUES);
+        if (flashFeature != null && flashFeature.getAvailableValues().contains(Flash.ON))
+        {
+            List<FocusMode> availableValues = new ArrayList<>(validator.getAvailableValues());
+            availableValues.add(FocusMode.FLASH);
+            validator = new ListValidator<>(availableValues);
+        }
+        return validator;
+    }
+
+    FocusFeature(ParameterCollection parameterCollection, ListFeature<Flash> flashFeature, AutoFocusAction autoFocusAction)
+    {
+        super(Parameters.FOCUS_MODE, parameterCollection, getValidator(parameterCollection, flashFeature));
         this.autoFocusAction = autoFocusAction;
     }
 
@@ -55,7 +81,16 @@ public class FocusFeature extends ListFeature<FocusMode> implements AutoFocusAct
     public void startAutoFocus(PreviewArea focusArea, AutoFocusResult callback)
     {
         checkFeatureAvailability(this);
-        autoFocusAction.startAutoFocus(focusArea, callback);
+        onStartAutoFocus.dispatchEvent(null);
+
+        handler.postDelayed(() ->
+        {
+            autoFocusAction.startAutoFocus(focusArea, success ->
+            {
+                onAutoFocusResult.dispatchEvent(success);
+                callback.autoFocusDone(success);
+            });
+        }, 100);
     }
 
     @Override

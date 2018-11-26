@@ -71,7 +71,7 @@ public class VirtualFeatureRecyclerFactory extends FeatureRecyclerFactoryBase
         return result;
     }
 
-    public WritableFeature<Flash, List<Flash>> createFlashFeature(ParameterCollection cameraParameterCollection, CameraContext cameraContext)
+    public ListFeature<Flash> createFlashFeature(ParameterCollection cameraParameterCollection, CameraContext cameraContext)
     {
         FlashFeature result = new FlashFeature(virtualParameterCollection, cameraParameterCollection, cameraActions, cameraContext);
         registerFeature(result);
