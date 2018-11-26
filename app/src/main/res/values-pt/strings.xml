@@ -102,6 +102,7 @@
     <string name="focus_infinity">∞</string>
     <string name="focus_fixed">FIXO</string>
     <string name="focus_edof">EDOF</string>
+    <string name="focus_flash">FLASH</string>
     <string name="focus_manual">MANUAL</string>
 
     <string name="wb_auto">AUTO</string>
