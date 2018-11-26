@@ -55,6 +55,15 @@
             android:text="CF" />
 
         <ImageButton
+            android:id="@+id/flashFocusBt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_button"
+            android:padding="8dp"
+            android:elevation="2dp"
+            app:srcCompat="@drawable/ic_flash_on_black_24dp" />
+
+        <ImageButton
             android:id="@+id/macroFocusBt"
             android:layout_width="40dp"
             android:layout_height="40dp"

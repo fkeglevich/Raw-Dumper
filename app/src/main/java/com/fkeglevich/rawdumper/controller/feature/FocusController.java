@@ -46,6 +46,7 @@ public class FocusController extends PresetController<FocusMode>
         putIconMap(reference, FocusMode.INFINITY,             R.id.infinityFocusBt);
         putIconMap(reference, FocusMode.FIXED,                R.id.fixedFocusBt);
         putIconMap(reference, FocusMode.EDOF,                 R.id.edofFocusBt);
+        putIconMap(reference, FocusMode.FLASH,                R.id.flashFocusBt);
     }
 
     @Override
