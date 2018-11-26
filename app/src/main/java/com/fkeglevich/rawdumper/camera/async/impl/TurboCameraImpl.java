@@ -54,6 +54,8 @@ import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.capture.RawSettings;
 import com.fkeglevich.rawdumper.util.Nullable;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
+import com.fkeglevich.rawdumper.util.event.EventDispatcher;
+import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +72,8 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private final LowLevelCamera lowLevelCamera;
     private final FeatureRecyclerFactory recyclerFactory;
     private final VirtualFeatureRecyclerFactory virtualRecyclerFactory;
+
+    private final EventDispatcher<Void> onTakePicture = new SimpleDispatcher<>();
 
     private PreviewFeature                                      previewFeature;
     private PictureSizeFeature                                  pictureSizeFeature;
@@ -115,16 +119,19 @@ public class TurboCameraImpl implements TurboCamera, Closeable
 
     private void createFeatures()
     {
+        ListFeature<Flash> flashFeature = virtualRecyclerFactory.createFlashFeature(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext());
+
         writableFeatures.put(Iso.class, recyclerFactory.createIsoFeature());
         writableFeatures.put(Ev.class, recyclerFactory.createEVFeature());
-        writableFeatures.put(FocusMode.class, recyclerFactory.createFocusFeature());
+        writableFeatures.put(FocusMode.class, recyclerFactory.createFocusFeature(flashFeature));
         writableFeatures.put(WhiteBalancePreset.class, recyclerFactory.createWhiteBalancePresetFeature());
 
         writableFeatures.put(ManualFocus.class, recyclerFactory.createManualFocusFeature());
         writableFeatures.put(ManualTemperature.class, recyclerFactory.createManualTemperatureFeature());
 
         //Virtual features
-        writableFeatures.put(Flash.class, virtualRecyclerFactory.createFlashFeature(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext()));
+
+        writableFeatures.put(Flash.class, flashFeature);
         writableFeatures.put(ShutterSpeed.class, virtualRecyclerFactory.createShutterSpeedFeature(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext()));
 
         previewFeature = recyclerFactory.createPreviewFeature();
@@ -146,7 +153,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private void createRestrictions()
     {
         exposureRestriction     = new ExposureRestriction(getListFeature(Iso.class), getListFeature(ShutterSpeed.class), getListFeature(Ev.class));
-        focusRestriction        = new FocusRestriction((FocusFeature) getListFeature(FocusMode.class), getRangeFeature(ManualFocus.class));
+        focusRestriction        = new FocusRestriction(this);
         modeRestrictionChain    = new ModeRestrictionChain(pictureModeFeature, pictureFormatFeature, pictureSizeFeature, previewFeature, lowLevelCamera.getCameraActions());
         whiteBalanceRestriction = new WhiteBalanceRestriction((WhiteBalancePresetFeature) getListFeature(WhiteBalancePreset.class), getRangeFeature(ManualTemperature.class));
     }
@@ -212,8 +219,15 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     }
 
     @Override
+    public EventDispatcher<Void> getOnTakePicture()
+    {
+        return onTakePicture;
+    }
+
+    @Override
     public void takePicture(PictureListener pictureCallback, PictureExceptionListener exceptionCallback)
     {
+        onTakePicture.dispatchEvent(null);
         lowLevelCamera.getCameraActions().takePicture(pictureCallback, exceptionCallback);
     }
 }
