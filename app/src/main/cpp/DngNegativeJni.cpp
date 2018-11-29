@@ -64,11 +64,12 @@ class OpenMPHost : public dng_host
         {
             dng_point tileSize (task.FindTileSize (area));
 
-            int numThreads = omp_get_max_threads();
+            int numThreads = PerformAreaTaskThreads();
             int widthPerThread = (int)ceil(((double) area.W()) / numThreads);
 
             timestamp_t t0 = get_timestamp();
 
+            __android_log_print(ANDROID_LOG_DEBUG, "OpenMPHost", "num threads: %d", numThreads);
             __android_log_print(ANDROID_LOG_DEBUG, "OpenMPHost", "total area: %d %d %d %d", area.l, area.t, area.r, area.b);
 
             const int tileSizeH = tileSize.h, tileSizeV = tileSize.v;
@@ -93,7 +94,7 @@ class OpenMPHost : public dng_host
 
         uint32 PerformAreaTaskThreads() override
         {
-            return (uint32) omp_get_max_threads();
+            return std::min((uint32) omp_get_max_threads(), kMaxMPThreads);
         }
 };
 
@@ -370,7 +371,8 @@ extern "C"
                                                                                 jint bpl,
                                                                                 jboolean shouldInvertRows,
                                                                                 jbyteArray imageData_,
-                                                                                jboolean uncompressed)
+                                                                                jboolean uncompressed,
+                                                                                jboolean calculateDigest)
     {
 
         timestamp_t t0 = get_timestamp();
