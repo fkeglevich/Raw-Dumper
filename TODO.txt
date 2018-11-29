@@ -36,7 +36,7 @@ TODO list:
  - Restructure the camera access diagram
 
  - Optimize the DNG creation process
-   - Don't calculate checksums
+   - (IN PROGRESS) Don't calculate checksums
 
  - Create DNG with thumbnails
 
@@ -47,8 +47,9 @@ TODO list:
 - (IN PROGRESS) Flash focus
 	- remove these hardcoded values
 	- remove the appearing of notification toasts
+	- disable the feature when the device has laser
 	- make the focus feature virtual
-	- add small pad between the focus buttons
+	- (IN PROGRESS) add small pad between the focus buttons
 
 Next features:
  - Night Mode with raw pictures
@@ -194,3 +195,4 @@ Done:
  - (DONE!) Optimize the DNG creation memory performance
  - Fixed "Currently using the manual focus slider crashes Zenfone Zoom camera"
  - (DONE!) Use multithreading in the DNG creation process
+ - (DONE!) Slower metering update rate for a better performance
