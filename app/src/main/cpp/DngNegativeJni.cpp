@@ -43,6 +43,7 @@
 #include <android/log.h>
 #include <sys/time.h>
 #include <math.h>
+#include <algorithm>
 
 typedef unsigned long long timestamp_t;
 
@@ -417,7 +418,7 @@ extern "C"
         const char *fileName = env->GetStringUTFChars(fileName_, 0);
         dng_image_writer writer;
         dng_file_stream stream(fileName, true);
-        writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer) , NULL, dngVersion_SaveDefault, uncompressed);
+        writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer) , NULL, dngVersion_SaveDefault, uncompressed, calculateDigest);
         env->ReleaseStringUTFChars(fileName_, fileName);
         t1 = get_timestamp();
         secs = (t1 - t0) / 1000000.0L;

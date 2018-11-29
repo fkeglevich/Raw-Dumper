@@ -1173,7 +1173,8 @@ class dng_image_writer
 					   dng_negative &negative,
 					   const dng_preview_list *previewList = NULL,
 					   uint32 maxBackwardVersion = dngVersion_SaveDefault,
-					   bool uncompressed = false);
+					   bool uncompressed = false,
+					   bool calculateDigest = true);
 							   
 		/// Write a dng_image to a dng_stream in DNG format.
 		/// \param host Host interface used for progress updates, abort testing, buffer allocation, etc.
@@ -1190,7 +1191,8 @@ class dng_image_writer
 							   const dng_metadata &metadata,
 							   const dng_preview_list *previewList = NULL,
 							   uint32 maxBackwardVersion = dngVersion_SaveDefault,
-							   bool uncompressed = false);
+							   bool uncompressed = false,
+							   bool calculateDigest = true);
 
 		/// Resolve metadata conflicts and apply metadata policies in keeping
 		/// with Metadata Working Group (MWG) guidelines.
