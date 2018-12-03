@@ -28,8 +28,8 @@ TODO list:
 
  - (IN PROGRESS) Optimize logcat reading, right now the GC is crying
    - (DONE!) Migrate to libsu
-   - (IN PROGRESS) Low-level high performance without memory allocations IO
-   - (IN PROGRESS) Perform more optimizations (related to high frame updates)
+   - (DONE!) Low-level high performance without memory allocations IO
+   - (IN PROGRESS) Perform more optimizations (related to high frame updates and avoiding memory alloc)
 
  - Zoom feature for Zenfone Zoom
 
