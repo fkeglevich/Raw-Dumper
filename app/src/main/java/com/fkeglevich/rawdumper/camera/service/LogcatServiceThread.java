@@ -16,13 +16,13 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
-import android.util.Log;
-
 import com.topjohnwu.superuser.Shell;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import static com.fkeglevich.rawdumper.camera.service.LogcatMatch.MATCH_BUFFER_SIZE;
 
 public class LogcatServiceThread extends Thread
 {
@@ -53,65 +53,73 @@ public class LogcatServiceThread extends Thread
                 int readBytes;
                 while((readBytes = dis.read(readingBuffer)) != -1)
                 {
-                    long nanos = System.nanoTime();
-
                     LogcatMatch match;
                     for (int k = 0; k < matchArray.length; k++)
                     {
+                        boolean foundMatch = false;
                         match = matchArray[k];
-                        if (match.enabled)
+                        if (match.enabled && match.fingerprintPrefixBytes.length <= readBytes)
                         {
                             byte[] fingerPrintBytes = match.fingerprintPrefixBytes;
 
-                            boolean fingerPrintFound = false;
-                            int i;
-                            for (i = 0; i < readBytes - fingerPrintBytes.length + 1; i++)
+                            int start = indexOfFingerprint(fingerPrintBytes, readingBuffer, readBytes);
+                            if (start != -1)
                             {
-                                boolean found = true;
-                                for (int j = 0; j < fingerPrintBytes.length; j++)
-                                {
-                                    if (readingBuffer[i + j] != fingerPrintBytes[j])
-                                    {
-                                        found = false;
-                                        break;
-                                    }
-                                }
-                                if (found)
-                                {
-                                    fingerPrintFound = true;
-                                    break;
-                                }
-                            }
-
-                            if (fingerPrintFound)
-                            {
-                                int start = i;
-                                i += fingerPrintBytes.length;
-                                for (; i < readBytes; i++)
-                                {
-                                    if (readingBuffer[i] == '\n')
-                                    {
-                                        int length = i - start + 1;
-                                        synchronized (match.tag)
-                                        {
-                                            System.arraycopy(readingBuffer, start, match.volatileBuffer, 0, length);
-                                            match.volatileBufferSize = match.volatileBuffer.length >= length ? length : match.volatileBuffer.length;
-                                        }
-
-                                        break;
-                                    }
-                                }
+                                int length = findLengthOfMatch(start, fingerPrintBytes, readingBuffer, readBytes);
+                                writeMatchData(match, start, length);
+                                foundMatch = true;
                             }
                         }
+                        if (foundMatch)
+                            break;
                     }
-
-                    //Log.i("ASD", "find time: " + (System.nanoTime() - nanos)/1e6);
                 }
             });
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
+    }
+
+    private void writeMatchData(LogcatMatch match, int start, int length)
+    {
+        if ((start + length) > readingBuffer.length || length > MATCH_BUFFER_SIZE)
+            return;
+
+        synchronized (match.tag)
+        {
+            System.arraycopy(readingBuffer, start, match.volatileBuffer, 0, length);
+            match.volatileBufferSize = match.volatileBuffer.length >= length ? length : match.volatileBuffer.length;
+        }
+    }
+
+    private int findLengthOfMatch(int start, byte[] fingerPrintBytes, byte[] readingBuffer, int readBytes)
+    {
+        if (start + MATCH_BUFFER_SIZE + 1 > readBytes)
+            return readBytes - start + 1;
+        else
+            return MATCH_BUFFER_SIZE;
+    }
+
+    private int indexOfFingerprint(byte[] fingerPrintBytes, byte[] readingBuffer, int readBytes)
+    {
+        int i;
+        for (i = 0; i < readBytes - fingerPrintBytes.length + 1; i++)
+        {
+            boolean found = true;
+            for (int j = 0; j < fingerPrintBytes.length; j++)
+            {
+                if (readingBuffer[i + j] != fingerPrintBytes[j])
+                {
+                    found = false;
+                    break;
+                }
+            }
+            if (found)
+                return i;
+        }
+        return -1;
     }
 
     private void execCommands(String[] commands, OutputStream in) throws IOException
