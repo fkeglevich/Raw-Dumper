@@ -20,6 +20,8 @@ import java.io.UnsupportedEncodingException;
 
 public class LogcatMatch
 {
+    public static final int MATCH_BUFFER_SIZE = 100;
+
     public final String tag;
     public final LogPriority priority;
     public final String fingerprintPrefix;
@@ -27,7 +29,7 @@ public class LogcatMatch
 
     public volatile boolean enabled = false;
 
-    public final byte[] volatileBuffer = new byte[128];
+    public final byte[] volatileBuffer = new byte[MATCH_BUFFER_SIZE];
     public volatile int volatileBufferSize = 0;
 
     public LogcatMatch(String tag, LogPriority priority, String fingerprintPrefix)
