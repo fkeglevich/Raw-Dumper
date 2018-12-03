@@ -16,16 +16,13 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 
 import com.fkeglevich.rawdumper.su.ShellFactory;
+import com.topjohnwu.superuser.Shell;
 
 import java.util.concurrent.atomic.AtomicReference;
-
-import eu.chainfire.libsuperuser.Shell;
 
 /**
  * TODO: add header comment
@@ -38,16 +35,11 @@ public class LogcatService
         IDLE, RUNNING, PAUSED
     }
 
-    private static final String THREAD_NAME = "LogcatServiceThread";
-
-    private int logcatShellId       = -1;
-    private int cameraHalShellId    = -1;
-    private Shell.Interactive logcatShell;
-    private Shell.Interactive cameraHalShell;
+    private Shell logcatShell;
+    private Shell cameraHalShell;
 
     private final LogcatMatch[] localMatchArray;
     private final boolean needHalDebugCommandFlag;
-    private final Handler handler;
 
     private final AtomicReference<State> state = new AtomicReference<>(State.IDLE);
 
@@ -55,9 +47,6 @@ public class LogcatService
     {
         localMatchArray = matchArray;
         needHalDebugCommandFlag = needHalDebugCommand;
-        HandlerThread thread = new HandlerThread(THREAD_NAME);
-        thread.start();
-        handler = new Handler(thread.getLooper());
         requestShells();
     }
 
@@ -81,57 +70,19 @@ public class LogcatService
     private void requestShells()
     {
         ShellFactory factory = ShellFactory.getInstance();
-        logcatShellId    = factory.requestShell(createLogcatShellBuilder());
+        factory.requestShell();
+
         if (needHalDebugCommandFlag)
-            cameraHalShellId = factory.requestShell(createCameraHalShellBuilder());
+            factory.requestShell();
+
         factory.onSuccess.addListener(eventData ->
         {
-            handler.post(() ->
-            {
-                if (needHalDebugCommandFlag)
-                    cameraHalShell = factory.getShell(cameraHalShellId);
-                logcatShell = factory.getShell(logcatShellId);
-                CommandHelper.addLogcatCommand(logcatShell, localMatchArray);
-                state.set(State.PAUSED);
-            });
+            if (needHalDebugCommandFlag)
+                cameraHalShell = factory.getShell();
+            logcatShell = factory.getShell();
+            state.set(State.PAUSED);
+
+            new LogcatServiceThread(localMatchArray).start();
         });
-    }
-
-    @SuppressWarnings("ForLoopReplaceableByForEach")
-    @WorkerThread
-    private void processLine(String line)
-    {
-        LogcatMatch match;
-        for (int i = 0; i < localMatchArray.length; i++)
-        {
-            match = localMatchArray[i];
-            if (match.enabled && line.contains(match.fingerprintPrefix))
-            {
-                match.latestMatch = line;
-                return;
-            }
-        }
-    }
-
-    @WorkerThread
-    private Shell.Builder createLogcatShellBuilder()
-    {
-        return new Shell.Builder().
-                    useSU().
-                    setWantSTDERR(false).
-                    setWatchdogTimeout(0).
-                    setAutoHandler(false).
-                    setMinimalLogging(true).
-                    setOnSTDOUTLineListener(this::processLine);
-    }
-
-    @WorkerThread
-    private Shell.Builder createCameraHalShellBuilder()
-    {
-        return new Shell.Builder().
-                    useSU().
-                    setWantSTDERR(true).
-                    setWatchdogTimeout(5).
-                    setMinimalLogging(true);
     }
 }

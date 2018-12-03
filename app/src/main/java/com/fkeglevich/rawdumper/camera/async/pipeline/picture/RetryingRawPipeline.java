@@ -44,8 +44,6 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.File;
 
-import eu.chainfire.libsuperuser.Shell;
-
 /**
  * TODO: Add class header
  * <p>
@@ -155,18 +153,9 @@ public class RetryingRawPipeline implements PicturePipeline
     {
         String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
         String partialPath = Directories.getPartialPicturesDirectory().getAbsolutePath();
-        MainSUShell.getInstance().addSingleCommand("mv " + dumpDirectory + "/*.i3av4" + " " + partialPath, new Shell.OnCommandLineListener()
-        {
-            @Override
-            public void onCommandResult(int commandCode, int exitCode)
-            {
-                processPicture();
-            }
 
-            @Override
-            public void onLine(String line)
-            {   }
-        });
+        MainSUShell.getInstance().addSingleCommand("mv " + dumpDirectory + "/*.i3av4" + " " + partialPath,
+                result -> processPicture());
     }
 
     private void processPicture()

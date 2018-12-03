@@ -34,15 +34,15 @@ public abstract class LogcatFeatureService<T>
 
     public synchronized void fixValue()
     {
-        fixedValue = match.latestMatch;
+        fixedValue = getMatchString();
     }
 
     @Nullable
     public synchronized T getValue()
     {
-        String string = fixedValue != null ? fixedValue : match.latestMatch;
+        String string = fixedValue != null ? fixedValue : getMatchString();
         fixedValue = null;
-        if (string != null)
+        if (match.enabled && !string.isEmpty())
         {
             try
             {
@@ -65,7 +65,14 @@ public abstract class LogcatFeatureService<T>
 
     synchronized void setAvailable(boolean available)
     {
-        if (!available) match.latestMatch = null;
         match.enabled = available;
+    }
+
+    private String getMatchString()
+    {
+        synchronized (match.tag)
+        {
+            return new String(match.volatileBuffer, 0, match.volatileBufferSize);
+        }
     }
 }

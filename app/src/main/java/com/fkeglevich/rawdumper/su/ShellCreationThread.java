@@ -16,9 +16,8 @@
 
 package com.fkeglevich.rawdumper.su;
 
-import java.util.List;
+import com.topjohnwu.superuser.Shell;
 
-import eu.chainfire.libsuperuser.Shell;
 
 /**
  * TODO: add header comment
@@ -26,42 +25,27 @@ import eu.chainfire.libsuperuser.Shell;
  */
 public class ShellCreationThread extends Thread
 {
-    private final Shell.Builder builder;
-    private final int id;
-    private final ShellFactory shellManager;
+    private Shell shell = null;
 
-    private Shell.Interactive shell = null;
-
-    ShellCreationThread(Shell.Builder builder, int id, ShellFactory shellManager)
+    ShellCreationThread()
     {
         super();
-        this.builder = builder;
-        this.id = id;
-        this.shellManager = shellManager;
     }
 
     @Override
     public void run()
     {
-        shell = builder.open(new Shell.OnCommandResultListener()
-        {
-            @Override
-            public void onCommandResult(int commandCode, int exitCode, List<String> output)
-            {
-                if (exitCode != Shell.OnCommandResultListener.SHELL_RUNNING)
-                    killShell();
-                if (!shellManager.registerShell(id, shell))
-                    killShell();
-            }
-        });
+        shell = Shell.newInstance();
     }
 
-    private void killShell()
+    public Shell getShell()
     {
-        if (shell != null)
+        try
         {
-            shell.kill();
-            shell = null;
+            join();
         }
+        catch (InterruptedException ignored)
+        {   }
+        return shell;
     }
 }
