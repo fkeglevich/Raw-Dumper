@@ -30,84 +30,94 @@
     tools:showIn="@layout/activity_main"
     tools:ignore="KeyboardInaccessibleWidget">
 
-    <LinearLayout
-        android:id="@+id/stdFocusChooser"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:fillViewport="true"
+        android:visibility="visible"
+        android:scrollbars="none">
+
+    <LinearLayout
+        android:id="@+id/stdFocusChooser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:divider="@drawable/focus_divider"
-        android:gravity="center"
+        android:gravity="center_horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:showDividers="middle">
 
-        <Button
-            android:id="@+id/autoFocusBt"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/round_button"
-            android:elevation="2dp"
-            android:text="AF" />
+            <Button
+                android:id="@+id/autoFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:text="AF" />
 
-        <Button
-            android:id="@+id/continuousFocusBt"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/round_button"
-            android:elevation="2dp"
-            android:text="CF" />
+            <Button
+                android:id="@+id/continuousFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:text="CF" />
 
-        <ImageButton
-            android:id="@+id/flashFocusBt"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/round_button"
-            android:padding="8dp"
-            android:elevation="2dp"
-            app:srcCompat="@drawable/ic_flash_on_black_24dp" />
+            <ImageButton
+                android:id="@+id/flashFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:padding="8dp"
+                android:elevation="2dp"
+                app:srcCompat="@drawable/ic_flash_on_black_24dp" />
 
-        <ImageButton
-            android:id="@+id/macroFocusBt"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/round_button"
-            android:padding="8dp"
-            android:elevation="2dp"
-            app:srcCompat="@drawable/ic_local_florist_black_24dp" />
+            <ImageButton
+                android:id="@+id/macroFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:padding="8dp"
+                android:elevation="2dp"
+                app:srcCompat="@drawable/ic_local_florist_black_24dp" />
 
-        <Button
-            android:id="@+id/infinityFocusBt"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/round_button"
-            android:elevation="2dp"
-            android:text="∞" />
+            <Button
+                android:id="@+id/infinityFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:text="∞" />
 
-        <Button
-            android:id="@+id/fixedFocusBt"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/round_button"
-            android:elevation="2dp"
-            android:text="f"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/fixedFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:text="f"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/edofFocusBt"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/round_button"
-            android:elevation="2dp"
-            android:text="ED" />
+            <Button
+                android:id="@+id/edofFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:text="ED" />
 
-        <Button
-            android:id="@+id/manualFocusBt"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/round_button"
-            android:elevation="2dp"
-            android:text="MF"
-            android:visibility="visible" />
+            <Button
+                android:id="@+id/manualFocusBt"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_button"
+                android:elevation="2dp"
+                android:text="MF"
+                android:visibility="visible" />
 
-    </LinearLayout>
-
+        </LinearLayout>
+    </HorizontalScrollView>
     <LinearLayout
         android:id="@+id/manualFocusChooser"
         android:gravity="center"
