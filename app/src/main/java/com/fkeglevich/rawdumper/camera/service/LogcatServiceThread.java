@@ -65,7 +65,7 @@ public class LogcatServiceThread extends Thread
                             int start = indexOfFingerprint(fingerPrintBytes, readingBuffer, readBytes);
                             if (start != -1)
                             {
-                                int length = findLengthOfMatch(start, fingerPrintBytes, readingBuffer, readBytes);
+                                int length = findLengthOfMatch(start, readBytes);
                                 writeMatchData(match, start, length);
                                 foundMatch = true;
                             }
@@ -94,7 +94,7 @@ public class LogcatServiceThread extends Thread
         }
     }
 
-    private int findLengthOfMatch(int start, byte[] fingerPrintBytes, byte[] readingBuffer, int readBytes)
+    private int findLengthOfMatch(int start, int readBytes)
     {
         if (start + MATCH_BUFFER_SIZE + 1 > readBytes)
             return readBytes - start + 1;
