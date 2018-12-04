@@ -122,5 +122,6 @@
     <string name="keep_lens_vignetting">Manter vinheta da lente</string>
     <string name="compress_raw_files">Habilitar compressão</string>
     <string name="save_as_flipped">Inverter fotos tiradas com a câmera frontal</string>
+    <string name="generate_raw_digest">Guardar digest das imagens no formato RAW</string>
 
 </resources>

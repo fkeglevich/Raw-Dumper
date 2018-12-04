@@ -97,6 +97,14 @@
                 android:text="@string/compress_raw_files" />
 
             <Switch
+                android:id="@+id/digestSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="10dp"
+                android:text="@string/generate_raw_digest" />
+
+            <Switch
                 android:id="@+id/safSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
