@@ -43,7 +43,7 @@ public class WhiteBalanceService extends LogcatFeatureService<float[]>
         String firstPiece = string.substring(string.indexOf(FINGERPRINT));
         //@setAicParameter: wb integer_bits=1 gr=32768 r=60811 b=50613 gb=32768
 
-        String[] split = firstPiece.split(" ");
+        String[] split = firstPiece.split("\\s");
 
         String gr = split[3].split("=")[1];
         String r = split[4].split("=")[1];
