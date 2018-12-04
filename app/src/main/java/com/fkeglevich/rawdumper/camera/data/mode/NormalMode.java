@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.data.mode;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.data.mode.format.DefaultFormatStrategy;
 import com.fkeglevich.rawdumper.camera.data.mode.size.JpegStrategy;

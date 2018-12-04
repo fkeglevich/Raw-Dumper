@@ -16,8 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.su.ShellFactory;
 import com.topjohnwu.superuser.Shell;

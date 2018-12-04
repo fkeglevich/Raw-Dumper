@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * TODO: add header comment

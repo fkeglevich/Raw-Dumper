@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.data;
 
-import android.support.annotation.Keep;
+import androidx.annotation.Keep;
 
 /**
  * A simple enum for listing all supported calibration illuminants.

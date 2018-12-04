@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.data;
 
-import android.support.annotation.Keep;
+import androidx.annotation.Keep;
 
 /**
  * Enumerates the possible image orientations for the DNG files.

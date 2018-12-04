@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.support.annotation.Keep;
+import androidx.annotation.Keep;
 
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 

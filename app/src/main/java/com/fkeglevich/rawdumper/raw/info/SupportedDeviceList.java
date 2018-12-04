@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.support.annotation.Keep;
+import androidx.annotation.Keep;
 
 import java.io.IOException;
 import java.util.ArrayList;

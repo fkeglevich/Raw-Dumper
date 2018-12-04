@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.async.direct.mutable;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;

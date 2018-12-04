@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.controller.context.ContextManager;

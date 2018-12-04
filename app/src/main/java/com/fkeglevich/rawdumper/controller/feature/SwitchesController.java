@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
-import android.support.annotation.IdRes;
+import androidx.annotation.IdRes;
 import android.widget.Switch;
 
 import com.fkeglevich.rawdumper.R;

@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;

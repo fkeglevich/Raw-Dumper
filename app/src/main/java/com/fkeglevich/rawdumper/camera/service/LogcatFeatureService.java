@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 public abstract class LogcatFeatureService<T>

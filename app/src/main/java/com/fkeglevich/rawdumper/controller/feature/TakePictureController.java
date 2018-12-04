@@ -17,7 +17,7 @@
 package com.fkeglevich.rawdumper.controller.feature;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;

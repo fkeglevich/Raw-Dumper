@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import junit.framework.Assert;
 

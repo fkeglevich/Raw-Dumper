@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.controller.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.camera.data.Displayable;

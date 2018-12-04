@@ -17,8 +17,8 @@
 package com.fkeglevich.rawdumper.controller.activity;
 
 import android.os.Build;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;

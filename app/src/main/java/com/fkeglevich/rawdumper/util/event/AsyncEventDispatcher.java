@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.util.event;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import junit.framework.Assert;
 

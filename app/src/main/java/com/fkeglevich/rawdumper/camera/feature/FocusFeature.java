@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.action.AutoFocusAction;
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;

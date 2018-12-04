@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.parameter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.async.direct.mutable.MutableParameterCollection;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;

@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.util.event;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

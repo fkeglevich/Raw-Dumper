@@ -42,8 +42,6 @@ TODO list:
 
  - Create DNG with thumbnails
 
- - Migrate project to AndroidX
-
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
 	- Zenfone 5
@@ -200,3 +198,4 @@ Done:
  - Fixed "Currently using the manual focus slider crashes Zenfone Zoom camera"
  - (DONE!) Use multithreading in the DNG creation process
  - (DONE!) Slower metering update rate for a better performance
+ - (DONE!) Migrate project to AndroidX

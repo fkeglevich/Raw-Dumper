@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;

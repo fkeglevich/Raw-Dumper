@@ -16,8 +16,8 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
-import android.support.annotation.IdRes;
-import android.support.annotation.StringRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;

@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.hardware.Camera;
 import android.os.Build;
-import android.support.annotation.Keep;
+import androidx.annotation.Keep;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;

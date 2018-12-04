@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.debug;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.fkeglevich.rawdumper.BuildConfig;

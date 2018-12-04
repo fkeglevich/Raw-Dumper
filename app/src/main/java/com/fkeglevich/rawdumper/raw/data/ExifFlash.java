@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.data;
 
-import android.support.annotation.Keep;
+import androidx.annotation.Keep;
 
 import com.drew.metadata.Directory;
 import com.drew.metadata.MetadataException;
