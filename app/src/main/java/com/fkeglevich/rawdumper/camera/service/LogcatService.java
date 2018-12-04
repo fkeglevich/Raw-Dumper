@@ -81,7 +81,7 @@ public class LogcatService
             logcatShell = factory.getShell();
             state.set(State.PAUSED);
 
-            new LogcatServiceThread(localMatchArray).start();
+            new LogcatServiceThread(localMatchArray, logcatShell).start();
         });
     }
 }

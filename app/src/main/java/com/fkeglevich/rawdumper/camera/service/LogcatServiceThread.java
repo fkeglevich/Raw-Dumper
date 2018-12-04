@@ -29,12 +29,14 @@ public class LogcatServiceThread extends Thread
     private static final String THREAD_NAME = "LogcatServiceThread";
 
     private final LogcatMatch[] matchArray;
+    private final Shell logcatShell;
     private final byte[] readingBuffer = new byte[4096];
 
-    LogcatServiceThread(LogcatMatch[] matchArray)
+    LogcatServiceThread(LogcatMatch[] matchArray, Shell logcatShell)
     {
         super(THREAD_NAME);
         this.matchArray = matchArray;
+        this.logcatShell = logcatShell;
     }
 
     @SuppressWarnings("ForLoopReplaceableByForEach")
@@ -44,7 +46,7 @@ public class LogcatServiceThread extends Thread
         String[] commands = CommandHelper.buildLogcatCommands(matchArray);
         try
         {
-            Shell.getShell().execTask((in, out, err) ->
+            logcatShell.execTask((in, out, err) ->
             {
                 execCommands(commands, in);
 
