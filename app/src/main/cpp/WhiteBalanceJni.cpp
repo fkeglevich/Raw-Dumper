@@ -49,14 +49,16 @@ extern "C"
         double linCc2;
         double linCc3;
 
+        double blackLevel = 64.0;
+
         for (int row = 0; row < height; row += 2)
         {
             for (int col = 0; col < width; col += 2)
             {
-                linCc0 = (buffer[row * bpl + col]            - 64.0) / (1023.0 - 64.0);
-                linCc1 = (buffer[row * bpl + col + 1]        - 64.0) / (1023.0 - 64.0);
-                linCc2 = (buffer[(row + 1) * bpl + col]      - 64.0) / (1023.0 - 64.0);
-                linCc3 = (buffer[(row + 1) * bpl + col + 1]  - 64.0) / (1023.0 - 64.0);
+                linCc0 = (buffer[row * bpl + col] -             blackLevel) / (1023.0 - blackLevel);
+                linCc1 = (buffer[row * bpl + col + 1] -         blackLevel) / (1023.0 - blackLevel);
+                linCc2 = (buffer[(row + 1) * bpl + col] -       blackLevel) / (1023.0 - blackLevel);
+                linCc3 = (buffer[(row + 1) * bpl + col + 1] -   blackLevel) / (1023.0 - blackLevel);
 
                 cc0Avg += (linCc0 - cc0Avg) / t;
                 cc1Avg += (linCc1 - cc1Avg) / t;
