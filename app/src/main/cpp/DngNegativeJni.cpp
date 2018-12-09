@@ -212,12 +212,12 @@ extern "C"
     JNIEXPORT void JNICALL
     Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setCameraNeutralNative(JNIEnv *env, jobject instance,
                                                                                 jlong pointer,
-                                                                                jfloatArray cameraNeutral_)
+                                                                                jdoubleArray cameraNeutral_)
     {
-        jfloat *cameraNeutral = env->GetFloatArrayElements(cameraNeutral_, NULL);
+        jdouble *cameraNeutral = env->GetDoubleArrayElements(cameraNeutral_, NULL);
         dng_vector_3 vector3(cameraNeutral[0], cameraNeutral[1], cameraNeutral[2]);
         ((dng_negative*) pointer)->SetCameraNeutral(vector3);
-        env->ReleaseFloatArrayElements(cameraNeutral_, cameraNeutral, 0);
+        env->ReleaseDoubleArrayElements(cameraNeutral_, cameraNeutral, 0);
     }
 
     JNIEXPORT void JNICALL

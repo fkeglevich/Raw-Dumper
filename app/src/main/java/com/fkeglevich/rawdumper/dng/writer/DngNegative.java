@@ -37,7 +37,7 @@ public class DngNegative
     private native void setModelNative(long pointer, String model);
     private native void setOriginalRawFileNameNative(long pointer, String fileName);
     private native void setSensorInfoNative(long pointer, int whiteLevel, float[] blackLevels, int bayerPhase);
-    private native void setCameraNeutralNative(long pointer, float[] cameraNeutral);
+    private native void setCameraNeutralNative(long pointer, double[] cameraNeutral);
     private native void setImageSizeAndOrientationNative(long pointer, int width, int height, int orientationExifCode);
     private native void setCameraCalibrationNative(long pointer, float[] cameraCalibration1, float[] cameraCalibration2);
     private native void addColorProfileNative(long pointer, String name, float[] colorMatrix1, float[] colorMatrix2,
@@ -75,7 +75,7 @@ public class DngNegative
         setSensorInfoNative(pointer, whiteLevel, blackLevels, bayerPhase);
     }
 
-    public void setCameraNeutral(float[] cameraNeutral)
+    public void setCameraNeutral(double[] cameraNeutral)
     {
         setCameraNeutralNative(pointer, cameraNeutral);
     }

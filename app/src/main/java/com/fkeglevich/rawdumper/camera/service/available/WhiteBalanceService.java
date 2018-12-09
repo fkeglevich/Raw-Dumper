@@ -20,7 +20,7 @@ import com.fkeglevich.rawdumper.camera.service.LogPriority;
 import com.fkeglevich.rawdumper.camera.service.LogcatFeatureService;
 import com.fkeglevich.rawdumper.camera.service.LogcatMatch;
 
-public class WhiteBalanceService extends LogcatFeatureService<float[]>
+public class WhiteBalanceService extends LogcatFeatureService<double[]>
 {
     private static final String FINGERPRINT = "@setAicParameter: wb int";
     private static final LogcatMatch LOGCAT_MATCH = new LogcatMatch("Camera_ISP", LogPriority.D, FINGERPRINT);
@@ -38,7 +38,7 @@ public class WhiteBalanceService extends LogcatFeatureService<float[]>
     }
 
     @Override
-    protected float[] parseString(String string)
+    protected double[] parseString(String string)
     {
         String firstPiece = string.substring(string.indexOf(FINGERPRINT));
         //@setAicParameter: wb integer_bits=1 gr=32768 r=60811 b=50613 gb=32768
@@ -50,9 +50,9 @@ public class WhiteBalanceService extends LogcatFeatureService<float[]>
         String b = split[5].split("=")[1];
         String gb = split[6].split("=")[1];
 
-        float rGain = (float) (Double.parseDouble(gr) / Double.parseDouble(r));
-        float bGain = (float) (Double.parseDouble(gb) / Double.parseDouble(b));
+        double rGain = Double.parseDouble(gr) / Double.parseDouble(r);
+        double bGain = Double.parseDouble(gb) / Double.parseDouble(b);
 
-        return new float[] {rGain, 1f, bGain};
+        return new double[] {rGain, 1f, bGain};
     }
 }
