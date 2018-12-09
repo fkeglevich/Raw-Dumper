@@ -46,7 +46,8 @@ public class DngWriter
             negative.writeImageToFile(captureInfo.destinationRawFilename,
                     imageSize.getPaddedWidth(), imageSize.getPaddedHeight(),
                     imageSize.getBytesPerLine(), captureInfo.shouldInvertRows(),
-                    imageData.getLowLevelBuffer(), !captureInfo.rawSettings.compressRawFiles);
+                    imageData.getLowLevelBuffer(), !captureInfo.rawSettings.compressRawFiles,
+                    captureInfo.rawSettings.calculateDigest);
             PerfInfo.end("SaveAndCompress");
         }
         finally

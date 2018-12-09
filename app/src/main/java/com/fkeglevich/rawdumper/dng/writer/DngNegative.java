@@ -132,9 +132,9 @@ public class DngNegative
         setNoiseProfileNative(pointer, noiseProfile);
     }
 
-    public void writeImageToFile(String fileName, int width, int height, int bpl, boolean shouldInvertRows, byte[] imageData, boolean uncompressed)
+    public void writeImageToFile(String fileName, int width, int height, int bpl, boolean shouldInvertRows, byte[] imageData, boolean uncompressed, boolean calculateDigest)
     {
-        writeImageToFileNative(pointer, fileName, width, height, bpl, shouldInvertRows, imageData, uncompressed, true);
+        writeImageToFileNative(pointer, fileName, width, height, bpl, shouldInvertRows, imageData, uncompressed, calculateDigest);
     }
 
     public long getExifHandle()

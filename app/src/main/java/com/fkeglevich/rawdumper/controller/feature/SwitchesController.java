@@ -40,9 +40,10 @@ class SwitchesController extends FeatureController
     {
         RawSettings rawSettings = camera.getRawSettings();
 
-        setupSwitch(R.id.klvSwitch, rawSettings.keepLensVignetting, rawSettings);
-        setupSwitch(R.id.cmpSwitch, rawSettings.compressRawFiles, rawSettings);
-        setupSwitch(R.id.safSwitch, rawSettings.shouldInvertFrontCameraRows, rawSettings);
+        setupSwitch(R.id.klvSwitch,     rawSettings.keepLensVignetting, rawSettings);
+        setupSwitch(R.id.cmpSwitch,     rawSettings.compressRawFiles, rawSettings);
+        setupSwitch(R.id.safSwitch,     rawSettings.shouldInvertFrontCameraRows, rawSettings);
+        setupSwitch(R.id.digestSwitch,  rawSettings.calculateDigest, rawSettings);
 
         enable();
     }
@@ -85,6 +86,10 @@ class SwitchesController extends FeatureController
 
                 case R.id.safSwitch:
                     rawSettings.shouldInvertFrontCameraRows = isChecked;
+                    break;
+
+                case R.id.digestSwitch:
+                    rawSettings.calculateDigest = isChecked;
                     break;
             }
         });
