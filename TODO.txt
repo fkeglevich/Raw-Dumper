@@ -24,21 +24,13 @@ TODO list:
  
  - Add simple normal/low light button switch
 
- - Fallback to Gray World AWB algorithm when there's no other AWB algo available
-
- - (IN PROGRESS) Optimize logcat reading, right now the GC is crying
-   - (DONE!) Migrate to libsu
-   - (DONE!) Low-level high performance without memory allocations IO
-   - (IN PROGRESS) Perform more optimizations (related to high frame updates and avoiding memory alloc)
+ - (IN PROGRESS) Fallback to Gray World AWB algorithm when there's no other AWB algo available
 
  - Zoom feature for Zenfone Zoom
 
  - (IN PROGRESS) Take picture discarding the result (skip picture)
 	
  - Restructure the camera access diagram
-
- - Optimize the DNG creation process
-   - (IN PROGRESS) Don't calculate checksums
 
  - Create DNG with thumbnails
 
@@ -49,7 +41,7 @@ TODO list:
 - (IN PROGRESS) Flash focus
 	- remove these hardcoded values
 	- remove the appearing of notification toasts
-	- disable the feature when the device has laser
+	- disable the feature when the device has laser (add a new raw info class)
 	- make the focus feature virtual
 	- (IN PROGRESS) add small pad between the focus buttons
 
@@ -199,3 +191,7 @@ Done:
  - (DONE!) Use multithreading in the DNG creation process
  - (DONE!) Slower metering update rate for a better performance
  - (DONE!) Migrate project to AndroidX
+ - (DONE!) Migrate to libsu
+ - (DONE!) Low-level logcat reading with high performance without (uneeded) memory allocation
+ - (DONE!) Optimize logcat reading
+ - (DONE!) Added checksum toggle for optimal compressed DNG creation
