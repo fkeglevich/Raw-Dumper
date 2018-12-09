@@ -30,7 +30,6 @@ public class LogcatMatch
     public volatile boolean enabled = false;
 
     public final byte[] volatileBuffer = new byte[MATCH_BUFFER_SIZE];
-    public volatile int volatileBufferSize = 0;
 
     public LogcatMatch(String tag, LogPriority priority, String fingerprintPrefix)
     {

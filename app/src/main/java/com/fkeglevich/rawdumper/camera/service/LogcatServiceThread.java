@@ -92,7 +92,6 @@ public class LogcatServiceThread extends Thread
         synchronized (match.tag)
         {
             System.arraycopy(readingBuffer, start, match.volatileBuffer, 0, length);
-            match.volatileBufferSize = match.volatileBuffer.length >= length ? length : match.volatileBuffer.length;
         }
     }
 

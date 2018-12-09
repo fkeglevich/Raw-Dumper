@@ -19,6 +19,8 @@ package com.fkeglevich.rawdumper.camera.service;
 import androidx.annotation.Nullable;
 import android.util.Log;
 
+import static com.fkeglevich.rawdumper.camera.service.LogcatMatch.MATCH_BUFFER_SIZE;
+
 public abstract class LogcatFeatureService<T>
 {
     final LogcatMatch match;
@@ -72,7 +74,7 @@ public abstract class LogcatFeatureService<T>
     {
         synchronized (match.tag)
         {
-            return new String(match.volatileBuffer, 0, match.volatileBufferSize);
+            return new String(match.volatileBuffer, 0, MATCH_BUFFER_SIZE);
         }
     }
 }
