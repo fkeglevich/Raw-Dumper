@@ -35,11 +35,6 @@ import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 @SuppressWarnings("unused")
 public class SensorInfo
 {
-    private static final short[] DEFAULT_CFA_REPEAT_PATTERN_DIM = new short[] {2, 2};
-    private static final short[] DEFAULT_BLACK_LEVEL_REPEAT_DIM = new short[] {2, 2};
-    private static final byte[]  DEFAULT_CFA_PLANE_COLOR        = new byte[]  {0, 1, 2};
-    private static final short   DEFAULT_CFA_LAYOUT             = 1;
-
     private int bitsPerPixel;
     private int storageBitsPerPixel;
 
