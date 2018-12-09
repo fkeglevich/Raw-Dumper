@@ -18,13 +18,14 @@ package com.fkeglevich.rawdumper.controller.orientation;
 
 import android.content.Context;
 import android.hardware.SensorManager;
-import androidx.annotation.NonNull;
 import android.view.OrientationEventListener;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
+
+import androidx.annotation.NonNull;
 
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 

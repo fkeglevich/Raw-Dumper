@@ -25,7 +25,6 @@ import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.util.ColorUtil;
-import com.fkeglevich.rawdumper.util.MathUtil;
 
 import java.util.Arrays;
 

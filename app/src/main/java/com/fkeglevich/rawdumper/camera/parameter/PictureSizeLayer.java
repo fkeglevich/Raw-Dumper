@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.parameter;
 
-import androidx.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.async.direct.mutable.MutableParameterCollection;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
@@ -25,6 +23,8 @@ import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 import com.fkeglevich.rawdumper.util.Mutable;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

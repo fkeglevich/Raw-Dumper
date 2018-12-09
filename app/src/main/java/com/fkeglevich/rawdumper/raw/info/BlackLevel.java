@@ -16,11 +16,11 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import androidx.annotation.Keep;
-
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 
 import java.util.Arrays;
+
+import androidx.annotation.Keep;
 
 /**
  * Simple data class for storing a combination of ISO, exposure time and black level values.

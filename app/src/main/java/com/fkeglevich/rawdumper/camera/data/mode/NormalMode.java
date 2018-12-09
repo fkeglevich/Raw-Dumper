@@ -16,13 +16,13 @@
 
 package com.fkeglevich.rawdumper.camera.data.mode;
 
-import androidx.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.data.mode.format.DefaultFormatStrategy;
 import com.fkeglevich.rawdumper.camera.data.mode.size.JpegStrategy;
 import com.fkeglevich.rawdumper.camera.data.mode.size.RawStrategy;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

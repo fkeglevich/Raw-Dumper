@@ -16,10 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
-import androidx.annotation.StringRes;
-
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
+
+import androidx.annotation.StringRes;
 
 import static android.hardware.Camera.Parameters.FOCUS_MODE_AUTO;
 import static android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE;

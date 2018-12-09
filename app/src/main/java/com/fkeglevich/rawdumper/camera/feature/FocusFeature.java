@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.action.AutoFocusAction;
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
@@ -34,6 +33,8 @@ import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

@@ -17,12 +17,13 @@
 package com.fkeglevich.rawdumper.activity;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 
 import com.fkeglevich.rawdumper.controller.permission.PermissionRequest;
 import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * ModularActivity is an activity that has modularized events and has a ActivityReference.

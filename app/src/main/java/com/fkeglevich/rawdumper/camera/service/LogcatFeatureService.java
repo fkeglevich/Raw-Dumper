@@ -16,8 +16,9 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
-import androidx.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import static com.fkeglevich.rawdumper.camera.service.LogcatMatch.MATCH_BUFFER_SIZE;
 

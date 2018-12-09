@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import androidx.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
@@ -29,6 +27,8 @@ import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
 import com.fkeglevich.rawdumper.raw.info.ExposureInfo;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

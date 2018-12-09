@@ -17,12 +17,13 @@
 package com.fkeglevich.rawdumper.raw.info;
 
 import android.hardware.Camera;
-import androidx.annotation.Keep;
 
 import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 import com.fkeglevich.rawdumper.raw.data.BayerPattern;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+
+import androidx.annotation.Keep;
 
 /**
  * Stores specific information and implementation details

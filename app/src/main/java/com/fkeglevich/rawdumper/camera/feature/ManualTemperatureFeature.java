@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import androidx.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
 import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
@@ -28,6 +26,8 @@ import com.fkeglevich.rawdumper.camera.parameter.value.RangeValidator;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.util.MathUtil;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: add header comment

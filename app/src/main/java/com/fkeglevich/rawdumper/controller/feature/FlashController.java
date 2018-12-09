@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.controller.feature;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import androidx.core.content.ContextCompat;
 import android.widget.ImageButton;
 
 import com.fkeglevich.rawdumper.R;
@@ -34,6 +33,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * TODO: Add class header

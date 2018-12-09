@@ -18,9 +18,6 @@ package com.fkeglevich.rawdumper.controller.feature;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.widget.CompoundButtonCompat;
-import androidx.appcompat.widget.AppCompatRadioButton;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -33,6 +30,10 @@ import com.fkeglevich.rawdumper.util.event.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.widget.CompoundButtonCompat;
 
 /**
  * TODO: add header comment

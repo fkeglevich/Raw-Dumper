@@ -16,11 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
-import androidx.annotation.NonNull;
-
 import com.drew.metadata.Directory;
 import com.drew.metadata.MetadataException;
 import com.drew.metadata.exif.ExifIFD0Directory;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

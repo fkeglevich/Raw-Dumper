@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.hardware.Camera;
 import android.os.Build;
-import androidx.annotation.Keep;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
@@ -33,6 +32,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import androidx.annotation.Keep;
 
 /**
  * Simple immutable class that stores specific information about

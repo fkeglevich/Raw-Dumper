@@ -19,13 +19,14 @@ package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.NonNull;
 
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureSkipListener;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.util.Mutable;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

@@ -16,13 +16,14 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
-import androidx.annotation.IdRes;
 import android.widget.Switch;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.raw.capture.RawSettings;
+
+import androidx.annotation.IdRes;
 
 class SwitchesController extends FeatureController
 {

@@ -16,12 +16,12 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import androidx.annotation.Keep;
-
 import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.util.AssetUtil;
 
 import java.io.IOException;
+
+import androidx.annotation.Keep;
 
 /**
  * Represents a set of opcode lists used to apply basic operations

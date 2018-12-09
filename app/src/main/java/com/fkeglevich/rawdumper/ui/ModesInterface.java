@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -29,6 +28,8 @@ import com.fkeglevich.rawdumper.controller.feature.FeatureController;
 import com.fkeglevich.rawdumper.ui.dialog.AboutDialog;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Represents the interface for camera mode selection

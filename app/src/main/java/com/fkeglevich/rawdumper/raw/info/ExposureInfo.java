@@ -16,9 +16,9 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import androidx.annotation.Keep;
-
 import java.util.List;
+
+import androidx.annotation.Keep;
 
 /**
  * Contains all implementation-specific information

@@ -18,9 +18,6 @@ package com.fkeglevich.rawdumper.ui.dialog;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -28,6 +25,10 @@ import android.widget.TextView;
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.ui.UiUtil;
 import com.fkeglevich.rawdumper.util.AppPackageUtil;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Represents the About this app dialog

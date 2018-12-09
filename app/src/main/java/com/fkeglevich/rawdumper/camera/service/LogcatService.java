@@ -16,12 +16,12 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
-import androidx.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.su.ShellFactory;
 import com.topjohnwu.superuser.Shell;
 
 import java.util.concurrent.atomic.AtomicReference;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: add header comment

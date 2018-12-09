@@ -16,11 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.parameter.value;
 
-import androidx.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

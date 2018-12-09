@@ -16,13 +16,13 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
-import androidx.annotation.Nullable;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.EnumMap;
 import java.util.Map;
+
+import androidx.annotation.Nullable;
 
 /**
  * TODO: add header comment

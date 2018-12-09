@@ -16,14 +16,14 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
-import androidx.annotation.Nullable;
-
 import com.fkeglevich.rawdumper.dng.opcode.GainMapOpcode;
 import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 
 import java.util.Collections;
 import java.util.Map;
+
+import androidx.annotation.Nullable;
 
 /**
  * TODO: add header comment

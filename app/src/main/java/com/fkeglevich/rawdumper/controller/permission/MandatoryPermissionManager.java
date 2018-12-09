@@ -20,7 +20,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Looper;
-import androidx.core.app.ActivityCompat;
 
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.controller.permission.exception.PermissionException;
@@ -31,6 +30,8 @@ import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.util.List;
+
+import androidx.core.app.ActivityCompat;
 
 /**
  * Created by Flávio Keglevich on 09/08/2017.

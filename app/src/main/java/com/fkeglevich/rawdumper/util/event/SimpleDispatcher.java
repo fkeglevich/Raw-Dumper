@@ -16,10 +16,10 @@
 
 package com.fkeglevich.rawdumper.util.event;
 
-import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

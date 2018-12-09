@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
-import androidx.annotation.IdRes;
-import androidx.annotation.StringRes;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -36,6 +34,9 @@ import com.fkeglevich.rawdumper.ui.TouchFocusView;
 import com.lantouzi.wheelview.WheelView;
 
 import java.util.List;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
 
 /**
  * TODO: Add class header

@@ -16,11 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.async.direct.mutable;
 
-import androidx.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.util.Mutable;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

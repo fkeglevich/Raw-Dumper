@@ -24,9 +24,7 @@ import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.topjohnwu.superuser.Shell;
 
 import java.io.IOException;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 
 /**

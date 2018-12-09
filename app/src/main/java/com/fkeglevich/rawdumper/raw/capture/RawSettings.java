@@ -16,11 +16,11 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
-import androidx.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
+
+import androidx.annotation.NonNull;
 
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 

@@ -16,12 +16,12 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import androidx.annotation.Keep;
-
 import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
 import com.fkeglevich.rawdumper.util.MathUtil;
+
+import androidx.annotation.Keep;
 
 import static com.fkeglevich.rawdumper.util.MathUtil.multiply3x3Matrices;
 
