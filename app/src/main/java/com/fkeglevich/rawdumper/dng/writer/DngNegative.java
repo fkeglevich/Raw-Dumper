@@ -26,7 +26,7 @@ public class DngNegative
 {
     static
     {
-        System.loadLibrary("dng-writer");
+        System.loadLibrary("raw-dumper");
     }
 
     private final long pointer;

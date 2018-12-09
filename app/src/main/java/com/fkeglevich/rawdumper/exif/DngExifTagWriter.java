@@ -29,7 +29,7 @@ public class DngExifTagWriter implements ExifTagWriter
 {
     static
     {
-        System.loadLibrary("dng-writer");
+        System.loadLibrary("raw-dumper");
     }
 
     private final long nativeHandle;
