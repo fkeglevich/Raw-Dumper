@@ -55,11 +55,14 @@ public abstract class WritableFeature<T, A> extends Feature<T>
 
     public void setValue(T value)
     {
-        checkFeatureAvailability(this);
-        if (!getValidator().isValid(value))
-            throw new IllegalArgumentException();
-
+        checkValueValidity(value);
         parameterCollection.set(parameter, value);
+    }
+
+    public void overrideValue(T value)
+    {
+        checkValueValidity(value);
+        parameterCollection.override(parameter, value);
     }
 
     public A getAvailableValues()
@@ -88,5 +91,12 @@ public abstract class WritableFeature<T, A> extends Feature<T>
     public ValueValidator<T, A> getValidator()
     {
         return validator;
+    }
+
+    private void checkValueValidity(T value)
+    {
+        checkFeatureAvailability(this);
+        if (!getValidator().isValid(value))
+            throw new IllegalArgumentException();
     }
 }

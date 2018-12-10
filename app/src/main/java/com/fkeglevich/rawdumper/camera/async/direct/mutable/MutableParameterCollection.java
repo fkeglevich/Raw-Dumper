@@ -71,4 +71,10 @@ public class MutableParameterCollection extends ParameterCollection
     {
         mutable.get().set(parameter, value);
     }
+
+    @Override
+    public <T> void override(Parameter<T> parameter, T value)
+    {
+        mutable.get().override(parameter, value);
+    }
 }

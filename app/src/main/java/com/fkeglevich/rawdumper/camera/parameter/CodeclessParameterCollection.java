@@ -58,7 +58,13 @@ public class CodeclessParameterCollection extends ParameterCollection
     {
         final ParameterChangeEvent<T> changeEvent = new ParameterChangeEvent<>(value);
         parameter.getOnChanging().dispatchEvent(changeEvent);
-        innerMap.put(parameter.getKey(), value);
+        override(parameter, value);
         parameter.getOnChanged().dispatchEvent(changeEvent);
+    }
+
+    @Override
+    public <T> void override(Parameter<T> parameter, T value)
+    {
+        innerMap.put(parameter.getKey(), value);
     }
 }
