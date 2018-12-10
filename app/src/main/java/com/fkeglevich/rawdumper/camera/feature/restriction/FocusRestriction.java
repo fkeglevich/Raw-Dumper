@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.feature.restriction;
 
-import android.util.Log;
-
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
@@ -78,7 +76,6 @@ public class FocusRestriction
 
         focusFeature.onStartAutoFocus.addListener(eventData ->
         {
-            Log.i("ASD", "FLASH: " + flashFocusFlag);
             if (flashFocusFlag)
             {
                 if(isHighIso(isoMeteringFeature) || isSlowSS(ssMeteringFeature))

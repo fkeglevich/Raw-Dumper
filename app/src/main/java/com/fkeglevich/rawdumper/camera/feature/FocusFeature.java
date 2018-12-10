@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.fkeglevich.rawdumper.camera.action.FocusAction;
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
@@ -95,7 +94,6 @@ public class FocusFeature extends ListFeature<FocusMode> implements FocusAction,
         onStartAutoFocus.dispatchEvent(null);
 
         int computedDelay = computeDelay();
-        Log.i("FocusFeature", "Autofocus delay: " + computedDelay);
 
         handler.postDelayed(() ->
         {
