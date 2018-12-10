@@ -38,13 +38,6 @@ TODO list:
 	- Razr I
 	- Zenfone 5
 
-- (DONE!) Flash focus
-	- (DONE!) remove these hardcoded values
-	- (DONE!) remove the appearing of notification toasts
-	- (DONE!) disable the feature when the device has laser (add a new raw info class)
-	- (DONE!) make the focus feature virtual
-	- (DONE!) add small pad between the focus buttons
-
 Next features:
  - Night Mode with raw pictures
  - Gain-based white balance
@@ -197,3 +190,4 @@ Done:
  - (DONE!) Optimize logcat reading
  - (DONE!) Added checksum toggle for optimal compressed DNG creation
  - (DONE!) Override EXIF software tag also for jpeg pictures
+ - (DONE!) Flash focus
