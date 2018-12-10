@@ -44,6 +44,7 @@ public class DngNegative
                                         float[] forwardMatrix1, float[] forwardMatrix2,
                                         int calibrationIlluminant1, int calibrationIlluminant2,
                                         float[] toneCurve);
+    private native void setAsShotProfileNameNative(long pointer, String name);
     private native void setOpcodeListNative(long pointer, byte[] bytes, int listType);
     private native void setNoiseProfileNative(long pointer, double[] noiseProfile);
     private native void writeImageToFileNative(long pointer, String fileName, int width, int height, int bpl,
@@ -100,6 +101,11 @@ public class DngNegative
                 calibrationIlluminant1 != null ? calibrationIlluminant1.getExifCode() : 0,
                 calibrationIlluminant2 != null ? calibrationIlluminant2.getExifCode() : 0,
                 toneCurve);
+    }
+
+    public void setAsShotProfileName(String name)
+    {
+        setAsShotProfileNameNative(pointer, name);
     }
 
     public void setOpcodeList1(byte[] opcodeList)

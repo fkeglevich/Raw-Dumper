@@ -293,6 +293,17 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setAsShotProfileNameNative(JNIEnv *env,
+                                                                                    jobject instance,
+                                                                                    jlong pointer,
+                                                                                    jstring name_)
+    {
+        const char *name = env->GetStringUTFChars(name_, 0);
+        ((dng_negative*) pointer)->SetAsShotProfileName(name);
+        env->ReleaseStringUTFChars(name_, name);
+    }
+
+    JNIEXPORT void JNICALL
     Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setOpcodeListNative(JNIEnv *env, jobject instance,
                                                                               jlong pointer,
                                                                               jbyteArray bytes_,

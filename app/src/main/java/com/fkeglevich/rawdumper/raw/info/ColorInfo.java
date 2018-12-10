@@ -36,7 +36,7 @@ import static com.fkeglevich.rawdumper.util.MathUtil.multiply3x3Matrices;
 @SuppressWarnings("unused")
 public class ColorInfo
 {
-    private static final String EMBEDDED_PROFILE_NAME   = "As Shot";
+    private static final String AS_SHOT_PROFILE_NAME    = "As Shot";
     private static final String CCM_MIXED_PROFILE       = "CCM Mixed Profile";
     private static final String CCM_PROFILE             = "CCM Profile";
 
@@ -77,11 +77,12 @@ public class ColorInfo
 
     private void addAsShotProfile(DngNegative negative)
     {
-        negative.addColorProfile(ColorInfo.EMBEDDED_PROFILE_NAME,
+        negative.addColorProfile(ColorInfo.AS_SHOT_PROFILE_NAME,
                 colorMatrix1, colorMatrix2,
                 forwardMatrix1, forwardMatrix2,
                 calibrationIlluminant1, calibrationIlluminant2,
                 toneCurve);
+        negative.setAsShotProfileName(AS_SHOT_PROFILE_NAME);
     }
 
     private void addMixedCCMProfile(DngNegative negative, float[] ccm)
