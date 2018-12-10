@@ -62,6 +62,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
     implementation 'androidx.annotation:annotation:1.0.1'
     implementation 'com.google.android.material:material:1.1.0-alpha01'
-
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.2.3'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
 }
