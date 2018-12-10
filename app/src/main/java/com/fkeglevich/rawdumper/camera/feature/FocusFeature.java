@@ -18,8 +18,9 @@ package com.fkeglevich.rawdumper.camera.feature;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
-import com.fkeglevich.rawdumper.camera.action.AutoFocusAction;
+import com.fkeglevich.rawdumper.camera.action.FocusAction;
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
 import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.data.FocusMode;
@@ -27,6 +28,7 @@ import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.extension.Parameters;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
+import com.fkeglevich.rawdumper.raw.info.FocusInfo;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.HandlerDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
@@ -42,19 +44,21 @@ import androidx.annotation.NonNull;
  * Created by Flávio Keglevich on 28/10/17.
  */
 
-public class FocusFeature extends ListFeature<FocusMode> implements AutoFocusAction
+public class FocusFeature extends ListFeature<FocusMode> implements FocusAction, VirtualFeature
 {
     public EventDispatcher<Void> onStartAutoFocus = new SimpleDispatcher<>();
     public EventDispatcher<Boolean> onAutoFocusResult = new HandlerDispatcher<>(Looper.getMainLooper());
+    public volatile boolean flashFocusTriggered = false;
 
-    private final AutoFocusAction autoFocusAction;
+    private final FocusAction focusActions;
+    private final int flashFocusDelay;
     private final Handler handler = new Handler(Looper.myLooper());
 
     @NonNull
-    private static ListValidator<FocusMode> getValidator(ParameterCollection parameterCollection, ListFeature<Flash> flashFeature)
+    private static ListValidator<FocusMode> getValidator(ParameterCollection parameterCollection, ListFeature<Flash> flashFeature, FocusInfo focusInfo)
     {
         ListValidator<FocusMode> validator = ListValidator.createFromListParameter(parameterCollection, Parameters.FOCUS_MODE_VALUES);
-        if (flashFeature != null && flashFeature.getAvailableValues().contains(Flash.ON))
+        if (focusInfo != null && focusInfo.hasFlashFocus() && flashFeature != null && flashFeature.getAvailableValues().contains(Flash.ON))
         {
             List<FocusMode> availableValues = new ArrayList<>(validator.getAvailableValues());
             availableValues.add(FocusMode.FLASH);
@@ -63,10 +67,16 @@ public class FocusFeature extends ListFeature<FocusMode> implements AutoFocusAct
         return validator;
     }
 
-    FocusFeature(ParameterCollection parameterCollection, ListFeature<Flash> flashFeature, AutoFocusAction autoFocusAction)
+    FocusFeature(ParameterCollection parameterCollection, ParameterCollection cameraParameterCollection, ListFeature<Flash> flashFeature, FocusInfo focusInfo, FocusAction focusActions)
     {
-        super(Parameters.FOCUS_MODE, parameterCollection, getValidator(parameterCollection, flashFeature));
-        this.autoFocusAction = autoFocusAction;
+        super(Parameters.FOCUS_MODE, parameterCollection, getValidator(cameraParameterCollection, flashFeature, focusInfo));
+        this.focusActions = focusActions;
+        this.flashFocusDelay = focusInfo.getFlashFocusExposureDelay();
+
+        if (isAvailable())
+            overrideValue(cameraParameterCollection.get(parameter));
+
+        getOnChanged().addListener(eventData -> performUpdate());
     }
 
     @Override
@@ -84,26 +94,51 @@ public class FocusFeature extends ListFeature<FocusMode> implements AutoFocusAct
         checkFeatureAvailability(this);
         onStartAutoFocus.dispatchEvent(null);
 
+        int computedDelay = computeDelay();
+        Log.i("FocusFeature", "Autofocus delay: " + computedDelay);
+
         handler.postDelayed(() ->
         {
-            autoFocusAction.startAutoFocus(focusArea, success ->
+            focusActions.startAutoFocus(focusArea, success ->
             {
                 onAutoFocusResult.dispatchEvent(success);
                 callback.autoFocusDone(success);
             });
-        }, 100);
+        }, computedDelay);
     }
 
     @Override
     public void cancelAutoFocus()
     {
         checkFeatureAvailability(this);
-        autoFocusAction.cancelAutoFocus();
+        focusActions.cancelAutoFocus();
     }
 
     @Override
     public boolean setMeteringArea(PreviewArea area)
     {
-        return autoFocusAction.setMeteringArea(area);
+        return focusActions.setMeteringArea(area);
+    }
+
+    @Override
+    public void notifyFocusValue(FocusMode value)
+    {
+        focusActions.notifyFocusValue(value);
+    }
+
+    @Override
+    public void performUpdate()
+    {
+        focusActions.notifyFocusValue(getValue());
+    }
+
+    private int computeDelay()
+    {
+        if (flashFocusTriggered && FocusMode.FLASH.equals(getValue()))
+        {
+            flashFocusTriggered = false;
+            return flashFocusDelay;
+        }
+        return 0;
     }
 }

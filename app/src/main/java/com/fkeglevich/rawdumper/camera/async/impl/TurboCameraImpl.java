@@ -97,7 +97,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
                                                             lowLevelCamera.getCameraActions());
 
         modeList = new ModeList(lowLevelCamera.getParameterCollection(), lowLevelCamera.getCameraContext().getCameraInfo());
-        virtualRecyclerFactory = new VirtualFeatureRecyclerFactory(lowLevelCamera.getCameraActions(), lowLevelCamera.getPictureSizeLayer());
+        virtualRecyclerFactory = new VirtualFeatureRecyclerFactory(lowLevelCamera.getCameraContext(), lowLevelCamera.getCameraActions(), lowLevelCamera.getPictureSizeLayer());
 
         createFeatures();
         createVirtualFeatures();
@@ -122,7 +122,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
 
         writableFeatures.put(Iso.class, recyclerFactory.createIsoFeature());
         writableFeatures.put(Ev.class, recyclerFactory.createEVFeature());
-        writableFeatures.put(FocusMode.class, recyclerFactory.createFocusFeature(flashFeature));
+        writableFeatures.put(FocusMode.class, virtualRecyclerFactory.createFocusFeature(lowLevelCamera.getParameterCollection(), flashFeature));
         writableFeatures.put(WhiteBalancePreset.class, recyclerFactory.createWhiteBalancePresetFeature());
 
         writableFeatures.put(ManualFocus.class, recyclerFactory.createManualFocusFeature());
@@ -152,7 +152,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     private void createRestrictions()
     {
         exposureRestriction     = new ExposureRestriction(getListFeature(Iso.class), getListFeature(ShutterSpeed.class), getListFeature(Ev.class));
-        focusRestriction        = new FocusRestriction(this);
+        focusRestriction        = new FocusRestriction(this, lowLevelCamera.getCameraContext().getCameraInfo());
         modeRestrictionChain    = new ModeRestrictionChain(pictureModeFeature, pictureFormatFeature, pictureSizeFeature, previewFeature, lowLevelCamera.getCameraActions());
         whiteBalanceRestriction = new WhiteBalanceRestriction((WhiteBalancePresetFeature) getListFeature(WhiteBalancePreset.class), getRangeFeature(ManualTemperature.class));
     }

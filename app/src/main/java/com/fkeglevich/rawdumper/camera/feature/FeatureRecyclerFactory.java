@@ -20,8 +20,6 @@ import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
 import com.fkeglevich.rawdumper.camera.data.Ev;
-import com.fkeglevich.rawdumper.camera.data.Flash;
-import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
@@ -65,13 +63,6 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
     public ListFeature<Ev> createEVFeature()
     {
         EvFeature result = EvFeature.create(parameterCollection);
-        registerFeature(result);
-        return result;
-    }
-
-    public ListFeature<FocusMode> createFocusFeature(ListFeature<Flash> flashFeature)
-    {
-        FocusFeature result = new FocusFeature(parameterCollection, flashFeature, cameraActions);
         registerFeature(result);
         return result;
     }

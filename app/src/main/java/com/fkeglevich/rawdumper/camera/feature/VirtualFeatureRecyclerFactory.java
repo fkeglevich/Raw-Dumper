@@ -20,6 +20,7 @@ import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Flash;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.parameter.CodeclessParameterCollection;
@@ -38,11 +39,13 @@ import java.util.List;
 public class VirtualFeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 {
     private final ParameterCollection virtualParameterCollection = new CodeclessParameterCollection();
+    private final CameraContext cameraContext;
     private final CameraActions cameraActions;
     private final ParameterCollection pictureSizeCollection;
 
-    public VirtualFeatureRecyclerFactory(CameraActions cameraActions, ParameterCollection pictureSizeCollection)
+    public VirtualFeatureRecyclerFactory(CameraContext cameraContext, CameraActions cameraActions, ParameterCollection pictureSizeCollection)
     {
+        this.cameraContext = cameraContext;
         this.cameraActions = cameraActions;
         this.pictureSizeCollection = pictureSizeCollection;
     }
@@ -81,6 +84,14 @@ public class VirtualFeatureRecyclerFactory extends FeatureRecyclerFactoryBase
     public WritableFeature<ShutterSpeed, List<ShutterSpeed>> createShutterSpeedFeature(ParameterCollection cameraParameterCollection, CameraContext cameraContext)
     {
         ShutterSpeedFeature result = ShutterSpeedFeature.create(cameraContext.getExposureInfo(), cameraParameterCollection, cameraActions);
+        registerFeature(result);
+        return result;
+    }
+
+
+    public ListFeature<FocusMode> createFocusFeature(ParameterCollection cameraParameterCollection, ListFeature<Flash> flashFeature)
+    {
+        FocusFeature result = new FocusFeature(virtualParameterCollection, cameraParameterCollection, flashFeature, cameraContext.getCameraInfo().getFocus(), cameraActions);
         registerFeature(result);
         return result;
     }

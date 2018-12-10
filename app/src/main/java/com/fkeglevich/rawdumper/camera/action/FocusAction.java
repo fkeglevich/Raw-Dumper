@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.camera.action;
 
 import com.fkeglevich.rawdumper.camera.action.listener.AutoFocusResult;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 
 /**
@@ -25,11 +26,13 @@ import com.fkeglevich.rawdumper.camera.data.PreviewArea;
  * Created by Flávio Keglevich on 28/10/17.
  */
 
-public interface AutoFocusAction
+public interface FocusAction
 {
     void startAutoFocus(PreviewArea focusArea, AutoFocusResult callback);
 
     void cancelAutoFocus();
 
     boolean setMeteringArea(PreviewArea area);
+
+    void notifyFocusValue(FocusMode value);
 }
