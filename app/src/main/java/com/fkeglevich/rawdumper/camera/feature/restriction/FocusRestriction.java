@@ -28,6 +28,7 @@ import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
 import com.fkeglevich.rawdumper.camera.feature.ListFeature;
 import com.fkeglevich.rawdumper.camera.feature.RangeFeature;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.util.Nullable;
 
 /**
@@ -45,8 +46,17 @@ public class FocusRestriction
     private boolean flashFocusFlag       = false;
     private boolean flashFocusTriggered  = false;
 
-    public FocusRestriction(TurboCamera turboCamera)
+    private final int flashFocusHighIso;
+    private final double flashFocusSlowShutterSpeed;
+
+    public FocusRestriction(TurboCamera turboCamera, ExtraCameraInfo cameraInfo)
     {
+        flashFocusHighIso = cameraInfo.getFocus().getFlashFocusHighIso();
+        flashFocusSlowShutterSpeed = cameraInfo.getFocus().getFlashFocusSlowShutterSpeed();
+
+        if(!cameraInfo.getFocus().hasFlashFocus())
+            return;
+
         FocusFeature focusFeature = (FocusFeature) turboCamera.getListFeature(FocusMode.class);
         RangeFeature<ManualFocus> manualFocusFeature = turboCamera.getRangeFeature(ManualFocus.class);
         ListFeature<Flash> flashFeature = turboCamera.getListFeature(Flash.class);
@@ -74,6 +84,7 @@ public class FocusRestriction
                 if(isHighIso(isoMeteringFeature) || isSlowSS(ssMeteringFeature))
                 {
                     flashFocusTriggered = true;
+                    focusFeature.flashFocusTriggered = true;
                     if (flashFeature.isAvailable())
                     {
                         oldFlashValue = flashFeature.getValue();
@@ -83,13 +94,13 @@ public class FocusRestriction
                     if (isoFeature.isAvailable())
                     {
                         oldIsoValue = isoFeature.getValue();
-                        isoFeature.setValue(Iso.AUTO);
+                        isoFeature.overrideValue(Iso.AUTO);
                     }
 
                     if (ssFeature.isAvailable())
                     {
                         oldSSValue = ssFeature.getValue();
-                        ssFeature.setValue(ShutterSpeed.AUTO);
+                        ssFeature.overrideValue(ShutterSpeed.AUTO);
                     }
                 }
             }
@@ -128,22 +139,16 @@ public class FocusRestriction
 
         if (oldIsoValue != null)
         {
-            isoFeature.setValue(oldIsoValue);
+            isoFeature.overrideValue(oldIsoValue);
             oldIsoValue = null;
         }
 
         if (oldSSValue != null)
         {
-            ssFeature.setValue(oldSSValue);
+            ssFeature.overrideValue(oldSSValue);
             oldSSValue = null;
         }
     }
-
-    /*
-            TODO: remove these hardcoded values
-            TODO: remove the appearing of notification toasts
-            TODO: make the focus feature virtual
-     */
 
     private boolean isHighIso(Feature<Nullable<Iso>> isoMeteringFeature)
     {
@@ -155,7 +160,7 @@ public class FocusRestriction
         {
             Iso iso = nullable.get();
             if (!Iso.AUTO.equals(iso))
-                return iso.getNumericValue() >= 600;
+                return iso.getNumericValue() >= flashFocusHighIso;
         }
         return false;
     }
@@ -170,7 +175,7 @@ public class FocusRestriction
         {
             ShutterSpeed shutterSpeed = nullable.get();
             if (!ShutterSpeed.AUTO.equals(shutterSpeed))
-                return shutterSpeed.getExposureInSeconds() >= 1.0/30.0;
+                return shutterSpeed.getExposureInSeconds() >= flashFocusSlowShutterSpeed;
         }
         return false;
     }
