@@ -154,6 +154,11 @@
 					"10000"
 				]
 			},
+            "focus": {
+                "hasFlashFocus": true,
+                "flashFocusHighIso": 600,
+                "flashFocusSlowShutterSpeed": 0.033333333
+            },
             "gainMapFile": "t4k37_gain_map.bin",
             "hasKnownMakernote": true,
             "id": 0,
@@ -510,6 +515,11 @@
                     "10000"
 				]
 			},
+            "focus": {
+                "hasFlashFocus": false,
+                "flashFocusHighIso": 0,
+                "flashFocusSlowShutterSpeed": 0
+            },
             "gainMapFile": "ov5670_gain_map.bin",
             "hasKnownMakernote": true,
             "id": 1,
