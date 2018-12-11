@@ -52,7 +52,6 @@ Known bugs:
     Lossy webp is also too slow and the memory requirements are also too high.
     PNG capture is even slower.
     I probably won't enable YUV capture (right now) due to performance problems.
- - Pictures have wrong month date
  
 Done:
  - The i3av4 header should always be saved in the DNG Exif MakerNote tag
@@ -191,3 +190,5 @@ Done:
  - (DONE!) Added checksum toggle for optimal compressed DNG creation
  - (DONE!) Override EXIF software tag also for jpeg pictures
  - (DONE!) Flash focus
+ - Fixed "Pictures have wrong month date"
+ - Fixed dates in exif tags
