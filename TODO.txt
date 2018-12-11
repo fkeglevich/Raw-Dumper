@@ -33,14 +33,12 @@ TODO list:
  - Restructure the camera access diagram
 
  - Create DNG with thumbnails
- 
- - Migrate project to AndroidX
+
+ - Change switches's background color
 
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
 	- Zenfone 5
-
- - (IN PROGRESS) Flash focus
 
 Next features:
  - Night Mode with raw pictures
