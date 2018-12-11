@@ -31,6 +31,8 @@ public interface ExifTagWriter
 
     void writeMakerNoteTag(byte[] makerNote);
 
+    void writeDateTagsAsCurrentDate();
+
     void writeDateTimeOriginalTags(Calendar dateTimeOriginal);
 
     void writeDateTimeDigitizedTags(Calendar dateTimeDigitized);

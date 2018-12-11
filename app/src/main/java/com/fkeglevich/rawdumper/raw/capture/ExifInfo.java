@@ -180,11 +180,12 @@ public class ExifInfo
     {
         exifWriter.writeExifVersionTag(exifVersion);
 
-        if (dateTimeOriginal != null)
+        /*if (dateTimeOriginal != null)
         {
             exifWriter.writeDateTimeOriginalTags(dateTimeOriginal);
             exifWriter.writeDateTimeDigitizedTags(dateTimeOriginal);
-        }
+        }*/
+        exifWriter.writeDateTagsAsCurrentDate();
 
         if (iso != null)
             exifWriter.writeISOTag(iso);
