@@ -25,6 +25,7 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.pipeline.PipelineManager;
 import com.fkeglevich.rawdumper.camera.data.DataFormat;
 import com.fkeglevich.rawdumper.camera.data.Flash;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
 import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
@@ -114,6 +115,17 @@ public class LowLevelCameraActions implements CameraActions
         {
             Camera camera = getCamera();
             return setAreasParameters(FocusHelper.generateFocusAreas(area.rotate(displayRotation).flip(flipType)), camera);
+        }
+    }
+
+    @Override
+    public void notifyFocusValue(FocusMode value)
+    {
+        synchronized (lock)
+        {
+            Camera.Parameters parameters = cameraExtension.get().getCameraDevice().getParameters();
+            parameters.setFocusMode(value.getParameterValue());
+            cameraExtension.get().getCameraDevice().setParameters(parameters);
         }
     }
 

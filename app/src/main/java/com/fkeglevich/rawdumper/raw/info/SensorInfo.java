@@ -17,12 +17,13 @@
 package com.fkeglevich.rawdumper.raw.info;
 
 import android.hardware.Camera;
-import android.support.annotation.Keep;
 
 import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 import com.fkeglevich.rawdumper.raw.data.BayerPattern;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+
+import androidx.annotation.Keep;
 
 /**
  * Stores specific information and implementation details
@@ -35,11 +36,6 @@ import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 @SuppressWarnings("unused")
 public class SensorInfo
 {
-    private static final short[] DEFAULT_CFA_REPEAT_PATTERN_DIM = new short[] {2, 2};
-    private static final short[] DEFAULT_BLACK_LEVEL_REPEAT_DIM = new short[] {2, 2};
-    private static final byte[]  DEFAULT_CFA_PLANE_COLOR        = new byte[]  {0, 1, 2};
-    private static final short   DEFAULT_CFA_LAYOUT             = 1;
-
     private int bitsPerPixel;
     private int storageBitsPerPixel;
 

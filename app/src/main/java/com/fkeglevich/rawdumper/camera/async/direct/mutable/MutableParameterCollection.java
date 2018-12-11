@@ -16,11 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.async.direct.mutable;
 
-import android.support.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.util.Mutable;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header
@@ -70,5 +70,11 @@ public class MutableParameterCollection extends ParameterCollection
     public <T> void set(Parameter<T> parameter, T value)
     {
         mutable.get().set(parameter, value);
+    }
+
+    @Override
+    public <T> void override(Parameter<T> parameter, T value)
+    {
+        mutable.get().override(parameter, value);
     }
 }

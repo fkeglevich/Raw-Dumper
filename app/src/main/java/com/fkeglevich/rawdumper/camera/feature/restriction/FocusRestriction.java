@@ -16,10 +16,18 @@
 
 package com.fkeglevich.rawdumper.camera.feature.restriction;
 
-import com.fkeglevich.rawdumper.camera.data.DataRange;
+import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.camera.data.Flash;
+import com.fkeglevich.rawdumper.camera.data.FocusMode;
+import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
+import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.camera.feature.Feature;
 import com.fkeglevich.rawdumper.camera.feature.FocusFeature;
-import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
+import com.fkeglevich.rawdumper.camera.feature.ListFeature;
+import com.fkeglevich.rawdumper.camera.feature.RangeFeature;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+import com.fkeglevich.rawdumper.util.Nullable;
 
 /**
  * TODO: Add class header
@@ -29,12 +37,82 @@ import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 
 public class FocusRestriction
 {
-    public FocusRestriction(FocusFeature focusFeature, WritableFeature<ManualFocus, DataRange<ManualFocus>> manualFocusFeature)
+    private Flash oldFlashValue     = null;
+    private Iso oldIsoValue         = null;
+    private ShutterSpeed oldSSValue = null;
+
+    private boolean flashFocusFlag       = false;
+    private boolean flashFocusTriggered  = false;
+
+    private final int flashFocusHighIso;
+    private final double flashFocusSlowShutterSpeed;
+
+    public FocusRestriction(TurboCamera turboCamera, ExtraCameraInfo cameraInfo)
     {
+        flashFocusHighIso = cameraInfo.getFocus().getFlashFocusHighIso();
+        flashFocusSlowShutterSpeed = cameraInfo.getFocus().getFlashFocusSlowShutterSpeed();
+
+        if(!cameraInfo.getFocus().hasFlashFocus())
+            return;
+
+        FocusFeature focusFeature = (FocusFeature) turboCamera.getListFeature(FocusMode.class);
+        RangeFeature<ManualFocus> manualFocusFeature = turboCamera.getRangeFeature(ManualFocus.class);
+        ListFeature<Flash> flashFeature = turboCamera.getListFeature(Flash.class);
+        ListFeature<Iso> isoFeature = turboCamera.getListFeature(Iso.class);
+        ListFeature<ShutterSpeed> ssFeature = turboCamera.getListFeature(ShutterSpeed.class);
+        Feature<Nullable<Iso>> isoMeteringFeature = turboCamera.getMeteringFeature(Iso.class);
+        Feature<Nullable<ShutterSpeed>> ssMeteringFeature = turboCamera.getMeteringFeature(ShutterSpeed.class);
+
         focusFeature.getOnChanging().addListener(eventData ->
         {
             if (manualFocusFeature.isAvailable())
                 manualFocusFeature.setValue(ManualFocus.DISABLED);
+
+            flashFocusFlag = eventData.parameterValue.equals(FocusMode.FLASH);
+
+            if (!flashFocusFlag)
+                resetValues(flashFeature, isoFeature, ssFeature);
+        });
+
+        focusFeature.onStartAutoFocus.addListener(eventData ->
+        {
+            if (flashFocusFlag)
+            {
+                if(isHighIso(isoMeteringFeature) || isSlowSS(ssMeteringFeature))
+                {
+                    flashFocusTriggered = true;
+                    focusFeature.flashFocusTriggered = true;
+                    if (flashFeature.isAvailable())
+                    {
+                        oldFlashValue = flashFeature.getValue();
+                        flashFeature.setValue(Flash.ON);
+                    }
+
+                    if (isoFeature.isAvailable())
+                    {
+                        oldIsoValue = isoFeature.getValue();
+                        isoFeature.overrideValue(Iso.AUTO);
+                    }
+
+                    if (ssFeature.isAvailable())
+                    {
+                        oldSSValue = ssFeature.getValue();
+                        ssFeature.overrideValue(ShutterSpeed.AUTO);
+                    }
+                }
+            }
+        });
+
+        focusFeature.onAutoFocusResult.addListener(eventData ->
+        {
+            if (flashFocusFlag && flashFocusTriggered)
+                resetValues(flashFeature, isoFeature, ssFeature);
+        });
+
+        turboCamera.getOnTakePicture().addListener(eventData ->
+        {
+            if (flashFocusFlag && flashFocusTriggered)
+                resetValues(flashFeature, isoFeature, ssFeature);
         });
 
         manualFocusFeature.getOnChanging().addListener(eventData ->
@@ -44,5 +122,58 @@ public class FocusRestriction
             if (manualFocusEnabled)
                 focusFeature.cancelAutoFocus();
         });
+    }
+
+    private void resetValues(ListFeature<Flash> flashFeature, ListFeature<Iso> isoFeature, ListFeature<ShutterSpeed> ssFeature)
+    {
+        flashFocusTriggered = false;
+
+        if (oldFlashValue != null)
+        {
+            flashFeature.setValue(oldFlashValue);
+            oldFlashValue = null;
+        }
+
+        if (oldIsoValue != null)
+        {
+            isoFeature.overrideValue(oldIsoValue);
+            oldIsoValue = null;
+        }
+
+        if (oldSSValue != null)
+        {
+            ssFeature.overrideValue(oldSSValue);
+            oldSSValue = null;
+        }
+    }
+
+    private boolean isHighIso(Feature<Nullable<Iso>> isoMeteringFeature)
+    {
+        if (!isoMeteringFeature.isAvailable())
+            return false;
+
+        Nullable<Iso> nullable = isoMeteringFeature.getValue();
+        if (nullable.isPresent())
+        {
+            Iso iso = nullable.get();
+            if (!Iso.AUTO.equals(iso))
+                return iso.getNumericValue() >= flashFocusHighIso;
+        }
+        return false;
+    }
+
+    private boolean isSlowSS(Feature<Nullable<ShutterSpeed>> ssMeteringFeature)
+    {
+        if (!ssMeteringFeature.isAvailable())
+            return false;
+
+        Nullable<ShutterSpeed> nullable = ssMeteringFeature.getValue();
+        if (nullable.isPresent())
+        {
+            ShutterSpeed shutterSpeed = nullable.get();
+            if (!ShutterSpeed.AUTO.equals(shutterSpeed))
+                return shutterSpeed.getExposureInSeconds() >= flashFocusSlowShutterSpeed;
+        }
+        return false;
     }
 }

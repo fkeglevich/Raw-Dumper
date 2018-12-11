@@ -16,13 +16,14 @@
 
 package com.fkeglevich.rawdumper.controller.feature;
 
-import android.support.annotation.IdRes;
 import android.widget.Switch;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.raw.capture.RawSettings;
+
+import androidx.annotation.IdRes;
 
 class SwitchesController extends FeatureController
 {
@@ -40,9 +41,10 @@ class SwitchesController extends FeatureController
     {
         RawSettings rawSettings = camera.getRawSettings();
 
-        setupSwitch(R.id.klvSwitch, rawSettings.keepLensVignetting, rawSettings);
-        setupSwitch(R.id.cmpSwitch, rawSettings.compressRawFiles, rawSettings);
-        setupSwitch(R.id.safSwitch, rawSettings.shouldInvertFrontCameraRows, rawSettings);
+        setupSwitch(R.id.klvSwitch,     rawSettings.keepLensVignetting, rawSettings);
+        setupSwitch(R.id.cmpSwitch,     rawSettings.compressRawFiles, rawSettings);
+        setupSwitch(R.id.safSwitch,     rawSettings.shouldInvertFrontCameraRows, rawSettings);
+        setupSwitch(R.id.digestSwitch,  rawSettings.calculateDigest, rawSettings);
 
         enable();
     }
@@ -85,6 +87,10 @@ class SwitchesController extends FeatureController
 
                 case R.id.safSwitch:
                     rawSettings.shouldInvertFrontCameraRows = isChecked;
+                    break;
+
+                case R.id.digestSwitch:
+                    rawSettings.calculateDigest = isChecked;
                     break;
             }
         });

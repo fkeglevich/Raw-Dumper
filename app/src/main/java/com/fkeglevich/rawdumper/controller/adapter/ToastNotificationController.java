@@ -18,12 +18,13 @@ package com.fkeglevich.rawdumper.controller.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 import com.fkeglevich.rawdumper.camera.data.Displayable;
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
 import com.fkeglevich.rawdumper.controller.feature.ExternalNotificationController;
+
+import androidx.annotation.StringRes;
 
 /**
  * TODO: Add class header

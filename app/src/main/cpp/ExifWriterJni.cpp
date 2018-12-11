@@ -44,6 +44,19 @@ extern "C"
     }
 
     JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeDateTagsAsCurrentDateNative(JNIEnv *env,
+                                                                                   jobject instance,
+                                                                                   jlong pointer)
+    {
+        dng_date_time_info current;
+        CurrentDateTimeAndZone(current);
+
+        ((dng_exif *) pointer)->fDateTimeOriginal   = current;
+        ((dng_exif *) pointer)->fDateTimeDigitized  = current;
+        ((dng_exif *) pointer)->fDateTime           = current;
+    }
+
+    JNIEXPORT void JNICALL
     Java_com_fkeglevich_rawdumper_exif_DngExifTagWriter_writeDateTimeOriginalTagsNative(JNIEnv *env,
                                                                                         jobject instance,
                                                                                         jlong pointer,

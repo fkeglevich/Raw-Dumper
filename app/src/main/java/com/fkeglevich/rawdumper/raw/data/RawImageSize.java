@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.data;
 
-import android.support.annotation.Keep;
+import androidx.annotation.Keep;
 
 import static com.fkeglevich.rawdumper.util.DataSize.SHORT_SIZE;
 

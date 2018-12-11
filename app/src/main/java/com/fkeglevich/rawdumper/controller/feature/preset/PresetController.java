@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.controller.feature.preset;
 
-import android.support.annotation.IdRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -35,6 +34,8 @@ import com.transitionseverywhere.TransitionManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.IdRes;
 
 /**
  * TODO: add header comment

@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.util;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Created by Flávio Keglevich on 22/04/2017.

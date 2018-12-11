@@ -16,13 +16,14 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.support.annotation.Keep;
 import android.util.Log;
 
 import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 
 import java.util.Arrays;
+
+import androidx.annotation.Keep;
 
 /**
  * Stores a matrix of possible black levels and chooses the best values given ISO and exposure time configs.

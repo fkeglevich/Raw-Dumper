@@ -16,8 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import android.support.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
@@ -26,6 +24,8 @@ import com.fkeglevich.rawdumper.camera.parameter.ValueCollectionFactory;
 import com.fkeglevich.rawdumper.camera.parameter.value.ListValidator;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

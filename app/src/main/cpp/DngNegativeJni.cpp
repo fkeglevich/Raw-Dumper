@@ -43,6 +43,7 @@
 #include <android/log.h>
 #include <sys/time.h>
 #include <math.h>
+#include <algorithm>
 
 typedef unsigned long long timestamp_t;
 
@@ -64,11 +65,12 @@ class OpenMPHost : public dng_host
         {
             dng_point tileSize (task.FindTileSize (area));
 
-            int numThreads = omp_get_max_threads();
+            int numThreads = PerformAreaTaskThreads();
             int widthPerThread = (int)ceil(((double) area.W()) / numThreads);
 
             timestamp_t t0 = get_timestamp();
 
+            __android_log_print(ANDROID_LOG_DEBUG, "OpenMPHost", "num threads: %d", numThreads);
             __android_log_print(ANDROID_LOG_DEBUG, "OpenMPHost", "total area: %d %d %d %d", area.l, area.t, area.r, area.b);
 
             const int tileSizeH = tileSize.h, tileSizeV = tileSize.v;
@@ -93,7 +95,7 @@ class OpenMPHost : public dng_host
 
         uint32 PerformAreaTaskThreads() override
         {
-            return (uint32) omp_get_max_threads();
+            return std::min((uint32) omp_get_max_threads(), kMaxMPThreads);
         }
 };
 
@@ -210,12 +212,12 @@ extern "C"
     JNIEXPORT void JNICALL
     Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setCameraNeutralNative(JNIEnv *env, jobject instance,
                                                                                 jlong pointer,
-                                                                                jfloatArray cameraNeutral_)
+                                                                                jdoubleArray cameraNeutral_)
     {
-        jfloat *cameraNeutral = env->GetFloatArrayElements(cameraNeutral_, NULL);
+        jdouble *cameraNeutral = env->GetDoubleArrayElements(cameraNeutral_, NULL);
         dng_vector_3 vector3(cameraNeutral[0], cameraNeutral[1], cameraNeutral[2]);
         ((dng_negative*) pointer)->SetCameraNeutral(vector3);
-        env->ReleaseFloatArrayElements(cameraNeutral_, cameraNeutral, 0);
+        env->ReleaseDoubleArrayElements(cameraNeutral_, cameraNeutral, 0);
     }
 
     JNIEXPORT void JNICALL
@@ -288,6 +290,17 @@ extern "C"
         profile->SetWasReadFromDNG(true);
 
         ((dng_negative*) pointer)->AddProfile(profile);
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_fkeglevich_rawdumper_dng_writer_DngNegative_setAsShotProfileNameNative(JNIEnv *env,
+                                                                                    jobject instance,
+                                                                                    jlong pointer,
+                                                                                    jstring name_)
+    {
+        const char *name = env->GetStringUTFChars(name_, 0);
+        ((dng_negative*) pointer)->SetAsShotProfileName(name);
+        env->ReleaseStringUTFChars(name_, name);
     }
 
     JNIEXPORT void JNICALL
@@ -370,7 +383,8 @@ extern "C"
                                                                                 jint bpl,
                                                                                 jboolean shouldInvertRows,
                                                                                 jbyteArray imageData_,
-                                                                                jboolean uncompressed)
+                                                                                jboolean uncompressed,
+                                                                                jboolean calculateDigest)
     {
 
         timestamp_t t0 = get_timestamp();
@@ -415,7 +429,7 @@ extern "C"
         const char *fileName = env->GetStringUTFChars(fileName_, 0);
         dng_image_writer writer;
         dng_file_stream stream(fileName, true);
-        writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer) , NULL, dngVersion_SaveDefault, uncompressed);
+        writer.WriteDNG(globalHost, stream, *((dng_negative*) pointer) , NULL, dngVersion_SaveDefault, uncompressed, calculateDigest);
         env->ReleaseStringUTFChars(fileName_, fileName);
         t1 = get_timestamp();
         secs = (t1 - t0) / 1000000.0L;

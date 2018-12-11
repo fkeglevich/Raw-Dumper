@@ -21,11 +21,11 @@ import android.os.HandlerThread;
 
 import com.fkeglevich.rawdumper.util.event.AsyncEventDispatcher;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
+import com.topjohnwu.superuser.Shell;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import eu.chainfire.libsuperuser.Shell;
 
 /**
  * TODO: add header comment
@@ -43,19 +43,37 @@ public class ShellFactory
     public final EventDispatcher<Void> onSuccess = new AsyncEventDispatcher<>();
     public final EventDispatcher<Void> onError = new AsyncEventDispatcher<>();
 
-    private final List<Shell.Builder> builderList = new ArrayList<>();
-    private final List<Shell.Interactive> shellList = new ArrayList<>();
-    private final Handler       managerHandler;
-    private final Runnable      createShellsRunnable = () ->
+    private int numRequestedShells = 0;
+    private List<Shell> createdShells = new ArrayList<>();
+
+    private final Handler managerHandler;
+    private final Runnable createShellsRunnable = () ->
     {
         synchronized (ShellFactory.this)
         {
-            for (int i = 0; i < builderList.size(); i++)
-                new ShellCreationThread(builderList.get(i), i, ShellFactory.this).start();
+            List<ShellCreationThread> threadList = new ArrayList<>();
+            for (int i = 0; i < numRequestedShells; i++)
+            {
+                ShellCreationThread thread = new ShellCreationThread();
+                thread.start();
+                threadList.add(thread);
+            }
+
+            for (ShellCreationThread thread : threadList)
+                createdShells.add(thread.getShell());
+
+            numRequestedShells = 0;
+            creatingShells = false;
+
+            if (shellsHaveRootAccess())
+                dispatchSuccess();
+            else
+            {
+                closeShells();
+                dispatchError();
+            }
         }
     };
-
-    private boolean errorFlag = false;
 
     private ShellFactory()
     {
@@ -66,65 +84,26 @@ public class ShellFactory
 
     private boolean creatingShells = false;
 
-    public synchronized int requestShell(Shell.Builder builder)
+    public synchronized void requestShell()
     {
         requiresIdleState();
-        builderList.add(builder);
-        shellList.add(null);
-        return builderList.size() - 1;
+        numRequestedShells ++;
     }
 
-    public synchronized Shell.Interactive getShell(int id)
+    public synchronized Shell getShell()
     {
         requiresIdleState();
-        Shell.Interactive shell = shellList.get(id);
-        shellList.set(id, null);
-        return shell;
+        return createdShells.remove(createdShells.size() - 1);
     }
 
     public synchronized void startCreatingShells()
     {
         requiresIdleState();
-        if (builderList.isEmpty())
-        {
-            creatingShells = false;
-            dispatchSuccess();
-            return;
-        }
-
-        for (Shell.Interactive shell : shellList)
-            if (shell != null)
-                throw new IllegalStateException("There are shells that weren't used!");
+        if (!createdShells.isEmpty())
+            throw new IllegalStateException("There are shells that weren't used!");
 
         creatingShells = true;
-        errorFlag = false;
         managerHandler.post(createShellsRunnable);
-    }
-
-    synchronized boolean registerShell(int id, Shell.Interactive shell)
-    {
-        if (errorFlag) return false;
-        requiresCreatingShellsState();
-
-        if (shell == null)
-        {
-            errorFlag = true;
-            killOpenedShells();
-            builderList.clear();
-            creatingShells = false;
-            dispatchError();
-            return false;
-        }
-
-        shellList.set(id, shell);
-        builderList.set(id, null);
-        if (hasEveryShell())
-        {
-            builderList.clear();
-            creatingShells = false;
-            dispatchSuccess();
-        }
-        return true;
     }
 
     public synchronized boolean isCreatingShells()
@@ -137,31 +116,6 @@ public class ShellFactory
         if (isCreatingShells()) throw new IllegalStateException("The state needs to be IDLE!");
     }
 
-    private void requiresCreatingShellsState()
-    {
-        if (!isCreatingShells()) throw new IllegalStateException("The state needs to be CREATING SHELLS");
-    }
-
-    private boolean hasEveryShell()
-    {
-        for (Shell.Interactive shell : shellList)
-            if (shell == null)
-                return false;
-
-        return true;
-    }
-
-    private void killOpenedShells()
-    {
-        int size = shellList.size();
-        for (int i = 0; i < size; i++)
-        {
-            Shell.Interactive s = shellList.get(i);
-            if (s != null) s.kill();
-            shellList.set(i, null);
-        }
-    }
-
     private void dispatchError()
     {
         managerHandler.post(() -> onError.dispatchEvent(null));
@@ -170,5 +124,27 @@ public class ShellFactory
     private void dispatchSuccess()
     {
         managerHandler.post(() -> onSuccess.dispatchEvent(null));
+    }
+
+    private boolean shellsHaveRootAccess()
+    {
+        for (Shell shell : createdShells)
+            if (!shell.isRoot()) return false;
+
+        return true;
+    }
+
+    private void closeShells()
+    {
+        for (Shell shell : createdShells)
+        {
+            try
+            {
+                shell.close();
+            }
+            catch (IOException ignored)
+            { }
+        }
+        createdShells.clear();
     }
 }

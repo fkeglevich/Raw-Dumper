@@ -26,7 +26,7 @@ public class DngNegative
 {
     static
     {
-        System.loadLibrary("dng-writer");
+        System.loadLibrary("raw-dumper");
     }
 
     private final long pointer;
@@ -37,17 +37,18 @@ public class DngNegative
     private native void setModelNative(long pointer, String model);
     private native void setOriginalRawFileNameNative(long pointer, String fileName);
     private native void setSensorInfoNative(long pointer, int whiteLevel, float[] blackLevels, int bayerPhase);
-    private native void setCameraNeutralNative(long pointer, float[] cameraNeutral);
+    private native void setCameraNeutralNative(long pointer, double[] cameraNeutral);
     private native void setImageSizeAndOrientationNative(long pointer, int width, int height, int orientationExifCode);
     private native void setCameraCalibrationNative(long pointer, float[] cameraCalibration1, float[] cameraCalibration2);
     private native void addColorProfileNative(long pointer, String name, float[] colorMatrix1, float[] colorMatrix2,
                                         float[] forwardMatrix1, float[] forwardMatrix2,
                                         int calibrationIlluminant1, int calibrationIlluminant2,
                                         float[] toneCurve);
+    private native void setAsShotProfileNameNative(long pointer, String name);
     private native void setOpcodeListNative(long pointer, byte[] bytes, int listType);
     private native void setNoiseProfileNative(long pointer, double[] noiseProfile);
     private native void writeImageToFileNative(long pointer, String fileName, int width, int height, int bpl,
-                                               boolean shouldInvertRows, byte[] imageData, boolean uncompressed);
+                                               boolean shouldInvertRows, byte[] imageData, boolean uncompressed, boolean calculateDigest);
     private native long getExifHandleNative(long pointer);
 
     public DngNegative()
@@ -75,7 +76,7 @@ public class DngNegative
         setSensorInfoNative(pointer, whiteLevel, blackLevels, bayerPhase);
     }
 
-    public void setCameraNeutral(float[] cameraNeutral)
+    public void setCameraNeutral(double[] cameraNeutral)
     {
         setCameraNeutralNative(pointer, cameraNeutral);
     }
@@ -100,6 +101,11 @@ public class DngNegative
                 calibrationIlluminant1 != null ? calibrationIlluminant1.getExifCode() : 0,
                 calibrationIlluminant2 != null ? calibrationIlluminant2.getExifCode() : 0,
                 toneCurve);
+    }
+
+    public void setAsShotProfileName(String name)
+    {
+        setAsShotProfileNameNative(pointer, name);
     }
 
     public void setOpcodeList1(byte[] opcodeList)
@@ -132,9 +138,9 @@ public class DngNegative
         setNoiseProfileNative(pointer, noiseProfile);
     }
 
-    public void writeImageToFile(String fileName, int width, int height, int bpl, boolean shouldInvertRows, byte[] imageData, boolean uncompressed)
+    public void writeImageToFile(String fileName, int width, int height, int bpl, boolean shouldInvertRows, byte[] imageData, boolean uncompressed, boolean calculateDigest)
     {
-        writeImageToFileNative(pointer, fileName, width, height, bpl, shouldInvertRows, imageData, uncompressed);
+        writeImageToFileNative(pointer, fileName, width, height, bpl, shouldInvertRows, imageData, uncompressed, calculateDigest);
     }
 
     public long getExifHandle()

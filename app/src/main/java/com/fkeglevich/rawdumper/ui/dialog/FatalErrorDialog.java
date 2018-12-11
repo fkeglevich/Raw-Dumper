@@ -17,13 +17,14 @@
 package com.fkeglevich.rawdumper.ui.dialog;
 
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.activity.ActivityReference;
 import com.fkeglevich.rawdumper.ui.UiUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Flávio Keglevich on 13/08/2017.

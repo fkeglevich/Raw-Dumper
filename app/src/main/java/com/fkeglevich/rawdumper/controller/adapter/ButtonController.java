@@ -16,9 +16,6 @@
 
 package com.fkeglevich.rawdumper.controller.adapter;
 
-import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,6 +31,10 @@ import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
 
 import java.util.List;
+
+import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 
 /**
  * TODO: Add class header

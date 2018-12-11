@@ -18,13 +18,14 @@ package com.fkeglevich.rawdumper.util.event;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
 
 import junit.framework.Assert;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: add header comment

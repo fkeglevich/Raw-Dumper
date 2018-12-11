@@ -18,10 +18,11 @@ package com.fkeglevich.rawdumper.ui;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Flávio Keglevich on 13/05/2017.

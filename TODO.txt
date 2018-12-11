@@ -24,20 +24,13 @@ TODO list:
  
  - Add simple normal/low light button switch
 
- - Fallback to Gray World AWB algorithm when there's no other AWB algo available
-
- - (IN PROGRESS) Optimize logcat reading, right now the GC is crying
-   - (IN PROGRESS) Migrate to libsu
-   - (IN PROGRESS) Low-level high performance without memory allocations IO
+ - (IN PROGRESS) Fallback to Gray World AWB algorithm when there's no other AWB algo available
 
  - Zoom feature for Zenfone Zoom
 
  - (IN PROGRESS) Take picture discarding the result (skip picture)
 	
  - Restructure the camera access diagram
-
- - Optimize the DNG creation process
-   - (IN PROGRESS) Don't calculate checksums
 
  - Create DNG with thumbnails
  
@@ -193,3 +186,13 @@ Done:
  - (DONE!) Optimize the DNG creation memory performance
  - Fixed "Currently using the manual focus slider crashes Zenfone Zoom camera"
  - (DONE!) Use multithreading in the DNG creation process
+ - (DONE!) Slower metering update rate for a better performance
+ - (DONE!) Migrate project to AndroidX
+ - (DONE!) Migrate to libsu
+ - (DONE!) Low-level logcat reading with high performance without (uneeded) memory allocation
+ - (DONE!) Optimize logcat reading
+ - (DONE!) Added checksum toggle for optimal compressed DNG creation
+ - (DONE!) Override EXIF software tag also for jpeg pictures
+ - (DONE!) Flash focus
+ - Fixed "Pictures have wrong month date"
+ - Fixed dates in exif tags

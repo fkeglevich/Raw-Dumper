@@ -17,8 +17,6 @@
 package com.fkeglevich.rawdumper.activity;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.fkeglevich.rawdumper.controller.permission.PermissionRequest;
@@ -27,6 +25,9 @@ import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.IdRes;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Represents a "safe" reference to an activity that can be stored and passed freely

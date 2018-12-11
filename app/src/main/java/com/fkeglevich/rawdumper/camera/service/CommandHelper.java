@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
-import eu.chainfire.libsuperuser.Shell;
+import com.topjohnwu.superuser.Shell;
 
 /**
  * TODO: add header comment
@@ -27,42 +27,30 @@ class CommandHelper
     private static final String CLEAR_LOGCAT_CMD = "logcat -c";
     private static final String ENTER_HAL_DEBUG_MODE = "setprop \"camera.hal.debug\" 2";
     private static final String EXIT_HAL_DEBUG_MODE = "setprop \"camera.hal.debug\" 0";
-    private static final int BLOCKING_CMD_TIMEOUT = 1000;
 
     private static final Object commandLock = new Object();
 
-    static void addLogcatCommand(Shell.Interactive shell, LogcatMatch[] matchArray)
+    static void addLogcatCommand(Shell shell, LogcatMatch[] matchArray)
     {
-        shell.addCommand(buildLogcatCommands(matchArray));
+        //shell.addCommand(buildLogcatCommands(matchArray));
     }
 
-    static synchronized void addEnterHalDebugCommand(Shell.Interactive shell)
+    static synchronized void addEnterHalDebugCommand(Shell shell)
     {
         executeBlockingCommand(shell, ENTER_HAL_DEBUG_MODE);
     }
 
-    static synchronized void addExitHalDebugCommand(Shell.Interactive shell)
+    static synchronized void addExitHalDebugCommand(Shell shell)
     {
         executeBlockingCommand(shell, EXIT_HAL_DEBUG_MODE);
     }
 
-    private static void executeBlockingCommand(Shell.Interactive shell, String command)
+    private static void executeBlockingCommand(Shell shell, String command)
     {
-        shell.addCommand(command, 0, (commandCode, exitCode, output) ->
-        {
-            synchronized (commandLock)
-            {
-                commandLock.notify();
-            }
-        });
-        synchronized (commandLock)
-        {
-            try { commandLock.wait(BLOCKING_CMD_TIMEOUT); }
-            catch (InterruptedException ignored) {   }
-        }
+        shell.newJob().add(command).exec().getOut();
     }
 
-    private static String[] buildLogcatCommands(LogcatMatch[] matchArray)
+    public static String[] buildLogcatCommands(LogcatMatch[] matchArray)
     {
         StringBuilder builder = new StringBuilder("logcat ");
         for (LogcatMatch match : matchArray)

@@ -16,9 +16,9 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.support.annotation.Keep;
-
 import com.fkeglevich.rawdumper.debug.DebugFlag;
+
+import androidx.annotation.Keep;
 
 /**
  * Contains device-specific information used to create DNG files.

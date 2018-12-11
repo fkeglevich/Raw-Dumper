@@ -16,10 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.fkeglevich.rawdumper.util.MathUtil;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * CaptureSize represents a valid size of picture, preview or video capture.

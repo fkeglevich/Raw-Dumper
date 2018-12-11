@@ -16,13 +16,13 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
-import android.support.annotation.Keep;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import androidx.annotation.Keep;
 
 /**
  * Represents the list of known devices.

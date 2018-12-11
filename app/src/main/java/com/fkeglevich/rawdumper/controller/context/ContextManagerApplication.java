@@ -16,7 +16,8 @@
 
 package com.fkeglevich.rawdumper.controller.context;
 
-import android.app.Application;
+import com.topjohnwu.superuser.BusyBox;
+import com.topjohnwu.superuser.ContainerApp;
 
 /**
  * A simple Application class that helps managing a global application context.
@@ -24,12 +25,13 @@ import android.app.Application;
  * Created by Flávio Keglevich on 22/08/2017.
  */
 
-public class ContextManagerApplication extends Application
+public class ContextManagerApplication extends ContainerApp
 {
     @Override
     public void onCreate()
     {
         super.onCreate();
         ContextManager.setApplicationContext(this);
+        BusyBox.setup(this);
     }
 }

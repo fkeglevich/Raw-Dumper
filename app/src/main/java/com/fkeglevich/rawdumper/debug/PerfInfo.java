@@ -16,13 +16,14 @@
 
 package com.fkeglevich.rawdumper.debug;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.fkeglevich.rawdumper.BuildConfig;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.Nullable;
 
 /**
  * PerfInfo contains useful methods for measuring time cost of certain operations

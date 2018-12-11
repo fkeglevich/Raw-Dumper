@@ -24,11 +24,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
+
+import androidx.annotation.Nullable;
 
 /**
  * TODO: Add class header

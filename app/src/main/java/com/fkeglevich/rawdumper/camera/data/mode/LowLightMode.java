@@ -16,12 +16,12 @@
 
 package com.fkeglevich.rawdumper.camera.data.mode;
 
-import android.support.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.data.mode.format.DefaultFormatStrategy;
 import com.fkeglevich.rawdumper.camera.data.mode.size.BinningJpegStrategy;
 import com.fkeglevich.rawdumper.camera.data.mode.size.BinningRawStrategy;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+
+import androidx.annotation.NonNull;
 
 /**
  * TODO: Add class header

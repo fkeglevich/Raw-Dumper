@@ -64,6 +64,7 @@ public class LowLevelCameraImpl implements LowLevelCamera, RestartableCamera
         synchronized (lock)
         {
             Camera camera = extension.getCameraDevice();
+            ExifOverrider.overrideExifParameters(camera);
             int displayRotation = PreviewHelper.setupPreviewTexture(cameraContext, camera);
             LowLevelParameterInterfaceImpl parameterInterface = new LowLevelParameterInterfaceImpl(camera, lock);
             ParameterCollection parameters = new ParameterCollection(parameterInterface);

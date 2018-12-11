@@ -25,7 +25,6 @@ import com.fkeglevich.rawdumper.dng.writer.DngNegative;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.util.ColorUtil;
-import com.fkeglevich.rawdumper.util.MathUtil;
 
 import java.util.Arrays;
 
@@ -40,7 +39,7 @@ public class WhiteBalanceInfo
 {
     public static WhiteBalanceInfo create(ExtraCameraInfo cameraInfo, MakerNoteInfo makerNoteInfo, Camera.Parameters parameters)
     {
-        float[] neutralValues = WhiteBalanceService.getInstance().isAvailable() ? WhiteBalanceService.getInstance().getValue() : null;
+        double[] neutralValues = WhiteBalanceService.getInstance().isAvailable() ? WhiteBalanceService.getInstance().getValue() : null;
 
         if (neutralValues != null)
         {
@@ -64,7 +63,7 @@ public class WhiteBalanceInfo
 
     private static WhiteBalanceInfo createFromXYCoords(double x, double y, ColorInfo colorInfo)
     {
-        float[] neutralValues = MathUtil.doubleArrayToFloat(colorInfo.calculateSimpleAsShotNeutral(x, y));
+        double[] neutralValues = colorInfo.calculateSimpleAsShotNeutral(x, y);
         return new WhiteBalanceInfo(neutralValues);
     }
 
@@ -87,9 +86,9 @@ public class WhiteBalanceInfo
         return createFromWhiteBalancePreset(WhiteBalancePreset.DAYLIGHT, colorInfo);
     }
 
-    private final float[] asShotNeutral;
+    private final double[] asShotNeutral;
 
-    private WhiteBalanceInfo(float[] asShotNeutral)
+    private WhiteBalanceInfo(double[] asShotNeutral)
     {
         this.asShotNeutral = asShotNeutral;
     }

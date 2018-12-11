@@ -72,6 +72,11 @@
                 "shutterSpeedAutoValue": null,
                 "shutterSpeedValues": []
             },
+            "focus": {
+                "hasFlashFocus": false,
+                "flashFocusHighIso": 0,
+                "flashFocusSlowShutterSpeed": 0
+            },
             "hasKnownMakernote": false,
             "id": 0,
             "lens": {
@@ -186,6 +191,11 @@
                 "shutterSpeedParameter": null,
                 "shutterSpeedAutoValue": null,
                 "shutterSpeedValues": []
+            },
+            "focus": {
+                "hasFlashFocus": false,
+                "flashFocusHighIso": 0,
+                "flashFocusSlowShutterSpeed": 0
             },
             "hasKnownMakernote": false,
             "id": 1,

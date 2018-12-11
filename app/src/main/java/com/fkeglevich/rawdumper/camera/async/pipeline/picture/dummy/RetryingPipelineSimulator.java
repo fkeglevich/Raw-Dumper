@@ -29,8 +29,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-import eu.chainfire.libsuperuser.Shell;
-
 /**
  * TODO: Add class header
  * <p>
@@ -79,24 +77,15 @@ public class RetryingPipelineSimulator
             }
         }
 
-        MainSUShell.getInstance().addSingleCommand("mv " + dummyPicture.getAbsolutePath() + " " + dumpDirectory, new Shell.OnCommandLineListener()
-        {
-            @Override
-            public void onCommandResult(int commandCode, int exitCode)
-            {
-                if (commandCode >= 0)
+        MainSUShell.getInstance().addSingleCommand("mv " + dummyPicture.getAbsolutePath() + " " + dumpDirectory,
+                result ->
                 {
-                    Log.i(TAG, "Dummy picture successfully moved!");
-                    errorCallback.onError(0, null);
-                }
-            }
-
-            @Override
-            public void onLine(String line)
-            {
-
-            }
-        });
+                    if (result.isSuccess())
+                    {
+                        Log.i(TAG, "Dummy picture successfully moved!");
+                        errorCallback.onError(0, null);
+                    }
+                });
     }
 
     private static int calculateDummyPictureSize(CameraContext cameraContext)

@@ -14,38 +14,25 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.su;
+package com.fkeglevich.rawdumper.camera.async.direct;
 
-import com.topjohnwu.superuser.Shell;
+import android.hardware.Camera;
 
+import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
+import com.fkeglevich.rawdumper.util.AppPackageUtil;
 
-/**
- * TODO: add header comment
- * Created by Flávio Keglevich on 01/05/18.
- */
-public class ShellCreationThread extends Thread
+class ExifOverrider
 {
-    private Shell shell = null;
-
-    ShellCreationThread()
+    static void overrideExifParameters(Camera camera)
     {
-        super();
-    }
-
-    @Override
-    public void run()
-    {
-        shell = Shell.newInstance();
-    }
-
-    public Shell getShell()
-    {
+        //Overrides EXIF software tag with app's name
         try
         {
-            join();
+            Camera.Parameters parameters = camera.getParameters();
+            parameters.set(IntelParameters.KEY_EXIF_SOFTWARE, AppPackageUtil.getAppNameWithVersion());
+            camera.setParameters(parameters);
         }
-        catch (InterruptedException ignored)
+        catch (RuntimeException ignored)
         {   }
-        return shell;
     }
 }

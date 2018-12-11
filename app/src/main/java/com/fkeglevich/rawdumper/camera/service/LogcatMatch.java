@@ -16,19 +16,31 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
+import java.io.UnsupportedEncodingException;
+
 public class LogcatMatch
 {
+    public static final int MATCH_BUFFER_SIZE = 100;
+
     public final String tag;
     public final LogPriority priority;
     public final String fingerprintPrefix;
+    public byte[] fingerprintPrefixBytes;
 
-    public volatile String latestMatch = null;
     public volatile boolean enabled = false;
+
+    public final byte[] volatileBuffer = new byte[MATCH_BUFFER_SIZE];
 
     public LogcatMatch(String tag, LogPriority priority, String fingerprintPrefix)
     {
         this.tag = tag;
         this.priority = priority;
         this.fingerprintPrefix = fingerprintPrefix;
+        try
+        {
+            this.fingerprintPrefixBytes = fingerprintPrefix.getBytes("UTF-8");
+        }
+        catch (UnsupportedEncodingException ignored)
+        {   }
     }
 }

@@ -52,7 +52,12 @@ public class ParameterCollection
     {
         final ParameterChangeEvent<T> changeEvent = new ParameterChangeEvent<>(value);
         parameter.getOnChanging().dispatchEvent(changeEvent);
-        parameterInterface.set(parameter.getKey(), parameter.getEncoder().encode(value));
+        override(parameter, value);
         parameter.getOnChanged().dispatchEvent(changeEvent);
+    }
+
+    public <T> void override(Parameter<T> parameter, T value)
+    {
+        parameterInterface.set(parameter.getKey(), parameter.getEncoder().encode(value));
     }
 }

@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.su;
 
-import eu.chainfire.libsuperuser.Shell;
+import com.topjohnwu.superuser.Shell;
 
 /**
  * Created by Flávio Keglevich on 09/07/2017.
@@ -32,39 +32,32 @@ public class MainSUShell
         return instance;
     }
 
-    private Shell.Interactive shell = null;
-    private int shellId = -1;
+    private Shell shell = null;
 
     public synchronized void requestShell()
     {
         if (isRunning()) throw new RuntimeException("The shell is already running!");
-        if (shellId != -1) return;
 
         ShellFactory factory = ShellFactory.getInstance();
-        shellId = factory.requestShell(
-                        new Shell.Builder().
-                            useSU().
-                            setWantSTDERR(true).
-                            setWatchdogTimeout(5).
-                            setMinimalLogging(true));
-        factory.onSuccess.addListener(eventData -> shell = factory.getShell(shellId));
+        factory.requestShell();
+        factory.onSuccess.addListener(eventData -> shell = factory.getShell());
     }
 
     public synchronized boolean isRunning()
     {
-        return shell != null && shell.isRunning();
+        return shell != null && shell.isAlive();
     }
 
-    public synchronized void addCommand(String[] commands, int exitCode, Shell.OnCommandLineListener onCommandLineListener)
+    public synchronized void addCommand(String[] commands, Shell.ResultCallback callback)
     {
         if (!isRunning())
             throw new RuntimeException("The shell is not running!");
 
-        shell.addCommand(commands, exitCode, onCommandLineListener);
+        shell.newJob().add(commands).submit(callback);
     }
 
-    public synchronized void addSingleCommand(String command, Shell.OnCommandLineListener onCommandLineListener)
+    public synchronized void addSingleCommand(String command, Shell.ResultCallback callback)
     {
-        addCommand(new String[] {command}, 2, onCommandLineListener);
+        addCommand(new String[] {command}, callback);
     }
 }

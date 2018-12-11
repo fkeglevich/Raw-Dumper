@@ -8,9 +8,9 @@ android {
         testApplicationId "com.fkeglevich.rawdumper.tests"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 8
-        versionName "3.3.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 9
+        versionName "3.4.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
                 //arguments "-DANDROID_TOOLCHAIN=gcc"
@@ -51,21 +51,19 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     implementation 'junit:junit:4.12'
-    implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
     implementation 'com.andkulikov:transitionseverywhere:1.7.2'
     implementation 'com.lantouzi.wheelview:library:1.1.2'
     implementation 'com.drewnoakes:metadata-extractor:2.9.1'
     implementation 'com.squareup.moshi:moshi:1.5.0'
-    //required support lib modules
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:support-annotations:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-
+    implementation 'com.github.topjohnwu:libsu:2.1.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
+    implementation 'androidx.annotation:annotation:1.0.1'
+    implementation 'com.google.android.material:material:1.1.0-alpha01'
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.2.3'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
 }

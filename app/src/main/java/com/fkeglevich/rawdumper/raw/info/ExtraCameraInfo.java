@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.raw.info;
 
 import android.hardware.Camera;
 import android.os.Build;
-import android.support.annotation.Keep;
 
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.PreviewArea;
@@ -33,6 +32,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import androidx.annotation.Keep;
 
 /**
  * Simple immutable class that stores specific information about
@@ -55,6 +56,7 @@ public class ExtraCameraInfo
     private ExposureInfo exposure;
     private OpcodeListInfo[] opcodes;
     private NoiseInfo noise;
+    private FocusInfo focus;
     private CaptureSize[] binningSizes;
     private String[] logcatServices;
     private String gainMapFile;
@@ -120,6 +122,11 @@ public class ExtraCameraInfo
     public NoiseInfo getNoise()
     {
         return noise;
+    }
+
+    public FocusInfo getFocus()
+    {
+        return focus;
     }
 
     public boolean hasKnownMakernote()

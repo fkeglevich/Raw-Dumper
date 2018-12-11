@@ -16,10 +16,10 @@
 
 package com.fkeglevich.rawdumper.camera.data;
 
-import android.support.annotation.StringRes;
-
 import com.fkeglevich.rawdumper.R;
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
+
+import androidx.annotation.StringRes;
 
 import static android.hardware.Camera.Parameters.FOCUS_MODE_AUTO;
 import static android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE;
@@ -43,7 +43,8 @@ public enum FocusMode implements ParameterValue, Displayable
     MACRO(FOCUS_MODE_MACRO,                             true,  false, R.string.focus_macro),
     INFINITY(FOCUS_MODE_INFINITY,                       false, false, R.string.focus_infinity),
     FIXED(FOCUS_MODE_FIXED,                             false, false, R.string.focus_fixed),
-    EDOF(FOCUS_MODE_EDOF,                               false, false, R.string.focus_edof);
+    EDOF(FOCUS_MODE_EDOF,                               false, false, R.string.focus_edof),
+    FLASH(FOCUS_MODE_AUTO,                              true,  false, R.string.focus_flash);
 
     private final String parameterValue;
     private final boolean canAutoFocus;

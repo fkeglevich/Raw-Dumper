@@ -23,6 +23,3 @@
     @com.squareup.moshi.* <methods>;
 }
 -keep @com.squareup.moshi.JsonQualifier interface *
--keepclassmembers, allowobfuscation class ** {
-    @de.halfbit.tinymachine.StateHandler public *;
-}

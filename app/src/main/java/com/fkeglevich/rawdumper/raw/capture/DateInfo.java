@@ -47,7 +47,7 @@ public class DateInfo
         int second = Integer.parseInt(filename.substring(17, 19));
 
         GregorianCalendar calendar = new GregorianCalendar();
-        calendar.set(year, month, day, hour, minute, second);
+        calendar.set(year, month - 1, day, hour, minute, second);
 
         return new DateInfo(calendar);
     }
@@ -62,7 +62,7 @@ public class DateInfo
         return new DateInfo((GregorianCalendar)GregorianCalendar.getInstance());
     }
 
-    private GregorianCalendar captureDate = null;
+    private GregorianCalendar captureDate;
 
     /**
      * Private constructor

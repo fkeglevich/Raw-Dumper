@@ -26,6 +26,7 @@ import com.fkeglevich.rawdumper.camera.feature.RangeFeature;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.raw.capture.RawSettings;
 import com.fkeglevich.rawdumper.util.Nullable;
+import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 
 import java.util.List;
 
@@ -37,6 +38,8 @@ import java.util.List;
 
 public interface TurboCamera extends TakePictureAction
 {
+    EventDispatcher<Void> getOnTakePicture();
+
     <T> ListFeature<T> getListFeature(Class<T> dataType);
     <T extends Comparable<T>> RangeFeature<T> getRangeFeature(Class<T> dataType);
     <T> Feature<Nullable<T>> getMeteringFeature(Class<T> dataType);

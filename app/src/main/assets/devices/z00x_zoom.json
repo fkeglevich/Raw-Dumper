@@ -151,6 +151,11 @@
                     "16000"
                 ]
             },
+            "focus": {
+                "hasFlashFocus": false,
+                "flashFocusHighIso": 0,
+                "flashFocusSlowShutterSpeed": 0
+            },
             "hasKnownMakernote": false,
             "id": 0,
             "lens": {
@@ -593,6 +598,11 @@
                     "8000",
                     "10000"
                 ]
+            },
+            "focus": {
+                "hasFlashFocus": false,
+                "flashFocusHighIso": 0,
+                "flashFocusSlowShutterSpeed": 0
             },
             "gainMapFile": "ov5670_zoom_gain_map.bin",
             "hasKnownMakernote": true,

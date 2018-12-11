@@ -16,11 +16,11 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
-import android.support.annotation.NonNull;
-
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
+
+import androidx.annotation.NonNull;
 
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 
@@ -30,6 +30,7 @@ public class RawSettings
     public volatile boolean keepLensVignetting          = false;
     public volatile boolean compressRawFiles            = true;
     public volatile boolean useOrientationFromPhone     = true;
+    public volatile boolean calculateDigest             = true;
 
     public int getOrientationCode(CaptureInfo captureInfo)
     {
@@ -54,6 +55,7 @@ public class RawSettings
         keepLensVignetting          = rawSettings.keepLensVignetting;
         compressRawFiles            = rawSettings.compressRawFiles;
         useOrientationFromPhone     = rawSettings.useOrientationFromPhone;
+        calculateDigest             = rawSettings.calculateDigest;
     }
 
     @NonNull
@@ -63,6 +65,7 @@ public class RawSettings
         return "[RawSettings shouldInvertFrontCameraRows=" + shouldInvertFrontCameraRows + ", " +
                 "keepLensVignetting=" + keepLensVignetting + ", " +
                 "compressRawFiles=" + compressRawFiles + ", " +
-                "useOrientationFromPhone=" + useOrientationFromPhone + "]";
+                "useOrientationFromPhone=" + useOrientationFromPhone + ", " +
+                "calculateDigest=" + calculateDigest + "]";
     }
 }

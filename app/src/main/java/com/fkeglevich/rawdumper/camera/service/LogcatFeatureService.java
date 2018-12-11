@@ -16,8 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.service;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
+
+import static com.fkeglevich.rawdumper.camera.service.LogcatMatch.MATCH_BUFFER_SIZE;
 
 public abstract class LogcatFeatureService<T>
 {
@@ -34,15 +37,15 @@ public abstract class LogcatFeatureService<T>
 
     public synchronized void fixValue()
     {
-        fixedValue = match.latestMatch;
+        fixedValue = getMatchString();
     }
 
     @Nullable
     public synchronized T getValue()
     {
-        String string = fixedValue != null ? fixedValue : match.latestMatch;
+        String string = fixedValue != null ? fixedValue : getMatchString();
         fixedValue = null;
-        if (string != null)
+        if (match.enabled && !string.isEmpty())
         {
             try
             {
@@ -65,7 +68,14 @@ public abstract class LogcatFeatureService<T>
 
     synchronized void setAvailable(boolean available)
     {
-        if (!available) match.latestMatch = null;
         match.enabled = available;
+    }
+
+    private String getMatchString()
+    {
+        synchronized (match.tag)
+        {
+            return new String(match.volatileBuffer, 0, MATCH_BUFFER_SIZE);
+        }
     }
 }

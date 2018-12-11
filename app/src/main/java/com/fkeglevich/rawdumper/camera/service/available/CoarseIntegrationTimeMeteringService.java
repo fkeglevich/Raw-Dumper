@@ -45,7 +45,7 @@ public class CoarseIntegrationTimeMeteringService extends LogcatFeatureService<I
             */
 
         String firstPiece = string.substring(string.indexOf(FINGERPRINT));
-        String[] split = firstPiece.split(" ");
+        String[] split = firstPiece.split("\\s");
         return Integer.parseInt(split[3].trim());
     }
 }

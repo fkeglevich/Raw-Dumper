@@ -21,18 +21,16 @@ import com.fkeglevich.rawdumper.debug.PerfInfo;
 import org.junit.Assert;
 import org.junit.Test;
 
-import eu.chainfire.libsuperuser.Shell;
-
 public class ShellFactoryTest
 {
     private static final Object lock = new Object();
-    public static final int NUM_SHELLS = 1;
+    public static final int NUM_SHELLS = 10;
 
     private static void onSuccess(Void eventData)
     {
         System.out.println("ShellManager2Test Success!");
         for (int i = 0; i < NUM_SHELLS; i++)
-            Assert.assertNotNull(ShellFactory.getInstance().getShell(i));
+            Assert.assertNotNull(ShellFactory.getInstance().getShell());
         defaultCb();
     }
 
@@ -54,7 +52,7 @@ public class ShellFactoryTest
         ShellFactory shellManager = ShellFactory.getInstance();
 
         for (int i = 0; i < NUM_SHELLS; i++)
-            shellManager.requestShell(createBuilder());
+            shellManager.requestShell();
 
         shellManager.onSuccess.addListener(ShellFactoryTest::onSuccess);
         shellManager.onError.addListener(ShellFactoryTest::onError);
@@ -62,14 +60,5 @@ public class ShellFactoryTest
         shellManager.startCreatingShells();
 
         synchronized (lock) { lock.wait(); }
-    }
-
-    private Shell.Builder createBuilder()
-    {
-        return new Shell.Builder().
-                                useSU().
-                                setWantSTDERR(true).
-                                setWatchdogTimeout(5).
-                                setMinimalLogging(true);
     }
 }

@@ -5598,7 +5598,8 @@ void dng_image_writer::WriteDNG (dng_host &host,
 							     dng_negative &negative,
 							     const dng_preview_list *previewList,
 								 uint32 maxBackwardVersion,
-							     bool uncompressed)
+							     bool uncompressed,
+								 bool calculateDigest)
 	{
 	
 	WriteDNG (host,
@@ -5607,7 +5608,8 @@ void dng_image_writer::WriteDNG (dng_host &host,
 			  negative.Metadata (),
 			  previewList,
 			  maxBackwardVersion,
-			  uncompressed);
+			  uncompressed,
+	          calculateDigest);
 	
 	}
 	
@@ -5619,7 +5621,8 @@ void dng_image_writer::WriteDNG (dng_host &host,
 								 const dng_metadata &constMetadata,
 								 const dng_preview_list *previewList,
 								 uint32 maxBackwardVersion,
-							     bool uncompressed)
+							     bool uncompressed,
+								 bool calculateDigest)
 	{
 
 	uint32 j;
@@ -6430,28 +6433,36 @@ void dng_image_writer::WriteDNG (dng_host &host,
 		}
 		
 	bool useNewDigest = (maxBackwardVersion >= dngVersion_1_4_0_0);
-		
-	if (compression == ccLossyJPEG)
+
+	if (calculateDigest)
 		{
-		
-		negative.FindRawJPEGImageDigest (host);
-		
-		}
-		
-	else
-		{
-		
-		if (useNewDigest)
+
+		if (compression == ccLossyJPEG)
 			{
-			negative.FindNewRawImageDigest (host);
+
+			negative.FindRawJPEGImageDigest (host);
+
 			}
+
 		else
 			{
-			negative.FindRawImageDigest (host);
+
+			if (useNewDigest)
+				{
+
+				negative.FindNewRawImageDigest (host);
+
+				}
+			else
+				{
+
+				negative.FindRawImageDigest (host);
+
+				}
+
 			}
-		
 		}
-	
+
 	tag_uint8_ptr tagRawImageDigest (useNewDigest ? tcNewRawImageDigest : tcRawImageDigest,
 									 compression == ccLossyJPEG ?
 									 negative.RawJPEGImageDigest ().data :
@@ -6460,8 +6471,14 @@ void dng_image_writer::WriteDNG (dng_host &host,
 							   		 16);
 							   		  
 	mainIFD.Add (&tagRawImageDigest);
-	
-	negative.FindRawDataUniqueID (host);
+
+	if (calculateDigest)
+		{
+
+		negative.FindRawDataUniqueID (host);
+
+		}
+
 	
 	tag_uint8_ptr tagRawDataUniqueID (tcRawDataUniqueID,
 							   		  negative.RawDataUniqueID ().data,

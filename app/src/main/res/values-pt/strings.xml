@@ -46,10 +46,10 @@
         \nCopyright © 2017 Adobe
         \nLink e Licença: http://supportdownloads.adobe.com/detail.jsp?ftpID=5474
         \n
-        \nLibsuperuser
-        \nCopyright © 2012-2015 Jorrit "Chainfire" Jongma
-        \nLink: https://github.com/Chainfire/libsuperuser
-        \nLicença: https://github.com/Chainfire/libsuperuser/blob/master/LICENSE
+        \nlibsu
+        \nCopyright © 2018 John "topjohnwu" Wu
+        \nLink: https://github.com/topjohnwu/libsu
+        \nLicença: https://github.com/topjohnwu/libsu/blob/master/LICENSE
         \n
         \nTransitions Everywhere
         \nCopyright © 2016 Andrey Kulikov (andkulikov@gmail.com)
@@ -102,6 +102,7 @@
     <string name="focus_infinity">∞</string>
     <string name="focus_fixed">FIXO</string>
     <string name="focus_edof">EDOF</string>
+    <string name="focus_flash">FLASH</string>
     <string name="focus_manual">MANUAL</string>
 
     <string name="wb_auto">AUTO</string>
@@ -121,5 +122,6 @@
     <string name="keep_lens_vignetting">Manter vinheta da lente</string>
     <string name="compress_raw_files">Habilitar compressão</string>
     <string name="save_as_flipped">Inverter fotos tiradas com a câmera frontal</string>
+    <string name="generate_raw_digest">Guardar digest das imagens no formato RAW</string>
 
 </resources>
