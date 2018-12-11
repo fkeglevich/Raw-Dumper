@@ -117,7 +117,7 @@ public class FilenameBuilder
     public String build()
     {
         if (fileFormat == null) throw new RuntimeException("A file format wasn't choosed!");
-        if (format.getCalendar() == null) throw new RuntimeException("A file format wasn't choosed!");
+        if (format.getCalendar() == null) throw new RuntimeException("A calendar wasn't choosed!");
 
         format.setCalendar(calendar);
 
