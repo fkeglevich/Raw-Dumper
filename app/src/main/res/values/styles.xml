@@ -9,4 +9,10 @@
         <item name="android:windowBackground">@color/mainBackground</item>
     </style>
 
+    <style name="MenuSwitchStyle" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorSwitchThumbNormal">@color/colorAccent</item>
+        <item name="android:colorForeground">#FFFFFFFF</item>
+    </style>
+
 </resources>

@@ -194,3 +194,4 @@ Done:
  - (DONE!) Flash focus
  - Fixed "Pictures have wrong month date"
  - Fixed dates in exif tags
+ - (DONE!) Better configurations's switches color

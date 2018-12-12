@@ -86,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="10dp"
+                android:theme="@style/MenuSwitchStyle"
                 android:text="@string/keep_lens_vignetting" />
 
             <Switch
@@ -94,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="10dp"
+                android:theme="@style/MenuSwitchStyle"
                 android:text="@string/compress_raw_files" />
 
             <Switch
@@ -102,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="10dp"
+                android:theme="@style/MenuSwitchStyle"
                 android:text="@string/generate_raw_digest" />
 
             <Switch
@@ -110,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="10dp"
+                android:theme="@style/MenuSwitchStyle"
                 android:text="@string/save_as_flipped" />
 
             <LinearLayout
