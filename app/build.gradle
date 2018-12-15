@@ -17,7 +17,7 @@ android {
                 cppFlags "-std=c++11 -fexceptions -fpermissive -fopenmp -DAVOID_TABLES -O3 -fstrict-aliasing"
             }
             ndk {
-                abiFilters 'x86', 'x86_64'
+                abiFilters 'x86'
             }
         }
     }
