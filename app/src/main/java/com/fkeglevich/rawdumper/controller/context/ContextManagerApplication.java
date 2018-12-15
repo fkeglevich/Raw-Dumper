@@ -16,7 +16,10 @@
 
 package com.fkeglevich.rawdumper.controller.context;
 
+import com.topjohnwu.superuser.BusyBox;
 import com.topjohnwu.superuser.ContainerApp;
+
+import java.io.File;
 
 /**
  * A simple Application class that helps managing a global application context.
@@ -31,6 +34,8 @@ public class ContextManagerApplication extends ContainerApp
     {
         super.onCreate();
         ContextManager.setApplicationContext(this);
-        //BusyBox.setup(this);
+
+        //Rely on Magisk external busybox
+        BusyBox.BB_PATH = new File("/sbin/.core/busybox");
     }
 }
