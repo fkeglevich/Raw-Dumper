@@ -39,3 +39,5 @@
 
 # The name of @JsonClass types is used to look up the generated adapter.
 -keepnames @com.squareup.moshi.JsonClass class *
+
+-keepnames @com.fkeglevich.rawdumper.camera.service.available class *
