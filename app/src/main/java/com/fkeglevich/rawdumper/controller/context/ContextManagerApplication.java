@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.controller.context;
 
-import com.topjohnwu.superuser.BusyBox;
 import com.topjohnwu.superuser.ContainerApp;
 
 /**
@@ -32,6 +31,6 @@ public class ContextManagerApplication extends ContainerApp
     {
         super.onCreate();
         ContextManager.setApplicationContext(this);
-        BusyBox.setup(this);
+        //BusyBox.setup(this);
     }
 }
