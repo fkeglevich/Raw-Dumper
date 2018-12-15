@@ -21,12 +21,15 @@ import android.util.Log;
 
 import java.lang.reflect.Method;
 
+import androidx.annotation.Keep;
+
 /**
  * Represents a Intel Camera Extensions library interface.
  *
  * Created by Flávio Keglevich on 30/07/2017.
  */
 
+@Keep
 class IntelCameraProxy implements ICameraExtension
 {
     private Object instance;

@@ -31,12 +31,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Keep;
+
 /**
  * This class is used for loading and creating DeviceInfo objects.
  *
  * Created by Flávio Keglevich on 15/06/2017.
  */
 
+@Keep
 public class DeviceInfoLoader
 {
     private static final String DEVICES_DIR_NAME = "devices/";

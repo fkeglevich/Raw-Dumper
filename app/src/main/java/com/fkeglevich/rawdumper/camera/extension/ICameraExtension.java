@@ -18,6 +18,8 @@ package com.fkeglevich.rawdumper.camera.extension;
 
 import android.hardware.Camera;
 
+import androidx.annotation.Keep;
+
 /**
  * Provides a simple interface for accessing Intel Camera Extension features.
  *
@@ -26,6 +28,7 @@ import android.hardware.Camera;
  * Created by Flávio Keglevich on 30/07/2017.
  */
 
+@Keep
 public interface ICameraExtension
 {
     void release();

@@ -20,6 +20,9 @@ import com.fkeglevich.rawdumper.camera.service.LogPriority;
 import com.fkeglevich.rawdumper.camera.service.LogcatFeatureService;
 import com.fkeglevich.rawdumper.camera.service.LogcatMatch;
 
+import androidx.annotation.Keep;
+
+@Keep
 public class CoarseIntegrationTimeMeteringService extends LogcatFeatureService<Integer>
 {
     private static final String FINGERPRINT = "Feedback AEC integration_time[0]: ";

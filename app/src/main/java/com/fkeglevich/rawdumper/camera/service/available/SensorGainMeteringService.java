@@ -20,6 +20,9 @@ import com.fkeglevich.rawdumper.camera.service.LogPriority;
 import com.fkeglevich.rawdumper.camera.service.LogcatFeatureService;
 import com.fkeglevich.rawdumper.camera.service.LogcatMatch;
 
+import androidx.annotation.Keep;
+
+@Keep
 public class SensorGainMeteringService extends LogcatFeatureService<Double>
 {
     private static final String FINGERPRINT = "total_gain: ";

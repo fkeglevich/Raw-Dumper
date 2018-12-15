@@ -16,12 +16,15 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
+import androidx.annotation.Keep;
+
 /**
  * Represents a well-known device.
  *
  * Created by Flávio Keglevich on 15/06/2017.
  */
 
+@Keep
 class SupportedDevice
 {
     String deviceModel;

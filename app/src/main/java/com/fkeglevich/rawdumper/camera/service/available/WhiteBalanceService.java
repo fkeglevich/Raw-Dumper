@@ -20,6 +20,9 @@ import com.fkeglevich.rawdumper.camera.service.LogPriority;
 import com.fkeglevich.rawdumper.camera.service.LogcatFeatureService;
 import com.fkeglevich.rawdumper.camera.service.LogcatMatch;
 
+import androidx.annotation.Keep;
+
+@Keep
 public class WhiteBalanceService extends LogcatFeatureService<double[]>
 {
     private static final String FINGERPRINT = "@setAicParameter: wb int";
