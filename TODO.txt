@@ -24,6 +24,8 @@ TODO list:
  
  - Add simple normal/low light button switch
 
+ - Add asus camera metering
+
  - (IN PROGRESS) Fallback to Gray World AWB algorithm when there's no other AWB algo available
 
  - Zoom feature for Zenfone Zoom
@@ -34,7 +36,7 @@ TODO list:
 
  - Create DNG with thumbnails
 
- - Change switches's background color
+ - Create a IO thread queue
 
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
