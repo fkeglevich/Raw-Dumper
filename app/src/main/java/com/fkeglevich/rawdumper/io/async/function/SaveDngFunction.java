@@ -36,6 +36,7 @@ import java.io.IOException;
 
 public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Void, MessageException>
 {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     protected Void call(CaptureInfo captureInfo) throws MessageException
     {
