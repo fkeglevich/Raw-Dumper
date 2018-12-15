@@ -48,16 +48,11 @@ public class MainSUShell
         return shell != null && shell.isAlive();
     }
 
-    public synchronized void addCommand(String[] commands, Shell.ResultCallback callback)
+    public synchronized void addSingleCommand(String command, Shell.ResultCallback callback)
     {
         if (!isRunning())
             throw new RuntimeException("The shell is not running!");
 
-        shell.newJob().add(commands).submit(callback);
-    }
-
-    public synchronized void addSingleCommand(String command, Shell.ResultCallback callback)
-    {
-        addCommand(new String[] {command}, callback);
+        shell.newJob().add(command).submit(callback);
     }
 }
