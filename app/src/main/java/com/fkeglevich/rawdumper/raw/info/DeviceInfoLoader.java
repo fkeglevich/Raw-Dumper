@@ -68,6 +68,7 @@ public class DeviceInfoLoader
         }
         catch (IOException ioe)
         {
+            ioe.printStackTrace();
             return throwDeviceLoadException(ioe);
         }
     }
