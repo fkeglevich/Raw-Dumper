@@ -19,6 +19,9 @@
 -dontwarn okio.**
 -dontwarn javax.annotation.Nullable
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn android.test.**
+-dontwarn org.junit.**
+
 -keepclasseswithmembers class * {
     @com.squareup.moshi.* <methods>;
 }
