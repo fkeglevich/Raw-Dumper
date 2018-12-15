@@ -39,6 +39,7 @@ public class LoadDeviceInfoFunction extends ThrowingAsyncFunction<Void, DeviceIn
         }
         catch (RuntimeException re)
         {
+            re.printStackTrace();
             Log.e("LoadDeviceInfoFunction", "RuntimeException: " + re.getMessage());
             throw re;
         }
