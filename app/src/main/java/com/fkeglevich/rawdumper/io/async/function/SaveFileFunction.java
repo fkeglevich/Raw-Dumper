@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.io.async.function;
 
-import com.fkeglevich.rawdumper.async.Locked;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.io.async.IOUtil;
 import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
@@ -29,7 +28,7 @@ import java.io.IOException;
  * TODO: Add a class header comment!
  */
 
-public class SaveFileFunction extends FileFunction<Locked<byte[]>>
+public class SaveFileFunction extends FileFunction<byte[]>
 {
     public SaveFileFunction(String destinationFilePath)
     {
@@ -37,21 +36,18 @@ public class SaveFileFunction extends FileFunction<Locked<byte[]>>
     }
 
     @Override
-    protected Void call(Locked<byte[]> argument) throws MessageException
+    protected Void call(byte[] argument) throws MessageException
     {
         if (DebugFlag.dontSavePictures()) return null;
-        synchronized (argument.getLock())
+        try
         {
-            try
-            {
-                IOUtil.saveBytes(argument.get(), getDestinationFilePath());
-                IOUtil.scanFileWithMediaScanner(getDestinationFilePath());
-                return null;
-            }
-            catch (IOException e)
-            {
-                throw new SaveFileException();
-            }
+            IOUtil.saveBytes(argument, getDestinationFilePath());
+            IOUtil.scanFileWithMediaScanner(getDestinationFilePath());
+            return null;
+        }
+        catch (IOException e)
+        {
+            throw new SaveFileException();
         }
     }
 }

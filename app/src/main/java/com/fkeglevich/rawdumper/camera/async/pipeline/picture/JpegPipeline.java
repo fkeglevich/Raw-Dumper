@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.async.pipeline.picture;
 
-import com.fkeglevich.rawdumper.async.Locked;
 import com.fkeglevich.rawdumper.async.operation.AsyncOperation;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureExceptionListener;
 import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
@@ -46,8 +45,7 @@ public class JpegPipeline extends StandardPipeline
                    final PictureExceptionListener exceptionCallback,
                    String filename)
     {
-        Locked<byte[]> data = new Locked<>(pipelineData.jpegData);
-        IOThread.getIOAccess().saveFileAsync(data, filename, new AsyncOperation<Void>()
+        IOThread.getIOAccess().saveFileAsync(pipelineData.jpegData, filename, new AsyncOperation<Void>()
                 {
                     @Override
                     protected void execute(Void argument)
