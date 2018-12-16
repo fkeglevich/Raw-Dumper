@@ -197,3 +197,4 @@ Done:
  - Fixed "Pictures have wrong month date"
  - Fixed dates in exif tags
  - (DONE!) Better configurations's switches color
+ - (DONE!) Enabled ProGuard on release builds and optimized apk's file size
