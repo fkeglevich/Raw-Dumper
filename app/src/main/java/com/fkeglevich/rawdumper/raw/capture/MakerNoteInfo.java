@@ -32,7 +32,7 @@ public class MakerNoteInfo
     public float[] wbCoordinatesXY      = null;
     public float[] colorMatrix          = null;
     public double[] illuminantScale     = null;
-    public byte[] originalMakerNote     = null;
+    public byte[] originalMakerNote;
 
     public MakerNoteInfo(byte[] originalMakerNote)
     {
