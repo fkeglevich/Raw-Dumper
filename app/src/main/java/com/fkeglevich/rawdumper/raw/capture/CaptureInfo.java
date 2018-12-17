@@ -66,7 +66,6 @@ public class CaptureInfo
     public void writeInfoTo(DngNegative negative)
     {
         negative.setOriginalRawFileName(originalRawFilename);
-        //negative.setSoftware(AppPackageUtil.getAppNameWithVersion());
     }
 
     public boolean shouldInvertRows()
