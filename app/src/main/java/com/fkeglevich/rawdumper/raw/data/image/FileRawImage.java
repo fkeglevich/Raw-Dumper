@@ -47,6 +47,7 @@ public class FileRawImage implements RawImage
         return size;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void prepareData() throws IOException
     {
