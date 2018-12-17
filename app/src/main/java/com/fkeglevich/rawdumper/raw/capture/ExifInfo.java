@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.raw.capture;
 
 import android.hardware.Camera;
+import android.util.Log;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Directory;
@@ -120,13 +121,11 @@ public class ExifInfo
             flash = Camera.Parameters.FLASH_MODE_OFF.equals(parameters.getFlashMode()) ? ExifFlash.DID_NOT_FIRE : ExifFlash.FIRED;
     }
 
-    private boolean getSomeDataFrom(byte[] extraJpegBytes, boolean extractMakerNotes)
+    private void getSomeDataFrom(byte[] jpegData, boolean extractMakerNotes)
     {
-        BufferedInputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(extraJpegBytes));
-        boolean success = true;
-        try
+        try (BufferedInputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(jpegData)))
         {
-            Metadata metadata = ImageMetadataReader.readMetadata(inputStream, extraJpegBytes.length);
+            Metadata metadata = ImageMetadataReader.readMetadata(inputStream, jpegData.length);
             for(Directory directory : metadata.getDirectories())
             {
                 if (directory.containsTag(ExifIFD0Directory.TAG_DATETIME_ORIGINAL))
@@ -159,15 +158,9 @@ public class ExifInfo
         }
         catch (Exception e)
         {
-            success = false;
+            e.printStackTrace();
+            Log.e("ExifInfo", "Exception: " + e.getMessage());
         }
-
-        try
-        {   inputStream.close();    }
-        catch (IOException ignored)
-        {   }
-
-        return success;
     }
 
     public void writeInfoTo(DngNegative negative)
