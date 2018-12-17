@@ -50,7 +50,7 @@ public class MakerNoteInfoExtractor
     private static final int EXPOSURELIST_ITEM_SIZE = 16;   //Size (in bytes) of each item on the list
 
     /***** Color matrix and white balance related constants and functions: *****/
-    private static final String FLOAT_PATTERN = "(\\-)?\\d+(\\.\\d+)?"; //Regex pattern for matching floating point numbers
+    private static final String FLOAT_PATTERN = "(-)?\\d+(\\.\\d+)?"; //Regex pattern for matching floating point numbers
 
     //Regex pattern to match color matrix and white balance
     private static final String COLOR_MATRIX_WB_PATTERN =   "grass\\s*=\\s*" + FLOAT_PATTERN + "\\s+" +
@@ -82,41 +82,37 @@ public class MakerNoteInfoExtractor
      */
     private static final double[] TEMPERATURES = new double[] {2856, 7504, 4000, 5503, 6504, 9000};
 
-    private Pattern colorMatrixWBPattern;
-    private Pattern colorMatrixWBCheckerPattern;
-    private final int baseISO;
+    private final Pattern colorMatrixWBPattern;
+    private final Pattern colorMatrixWBCheckerPattern;
 
-    public MakerNoteInfoExtractor(int baseISO)
+    public MakerNoteInfoExtractor()
     {
         colorMatrixWBPattern = Pattern.compile(COLOR_MATRIX_WB_PATTERN);
         colorMatrixWBCheckerPattern = Pattern.compile(COLOR_MATRIX_WB_CHECKER_PATTERN);
-        this.baseISO = baseISO;
     }
 
-    public MakerNoteInfo extractFrom(byte[] mknBytes, ColorInfo colorInfo)
+    public MakerNoteInfo extractFrom(byte[] mknBytes, ColorInfo colorInfo, int baseISO)
     {
         MakerNoteInfo result = new MakerNoteInfo(mknBytes);
         String mknStringBytes;
         try
         {
             mknStringBytes = new String(mknBytes, "ISO-8859-1");
-            extractExposureTimeAndIso(result, mknBytes);
+            extractExposureTimeAndIso(result, mknBytes, baseISO);
             extractColorMatrixAndWB(result, mknStringBytes, colorInfo);
             Log.i(TAG, Arrays.toString(result.illuminantScale));
         }
-        catch (UnsupportedEncodingException e)
-        {
-            return null;
-        }
+        catch (UnsupportedEncodingException ignored)
+        { }
         return result;
     }
 
-    private boolean extractExposureTimeAndIso(MakerNoteInfo info, byte[] mknBytes)
+    private void extractExposureTimeAndIso(MakerNoteInfo info, byte[] mknBytes, int baseISO)
     {
         if (mknBytes.length <= LAST_EXPOSUREITEM_DELTA)
         {
-            Log.v(TAG, "Could not extract exposure time and ISO from makernotes!");
-            return false;
+            Log.e(TAG, "Could not extract exposure time and ISO from makernotes!");
+            return;
         }
 
         ByteBuffer wrapped = ByteBuffer.wrap(mknBytes, mknBytes.length - LAST_EXPOSUREITEM_DELTA, EXPOSURELIST_ITEM_SIZE);
@@ -124,10 +120,9 @@ public class MakerNoteInfoExtractor
         info.exposureTime = ShutterSpeed.decodeMicrosecondExposure(wrapped.getInt());
         wrapped.getInt();
         info.iso = Iso.decodeAnalogGain(wrapped.getFloat(), baseISO);
-        return true;
     }
 
-    private boolean extractColorMatrixAndWB(MakerNoteInfo info, String mknStringBytes, ColorInfo colorInfo)
+    private void extractColorMatrixAndWB(MakerNoteInfo info, String mknStringBytes, ColorInfo colorInfo)
     {
         int start = findLastOccurrence(colorMatrixWBPattern, mknStringBytes);
         if (start != -1)
@@ -146,13 +141,12 @@ public class MakerNoteInfoExtractor
                         info.colorMatrix = getColorMatrix(lines[0] + " " + lines[1] + " " + lines[2]);
                         info.wbTemperature = getMeanTemperature(lines[3], info.illuminantScale);
                         info.wbCoordinatesXY = ColorUtil.getXYFromCCT(info.wbTemperature, colorInfo);
-                        return true;
+                        return;
                     }
                 }
             }
         }
-        Log.v(TAG, "Could not extract color matrix and white balance from makernotes!");
-        return false;
+        Log.e(TAG, "Could not extract color matrix and white balance from makernotes!");
     }
 
     private int findLastOccurrence(Pattern pattern, String mknStringBytes)
