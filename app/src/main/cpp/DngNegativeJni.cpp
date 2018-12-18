@@ -190,9 +190,12 @@ extern "C"
                                                                                       jlong pointer,
                                                                                       jstring fileName_)
     {
-        const char *fileName = env->GetStringUTFChars(fileName_, 0);
-        ((dng_negative*) pointer)->SetOriginalRawFileName(fileName);
-        env->ReleaseStringUTFChars(fileName_, fileName);
+        if (fileName_ != NULL)
+        {
+            const char *fileName = env->GetStringUTFChars(fileName_, 0);
+            ((dng_negative *) pointer)->SetOriginalRawFileName(fileName);
+            env->ReleaseStringUTFChars(fileName_, fileName);
+        }
     }
 
     JNIEXPORT void JNICALL
@@ -358,6 +361,9 @@ extern "C"
                                                                                 jbyteArray makerNote_)
     {
         int numBytes = env->GetArrayLength(makerNote_);
+        if (numBytes == 0)
+            return;
+
         jbyte *makerNote = env->GetByteArrayElements(makerNote_, NULL);
 
         AutoPtr<dng_memory_stream> mknStream(new dng_memory_stream(globalHost.Allocator()));
