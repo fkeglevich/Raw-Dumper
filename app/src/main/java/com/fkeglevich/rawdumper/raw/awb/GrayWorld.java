@@ -17,9 +17,7 @@
 package com.fkeglevich.rawdumper.raw.awb;
 
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
-import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
-
-import java.io.IOException;
+import com.fkeglevich.rawdumper.raw.data.image.RawImage;
 
 public class GrayWorld
 {
@@ -30,10 +28,10 @@ public class GrayWorld
 
     private static native void nativeCalculate(int width, int height, int bpl, byte[] data, double[] output);
 
-    public static void calculate(RawImageData imageData, double[] output) throws IOException
+    public static void calculate(RawImage imageData, double[] output)
     {
         RawImageSize imageSize = imageData.getSize();
         nativeCalculate(imageSize.getPaddedWidth(), imageSize.getPaddedHeight(),
-                imageSize.getBytesPerLine(), imageData.getLowLevelBuffer(), output);
+                imageSize.getBytesPerLine(), imageData.getData(), output);
     }
 }
