@@ -31,18 +31,17 @@ import com.fkeglevich.rawdumper.camera.async.pipeline.picture.dummy.RetryingPipe
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
-import com.fkeglevich.rawdumper.io.Directories;
 import com.fkeglevich.rawdumper.io.async.IOThread;
 import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
-import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
-import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
-import com.fkeglevich.rawdumper.raw.capture.builder.FromI3av4FileBuilder;
-import com.fkeglevich.rawdumper.su.MainSUShell;
+import com.fkeglevich.rawdumper.raw.capture.RawCaptureInfo;
+import com.fkeglevich.rawdumper.raw.capture.raw_builder.FileCaptureInfo;
+import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+import com.fkeglevich.rawdumper.raw.data.image.FileRawImage;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
-import java.io.File;
+import java.io.IOException;
 
 /**
  * TODO: Add class header
@@ -149,27 +148,13 @@ public class RetryingRawPipeline implements PicturePipeline
         }
     }
 
-    private void movePictures()
+    private void processPicture() throws IOException
     {
+        RawImageSize size = cameraContext.getSensorInfo().getRawImageSizeFromParameters(parameters);
         String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
-        String partialPath = Directories.getPartialPicturesDirectory().getAbsolutePath();
+        FileRawImage rawImage = FileRawImage.createFromDumpDir(dumpDirectory, size, buffer);
 
-        MainSUShell.getInstance().addSingleCommand("mv " + dumpDirectory + "/*.i3av4" + " " + partialPath,
-                result -> processPicture());
-    }
-
-    private void processPicture()
-    {
-        File[] files = Directories.getPartialPicturesDirectory().listFiles();
-        if (files.length != 1)
-        {
-            uiHandler.post(() -> nextExceptionCallback.onException(new SaveFileException()));
-            return;
-        }
-
-        File i3av4File = files[0];
-        ACaptureInfoBuilder captureInfoBuilder = new FromI3av4FileBuilder(cameraContext, i3av4File, parameters, buffer);
-        CaptureInfo captureInfo = captureInfoBuilder.build();
+        RawCaptureInfo captureInfo = new FileCaptureInfo(cameraContext, rawImage, parameters);
 
         IOThread.getIOAccess().saveDng(captureInfo, new AsyncOperation<Void>()
         {
@@ -195,8 +180,16 @@ public class RetryingRawPipeline implements PicturePipeline
             @Override
             protected void execute(Void argument)
             {
-                movePictures();
-                nextPictureCallback.onPictureTaken();
+                try
+                {
+                    processPicture();
+                    nextPictureCallback.onPictureTaken();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                    nextExceptionCallback.onException(new SaveFileException());
+                }
             }
         }, new AsyncOperation<MessageException>()
         {

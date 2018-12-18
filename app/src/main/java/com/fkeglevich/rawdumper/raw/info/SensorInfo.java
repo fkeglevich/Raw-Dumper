@@ -19,9 +19,9 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.hardware.Camera;
 
 import com.fkeglevich.rawdumper.dng.writer.DngNegative;
-import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
 import com.fkeglevich.rawdumper.raw.data.BayerPattern;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+import com.fkeglevich.rawdumper.raw.metadata.ExifMetadata;
 
 import androidx.annotation.Keep;
 
@@ -73,13 +73,15 @@ public class SensorInfo
         return integrationTimeScale;
     }
 
-    public void writeInfoTo(DngNegative negative, ExifInfo exifInfo, boolean invertRows)
+    public void writeInfoTo(DngNegative negative, ExifMetadata metadata, boolean invertRows)
     {
-        negative.setSensorInfo(whiteLevel, blackLevelInfo.computeBlackLevel(exifInfo), invertRows ? bayerPattern.invertVertically().getPhase() : bayerPattern.getPhase());
+        negative.setSensorInfo(whiteLevel, blackLevelInfo.computeBlackLevel(metadata), invertRows ? bayerPattern.invertVertically().getPhase() : bayerPattern.getPhase());
     }
 
-    public RawImageSize getRawImageSizeFromSize(Camera.Size size)
+    public RawImageSize getRawImageSizeFromParameters(Camera.Parameters parameters)
     {
+        Camera.Size size = parameters.getPictureSize();
+
         for (RawImageSize rawImageSize : getRawImageSizes())
             if (rawImageSize.getWidth() == size.width && rawImageSize.getHeight() == size.height)
                 return rawImageSize;

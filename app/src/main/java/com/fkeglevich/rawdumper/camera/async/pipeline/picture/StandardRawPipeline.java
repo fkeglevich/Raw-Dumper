@@ -26,9 +26,10 @@ import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.camera.extension.RawImageCallbackAccess;
 import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.io.async.IOThread;
-import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
-import com.fkeglevich.rawdumper.raw.capture.builder.ACaptureInfoBuilder;
-import com.fkeglevich.rawdumper.raw.capture.builder.FromRawAndJpegBuilder;
+import com.fkeglevich.rawdumper.raw.capture.RawCaptureInfo;
+import com.fkeglevich.rawdumper.raw.capture.raw_builder.MemoryCaptureInfo;
+import com.fkeglevich.rawdumper.raw.data.RawImageSize;
+import com.fkeglevich.rawdumper.raw.data.image.MemoryRawImage;
 import com.fkeglevich.rawdumper.su.MainSUShell;
 import com.fkeglevich.rawdumper.util.MinDelay;
 import com.fkeglevich.rawdumper.util.Mutable;
@@ -77,8 +78,9 @@ public class StandardRawPipeline extends PicturePipelineBase
 
     private void saveDngPicture(PipelineData pipelineData, final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback)
     {
-        ACaptureInfoBuilder captureInfoBuilder = new FromRawAndJpegBuilder(cameraContext, parameters, pipelineData.rawData, pipelineData.jpegData);
-        CaptureInfo captureInfo = captureInfoBuilder.build();
+        RawImageSize size = cameraContext.getSensorInfo().getRawImageSizeFromParameters(parameters);
+        MemoryRawImage rawImage = new MemoryRawImage(pipelineData.rawData, pipelineData.jpegData, size);
+        RawCaptureInfo captureInfo = new MemoryCaptureInfo(cameraContext, rawImage, parameters);
 
         IOThread.getIOAccess().saveDng(captureInfo, new AsyncOperation<Void>()
         {

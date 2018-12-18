@@ -22,6 +22,8 @@ import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.raw.gain.ShadingIlluminant;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
+import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 import com.fkeglevich.rawdumper.util.ColorUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -82,28 +84,39 @@ public class MakerNoteInfoExtractor
      */
     private static final double[] TEMPERATURES = new double[] {2856, 7504, 4000, 5503, 6504, 9000};
 
+    private static final MakerNoteInfoExtractor instance = new MakerNoteInfoExtractor();
+
+    public static MakerNoteInfo extract(byte[] mknBytes, ExtraCameraInfo cameraInfo)
+    {
+        return instance.extractFrom(mknBytes, cameraInfo);
+    }
+
     private final Pattern colorMatrixWBPattern;
     private final Pattern colorMatrixWBCheckerPattern;
 
-    public MakerNoteInfoExtractor()
+    private MakerNoteInfoExtractor()
     {
         colorMatrixWBPattern = Pattern.compile(COLOR_MATRIX_WB_PATTERN);
         colorMatrixWBCheckerPattern = Pattern.compile(COLOR_MATRIX_WB_CHECKER_PATTERN);
     }
 
-    public MakerNoteInfo extractFrom(byte[] mknBytes, ColorInfo colorInfo, int baseISO)
+    public MakerNoteInfo extractFrom(byte[] mknBytes, ExtraCameraInfo cameraInfo)
     {
         MakerNoteInfo result = new MakerNoteInfo(mknBytes);
-        String mknStringBytes;
-        try
+        if (cameraInfo.hasKnownMakernote())
         {
-            mknStringBytes = new String(mknBytes, "ISO-8859-1");
-            extractExposureTimeAndIso(result, mknBytes, baseISO);
-            extractColorMatrixAndWB(result, mknStringBytes, colorInfo);
-            Log.i(TAG, Arrays.toString(result.illuminantScale));
+            String mknStringBytes;
+            SensorInfo sensorInfo = cameraInfo.getSensor();
+            ColorInfo  colorInfo  = cameraInfo.getColor();
+            try
+            {
+                mknStringBytes = new String(mknBytes, "ISO-8859-1");
+                extractExposureTimeAndIso(result, mknBytes, sensorInfo.getBaseISO());
+                extractColorMatrixAndWB(result, mknStringBytes, colorInfo);
+                Log.i(TAG, Arrays.toString(result.illuminantScale));
+            } catch (UnsupportedEncodingException ignored)
+            { }
         }
-        catch (UnsupportedEncodingException ignored)
-        { }
         return result;
     }
 

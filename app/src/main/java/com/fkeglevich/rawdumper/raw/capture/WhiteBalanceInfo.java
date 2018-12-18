@@ -28,6 +28,8 @@ import com.fkeglevich.rawdumper.util.ColorUtil;
 
 import java.util.Arrays;
 
+import androidx.annotation.Nullable;
+
 import static android.hardware.Camera.Parameters.WHITE_BALANCE_AUTO;
 
 /**
@@ -37,7 +39,14 @@ import static android.hardware.Camera.Parameters.WHITE_BALANCE_AUTO;
 
 public class WhiteBalanceInfo
 {
-    public static WhiteBalanceInfo create(ExtraCameraInfo cameraInfo, MakerNoteInfo makerNoteInfo, Camera.Parameters parameters)
+    private static final WhiteBalanceInfo DEFAULT_WB_INFO = new WhiteBalanceInfo(new double[]{1, 1, 1});
+
+    public static WhiteBalanceInfo create()
+    {
+        return DEFAULT_WB_INFO;
+    }
+
+    public static WhiteBalanceInfo create(ExtraCameraInfo cameraInfo, MakerNoteInfo makerNoteInfo, @Nullable Camera.Parameters parameters)
     {
         double[] neutralValues = WhiteBalanceService.getInstance().isAvailable() ? WhiteBalanceService.getInstance().getValue() : null;
 

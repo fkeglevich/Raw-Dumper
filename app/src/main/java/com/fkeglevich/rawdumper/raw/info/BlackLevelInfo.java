@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.raw.info;
 import android.util.Log;
 
 import com.fkeglevich.rawdumper.debug.DebugFlag;
-import com.fkeglevich.rawdumper.raw.capture.ExifInfo;
+import com.fkeglevich.rawdumper.raw.metadata.ExifMetadata;
 
 import java.util.Arrays;
 
@@ -33,23 +33,24 @@ import androidx.annotation.Keep;
 
 @Keep
 @SuppressWarnings("unused")
-public class BlackLevelInfo
+class BlackLevelInfo
 {
     BlackLevel[][] blackLevelMatrix;
     float[] defaultValues;
 
-    public float[] computeBlackLevel(ExifInfo exifInfo)
+    float[] computeBlackLevel(ExifMetadata metadata)
     {
-        if (DebugFlag.ignoreAdvancedBlackLevel() || blackLevelMatrix == null || !exifInfo.hasExposureInfo())
+        if (DebugFlag.ignoreAdvancedBlackLevel() || blackLevelMatrix == null ||
+                metadata.iso == null || metadata.exposureTime == null)
             return defaultValues;
 
-        int iso = exifInfo.getIso().getNumericValue();
-        double exposureTime = exifInfo.getExposureTime().getExposureInSeconds();
+        int iso = metadata.iso.getNumericValue();
+        double exposureTime = metadata.exposureTime.getExposureInSeconds();
 
         BlackLevel[] exposureTimeRow = findExposureTimeRow(exposureTime);
 
         Log.i("BlackLevelInfo", Arrays.toString(exposureTimeRow));
-        Log.i("BlackLevelInfo", "original iso=" + iso + ", exposure time=" + exifInfo.getExposureTime().displayValue());
+        Log.i("BlackLevelInfo", "original iso=" + iso + ", exposure time=" + metadata.exposureTime.displayValue());
 
         return findBestBlackLevel(exposureTimeRow, iso);
     }

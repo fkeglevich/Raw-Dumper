@@ -22,7 +22,7 @@ import com.fkeglevich.rawdumper.io.async.function.LoadDeviceInfoFunction;
 import com.fkeglevich.rawdumper.io.async.function.SaveDngFunction;
 import com.fkeglevich.rawdumper.io.async.function.SaveFileFunction;
 import com.fkeglevich.rawdumper.io.async.function.SaveYuvFunction;
-import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
+import com.fkeglevich.rawdumper.raw.capture.RawCaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.YuvCaptureInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
@@ -51,7 +51,7 @@ public class IOAccess
         functionContext.call(new LoadDeviceInfoFunction(), null, callback, exception);
     }
 
-    public void saveDng(CaptureInfo captureInfo, AsyncOperation<Void> callback, AsyncOperation<MessageException> exception)
+    public void saveDng(RawCaptureInfo captureInfo, AsyncOperation<Void> callback, AsyncOperation<MessageException> exception)
     {
         functionContext.call(new SaveDngFunction(), captureInfo, callback, exception);
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, Flávio Keglevich
+ * Copyright 2018, Flávio Keglevich
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,9 @@
  * limitations under the License.
  */
 
-package com.fkeglevich.rawdumper.camera.setup;
+package com.fkeglevich.rawdumper.io.async;
 
-import com.fkeglevich.rawdumper.io.Directories;
-
-/**
- * TODO: Add class header
- * <p>
- * Created by Flávio Keglevich on 06/11/17.
- */
-
-public class DirectoryStage implements SetupStage
+public class BufferManager
 {
-    @Override
-    public void executeStage(SetupStageLink setupBase)
-    {
-        Directories.getPicturesDirectory().mkdirs();
-        setupBase.processNextStage();
-    }
+
 }

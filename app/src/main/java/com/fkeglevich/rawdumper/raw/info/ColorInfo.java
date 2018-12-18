@@ -17,7 +17,7 @@
 package com.fkeglevich.rawdumper.raw.info;
 
 import com.fkeglevich.rawdumper.dng.writer.DngNegative;
-import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
+import com.fkeglevich.rawdumper.raw.capture.RawCaptureInfo;
 import com.fkeglevich.rawdumper.raw.data.CalibrationIlluminant;
 import com.fkeglevich.rawdumper.util.MathUtil;
 
@@ -58,12 +58,12 @@ public class ColorInfo
 
     private float[] toneCurve;
 
-    public void writeInfoTo(DngNegative negative, CaptureInfo captureInfo)
+    public void writeInfoTo(DngNegative negative, RawCaptureInfo captureInfo)
     {
         negative.setCameraCalibration(cameraCalibration1, cameraCalibration2);
-        if (captureInfo.makerNoteInfo != null && captureInfo.makerNoteInfo.colorMatrix != null)
+        if (captureInfo.getMakerNoteInfo().colorMatrix != null)
         {
-            float[] ccm = captureInfo.makerNoteInfo.colorMatrix;
+            float[] ccm = captureInfo.getMakerNoteInfo().colorMatrix;
 
             addAsShotProfile(negative);
             addMixedCCMProfile(negative, ccm);

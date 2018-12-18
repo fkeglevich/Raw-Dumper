@@ -22,6 +22,8 @@ import com.topjohnwu.superuser.io.SuFileInputStream;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileRawImage implements RawImage
 {
@@ -32,35 +34,36 @@ public class FileRawImage implements RawImage
     private byte[] data;
     private byte[] mkn;
 
-    public FileRawImage(File file, RawImageSize size, byte[] auxBuffer)
+    public static FileRawImage createFromDumpDir(String dumpPath, RawImageSize size, byte[] auxBuffer) throws IOException
+    {
+        SuFile dumpDir = new SuFile(dumpPath);
+        String[] files = dumpDir.list();
+
+        List<String> actualImages = new ArrayList<>();
+        for (String file : files)
+            if (file.endsWith(".i3av4"))
+                actualImages.add(file);
+
+        if (actualImages.size() != 1)
+            throw new IOException("Invalid number of pictures in dump directory!");
+
+        return new FileRawImage(new SuFile(actualImages.get(0)), size, auxBuffer);
+    }
+
+    public FileRawImage(File file, RawImageSize size, byte[] auxBuffer) throws IOException
     {
         this.file = new SuFile(file);
         this.size = size;
         this.auxBuffer = auxBuffer;
         this.data = initData(size, auxBuffer);
         this.mkn = new byte[0];
+        initialize();
     }
 
     @Override
     public RawImageSize getSize()
     {
         return size;
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    @Override
-    public void prepareData() throws IOException
-    {
-        int fileSize = (int) file.length();
-        mkn = new byte[fileSize - size.getBufferLength()];
-
-        try(SuFileInputStream is = new SuFileInputStream(file))
-        {
-            is.read(mkn);
-            is.read(data, 0, size.getBufferLength());
-        }
-
-        file.delete();
     }
 
     @Override
@@ -72,6 +75,26 @@ public class FileRawImage implements RawImage
     public byte[] getMakerNotes()
     {
         return mkn;
+    }
+
+    public SuFile getFile()
+    {
+        return file;
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void initialize() throws IOException
+    {
+        int fileSize = (int) file.length();
+        mkn = new byte[fileSize - size.getBufferLength()];
+
+        try(SuFileInputStream is = new SuFileInputStream(file))
+        {
+            is.read(mkn);
+            is.read(data, 0, size.getBufferLength());
+        }
+
+        file.delete();
     }
 
     private byte[] initData(RawImageSize size, byte[] auxBuffer)

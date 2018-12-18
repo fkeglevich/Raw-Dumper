@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.raw.gain;
 
 import com.fkeglevich.rawdumper.dng.opcode.GainMapOpcode;
 import com.fkeglevich.rawdumper.dng.writer.DngNegative;
-import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
+import com.fkeglevich.rawdumper.raw.capture.RawCaptureInfo;
 
 import java.util.Collections;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class GainMapOpcodeStacker
 {
     private static final String TAG = "GainMapOpcodeWriter";
 
-    public static void write(CaptureInfo captureInfo, DngNegative negative)
+    public static void write(RawCaptureInfo captureInfo, DngNegative negative)
     {
         GainMapOpcode opcode = generateStackedOpcode(captureInfo);
         if (opcode == null) return;
@@ -42,10 +42,10 @@ public class GainMapOpcodeStacker
     }
 
     @Nullable
-    private static GainMapOpcode generateStackedOpcode(CaptureInfo captureInfo)
+    private static GainMapOpcode generateStackedOpcode(RawCaptureInfo captureInfo)
     {
-        Map<ShadingIlluminant, BayerGainMap> map = captureInfo.camera.getGainMapCollection();
-        double[] illuminantScale = captureInfo.makerNoteInfo.illuminantScale;
+        Map<ShadingIlluminant, BayerGainMap> map = captureInfo.getCameraInfo().getGainMapCollection();
+        double[] illuminantScale = captureInfo.getMakerNoteInfo().illuminantScale;
         if (map == null || illuminantScale == null) return null;
 
         BayerGainMap accGainMap = new BayerGainMap(map.get(ShadingIlluminant.A).numColumns, map.get(ShadingIlluminant.A).numRows);
@@ -59,14 +59,13 @@ public class GainMapOpcodeStacker
             }
         }
 
-        if (captureInfo.rawSettings.keepLensVignetting)
+        if (captureInfo.getRawSettings().keepLensVignetting)
             restoreLensVignetting(accGainMap, map.get(ShadingIlluminant.D65));
 
         if (captureInfo.shouldInvertRows())
             accGainMap.invertRows();
 
-        GainMapOpcode opcode = new GainMapOpcode(captureInfo.imageSize, accGainMap);
-        return opcode;
+        return new GainMapOpcode(captureInfo.getImageSize(), accGainMap);
     }
 
     private static void restoreLensVignetting(BayerGainMap accGainMap, BayerGainMap D65Map)
