@@ -198,3 +198,4 @@ Done:
  - Fixed dates in exif tags
  - (DONE!) Better configurations's switches color
  - (DONE!) Enabled ProGuard on release builds and optimized apk's file size
+ - (DONE!) Removed CaptureInfo favoring RawCaptureInfo for a simpler code
