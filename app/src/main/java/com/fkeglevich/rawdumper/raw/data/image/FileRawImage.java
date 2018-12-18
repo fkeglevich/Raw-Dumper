@@ -47,7 +47,7 @@ public class FileRawImage implements RawImage
         if (actualImages.size() != 1)
             throw new IOException("Invalid number of pictures in dump directory!");
 
-        return new FileRawImage(new SuFile(actualImages.get(0)), size, auxBuffer);
+        return new FileRawImage(new SuFile(dumpDir, actualImages.get(0)), size, auxBuffer);
     }
 
     public FileRawImage(File file, RawImageSize size, byte[] auxBuffer) throws IOException
