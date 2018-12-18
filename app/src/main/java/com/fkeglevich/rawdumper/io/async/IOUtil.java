@@ -42,17 +42,10 @@ public class IOUtil
 
     public static void saveBytes(byte[] data, String filePath) throws IOException
     {
-        BufferedOutputStream bos = null;
-        try
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(filePath))))
         {
-            bos = new BufferedOutputStream(new FileOutputStream(new File(filePath)));
             bos.write(data);
             bos.flush();
-        }
-        finally
-        {
-            if (bos != null)
-                bos.close();
         }
     }
 
