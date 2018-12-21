@@ -103,6 +103,7 @@ public class AsusCameraExtension
         }
     }
 
+    @Keep
     public static class CaptureFrameData
     {
         private int mStatus;
@@ -119,6 +120,7 @@ public class AsusCameraExtension
         }
     }
 
+    @Keep
     public static class ProfessionalData
     {
         private int   mISO;
