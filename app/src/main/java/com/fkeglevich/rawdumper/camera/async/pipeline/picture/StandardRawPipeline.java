@@ -35,6 +35,8 @@ import com.fkeglevich.rawdumper.util.MinDelay;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
+import static com.fkeglevich.rawdumper.raw.data.DumpFile.RAW_DUMP_FILE_EXTENSION;
+
 /**
  * TODO: Add class header
  * <p>
@@ -104,7 +106,7 @@ public class StandardRawPipeline extends PicturePipelineBase
         String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
         if (!DebugFlag.isDisableMandatoryRoot())
         {
-            MainSUShell.getInstance().addSingleCommand("rm " + dumpDirectory + "/*.i3av4",
+            MainSUShell.getInstance().addSingleCommand("rm " + dumpDirectory + "/*" + RAW_DUMP_FILE_EXTENSION,
                     result -> postOnPictureSaved(pictureCallback));
         }
         else

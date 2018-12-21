@@ -25,8 +25,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fkeglevich.rawdumper.raw.data.DumpFile.RAW_DUMP_FILE_EXTENSION;
+
 public class FileRawImage implements RawImage
 {
+
     private final SuFile file;
     private final RawImageSize size;
     private final byte[] auxBuffer;
@@ -41,7 +44,7 @@ public class FileRawImage implements RawImage
 
         List<String> actualImages = new ArrayList<>();
         for (String file : files)
-            if (file.endsWith(".i3av4"))
+            if (file.endsWith(RAW_DUMP_FILE_EXTENSION))
                 actualImages.add(file);
 
         if (actualImages.size() != 1)
