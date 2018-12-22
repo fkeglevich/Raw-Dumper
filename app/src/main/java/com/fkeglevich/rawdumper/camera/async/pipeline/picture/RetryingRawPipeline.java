@@ -45,6 +45,8 @@ import com.topjohnwu.superuser.io.SuFile;
 
 import java.io.IOException;
 
+import static android.hardware.Camera.CAMERA_ERROR_UNKNOWN;
+
 /**
  * TODO: Add class header
  * <p>
@@ -59,7 +61,6 @@ public class RetryingRawPipeline implements PicturePipeline
     private final CameraContext             cameraContext;
     private final RestartableCamera         restartableCamera;
     private final int                       minRetryingDelay;
-    private final byte[] buffer;
 
     private Camera.Parameters               parameters = null;
     private boolean                         ignoreError = false;
@@ -71,7 +72,7 @@ public class RetryingRawPipeline implements PicturePipeline
         public void onPictureTaken(byte[] data, Camera camera)
         {
             cameraExtension.get().getCameraDevice().startPreview();
-            errorCallback.onError(0, camera);
+            errorCallback.onError(CAMERA_ERROR_UNKNOWN, camera);
         }
     };
 
@@ -79,6 +80,7 @@ public class RetryingRawPipeline implements PicturePipeline
     private PictureExceptionListener nextExceptionCallback;
 
     private final Handler uiHandler;
+    private final Handler cameraHandler;
 
     RetryingRawPipeline(Mutable<ICameraExtension> cameraExtension, Object lock, CameraContext cameraContext, RestartableCamera restartableCamera, byte[] buffer)
     {
@@ -87,10 +89,10 @@ public class RetryingRawPipeline implements PicturePipeline
         this.lock               = lock;
         this.cameraContext      = cameraContext;
         this.restartableCamera  = restartableCamera;
-        this.buffer             = buffer;
         this.minRetryingDelay   = cameraContext.getCameraInfo().getRetryPipelineDelay();
         this.pipelineDelay      = minRetryingDelay;
         this.uiHandler          = new Handler(Looper.getMainLooper());
+        this.cameraHandler      = new Handler(Looper.myLooper());
     }
 
     @Override
@@ -156,7 +158,7 @@ public class RetryingRawPipeline implements PicturePipeline
         String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
 
         SuFile i3av4Image = DumpFile.selectI3av4Image(dumpDirectory);
-        FileRawImage rawImage = new FileRawImage(i3av4Image, size, buffer);
+        FileRawImage rawImage = new FileRawImage(i3av4Image, size);
 
         RawCaptureInfo captureInfo = new FileCaptureInfo(cameraContext, rawImage, parameters);
 
@@ -165,16 +167,30 @@ public class RetryingRawPipeline implements PicturePipeline
             @Override
             protected void execute(Void argument)
             {
-                nextPictureCallback.onPictureSaved();
+                postOnPictureSaved();
             }
         }, new AsyncOperation<MessageException>()
         {
             @Override
             protected void execute(MessageException argument)
             {
-                nextExceptionCallback.onException(argument);
+                postOnPictureException(argument);
             }
         });
+    }
+
+    private void tryProcessPicture()
+    {
+        try
+        {
+            processPicture();
+            postOnPictureTaken();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            postOnPictureException(new SaveFileException());
+        }
     }
 
     private void restartCamera()
@@ -184,23 +200,14 @@ public class RetryingRawPipeline implements PicturePipeline
             @Override
             protected void execute(Void argument)
             {
-                try
-                {
-                    processPicture();
-                    nextPictureCallback.onPictureTaken();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                    nextExceptionCallback.onException(new SaveFileException());
-                }
+                cameraHandler.post(() -> tryProcessPicture());
             }
         }, new AsyncOperation<MessageException>()
         {
             @Override
             protected void execute(MessageException argument)
             {
-                nextExceptionCallback.onException(argument);
+                postOnPictureException(argument);
             }
         });
     }
@@ -216,5 +223,20 @@ public class RetryingRawPipeline implements PicturePipeline
                 ignoreError = false;
             }
         };
+    }
+
+    private void postOnPictureTaken()
+    {
+        uiHandler.post(() -> nextPictureCallback.onPictureTaken());
+    }
+
+    private void postOnPictureSaved()
+    {
+        uiHandler.post(() -> nextPictureCallback.onPictureSaved());
+    }
+
+    private void postOnPictureException(MessageException exception)
+    {
+        uiHandler.post(() -> nextExceptionCallback.onException(exception));
     }
 }
