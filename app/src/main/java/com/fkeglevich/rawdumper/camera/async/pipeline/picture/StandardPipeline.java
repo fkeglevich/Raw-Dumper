@@ -71,7 +71,7 @@ abstract class StandardPipeline extends PicturePipelineBase
         uiHandler.post(pictureCallback::onPictureSaved);
     }
 
-    void postOnPictureSaved(PictureExceptionListener exceptionCallback, MessageException e)
+    void postOnException(PictureExceptionListener exceptionCallback, MessageException e)
     {
         uiHandler.post(() -> exceptionCallback.onException(e));
     }

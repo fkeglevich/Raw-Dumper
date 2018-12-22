@@ -89,7 +89,7 @@ public class YuvPipeline extends StandardPipeline
             @Override
             protected void execute(MessageException argument)
             {
-                postOnPictureSaved(exceptionCallback, argument);
+                postOnException(exceptionCallback, argument);
             }
         });
     }
