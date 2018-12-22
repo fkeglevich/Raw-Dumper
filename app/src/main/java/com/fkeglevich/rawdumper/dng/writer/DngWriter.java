@@ -59,6 +59,7 @@ public class DngWriter
         finally
         {
             negative.dispose();
+            captureInfo.dispose();
         }
     }
 

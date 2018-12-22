@@ -109,6 +109,11 @@ public abstract class RawCaptureInfo
         return whiteBalanceInfoCache;
     }
 
+    public void dispose()
+    {
+        rawImage.dispose();
+    }
+
     private File initDestinationFile()
     {
         String fileName = new FilenameBuilder()
