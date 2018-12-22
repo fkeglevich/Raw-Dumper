@@ -22,9 +22,5 @@ public interface RawImage
 {
     RawImageSize getSize();
     byte[] getData();
-
-    default void copyDataTo(byte[] other)
-    {
-        System.arraycopy(getData(), 0, other, 0, getSize().getBufferLength());
-    }
+    void dispose();
 }

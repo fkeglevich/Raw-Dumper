@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.data.image;
 
+import com.fkeglevich.rawdumper.io.async.BufferManager;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.topjohnwu.superuser.io.SuFile;
 import com.topjohnwu.superuser.io.SuFileInputStream;
@@ -27,17 +28,15 @@ public class FileRawImage implements RawImage
 {
     private final SuFile file;
     private final RawImageSize size;
-    private final byte[] auxBuffer;
 
     private byte[] data;
     private byte[] mkn;
 
-    public FileRawImage(File file, RawImageSize size, byte[] auxBuffer) throws IOException
+    public FileRawImage(File file, RawImageSize size) throws IOException
     {
         this.file = new SuFile(file);
         this.size = size;
-        this.auxBuffer = auxBuffer;
-        this.data = initData(size, auxBuffer);
+        this.data = initData(size.getBufferLength());
         this.mkn = new byte[0];
         initialize();
     }
@@ -52,6 +51,13 @@ public class FileRawImage implements RawImage
     public byte[] getData()
     {
         return data;
+    }
+
+    @Override
+    public void dispose()
+    {
+        BufferManager.getInstance().sendBuffer(data);
+        data = null;
     }
 
     public byte[] getMakerNotes()
@@ -79,12 +85,8 @@ public class FileRawImage implements RawImage
         file.delete();
     }
 
-    private byte[] initData(RawImageSize size, byte[] auxBuffer)
+    private byte[] initData(int bufferLength)
     {
-        int length = size.getBufferLength();
-        if (this.auxBuffer != null && auxBuffer.length >= length)
-            return auxBuffer;
-        else
-            return new byte[length];
+        return BufferManager.getInstance().getBuffer(bufferLength);
     }
 }

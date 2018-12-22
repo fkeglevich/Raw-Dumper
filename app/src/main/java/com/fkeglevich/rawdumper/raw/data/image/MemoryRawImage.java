@@ -16,17 +16,19 @@
 
 package com.fkeglevich.rawdumper.raw.data.image;
 
+import com.fkeglevich.rawdumper.io.async.BufferManager;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 
 public class MemoryRawImage implements RawImage
 {
-    private final byte[] data;
+    private byte[] data;
+
     private final byte[] jpegData;
     private final RawImageSize size;
 
     public MemoryRawImage(byte[] data, byte[] jpegData, RawImageSize size)
     {
-        this.data       = data;
+        this.data       = wrapData(data, size.getBufferLength());
         this.jpegData   = jpegData;
         this.size       = size;
     }
@@ -46,5 +48,19 @@ public class MemoryRawImage implements RawImage
     public RawImageSize getSize()
     {
         return size;
+    }
+
+    @Override
+    public void dispose()
+    {
+        BufferManager.getInstance().sendBuffer(data);
+        data = null;
+    }
+
+    private byte[] wrapData(byte[] data, int bufferLength)
+    {
+        byte[] newDataBuffer = BufferManager.getInstance().getBuffer(bufferLength);
+        System.arraycopy(data, 0, newDataBuffer, 0, bufferLength);
+        return newDataBuffer;
     }
 }
