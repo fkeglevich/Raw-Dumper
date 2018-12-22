@@ -47,7 +47,8 @@ public class TakePictureController extends FeatureController
 
     private final View captureButton;
     private final ButtonDisabledStateController buttonDisabledStateController;
-    private final Toast toast;
+    private final Toast errorToast;
+    private final Toast pictureToast;
     private final View pictureLayer;
     private final CameraPreview cameraPreview;
     private final List<ValueMeteringController> meteringControllers;
@@ -62,7 +63,8 @@ public class TakePictureController extends FeatureController
     {
         this.captureButton = captureButton;
         this.buttonDisabledStateController = new ButtonDisabledStateController(captureButton, false);
-        this.toast = Toast.makeText(captureButton.getContext(), "", Toast.LENGTH_LONG);
+        this.errorToast = Toast.makeText(captureButton.getContext(), "", Toast.LENGTH_LONG);
+        this.pictureToast = Toast.makeText(captureButton.getContext(), "", Toast.LENGTH_SHORT);
         this.pictureLayer = pictureLayer;
         this.cameraPreview = cameraPreview;
         this.meteringControllers = meteringControllers;
@@ -99,18 +101,18 @@ public class TakePictureController extends FeatureController
             public void onPictureTaken()
             {
                 //Reserved for future versions
+                enableUi();
+                isTakingPicture = false;
             }
 
             @Override
             public void onPictureSaved()
             {
-                showToast(R.string.picture_saved);
-                enableUi();
-                isTakingPicture = false;
+                showToast(R.string.picture_saved, pictureToast);
             }
         }, exception ->
         {
-            showToast(R.string.error_saving_picture);
+            showToast(R.string.error_saving_picture, errorToast);
             enableUi();
             isTakingPicture = false;
         });
@@ -136,7 +138,7 @@ public class TakePictureController extends FeatureController
             meteringController.enable();
     }
 
-    private void showToast(@StringRes int id)
+    private void showToast(@StringRes int id, Toast toast)
     {
         toast.setText(id);
         toast.show();
