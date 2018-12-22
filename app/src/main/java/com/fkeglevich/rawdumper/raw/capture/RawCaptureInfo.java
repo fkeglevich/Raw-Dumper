@@ -22,7 +22,6 @@ import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.pipeline.filename.FilenameBuilder;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.dng.writer.DngNegative;
-import com.fkeglevich.rawdumper.io.Directories;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.image.RawImage;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
@@ -116,12 +115,10 @@ public abstract class RawCaptureInfo
 
     private File initDestinationFile()
     {
-        String fileName = new FilenameBuilder()
+        return new FilenameBuilder()
                 .useCalendar(GregorianCalendar.getInstance())
                 .useFileFormat(FileFormat.DNG)
                 .isPicture()
                 .build();
-
-        return new File(Directories.getPicturesDirectory(), fileName);
     }
 }

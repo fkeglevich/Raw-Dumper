@@ -25,11 +25,9 @@ import com.fkeglevich.rawdumper.camera.async.pipeline.filename.FilenameBuilder;
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
 import com.fkeglevich.rawdumper.camera.extension.ICameraExtension;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
-import com.fkeglevich.rawdumper.io.Directories;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
-import java.io.File;
 import java.util.Calendar;
 
 /**
@@ -53,7 +51,7 @@ abstract class StandardPipeline extends PicturePipelineBase
     @Override
     protected void processPipeline(PipelineData pipelineData, final PictureListener pictureCallback, final PictureExceptionListener exceptionCallback)
     {
-        String filename = new File(Directories.getPicturesDirectory(), filenameBuilder.useCalendar(Calendar.getInstance()).build()).getAbsolutePath();
+        String filename = filenameBuilder.useCalendar(Calendar.getInstance()).build().getAbsolutePath();
         saveImage(pipelineData, pictureCallback, exceptionCallback, filename);
         startPreview();
         uiHandler.post(pictureCallback::onPictureTaken);

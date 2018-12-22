@@ -17,8 +17,10 @@
 package com.fkeglevich.rawdumper.camera.async.pipeline.filename;
 
 import com.fkeglevich.rawdumper.camera.data.FileFormat;
+import com.fkeglevich.rawdumper.io.Directories;
 import com.fkeglevich.rawdumper.raw.capture.DateInfo;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -57,6 +59,7 @@ public class FilenameBuilder
     private Calendar   calendar             = null;
     private FileFormat fileFormat           = null;
     private NameSuffix nameSuffix           = NameSuffix.PICTURE;
+    private File       parentDir            = Directories.getPicturesDirectory();
 
     /**
      * Sets the date used by the builder to create the file name
@@ -95,6 +98,7 @@ public class FilenameBuilder
     public FilenameBuilder isPicture()
     {
         nameSuffix = NameSuffix.PICTURE;
+        parentDir  = Directories.getPicturesDirectory();
         return this;
     }
 
@@ -106,24 +110,44 @@ public class FilenameBuilder
     public FilenameBuilder isVideo()
     {
         nameSuffix = NameSuffix.VIDEO;
+        parentDir  = Directories.getVideosDirectory();
         return this;
     }
 
     /**
      * Build the requested picture/video name
      *
-     * @return  The name as a String
+     * @return  The resulting File object
      */
-    public String build()
+    public File build()
     {
         if (fileFormat == null) throw new RuntimeException("A file format wasn't choosed!");
         if (format.getCalendar() == null) throw new RuntimeException("A calendar wasn't choosed!");
 
         format.setCalendar(calendar);
 
-        return  nameSuffix.getSuffix() +
+        int count = 1;
+        File result = new File(parentDir, generateFileName(count));
+        while (result.exists())
+        {
+            count++;
+            result = new File(parentDir, generateFileName(count));
+        }
+
+        return result;
+    }
+
+    private String generateFileName(int count)
+    {
+        return nameSuffix.getSuffix() +
                 NAME_SEPARATOR +
                 format.format(calendar.getTime()) +
+                getCountSufix(count) +
                 fileFormat.getExtension();
+    }
+
+    private String getCountSufix(int count)
+    {
+        return count == 1 ? "" : "_" + count;
     }
 }
