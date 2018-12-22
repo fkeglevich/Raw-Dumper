@@ -237,6 +237,7 @@ extern "C"
         ((dng_negative*) pointer)->SetDefaultCropSize((uint32) width, (uint32) height);
         ((dng_negative*) pointer)->SetActiveArea(rect);
         ((dng_negative*) pointer)->SetBaseOrientation(orientation);
+        ((dng_negative*) pointer)->SetDefaultOriginalSizes();
     }
 
     JNIEXPORT void JNICALL
