@@ -198,3 +198,4 @@ Done:
  - (DONE!) Enabled ProGuard on release builds and optimized apk's file size
  - (DONE!) Removed CaptureInfo favoring RawCaptureInfo for a simpler code
  - (DONE!) Create a IO thread queue
+ - Fixed Original Size tags
