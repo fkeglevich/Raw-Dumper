@@ -27,7 +27,7 @@ import com.fkeglevich.rawdumper.camera.data.Flash;
 import com.fkeglevich.rawdumper.camera.feature.WritableFeature;
 import com.fkeglevich.rawdumper.controller.animation.ButtonDisabledStateController;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.HashMap;

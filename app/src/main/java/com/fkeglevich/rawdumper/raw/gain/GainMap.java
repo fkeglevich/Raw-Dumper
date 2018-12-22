@@ -16,7 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * Created by flavio on 24/03/18.

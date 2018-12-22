@@ -18,7 +18,7 @@ package com.fkeglevich.rawdumper.camera.data;
 
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * TODO: add header comment

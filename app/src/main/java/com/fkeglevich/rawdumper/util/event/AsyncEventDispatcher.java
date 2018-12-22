@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.util.event;
 import android.os.Handler;
 import android.os.Looper;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import java.util.HashMap;
 import java.util.Map;

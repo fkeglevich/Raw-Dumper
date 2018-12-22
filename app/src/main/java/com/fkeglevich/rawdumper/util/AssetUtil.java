@@ -21,7 +21,7 @@ import android.content.res.AssetManager;
 
 import com.fkeglevich.rawdumper.controller.context.ContextManager;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -28,7 +28,7 @@ import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * TODO: Add class header
