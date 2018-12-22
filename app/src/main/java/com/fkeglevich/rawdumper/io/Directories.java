@@ -16,11 +16,10 @@
 
 package com.fkeglevich.rawdumper.io;
 
-import android.os.Environment;
-
 import java.io.File;
 
 import static android.os.Environment.DIRECTORY_DCIM;
+import static android.os.Environment.getExternalStoragePublicDirectory;
 
 /**
  * TODO: Add class header
@@ -30,11 +29,13 @@ import static android.os.Environment.DIRECTORY_DCIM;
 
 public class Directories
 {
-    private static final String RAW_DUMPER_DIR = "RawDumper";
+    private static final String RAW_DUMPER_DIR_NAME = "RawDumper";
+
+    private static final File RAW_DUMPER_DIR = new File(getExternalStoragePublicDirectory(DIRECTORY_DCIM), RAW_DUMPER_DIR_NAME);
 
     public static File getPicturesDirectory()
     {
-        return new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM), RAW_DUMPER_DIR);
+        return RAW_DUMPER_DIR;
     }
 
     public static File getVideosDirectory()
