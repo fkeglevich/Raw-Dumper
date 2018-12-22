@@ -35,11 +35,13 @@ import com.fkeglevich.rawdumper.io.async.IOThread;
 import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
 import com.fkeglevich.rawdumper.raw.capture.RawCaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.raw_builder.FileCaptureInfo;
+import com.fkeglevich.rawdumper.raw.data.DumpFile;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.image.FileRawImage;
 import com.fkeglevich.rawdumper.util.Mutable;
 import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
+import com.topjohnwu.superuser.io.SuFile;
 
 import java.io.IOException;
 
@@ -152,7 +154,9 @@ public class RetryingRawPipeline implements PicturePipeline
     {
         RawImageSize size = cameraContext.getSensorInfo().getRawImageSizeFromParameters(parameters);
         String dumpDirectory = cameraContext.getDeviceInfo().getDumpDirectoryLocation();
-        FileRawImage rawImage = FileRawImage.createFromDumpDir(dumpDirectory, size, buffer);
+
+        SuFile i3av4Image = DumpFile.selectI3av4Image(dumpDirectory);
+        FileRawImage rawImage = new FileRawImage(i3av4Image, size, buffer);
 
         RawCaptureInfo captureInfo = new FileCaptureInfo(cameraContext, rawImage, parameters);
 

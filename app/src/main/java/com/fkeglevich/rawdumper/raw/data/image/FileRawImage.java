@@ -22,36 +22,15 @@ import com.topjohnwu.superuser.io.SuFileInputStream;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.fkeglevich.rawdumper.raw.data.DumpFile.RAW_DUMP_FILE_EXTENSION;
 
 public class FileRawImage implements RawImage
 {
-
     private final SuFile file;
     private final RawImageSize size;
     private final byte[] auxBuffer;
 
     private byte[] data;
     private byte[] mkn;
-
-    public static FileRawImage createFromDumpDir(String dumpPath, RawImageSize size, byte[] auxBuffer) throws IOException
-    {
-        SuFile dumpDir = new SuFile(dumpPath);
-        String[] files = dumpDir.list();
-
-        List<String> actualImages = new ArrayList<>();
-        for (String file : files)
-            if (file.endsWith(RAW_DUMP_FILE_EXTENSION))
-                actualImages.add(file);
-
-        if (actualImages.size() != 1)
-            throw new IOException("Invalid number of pictures in dump directory!");
-
-        return new FileRawImage(new SuFile(dumpDir, actualImages.get(0)), size, auxBuffer);
-    }
 
     public FileRawImage(File file, RawImageSize size, byte[] auxBuffer) throws IOException
     {
