@@ -16,7 +16,67 @@
 
 package com.fkeglevich.rawdumper.io.async;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BufferManager
 {
+    private static final int MAX_AVAILABLE_BUFFERS = 3;
 
+    private static final BufferManager instance = new BufferManager();
+
+    public static BufferManager getInstance()
+    {
+        return instance;
+    }
+
+    private final List<byte[]> bufferList = new ArrayList<>(MAX_AVAILABLE_BUFFERS);
+
+    private BufferManager()
+    {
+        for (int i = 0; i < MAX_AVAILABLE_BUFFERS; i++)
+            bufferList.add(new byte[0]);
+    }
+
+    public byte[] getBuffer(int minSize)
+    {
+        synchronized (bufferList)
+        {
+            for (int i = 0; i < bufferList.size(); i++)
+            {
+                byte[] buffer = bufferList.get(i);
+                if (buffer.length >= minSize)
+                {
+                    bufferList.remove(i);
+                    return buffer;
+                }
+            }
+
+            if (bufferList.isEmpty())
+            {
+                try
+                {
+                    bufferList.wait();
+                }
+                catch (InterruptedException ignored)
+                { }
+
+                return getBuffer(minSize);
+            }
+            else
+            {
+                bufferList.set(0, new byte[minSize]);
+                return bufferList.remove(0);
+            }
+        }
+    }
+
+    public void sendBuffer(byte[] buffer)
+    {
+        synchronized (bufferList)
+        {
+            bufferList.add(buffer);
+            bufferList.notify();
+        }
+    }
 }
