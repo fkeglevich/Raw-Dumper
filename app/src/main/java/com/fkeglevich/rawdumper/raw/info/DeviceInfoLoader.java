@@ -105,7 +105,7 @@ public class DeviceInfoLoader
         try
         {
             String deviceInfoJson = AssetUtil.getAssetAsString(DEVICES_DIR_NAME + deviceInfoFileName + DEVICE_FILE_EXTENSION);
-            DeviceInfo deviceInfo = moshi.adapter(DeviceInfo.class).fromJson(deviceInfoJson);
+            DeviceInfo deviceInfo = moshi.adapter(DeviceInfo.class).lenient().fromJson(deviceInfoJson);
             if (deviceInfo != null) deviceInfo.runtimeInit(deviceInfoFileName);
             return deviceInfo;
         }
