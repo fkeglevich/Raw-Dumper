@@ -29,7 +29,7 @@ public class PreviewArea
 {
     public enum FlipType
     {
-        NONE, HORIZONTAL, VERTICAL;
+        NONE, HORIZONTAL, VERTICAL
     }
 
     private static final List<Integer> VALID_DEGREES = Arrays.asList(0, 90, 180, 270);
