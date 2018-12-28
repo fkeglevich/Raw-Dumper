@@ -42,7 +42,7 @@ public class ManualTemperatureRange extends DataRange<ManualTemperature>
         int[] temperatureRange = colorInfo.getTemperatureRange();
         if (temperatureRange == null) return null;
 
-        Assert.assertTrue(temperatureRange.length == 4);
+        Assert.assertEquals(4, temperatureRange.length);
 
         ManualTemperature lower = ManualTemperature.create(temperatureRange[0]);
         ManualTemperature upper = ManualTemperature.create(temperatureRange[temperatureRange.length - 1]);
