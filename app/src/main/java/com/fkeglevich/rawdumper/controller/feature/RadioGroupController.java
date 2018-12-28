@@ -43,7 +43,6 @@ public abstract class RadioGroupController<T> extends FeatureController
 {
     private final ActivityReference reference;
     private final RadioGroup radioGroup;
-    private final int accentColor;
     private final ColorStateList stateList;
     private WritableFeature<T, List<T>> feature;
     private final Map<View, T> viewValueMap = new HashMap<>();
@@ -53,9 +52,10 @@ public abstract class RadioGroupController<T> extends FeatureController
 
     RadioGroupController(ActivityReference reference, RadioGroup radioGroup)
     {
+        int accentColor = ResourcesCompat.getColor(reference.weaklyGet().getResources(), R.color.colorAccent, null);
+
         this.reference = reference;
         this.radioGroup = radioGroup;
-        this.accentColor = ResourcesCompat.getColor(reference.weaklyGet().getResources(), R.color.colorAccent, null);
         this.stateList = new ColorStateList(new int[][]
                 {
                         new int[]{-android.R.attr.state_checked},
