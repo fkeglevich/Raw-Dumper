@@ -140,6 +140,7 @@ public class OrientationUIController
         else return 0;
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     private boolean hasProblematicAngle(int degrees)
     {
         if (Math.abs(degrees - 45)  < ANGLE_MARGIN) return true;
