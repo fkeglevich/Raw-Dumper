@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.camera.feature;
 import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
+import com.fkeglevich.rawdumper.camera.data.Aperture;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
@@ -88,6 +89,13 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
     public Feature<Nullable<ShutterSpeed>> createSSMeteringFeature()
     {
         SSMeteringFeature result = new SSMeteringFeature(parameterCollection, cameraContext.getSensorInfo());
+        registerFeature(result);
+        return result;
+    }
+
+    public Feature<Nullable<Aperture>> createApertureMeteringFeature()
+    {
+        ApertureMeteringFeature result = new ApertureMeteringFeature(cameraContext.getLensInfo());
         registerFeature(result);
         return result;
     }

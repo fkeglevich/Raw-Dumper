@@ -51,7 +51,7 @@ public class TakePictureController extends FeatureController
     private final Toast pictureToast;
     private final View pictureLayer;
     private final CameraPreview cameraPreview;
-    private final List<ValueMeteringController> meteringControllers;
+    private final List<FeatureController> meteringControllers;
     private final View progressBar;
     private final ActivityReference reference;
     private EventListener<KeyEventData> keyListener;
@@ -59,7 +59,7 @@ public class TakePictureController extends FeatureController
 
     @SuppressLint("ShowToast")
     TakePictureController(View captureButton, View pictureLayer, CameraPreview cameraPreview,
-                          List<ValueMeteringController> meteringControllers, View progressBar, ActivityReference reference)
+                          List<FeatureController> meteringControllers, View progressBar, ActivityReference reference)
     {
         this.captureButton = captureButton;
         this.buttonDisabledStateController = new ButtonDisabledStateController(captureButton, false);
@@ -120,7 +120,7 @@ public class TakePictureController extends FeatureController
 
     private void disableUi()
     {
-        for (ValueMeteringController meteringController : meteringControllers)
+        for (FeatureController meteringController : meteringControllers)
             meteringController.disable();
         cameraPreview.pauseUpdating();
         pictureLayer.setVisibility(View.VISIBLE);
@@ -134,7 +134,7 @@ public class TakePictureController extends FeatureController
         progressBar.setVisibility(View.INVISIBLE);
         pictureLayer.setVisibility(View.INVISIBLE);
         cameraPreview.resumeUpdating();
-        for (ValueMeteringController meteringController : meteringControllers)
+        for (FeatureController meteringController : meteringControllers)
             meteringController.enable();
     }
 

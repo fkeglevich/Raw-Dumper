@@ -150,7 +150,7 @@ public class ValueMeteringController<T extends Displayable> extends FeatureContr
     }
 
     @SuppressWarnings("unchecked")
-    private Feature<T> getFallbackFeature(TurboCamera turboCamera)
+    Feature<T> getFallbackFeature(TurboCamera turboCamera)
     {
         return turboCamera.getListFeature((Class<T>) defaultValue.getClass());
     }

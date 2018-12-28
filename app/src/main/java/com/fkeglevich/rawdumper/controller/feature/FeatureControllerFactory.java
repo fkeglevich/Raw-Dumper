@@ -114,13 +114,19 @@ public class FeatureControllerFactory
         return new ValueMeteringController<>(textView, Ev.DEFAULT);
     }
 
+    ApertureMeteringController createApertureMeteringController(ActivityReference reference)
+    {
+        TextView textView = reference.weaklyGet().findViewById(R.id.apertureText);
+        return new ApertureMeteringController(textView);
+    }
+
     FocusMeteringController createFocusMeteringController(ActivityReference reference)
     {
         TextView textView = reference.weaklyGet().findViewById(R.id.focusText);
         return new FocusMeteringController(textView);
     }
 
-    TakePictureController createCaptureButtonController(ActivityReference reference, List<ValueMeteringController> meteringControllers)
+    TakePictureController createCaptureButtonController(ActivityReference reference, List<FeatureController> meteringControllers)
     {
         View captureButton = reference.weaklyGet().findViewById(R.id.captureButton);
         View pictureLayer = reference.weaklyGet().findViewById(R.id.captureLayer);

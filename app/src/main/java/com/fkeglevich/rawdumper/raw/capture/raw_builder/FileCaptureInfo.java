@@ -69,7 +69,7 @@ public class FileCaptureInfo extends RawCaptureInfo
         ExifMetadata result = new ExifMetadata(getCameraInfo(), getDeviceInfo());
 
         if (getLensInfo() != null)
-            result.aperture = getLensInfo().getAperture();
+            result.aperture = getLensInfo().getNumericAperture();
 
         result.exposureBias         = Ev.create(parameters.getExposureCompensationStep() * parameters.getExposureCompensation());
         result.focalLength          = parameters.getFocalLength();
