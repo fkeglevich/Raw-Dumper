@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:text="ƒ/2.0"
             android:textColor="@android:color/white"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:textSize="12sp" />
 
     </LinearLayout>
