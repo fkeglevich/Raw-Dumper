@@ -23,6 +23,8 @@ import java.lang.reflect.Method;
 
 import androidx.annotation.Keep;
 
+import static com.fkeglevich.rawdumper.camera.extension.MeteringExtensionLoader.loadMeteringExtension;
+
 /**
  * Represents a Intel Camera Extensions library interface.
  *
@@ -32,7 +34,8 @@ import androidx.annotation.Keep;
 @Keep
 class IntelCameraProxy implements ICameraExtension
 {
-    private Object instance;
+    private final IMeteringExtension meteringExtension;
+    private final Object instance;
 
     private Method releaseMethod;
     private Method getCameraDeviceMethod;
@@ -65,6 +68,7 @@ class IntelCameraProxy implements ICameraExtension
     {
         this.instance = instance;
         initializeMethods(intelCameraClass);
+        this.meteringExtension = loadMeteringExtension(getCameraDevice());
         Log.i(IntelCameraProxy.class.getSimpleName(), "Intel Camera Extensions loaded!");
     }
 
@@ -115,6 +119,7 @@ class IntelCameraProxy implements ICameraExtension
     @Override
     public void release()
     {
+        meteringExtension.release();
         callInstanceMethod(releaseMethod);
     }
 
@@ -128,6 +133,12 @@ class IntelCameraProxy implements ICameraExtension
     public boolean hasIntelFeatures()
     {
         return true;
+    }
+
+    @Override
+    public IMeteringExtension getMeteringExtension()
+    {
+        return meteringExtension;
     }
 
     @Override

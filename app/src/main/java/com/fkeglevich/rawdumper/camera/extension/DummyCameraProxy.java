@@ -18,6 +18,8 @@ package com.fkeglevich.rawdumper.camera.extension;
 
 import android.hardware.Camera;
 
+import static com.fkeglevich.rawdumper.camera.extension.MeteringExtensionLoader.loadMeteringExtension;
+
 /**
  * Represents a "fake" Intel Camera Extensions library interface to be used when the actual
  * library implementation is absent from the system, while the core methods still works.
@@ -27,7 +29,8 @@ import android.hardware.Camera;
 
 class DummyCameraProxy implements ICameraExtension
 {
-    private Camera camera;
+    private final Camera camera;
+    private final IMeteringExtension meteringExtension;
 
     static DummyCameraProxy createNew(int cameraId)
     {
@@ -40,11 +43,13 @@ class DummyCameraProxy implements ICameraExtension
     private DummyCameraProxy(Camera camera)
     {
         this.camera = camera;
+        this.meteringExtension = loadMeteringExtension(camera);
     }
 
     @Override
     public void release()
     {
+        meteringExtension.release();
         camera.release();
     }
 
@@ -58,6 +63,12 @@ class DummyCameraProxy implements ICameraExtension
     public boolean hasIntelFeatures()
     {
         return false;
+    }
+
+    @Override
+    public IMeteringExtension getMeteringExtension()
+    {
+        return meteringExtension;
     }
 
     @Override

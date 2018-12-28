@@ -23,12 +23,15 @@ import com.fkeglevich.rawdumper.camera.data.Aperture;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
+import com.fkeglevich.rawdumper.camera.extension.IMeteringExtension;
+import com.fkeglevich.rawdumper.camera.service.ProDataMeteringService;
 import com.fkeglevich.rawdumper.util.event.AsyncEventDispatcher;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 
 import java.lang.ref.WeakReference;
 
 import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
@@ -38,7 +41,7 @@ import androidx.annotation.Nullable;
  */
 @SuppressWarnings({"JniMissingFunction", "unused"})
 @Keep
-public class AsusCameraExtension
+public class AsusCameraExtension implements IMeteringExtension
 {
     private static final String TAG                   = "AsusCameraExt";
     private static final String LIBRARY_NAME          = "asuscameraext_jni";
@@ -72,14 +75,18 @@ public class AsusCameraExtension
     private int mNativeContext;
     private long mNativeContextLong;
 
-    public final EventDispatcher<CaptureFrameData> onGotCaptureFrameData = new AsyncEventDispatcher<>();
-    public final EventDispatcher<ProfessionalData> onGotProfessionalData = new AsyncEventDispatcher<>();
+    private final EventDispatcher<CaptureFrameData> onGotCaptureFrameData = new AsyncEventDispatcher<>();
+    private final EventDispatcher<ProfessionalData> onGotProfessionalData = new AsyncEventDispatcher<>();
 
     public AsusCameraExtension(Camera camera)
     {
         mCameraDevice = camera;
         if (isAvailable())
+        {
             native_setup(new WeakReference<>(this), this.mCameraDevice);
+            ProDataMeteringService.getInstance().bind(this);
+            Log.i(TAG, "Asus Camera Extension loaded!");
+        }
     }
 
     private static void postEventFromNative(Object extensionRef, int what, int arg1, int arg2, Object obj)
@@ -94,13 +101,25 @@ public class AsusCameraExtension
 
             case PRO_DATA_MSG:
                 cameraExtension.onGotProfessionalData.dispatchEvent((ProfessionalData) obj);
-                //Log.i(TAG, "Aperture: " + obj.toString());
+                Log.i(TAG, "Aperture: " + obj.toString());
                 break;
 
             default:
                 Log.i(TAG, "Unknown message type: " + what);
                 break;
         }
+    }
+
+    @Override
+    public EventDispatcher<CaptureFrameData> getOnGotCaptureFrameData()
+    {
+        return onGotCaptureFrameData;
+    }
+
+    @Override
+    public EventDispatcher<ProfessionalData> getOnGotProfessionalData()
+    {
+        return onGotProfessionalData;
     }
 
     @Keep
@@ -114,6 +133,7 @@ public class AsusCameraExtension
         }
 
         @Override
+        @NonNull
         public String toString()
         {
             return "{ status: " + mStatus + " }";
@@ -174,6 +194,7 @@ public class AsusCameraExtension
         }
 
         @Override
+        @NonNull
         public String toString()
         {
             return "{ iso: " + mISO +
@@ -184,10 +205,13 @@ public class AsusCameraExtension
         }
     }
 
+    @Override
     public void release()
     {
         onGotCaptureFrameData.removeAllListeners();
         onGotProfessionalData.removeAllListeners();
+
+        ProDataMeteringService.getInstance().unbind();
 
         if (isAvailable())
         {
@@ -196,6 +220,7 @@ public class AsusCameraExtension
         }
     }
 
+    @Override
     public void startQueryData(int queryInterval)
     {
         if (isAvailable())
@@ -205,6 +230,7 @@ public class AsusCameraExtension
         }
     }
 
+    @Override
     public void stopQueryingData()
     {
         if (isAvailable())
