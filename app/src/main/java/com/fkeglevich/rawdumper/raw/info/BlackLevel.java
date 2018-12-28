@@ -21,6 +21,7 @@ import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import java.util.Arrays;
 
 import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
 
 /**
  * Simple data class for storing a combination of ISO, exposure time and black level values.
@@ -36,6 +37,7 @@ public class BlackLevel
     public float[] values;
 
     @Override
+    @NonNull
     public String toString()
     {
         return "[BlackLevel iso=" + iso + ", exposureTime=" + ShutterSpeed.create(exposureTime).displayValue() + ", values=" + Arrays.toString(values) + "]";
