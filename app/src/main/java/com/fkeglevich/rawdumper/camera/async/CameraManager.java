@@ -42,7 +42,7 @@ public class CameraManager
     {
         IDLE,
         PERFORMING_OPERATION,
-        CAMERA_READY;
+        CAMERA_READY
     }
 
     private final OrientationModule orientationModule;
