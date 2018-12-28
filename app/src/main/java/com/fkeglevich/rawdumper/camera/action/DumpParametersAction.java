@@ -22,5 +22,5 @@ package com.fkeglevich.rawdumper.camera.action;
 
 public interface DumpParametersAction
 {
-    public String dumpParameters();
+    String dumpParameters();
 }
