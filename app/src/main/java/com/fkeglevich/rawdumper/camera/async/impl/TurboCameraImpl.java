@@ -21,6 +21,7 @@ import com.fkeglevich.rawdumper.camera.action.listener.PictureListener;
 import com.fkeglevich.rawdumper.camera.async.Closeable;
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
 import com.fkeglevich.rawdumper.camera.async.direct.LowLevelCamera;
+import com.fkeglevich.rawdumper.camera.data.Aperture;
 import com.fkeglevich.rawdumper.camera.data.CaptureSize;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.data.Flash;
@@ -140,6 +141,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
     {
         meteringFeatures.put(Iso.class, recyclerFactory.createIsoMeteringFeature());
         meteringFeatures.put(ShutterSpeed.class, recyclerFactory.createSSMeteringFeature());
+        meteringFeatures.put(Aperture.class, recyclerFactory.createApertureMeteringFeature());
     }
 
     private void createVirtualFeatures()
