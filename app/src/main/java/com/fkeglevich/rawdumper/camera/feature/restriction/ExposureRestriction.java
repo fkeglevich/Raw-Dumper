@@ -84,8 +84,7 @@ public class ExposureRestriction
 
     private void addExposureToHistory(ExposureType type, Object data)
     {
-        if (historySet.contains(type))
-            historySet.remove(type);
+        historySet.remove(type);
 
         if (isManual(type, data))
             historySet.add(type);
