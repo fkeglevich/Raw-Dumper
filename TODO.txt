@@ -19,8 +19,6 @@ TODO list:
 			
  - (FUTURE RELEASE) Auto rotate the ISO/SS choosers
  - (FUTURE RELEASE) Handle different types of makernotes
-
- - (IN PROGRESS) Show aperture below the current shutter speed value (handle display rotation)
  
  - Add simple normal/low light button switch
 
@@ -199,3 +197,4 @@ Done:
  - (DONE!) Removed CaptureInfo favoring RawCaptureInfo for a simpler code
  - (DONE!) Create a IO thread queue
  - Fixed Original Size tags
+ - (DONE!) Show aperture below the current shutter speed value (handle display rotation)
