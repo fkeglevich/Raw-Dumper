@@ -101,7 +101,6 @@ public class AsusCameraExtension implements IMeteringExtension
 
             case PRO_DATA_MSG:
                 cameraExtension.onGotProfessionalData.dispatchEvent((ProfessionalData) obj);
-                Log.i(TAG, "Aperture: " + obj.toString());
                 break;
 
             default:
