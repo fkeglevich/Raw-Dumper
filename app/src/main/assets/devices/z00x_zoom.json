@@ -159,7 +159,8 @@
             "hasKnownMakernote": false,
             "id": 0,
             "lens": {
-                "aperture": 2.7
+                "aperture": 2.7,
+                "opticalZoom": true
             },
             "model": "%s (back camera)",
             "noise": {

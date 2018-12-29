@@ -32,6 +32,7 @@ import androidx.annotation.Nullable;
 public class LensInfo
 {
     private Double aperture = null;
+    private Boolean opticalZoom = null;
 
     @Nullable
     public Aperture getAperture()
@@ -50,5 +51,10 @@ public class LensInfo
             return aperture.getValue();
 
         return null;
+    }
+
+    public boolean hasOpticalZoom()
+    {
+        return (opticalZoom == null) ? false : opticalZoom;
     }
 }
