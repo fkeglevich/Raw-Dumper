@@ -23,7 +23,7 @@ import androidx.annotation.Nullable;
 public class ProDataMeteringService
 {
     private static final ProDataMeteringService instance = new ProDataMeteringService();
-    private static final int DEFAULT_INTERVAL = 500;
+    private static final int DEFAULT_INTERVAL = 200;
 
     public static ProDataMeteringService getInstance()
     {
