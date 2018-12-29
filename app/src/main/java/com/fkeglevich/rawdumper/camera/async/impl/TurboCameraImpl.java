@@ -142,6 +142,7 @@ public class TurboCameraImpl implements TurboCamera, Closeable
         meteringFeatures.put(Iso.class, recyclerFactory.createIsoMeteringFeature());
         meteringFeatures.put(ShutterSpeed.class, recyclerFactory.createSSMeteringFeature());
         meteringFeatures.put(Aperture.class, recyclerFactory.createApertureMeteringFeature());
+        meteringFeatures.put(Ev.class, recyclerFactory.createEvMeteringFeature());
     }
 
     private void createVirtualFeatures()

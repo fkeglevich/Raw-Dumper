@@ -100,6 +100,13 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
         return result;
     }
 
+    public Feature<Nullable<Ev>> createEvMeteringFeature()
+    {
+        EvMeteringFeature result = new EvMeteringFeature();
+        registerFeature(result);
+        return result;
+    }
+
     public PreviewFeature createPreviewFeature()
     {
         PreviewFeature result = new PreviewFeature(parameterCollection);
