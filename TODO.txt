@@ -22,8 +22,6 @@ TODO list:
  
  - Add simple normal/low light button switch
 
- - (IN PROGRESS) Add asus camera metering
-
  - (IN PROGRESS) Fallback to Gray World AWB algorithm when there's no other AWB algo available
 
  - Zoom feature for Zenfone Zoom
@@ -198,3 +196,6 @@ Done:
  - (DONE!) Create a IO thread queue
  - Fixed Original Size tags
  - (DONE!) Show aperture below the current shutter speed value (handle display rotation)
+ - Fix minor button controller color bug
+ - (DONE!) Added EV metering for ZenZoom
+ - (DONE!) Add asus camera metering
