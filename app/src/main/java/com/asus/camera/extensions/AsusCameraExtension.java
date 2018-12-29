@@ -184,6 +184,14 @@ public class AsusCameraExtension implements IMeteringExtension
             return Ev.create(mDifferentialEV);
         }
 
+        @Nullable
+        public Ev getMeteringEv()
+        {
+            float meteringEv = mOriginalEV + mDifferentialEV;
+            if (Ev.isInvalidEv(meteringEv)) return null;
+            return Ev.create(meteringEv);
+        }
+
         public void copyFrom(ProfessionalData other)
         {
             mISO            = other.mISO;
