@@ -27,7 +27,7 @@ import java.io.IOException;
  * Created by flavio on 29/11/17.
  */
 
-public class PreviewProgramFactory
+class PreviewProgramFactory
 {
     private static final String VERTEX_SHADER_ASSET = "shaders/preview_vertex.glsl";
 

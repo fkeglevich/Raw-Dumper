@@ -57,7 +57,7 @@ public class DateInfo
      *
      * @return  A DateInfo object
      */
-    public static DateInfo createFromCurrentTime()
+    private static DateInfo createFromCurrentTime()
     {
         return new DateInfo((GregorianCalendar)GregorianCalendar.getInstance());
     }

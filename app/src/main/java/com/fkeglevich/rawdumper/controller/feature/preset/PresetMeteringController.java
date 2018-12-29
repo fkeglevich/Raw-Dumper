@@ -46,7 +46,7 @@ public abstract class PresetMeteringController<P extends Displayable, M extends 
     private EventListener<ParameterChangeEvent<M>> manualListener = eventData -> updateText(false);
 
     @SuppressWarnings("unchecked")
-    public PresetMeteringController(TextView textView)
+    protected PresetMeteringController(TextView textView)
     {
         this.textView = textView;
         this.presetClass = (Class<P>) getUnavailableValue().getClass();

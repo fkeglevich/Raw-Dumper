@@ -21,7 +21,7 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ToggleValidator;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 
-public class ToggleFeature extends WritableFeature<Boolean, ToggleValidator>
+class ToggleFeature extends WritableFeature<Boolean, ToggleValidator>
 {
     ToggleFeature(Parameter<Boolean> featureParameter, ParameterCollection parameterCollection, ValueValidator<Boolean, ToggleValidator> validator)
     {

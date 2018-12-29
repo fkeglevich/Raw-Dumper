@@ -31,7 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class UiUtil
 {
-    public static float dpToPixels(float dp, Context context)
+    private static float dpToPixels(float dp, Context context)
     {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
@@ -46,7 +46,7 @@ public class UiUtil
         return (int)dpToPixels(context.getResources().getDimension(id), context);
     }
 
-    public static void setDpPadding(float padding, View view)
+    private static void setDpPadding(float padding, View view)
     {
         Context context = view.getContext();
         view.setPadding((int)dpToPixels(padding, context), (int)dpToPixels(padding, context),

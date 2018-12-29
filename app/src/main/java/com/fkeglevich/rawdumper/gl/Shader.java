@@ -41,7 +41,7 @@ public class Shader
         throw new GLException("Error creating shader!");
     }
 
-    protected Shader(int handle, ShaderType type)
+    private Shader(int handle, ShaderType type)
     {
         this.handle = handle;
         this.type = type;
@@ -71,7 +71,7 @@ public class Shader
         }
     }
 
-    public void delete()
+    private void delete()
     {
         GLES20.glDeleteShader(getHandle());
     }

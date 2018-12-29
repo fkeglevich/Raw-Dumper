@@ -27,7 +27,7 @@ import java.io.UnsupportedEncodingException;
  * Created by flavio on 24/03/18.
  */
 
-public class MakerNoteInfoFactory
+class MakerNoteInfoFactory
 {
     private static final String CCM_MKN_FINGERPRINT     = "factory_golden_at_lab";
     private static final String HOYA_MKN_FINGERPRINT    = "HOYA";

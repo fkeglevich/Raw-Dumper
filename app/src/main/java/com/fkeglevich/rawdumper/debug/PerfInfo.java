@@ -63,7 +63,7 @@ public class PerfInfo
      * @param tag   A tag for storing/querying the result
      * @param data  Extra data value for better documentation
      */
-    public synchronized static void end(String tag, String data)
+    private synchronized static void end(String tag, String data)
     {
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
         {
@@ -86,7 +86,7 @@ public class PerfInfo
      * @param tag   A tag for storing/querying the result
      * @param data  Extra data value for better documentation
      */
-    public synchronized static void log(String tag, @Nullable String data)
+    private synchronized static void log(String tag, @Nullable String data)
     {
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
         {

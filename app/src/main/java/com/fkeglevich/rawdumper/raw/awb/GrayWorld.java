@@ -19,7 +19,7 @@ package com.fkeglevich.rawdumper.raw.awb;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.data.image.RawImage;
 
-public class GrayWorld
+class GrayWorld
 {
     static
     {

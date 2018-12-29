@@ -30,7 +30,7 @@ import javax.microedition.khronos.opengles.GL10;
  * Created by flavio on 28/11/17.
  */
 
-public class PreviewRenderer implements GLSurfaceView.Renderer
+class PreviewRenderer implements GLSurfaceView.Renderer
 {
     private static final String TAG = "PreviewRenderer";
 
@@ -63,7 +63,7 @@ public class PreviewRenderer implements GLSurfaceView.Renderer
         rendering = true;
     }
 
-    void stopRender()
+    private void stopRender()
     {
         rendering = false;
     }

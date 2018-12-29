@@ -30,7 +30,7 @@ public class ThrowingAsyncFunctionContext extends AsyncFunctionContext
 {
     private final AsyncOperationPoster exceptionPoster;
 
-    public ThrowingAsyncFunctionContext(Looper taskLooper, Looper callbackLooper, Looper exceptionLooper)
+    private ThrowingAsyncFunctionContext(Looper taskLooper, Looper callbackLooper, Looper exceptionLooper)
     {
         super(taskLooper, callbackLooper);
         this.exceptionPoster = new AsyncOperationPoster(exceptionLooper);

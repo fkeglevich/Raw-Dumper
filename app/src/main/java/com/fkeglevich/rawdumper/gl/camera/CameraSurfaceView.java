@@ -133,7 +133,7 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
         }
     }
 
-    boolean takePictureAnimationIsEnding = false;
+    private boolean takePictureAnimationIsEnding = false;
 
     @Override
     public void pauseUpdating()

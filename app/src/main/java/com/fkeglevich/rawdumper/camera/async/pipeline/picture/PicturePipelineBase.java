@@ -106,7 +106,7 @@ public abstract class PicturePipelineBase implements PicturePipeline
         };
     }
 
-    protected void setupCameraBefore(Camera camera)
+    void setupCameraBefore(Camera camera)
     {   /*no op*/    }
 
     void startPreview()

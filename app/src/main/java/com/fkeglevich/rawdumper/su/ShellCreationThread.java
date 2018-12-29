@@ -23,7 +23,7 @@ import com.topjohnwu.superuser.Shell;
  * TODO: add header comment
  * Created by Flávio Keglevich on 01/05/18.
  */
-public class ShellCreationThread extends Thread
+class ShellCreationThread extends Thread
 {
     private Shell shell = null;
 

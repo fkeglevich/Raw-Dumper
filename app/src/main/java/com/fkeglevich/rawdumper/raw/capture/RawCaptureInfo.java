@@ -46,7 +46,7 @@ public abstract class RawCaptureInfo
 
     private WhiteBalanceInfo whiteBalanceInfoCache = null;
 
-    public RawCaptureInfo(CameraContext cameraContext, RawImage rawImage, @Nullable Camera.Parameters parameters)
+    protected RawCaptureInfo(CameraContext cameraContext, RawImage rawImage, @Nullable Camera.Parameters parameters)
     {
         this.cameraContext  = cameraContext;
         this.rawImage       = rawImage;
@@ -54,7 +54,7 @@ public abstract class RawCaptureInfo
         this.rawSettings.getDataFrom(cameraContext.getRawSettings());
     }
 
-    public DeviceInfo getDeviceInfo()
+    protected DeviceInfo getDeviceInfo()
     {
         return cameraContext.getDeviceInfo();
     }
@@ -64,7 +64,7 @@ public abstract class RawCaptureInfo
         return cameraContext.getCameraInfo();
     }
 
-    public LensInfo getLensInfo()
+    protected LensInfo getLensInfo()
     {
         return getCameraInfo().getLens();
     }

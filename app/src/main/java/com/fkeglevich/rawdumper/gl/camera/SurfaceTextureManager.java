@@ -31,7 +31,7 @@ import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
  * Created by flavio on 28/11/17.
  */
 
-public class SurfaceTextureManager
+class SurfaceTextureManager
 {
     final EventDispatcher<SurfaceTexture> onSurfaceTextureAvailable = new SimpleDispatcher<>();
 

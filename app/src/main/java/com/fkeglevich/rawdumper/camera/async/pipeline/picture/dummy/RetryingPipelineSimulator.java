@@ -37,7 +37,7 @@ import java.util.Arrays;
 
 public class RetryingPipelineSimulator
 {
-    public static final String TAG = "RetryingSimulator";
+    private static final String TAG = "RetryingSimulator";
 
     public static void simulate(CameraContext cameraContext, final Camera.ErrorCallback errorCallback)
     {

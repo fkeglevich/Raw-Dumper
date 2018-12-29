@@ -27,7 +27,7 @@ public class MandatoryPermissionModule
 {
     private MandatoryPermissionManager permissionManager = initPermissionManager();
 
-    public MandatoryPermissionModule(final ActivityReference activityReference)
+    MandatoryPermissionModule(final ActivityReference activityReference)
     {
         activityReference.onRequestPermissionsResult.addListener(request -> getPermissionManager().sendRequestPermissionsResult(request));
     }

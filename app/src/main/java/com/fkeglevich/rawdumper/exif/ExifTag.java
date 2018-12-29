@@ -22,7 +22,7 @@ package com.fkeglevich.rawdumper.exif;
  * Created by Flávio Keglevich on 02/02/2017.
  */
 
-public class ExifTag
+class ExifTag
 {
     public static final int EXIFTAG_EXPOSURETIME                = 33434;
     public static final int EXIFTAG_FNUMBER                     = 33437;

@@ -24,16 +24,16 @@ import com.fkeglevich.rawdumper.util.exception.MessageException;
  * TODO: Add a class header comment!
  */
 
-public abstract class FileFunction<I> extends ThrowingAsyncFunction<I, Void, MessageException>
+abstract class FileFunction<I> extends ThrowingAsyncFunction<I, Void, MessageException>
 {
     private final String destinationFilePath;
 
-    public FileFunction(String destinationFilePath)
+    FileFunction(String destinationFilePath)
     {
         this.destinationFilePath = destinationFilePath;
     }
 
-    public String getDestinationFilePath()
+    String getDestinationFilePath()
     {
         return destinationFilePath;
     }

@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class LowLightMode extends Mode
+class LowLightMode extends Mode
 {
     LowLightMode(ExtraCameraInfo cameraInfo)
     {

@@ -28,7 +28,7 @@ import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
  * Created by Flávio Keglevich on 31/10/17.
  */
 
-public class ChainNode<M, S, L>
+class ChainNode<M, S, L>
 {
     private final VirtualFeature master;
 

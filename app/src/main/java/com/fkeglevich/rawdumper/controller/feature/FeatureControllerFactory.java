@@ -44,7 +44,7 @@ import androidx.annotation.StringRes;
  * Created by Flávio Keglevich on 23/10/17.
  */
 
-public class FeatureControllerFactory
+class FeatureControllerFactory
 {
     private final DismissibleManagerAdapter dismissibleManager;
 

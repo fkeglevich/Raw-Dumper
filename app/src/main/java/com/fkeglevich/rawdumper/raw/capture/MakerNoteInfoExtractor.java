@@ -100,7 +100,7 @@ public class MakerNoteInfoExtractor
         colorMatrixWBCheckerPattern = Pattern.compile(COLOR_MATRIX_WB_CHECKER_PATTERN);
     }
 
-    public MakerNoteInfo extractFrom(byte[] mknBytes, ExtraCameraInfo cameraInfo)
+    private MakerNoteInfo extractFrom(byte[] mknBytes, ExtraCameraInfo cameraInfo)
     {
         MakerNoteInfo result = new MakerNoteInfo(mknBytes);
         if (cameraInfo.hasKnownMakernote())

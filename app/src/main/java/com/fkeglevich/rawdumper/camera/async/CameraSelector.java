@@ -45,7 +45,7 @@ public abstract class CameraSelector
         return getNumOfCameras() > 1;
     }
 
-    protected synchronized int getSelectedCameraId()
+    synchronized int getSelectedCameraId()
     {
         return currentCameraId;
     }

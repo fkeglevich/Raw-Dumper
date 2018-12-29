@@ -24,7 +24,7 @@ import java.io.OutputStream;
 
 import static com.fkeglevich.rawdumper.camera.service.LogcatMatch.MATCH_BUFFER_SIZE;
 
-public class LogcatServiceThread extends Thread
+class LogcatServiceThread extends Thread
 {
     private static final String THREAD_NAME = "LogcatServiceThread";
 

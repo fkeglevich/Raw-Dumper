@@ -45,7 +45,7 @@ public class FilenameBuilder
             this.suffix = suffix;
         }
 
-        public String getSuffix()
+        String getSuffix()
         {
             return suffix;
         }
