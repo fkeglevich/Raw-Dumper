@@ -34,6 +34,18 @@ public class ProgramFactory
         return create(AssetUtil.getAssetAsString(vertexShaderAsset), AssetUtil.getAssetAsString(fragmentShaderAsset));
     }
 
+    public static Program createComputeProgram(String computeShaderCode) throws GLException
+    {
+        Shader computeShader = Shader.create(ShaderType.COMPUTE);
+        computeShader.compile(computeShaderCode);
+
+        Program program = Program.create();
+        program.attachShader(computeShader);
+        program.link();
+
+        return program;
+    }
+
     private static Program create(String vertexShaderCode, String fragmentShaderCode) throws GLException
     {
         Shader vertexShader = Shader.create(ShaderType.VERTEX);

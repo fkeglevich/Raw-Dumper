@@ -27,7 +27,8 @@ import android.opengl.GLES20;
 public enum ShaderType
 {
     VERTEX(GLES20.GL_VERTEX_SHADER),
-    FRAGMENT(GLES20.GL_FRAGMENT_SHADER);
+    FRAGMENT(GLES20.GL_FRAGMENT_SHADER),
+    COMPUTE(0x91B9);
 
     private final int glShaderType;
 
