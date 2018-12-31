@@ -107,7 +107,7 @@ class SetupStageLinkImpl implements SetupStageLink
     {
         Assert.assertNotNull(deviceInfo);
         Assert.assertNotNull(surfaceTexture);
-        return new SetupStageCameraContext(deviceInfo, surfaceTexture, cameraSelector);
+        return new SetupStageCameraContext(deviceInfo, surfaceTexture, cameraSelector, textureSource);
     }
 
     @Override

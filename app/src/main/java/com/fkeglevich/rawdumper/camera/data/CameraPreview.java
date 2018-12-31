@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.camera.data;
 import android.graphics.SurfaceTexture;
 
 import com.fkeglevich.rawdumper.camera.async.TurboCamera;
+import com.fkeglevich.rawdumper.gl.GLService;
 import com.fkeglevich.rawdumper.util.event.EventListener;
 
 /**
@@ -27,7 +28,7 @@ import com.fkeglevich.rawdumper.util.event.EventListener;
  * Created by Flávio Keglevich on 27/11/17.
  */
 
-public interface CameraPreview
+public interface CameraPreview extends GLService
 {
     void requestSurfaceTexture(EventListener<SurfaceTexture> surfaceTextureListener);
 

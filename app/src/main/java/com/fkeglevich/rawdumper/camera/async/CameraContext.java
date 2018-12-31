@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.camera.async;
 
 import android.graphics.SurfaceTexture;
 
+import com.fkeglevich.rawdumper.gl.GLService;
 import com.fkeglevich.rawdumper.raw.capture.RawSettings;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
@@ -37,6 +38,7 @@ public abstract class CameraContext
     abstract public DeviceInfo getDeviceInfo();
     abstract public SurfaceTexture getSurfaceTexture();
     abstract public CameraSelector getCameraSelector();
+    abstract public GLService getGlService();
 
     private final RawSettings rawSettings = new RawSettings();
 

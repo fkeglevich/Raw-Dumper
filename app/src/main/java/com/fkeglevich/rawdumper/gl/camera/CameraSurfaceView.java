@@ -183,4 +183,10 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
     {
         previewRenderer.useDefaultProgram();
     }
+
+    @Override
+    public void postGLRunnable(Runnable runnable)
+    {
+        queueEvent(runnable);
+    }
 }
