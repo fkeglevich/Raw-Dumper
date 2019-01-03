@@ -46,11 +46,16 @@ public class AnalogPinkGainMapFilter
         return result;
     }
 
+    private static byte[] opcodeListBytesCache = null;
+
     public static void applyToNegative(DngNegative negative, RawImageSize imageSize)
     {
-        Opcode opcode = new GainMapOpcode(imageSize, createGainMap());
-        List<Opcode> opcodeList = Collections.singletonList(opcode);
-        byte[] opcodeListBytes = OpcodeListWriter.toByteArray(opcodeList);
-        negative.setOpcodeList1(opcodeListBytes);
+        if (opcodeListBytesCache == null)
+        {
+            Opcode opcode = new GainMapOpcode(imageSize, createGainMap());
+            List<Opcode> opcodeList = Collections.singletonList(opcode);
+            opcodeListBytesCache = OpcodeListWriter.toByteArray(opcodeList);
+        }
+        negative.setOpcodeList1(opcodeListBytesCache);
     }
 }
