@@ -34,12 +34,12 @@ public class ProgramFactory
         return create(AssetUtil.getAssetAsString(vertexShaderAsset), AssetUtil.getAssetAsString(fragmentShaderAsset));
     }
 
-    public static Program createComputeProgramFromAsset(String computeShaderAsset) throws GLException, IOException
+    public static Program createComputeFromAsset(String computeShaderAsset) throws GLException, IOException
     {
         return createComputeProgram(AssetUtil.getAssetAsString(computeShaderAsset));
     }
 
-    public static Program createComputeProgram(String computeShaderCode) throws GLException
+    private static Program createComputeProgram(String computeShaderCode) throws GLException
     {
         Shader computeShader = Shader.create(ShaderType.COMPUTE);
         computeShader.compile(computeShaderCode);
