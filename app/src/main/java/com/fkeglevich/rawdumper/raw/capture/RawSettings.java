@@ -31,6 +31,7 @@ public class RawSettings
     public volatile boolean compressRawFiles            = true;
     public volatile boolean useOrientationFromPhone     = true;
     public volatile boolean calculateDigest             = true;
+    public volatile boolean addAnalogFilter             = false;
 
     public int getOrientationCode(ExtraCameraInfo cameraInfo)
     {
@@ -55,6 +56,7 @@ public class RawSettings
         compressRawFiles            = rawSettings.compressRawFiles;
         useOrientationFromPhone     = rawSettings.useOrientationFromPhone;
         calculateDigest             = rawSettings.calculateDigest;
+        addAnalogFilter             = rawSettings.addAnalogFilter;
     }
 
     @NonNull
@@ -65,6 +67,7 @@ public class RawSettings
                 "keepLensVignetting=" + keepLensVignetting + ", " +
                 "compressRawFiles=" + compressRawFiles + ", " +
                 "useOrientationFromPhone=" + useOrientationFromPhone + ", " +
-                "calculateDigest=" + calculateDigest + "]";
+                "calculateDigest=" + calculateDigest + ", " +
+                "addAnalogFilter=" + addAnalogFilter + "]";
     }
 }

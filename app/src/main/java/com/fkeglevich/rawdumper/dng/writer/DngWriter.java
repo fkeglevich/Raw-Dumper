@@ -24,6 +24,7 @@ import com.fkeglevich.rawdumper.raw.capture.RawCaptureInfo;
 import com.fkeglevich.rawdumper.raw.capture.RawSettings;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.fkeglevich.rawdumper.raw.gain.GainMapOpcodeStacker;
+import com.fkeglevich.rawdumper.raw.gain.filter.AnalogPinkGainMapFilter;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.raw.metadata.ExifMetadata;
 
@@ -91,6 +92,9 @@ public class DngWriter
                 GainMapOpcodeStacker.write(captureInfo, negative);
             else if (cameraInfo.getOpcodes() != null && cameraInfo.getOpcodes().length >= 1)
                 cameraInfo.getOpcodes()[0].writeInfoTo(negative);
+
+            if (rawSettings.addAnalogFilter)
+                AnalogPinkGainMapFilter.applyToNegative(negative, rawImageSize);
         }
     }
 }
