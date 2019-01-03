@@ -27,7 +27,7 @@ class DummyCameraSelector extends CameraSelector
 {
     private final int numCameras;
 
-    protected DummyCameraSelector(DeviceInfo deviceInfo, int cameraId)
+    DummyCameraSelector(DeviceInfo deviceInfo, int cameraId)
     {
         super(cameraId);
         numCameras = deviceInfo.getCameras().length;

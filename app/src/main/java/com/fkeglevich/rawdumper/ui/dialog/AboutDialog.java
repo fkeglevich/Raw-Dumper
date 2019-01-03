@@ -59,7 +59,7 @@ public class AboutDialog
         String messageStr = context.getResources().getString(R.string.about_message, AppPackageUtil.getAppNameWithVersion());
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.about_view, null);
-        TextView aboutText = (TextView) view.findViewById(R.id.aboutText);
+        TextView aboutText = view.findViewById(R.id.aboutText);
         aboutText.setText(messageStr);
         return view;
     }

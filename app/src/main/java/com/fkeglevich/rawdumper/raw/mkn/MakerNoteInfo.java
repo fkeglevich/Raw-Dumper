@@ -25,7 +25,7 @@ import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 
 public class MakerNoteInfo
 {
-    public final byte[] originalMakerNote;
+    private final byte[] originalMakerNote;
 
     //Exposure
     public Iso iso                      = null;

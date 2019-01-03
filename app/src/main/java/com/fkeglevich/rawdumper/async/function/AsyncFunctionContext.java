@@ -28,10 +28,10 @@ import com.fkeglevich.rawdumper.async.operation.AsyncOperationPoster;
 
 public class AsyncFunctionContext
 {
-    protected final AsyncOperationPoster taskPoster;
-    protected final AsyncOperationPoster callbackPoster;
+    final AsyncOperationPoster taskPoster;
+    final AsyncOperationPoster callbackPoster;
 
-    public AsyncFunctionContext(Looper taskLooper, Looper callbackLooper)
+    AsyncFunctionContext(Looper taskLooper, Looper callbackLooper)
     {
         this.taskPoster     = new AsyncOperationPoster(taskLooper);
         this.callbackPoster = new AsyncOperationPoster(callbackLooper);
@@ -55,7 +55,7 @@ public class AsyncFunctionContext
         return function.call(argument);
     }
 
-    public void ignoreAllPendingCalls()
+    void ignoreAllPendingCalls()
     {
         taskPoster.removeAllPendingOperations();
         callbackPoster.removeAllPendingOperations();

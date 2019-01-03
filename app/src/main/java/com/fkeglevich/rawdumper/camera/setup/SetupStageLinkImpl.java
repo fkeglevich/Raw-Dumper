@@ -27,7 +27,7 @@ import com.fkeglevich.rawdumper.controller.permission.MandatoryRootManager;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * TODO: Add class header
@@ -107,7 +107,7 @@ class SetupStageLinkImpl implements SetupStageLink
     {
         Assert.assertNotNull(deviceInfo);
         Assert.assertNotNull(surfaceTexture);
-        return new SetupStageCameraContext(deviceInfo, surfaceTexture, cameraSelector);
+        return new SetupStageCameraContext(deviceInfo, surfaceTexture, cameraSelector, textureSource);
     }
 
     @Override

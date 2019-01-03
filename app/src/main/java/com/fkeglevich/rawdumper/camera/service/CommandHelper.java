@@ -28,13 +28,6 @@ class CommandHelper
     private static final String ENTER_HAL_DEBUG_MODE = "setprop \"camera.hal.debug\" 2";
     private static final String EXIT_HAL_DEBUG_MODE = "setprop \"camera.hal.debug\" 0";
 
-    private static final Object commandLock = new Object();
-
-    static void addLogcatCommand(Shell shell, LogcatMatch[] matchArray)
-    {
-        //shell.addCommand(buildLogcatCommands(matchArray));
-    }
-
     static synchronized void addEnterHalDebugCommand(Shell shell)
     {
         executeBlockingCommand(shell, ENTER_HAL_DEBUG_MODE);
@@ -50,7 +43,7 @@ class CommandHelper
         shell.newJob().add(command).exec().getOut();
     }
 
-    public static String[] buildLogcatCommands(LogcatMatch[] matchArray)
+    static String[] buildLogcatCommands(LogcatMatch[] matchArray)
     {
         StringBuilder builder = new StringBuilder("logcat ");
         for (LogcatMatch match : matchArray)

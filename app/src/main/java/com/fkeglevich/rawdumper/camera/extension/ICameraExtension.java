@@ -37,6 +37,8 @@ public interface ICameraExtension
 
     boolean hasIntelFeatures();
 
+    IMeteringExtension getMeteringExtension();
+
     void setWindowlessPreviewFrameCaptureId(int id);
 
     boolean setWindowlessPreviewFrameCaptureIdSupported();

@@ -69,11 +69,11 @@ public abstract class ManualController<P, M extends Comparable<M>> extends Featu
     private int progress = 0;
     private boolean dirty = false;
 
-    public ManualController(View manualButton,
-                            View backButton,
-                            View manualChooser,
-                            SeekBar seekBar,
-                            View presetChooser)
+    protected ManualController(View manualButton,
+                               View backButton,
+                               View manualChooser,
+                               SeekBar seekBar,
+                               View presetChooser)
     {
         this.manualButton  = manualButton;
         this.backButton    = backButton;

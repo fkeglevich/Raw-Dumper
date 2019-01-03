@@ -81,6 +81,8 @@ public class CaptureSize implements Comparable<CaptureSize>, Displayable
         return width * height;
     }
 
+    @Override
+    @NonNull
     public String toString()
     {
         return "[CaptureSize " + width + "x" + height + "]";

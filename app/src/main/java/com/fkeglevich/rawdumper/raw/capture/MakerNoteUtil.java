@@ -34,7 +34,7 @@ import java.io.RandomAccessFile;
  * Created by Flávio Keglevich on 25/08/2017.
  */
 
-public class MakerNoteUtil
+class MakerNoteUtil
 {
     /**
      * Reads the maker notes (header) from the i3av4 file.

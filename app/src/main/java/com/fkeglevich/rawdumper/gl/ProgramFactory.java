@@ -34,7 +34,24 @@ public class ProgramFactory
         return create(AssetUtil.getAssetAsString(vertexShaderAsset), AssetUtil.getAssetAsString(fragmentShaderAsset));
     }
 
-    public static Program create(String vertexShaderCode, String fragmentShaderCode) throws GLException
+    public static Program createComputeFromAsset(String computeShaderAsset) throws GLException, IOException
+    {
+        return createComputeProgram(AssetUtil.getAssetAsString(computeShaderAsset));
+    }
+
+    private static Program createComputeProgram(String computeShaderCode) throws GLException
+    {
+        Shader computeShader = Shader.create(ShaderType.COMPUTE);
+        computeShader.compile(computeShaderCode);
+
+        Program program = Program.create();
+        program.attachShader(computeShader);
+        program.link();
+
+        return program;
+    }
+
+    private static Program create(String vertexShaderCode, String fragmentShaderCode) throws GLException
     {
         Shader vertexShader = Shader.create(ShaderType.VERTEX);
         vertexShader.compile(vertexShaderCode);
@@ -45,7 +62,7 @@ public class ProgramFactory
         return create(vertexShader, fragmentShader);
     }
 
-    public static Program create(Shader vertexShader, Shader fragmentShader) throws GLException
+    private static Program create(Shader vertexShader, Shader fragmentShader) throws GLException
     {
         Program program = Program.create();
         program.attachShader(vertexShader);

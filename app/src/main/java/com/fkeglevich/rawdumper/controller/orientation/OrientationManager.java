@@ -22,6 +22,7 @@ import android.view.OrientationEventListener;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 import com.fkeglevich.rawdumper.util.event.SimpleDispatcher;
 
@@ -75,10 +76,10 @@ public class OrientationManager
             orientationListener.enable();
     }
 
-    public ImageOrientation getImageOrientation(CameraContext cameraContext, boolean flipHorizontally)
+    public ImageOrientation getImageOrientation(ExtraCameraInfo cameraInfo, boolean flipHorizontally)
     {
-        int cameraOrientation = cameraContext.getCameraInfo().getOrientation();
-        int facing = cameraContext.getCameraInfo().getFacing();
+        int cameraOrientation = cameraInfo.getOrientation();
+        int facing = cameraInfo.getFacing();
 
         int degrees;
         int orientation = lastDegrees != OrientationEventListener.ORIENTATION_UNKNOWN ? lastDegrees : 0;

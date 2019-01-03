@@ -17,6 +17,7 @@
 package com.fkeglevich.rawdumper.raw.data;
 
 import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
 
 import static com.fkeglevich.rawdumper.util.DataSize.SHORT_SIZE;
 
@@ -108,6 +109,8 @@ public class RawImageSize
         return new byte[getPaddedWidthBytes()];
     }
 
+    @Override
+    @NonNull
     public String toString()
     {
         return "[width: " + width +

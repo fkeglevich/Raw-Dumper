@@ -94,7 +94,7 @@ public class Program
         return handle;
     }
 
-    public int getUniformHandle(String name)
+    protected int getUniformHandle(String name)
     {
         if (uniformCache.containsKey(name))
             return uniformCache.get(name);
@@ -105,7 +105,7 @@ public class Program
         return result;
     }
 
-    public int getAttribHandle(String name)
+    protected int getAttribHandle(String name)
     {
         if (attribCache.containsKey(name))
             return attribCache.get(name);

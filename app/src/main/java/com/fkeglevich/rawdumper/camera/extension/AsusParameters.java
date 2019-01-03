@@ -27,6 +27,7 @@ import com.fkeglevich.rawdumper.camera.parameter.ParameterFactory;
  * TODO: Add a class header comment!
  */
 
+@SuppressWarnings("unused")
 public class AsusParameters
 {
     public static final String ASUS_XENON_ISO = "Xe_Iso";

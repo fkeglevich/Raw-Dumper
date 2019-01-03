@@ -37,7 +37,7 @@ public enum ExifFlash
 
     private final short exifValue;
 
-    public static ExifFlash getFlashFromValue(short exifValue)
+    private static ExifFlash getFlashFromValue(short exifValue)
     {
         for (ExifFlash exifFlash : ExifFlash.values())
             if (exifFlash.exifValue == exifValue)

@@ -31,8 +31,8 @@ import com.fkeglevich.rawdumper.util.event.EventDispatcher;
 
 public abstract class Feature<T> implements Available, DeltaParameter<T>
 {
-    protected final Parameter<T> parameter;
-    protected final ParameterCollection parameterCollection;
+    final Parameter<T> parameter;
+    final ParameterCollection parameterCollection;
 
     static <T> void checkFeatureAvailability(Feature<T> feature)
     {

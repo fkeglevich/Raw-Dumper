@@ -18,6 +18,8 @@ package com.fkeglevich.rawdumper.camera.data;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 /**
  * TODO: Add class header
  * <p>
@@ -72,6 +74,7 @@ public class PictureFormat implements DataContainer<CaptureSize>
     }
 
     @Override
+    @NonNull
     public String toString()
     {
         return fileFormat.name();

@@ -20,6 +20,7 @@ import android.graphics.SurfaceTexture;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
+import com.fkeglevich.rawdumper.gl.GLService;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 /**
@@ -33,12 +34,15 @@ class SetupStageCameraContext extends CameraContext
     private final DeviceInfo deviceInfo;
     private final SurfaceTexture surfaceTexture;
     private final CameraSelector cameraSelector;
+    private final GLService glService;
 
-    SetupStageCameraContext(DeviceInfo deviceInfo, SurfaceTexture surfaceTexture, CameraSelector cameraSelector)
+    SetupStageCameraContext(DeviceInfo deviceInfo, SurfaceTexture surfaceTexture,
+                            CameraSelector cameraSelector, GLService glService)
     {
         this.deviceInfo = deviceInfo;
         this.surfaceTexture = surfaceTexture;
         this.cameraSelector = cameraSelector;
+        this.glService = glService;
     }
 
     @Override
@@ -57,5 +61,11 @@ class SetupStageCameraContext extends CameraContext
     public CameraSelector getCameraSelector()
     {
         return cameraSelector;
+    }
+
+    @Override
+    public GLService getGlService()
+    {
+        return glService;
     }
 }

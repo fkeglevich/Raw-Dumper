@@ -19,6 +19,7 @@ package com.fkeglevich.rawdumper.camera.async.function;
 import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.camera.async.direct.RestartableCamera;
 import com.fkeglevich.rawdumper.camera.exception.CameraOpenException;
+import com.fkeglevich.rawdumper.util.ThreadUtil;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;
@@ -31,15 +32,19 @@ import java.io.IOException;
 
 public class CameraRestartFunction extends ThrowingAsyncFunction<RestartableCamera, Void, MessageException>
 {
+    private static final int SAFE_RESTART_DELAY = 250;
+
     @Override
     protected Void call(RestartableCamera camera) throws MessageException
     {
         try
         {
             camera.restartCamera();
+            ThreadUtil.simpleDelay(SAFE_RESTART_DELAY);
         }
         catch (IOException e)
         {
+            e.printStackTrace();
             throw new CameraOpenException();
         }
 

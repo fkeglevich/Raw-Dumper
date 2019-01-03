@@ -18,5 +18,5 @@ package com.fkeglevich.rawdumper.camera.service;
 
 public enum LogPriority
 {
-    V, D, I, W, E, F, S;
+    V, D, I, W, E, F, S
 }

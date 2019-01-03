@@ -19,5 +19,5 @@ package com.fkeglevich.rawdumper.camera.data.mode;
 public enum ModeType
 {
     NORMAL,
-    LOW_LIGHT;
+    LOW_LIGHT
 }

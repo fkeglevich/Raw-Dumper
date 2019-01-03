@@ -20,6 +20,7 @@ import android.graphics.SurfaceTexture;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.CameraSelector;
+import com.fkeglevich.rawdumper.gl.GLService;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 
 /**
@@ -54,5 +55,11 @@ public class DummyCameraContext extends CameraContext
     public CameraSelector getCameraSelector()
     {
         return cameraSelector;
+    }
+
+    @Override
+    public GLService getGlService()
+    {
+        return runnable -> { /*no op*/ };
     }
 }

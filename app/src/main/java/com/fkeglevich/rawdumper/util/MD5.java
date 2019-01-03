@@ -30,7 +30,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class MD5
 {
-    public static byte[] calculate(InputStream inputStream) throws IOException
+    private static byte[] calculate(InputStream inputStream) throws IOException
     {
         MessageDigest digest;
         try

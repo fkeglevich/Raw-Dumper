@@ -22,7 +22,7 @@ package com.fkeglevich.rawdumper.camera.setup;
  * Created by Flávio Keglevich on 30/09/17.
  */
 
-public interface SetupStage
+interface SetupStage
 {
     void executeStage(SetupStageLink setupBase);
 }

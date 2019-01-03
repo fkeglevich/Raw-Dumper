@@ -24,12 +24,12 @@ import com.fkeglevich.rawdumper.camera.feature.Feature;
  * Created by Flávio Keglevich on 31/10/17.
  */
 
-public abstract class RestrictionChain
+abstract class RestrictionChain
 {
     private boolean onBeforeChainOccured = false;
 
     @SuppressWarnings("unchecked")
-    protected  <M, S, L> void addChainNode(final ChainNode<M, S, L> node)
+    <M, S, L> void addChainNode(final ChainNode<M, S, L> node)
     {
         Feature<M> master = (Feature<M>) node.getMaster();
         master.getOnChanged().addListener(eventData ->
@@ -39,7 +39,7 @@ public abstract class RestrictionChain
         });
     }
 
-    protected  <M, S, L> void setupLatestSlave(Feature<S> slave)
+    <M, S, L> void setupLatestSlave(Feature<S> slave)
     {
         slave.getOnChanging().addListener(eventData -> dispatchOnBeforeChainIfNeeded());
 

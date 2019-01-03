@@ -26,11 +26,11 @@ import com.fkeglevich.rawdumper.io.Directories;
 
 public class DirectoryStage implements SetupStage
 {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void executeStage(SetupStageLink setupBase)
     {
         Directories.getPicturesDirectory().mkdirs();
-        Directories.getPartialPicturesDirectory().mkdirs();
         setupBase.processNextStage();
     }
 }

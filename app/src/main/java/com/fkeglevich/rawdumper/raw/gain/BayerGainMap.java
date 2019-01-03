@@ -16,8 +16,9 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
@@ -124,6 +125,7 @@ public class BayerGainMap
     }
 
     @Override
+    @NonNull
     public String toString()
     {
         return "[red: " + red.toString() +

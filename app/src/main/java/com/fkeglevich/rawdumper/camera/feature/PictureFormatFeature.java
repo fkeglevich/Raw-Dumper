@@ -35,7 +35,7 @@ public class PictureFormatFeature extends ListFeature<PictureFormat> implements 
 
     PictureFormatFeature(ParameterCollection parameterCollection, CameraActions cameraActions)
     {
-        super(PICTURE_FORMAT, parameterCollection, ListValidator.<PictureFormat>createInvalid(), true);
+        super(PICTURE_FORMAT, parameterCollection, ListValidator.createInvalid(), true);
         this.cameraActions = cameraActions;
     }
 

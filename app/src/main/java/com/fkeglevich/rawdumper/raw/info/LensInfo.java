@@ -16,7 +16,10 @@
 
 package com.fkeglevich.rawdumper.raw.info;
 
+import com.fkeglevich.rawdumper.camera.data.Aperture;
+
 import androidx.annotation.Keep;
+import androidx.annotation.Nullable;
 
 /**
  * Contains all lens-related information about a camera.
@@ -29,9 +32,29 @@ import androidx.annotation.Keep;
 public class LensInfo
 {
     private Double aperture = null;
+    private Boolean opticalZoom = null;
 
-    public Double getAperture()
+    @Nullable
+    public Aperture getAperture()
     {
-        return aperture;
+        if (aperture == null || Aperture.isInvalidAperture(aperture))
+            return null;
+
+        return Aperture.create(aperture);
+    }
+
+    @Nullable
+    public Double getNumericAperture()
+    {
+        Aperture aperture = getAperture();
+        if (aperture != null)
+            return aperture.getValue();
+
+        return null;
+    }
+
+    public boolean hasOpticalZoom()
+    {
+        return (opticalZoom == null) ? false : opticalZoom;
     }
 }

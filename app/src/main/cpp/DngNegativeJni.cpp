@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, Flávio Keglevich
+ * Copyright 2018, Flávio Keglevich
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -237,6 +237,7 @@ extern "C"
         ((dng_negative*) pointer)->SetDefaultCropSize((uint32) width, (uint32) height);
         ((dng_negative*) pointer)->SetActiveArea(rect);
         ((dng_negative*) pointer)->SetBaseOrientation(orientation);
+        ((dng_negative*) pointer)->SetDefaultOriginalSizes();
     }
 
     JNIEXPORT void JNICALL

@@ -19,12 +19,8 @@ TODO list:
 			
  - (FUTURE RELEASE) Auto rotate the ISO/SS choosers
  - (FUTURE RELEASE) Handle different types of makernotes
-
- - (IN PROGRESS) Show aperture below the current shutter speed value (handle display rotation)
  
  - Add simple normal/low light button switch
-
- - Add asus camera metering
 
  - (IN PROGRESS) Fallback to Gray World AWB algorithm when there's no other AWB algo available
 
@@ -35,8 +31,6 @@ TODO list:
  - Restructure the camera access diagram
 
  - Create DNG with thumbnails
-
- - Create a IO thread queue
 
  - (IMPORTANT) Test the newer version of these devices:
 	- Razr I
@@ -198,3 +192,11 @@ Done:
  - Fixed dates in exif tags
  - (DONE!) Better configurations's switches color
  - (DONE!) Enabled ProGuard on release builds and optimized apk's file size
+ - (DONE!) Removed CaptureInfo favoring RawCaptureInfo for a simpler code
+ - (DONE!) Create a IO thread queue
+ - Fixed Original Size tags
+ - (DONE!) Show aperture below the current shutter speed value (handle display rotation)
+ - Fix minor button controller color bug
+ - (DONE!) Added EV metering for ZenZoom
+ - (DONE!) Add asus camera metering
+ - (DONE!) Add analog free-lens-like filter to raw pictures!

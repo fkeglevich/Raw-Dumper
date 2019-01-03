@@ -116,6 +116,15 @@
                 android:theme="@style/MenuSwitchStyle"
                 android:text="@string/save_as_flipped" />
 
+            <Switch
+                android:id="@+id/analogSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="10dp"
+                android:theme="@style/MenuSwitchStyle"
+                android:text="@string/add_analog_filter" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

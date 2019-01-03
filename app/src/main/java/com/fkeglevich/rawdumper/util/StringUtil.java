@@ -22,7 +22,7 @@ import java.nio.charset.Charset;
  * TODO: add header comment
  * Created by Flávio Keglevich on 25/05/18.
  */
-public class StringUtil
+class StringUtil
 {
     public static byte[] getUTFBytesNullTerminated(String string)
     {

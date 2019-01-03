@@ -60,16 +60,17 @@ class FeatureControllerManager
         controllersList.add(controllerFactory.createSwitchsController(reference));
         controllersList.add(new ModesInterface(reference));
 
-        List<ValueMeteringController> meteringControllers = createMeteringControllers(reference);
+        List<FeatureController> meteringControllers = createMeteringControllers(reference);
         controllersList.add(controllerFactory.createCaptureButtonController(reference, meteringControllers));
     }
 
-    private List<ValueMeteringController> createMeteringControllers(ActivityReference reference)
+    private List<FeatureController> createMeteringControllers(ActivityReference reference)
     {
-        List<ValueMeteringController> meteringControllers = new ArrayList<>();
+        List<FeatureController> meteringControllers = new ArrayList<>();
 
         meteringControllers.add(controllerFactory.createIsoMeteringController(reference));
         meteringControllers.add(controllerFactory.createSSMeteringController(reference));
+        meteringControllers.add(controllerFactory.createApertureMeteringController(reference));
         meteringControllers.add(controllerFactory.createEvMeteringController(reference));
 
         controllersList.addAll(meteringControllers);

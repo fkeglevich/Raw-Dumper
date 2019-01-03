@@ -106,7 +106,7 @@ public class ShellFactory
         managerHandler.post(createShellsRunnable);
     }
 
-    public synchronized boolean isCreatingShells()
+    private synchronized boolean isCreatingShells()
     {
         return creatingShells;
     }

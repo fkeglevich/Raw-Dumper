@@ -61,7 +61,7 @@ public class BayerGainMapSerializer
         return map;
     }
 
-    public void writeBayerGainMap(BayerGainMap bayerGainMap, DataOutputStream dos) throws IOException
+    private void writeBayerGainMap(BayerGainMap bayerGainMap, DataOutputStream dos) throws IOException
     {
         dos.writeInt(bayerGainMap.numColumns);
         dos.writeInt(bayerGainMap.numRows);
@@ -71,7 +71,7 @@ public class BayerGainMapSerializer
         writeGainMapData(bayerGainMap.greenBlue, dos);
     }
 
-    public BayerGainMap readBayerGainMap(DataInputStream dis) throws IOException
+    private BayerGainMap readBayerGainMap(DataInputStream dis) throws IOException
     {
         int numColumns = dis.readInt();
         int numRows = dis.readInt();

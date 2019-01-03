@@ -26,7 +26,7 @@ import com.fkeglevich.rawdumper.util.event.DefaultPreventer;
  */
 public class KeyEventData
 {
-    public final KeyEvent keyEvent;
+    private final KeyEvent keyEvent;
     public final int keyCode;
     public final DefaultPreventer defaultPreventer;
 

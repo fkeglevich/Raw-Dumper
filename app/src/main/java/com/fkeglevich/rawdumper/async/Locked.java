@@ -98,7 +98,7 @@ public class Locked<T>
      *
      * @return  An object
      */
-    public Object getLock()
+    private Object getLock()
     {
         return lock;
     }

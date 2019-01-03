@@ -16,9 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import com.asus.camera.extensions.AsusCameraExtension;
 import com.fkeglevich.rawdumper.camera.data.ShutterSpeed;
 import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+import com.fkeglevich.rawdumper.camera.service.ProDataMeteringService;
 import com.fkeglevich.rawdumper.camera.service.available.CoarseIntegrationTimeMeteringService;
 import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 import com.fkeglevich.rawdumper.util.Nullable;
@@ -42,12 +44,18 @@ public class SSMeteringFeature extends Feature<Nullable<ShutterSpeed>>
     @Override
     public boolean isAvailable()
     {
-        return super.isAvailable() || CoarseIntegrationTimeMeteringService.getInstance().isAvailable();
+        return ProDataMeteringService.getInstance().isAvailable()
+                || super.isAvailable()
+                || CoarseIntegrationTimeMeteringService.getInstance().isAvailable();
     }
 
     @Override
     public Nullable<ShutterSpeed> getValue()
     {
+        AsusCameraExtension.ProfessionalData data = ProDataMeteringService.getInstance().getLatestData();
+        if (data != null)
+            return Nullable.of(data.getShutterSpeed());
+
         if (super.isAvailable())
             return super.getValue();
         else

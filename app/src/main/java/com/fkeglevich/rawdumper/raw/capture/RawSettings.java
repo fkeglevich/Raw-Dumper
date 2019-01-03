@@ -16,9 +16,9 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
-import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
+import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
 
 import androidx.annotation.NonNull;
 
@@ -31,21 +31,21 @@ public class RawSettings
     public volatile boolean compressRawFiles            = true;
     public volatile boolean useOrientationFromPhone     = true;
     public volatile boolean calculateDigest             = true;
+    public volatile boolean addAnalogFilter             = false;
 
-    public int getOrientationCode(CaptureInfo captureInfo)
+    public int getOrientationCode(ExtraCameraInfo cameraInfo)
     {
         if (useOrientationFromPhone)
         {
-            CameraContext cameraContext = captureInfo.cameraContext;
-            return OrientationManager.getInstance().getImageOrientation(cameraContext, shouldInvertRows(captureInfo)).getExifCode();
+            return OrientationManager.getInstance().getImageOrientation(cameraInfo, shouldInvertRows(cameraInfo)).getExifCode();
         }
         else
             return ImageOrientation.TOPLEFT.getExifCode();
     }
 
-    boolean shouldInvertRows(CaptureInfo captureInfo)
+    boolean shouldInvertRows(ExtraCameraInfo cameraInfo)
     {
-        boolean isFrontCamera = captureInfo.cameraContext.getCameraInfo().getFacing() == CAMERA_FACING_FRONT;
+        boolean isFrontCamera = cameraInfo.getFacing() == CAMERA_FACING_FRONT;
         return isFrontCamera && shouldInvertFrontCameraRows;
     }
 
@@ -56,6 +56,7 @@ public class RawSettings
         compressRawFiles            = rawSettings.compressRawFiles;
         useOrientationFromPhone     = rawSettings.useOrientationFromPhone;
         calculateDigest             = rawSettings.calculateDigest;
+        addAnalogFilter             = rawSettings.addAnalogFilter;
     }
 
     @NonNull
@@ -66,6 +67,7 @@ public class RawSettings
                 "keepLensVignetting=" + keepLensVignetting + ", " +
                 "compressRawFiles=" + compressRawFiles + ", " +
                 "useOrientationFromPhone=" + useOrientationFromPhone + ", " +
-                "calculateDigest=" + calculateDigest + "]";
+                "calculateDigest=" + calculateDigest + ", " +
+                "addAnalogFilter=" + addAnalogFilter + "]";
     }
 }

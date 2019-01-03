@@ -34,7 +34,7 @@ import androidx.annotation.NonNull;
  * Created by Flávio Keglevich on 26/09/17.
  */
 
-public class IsoFeature extends ListFeature<Iso>
+class IsoFeature extends ListFeature<Iso>
 {
     @NonNull
     static IsoFeature create(ExposureInfo exposureInfo, ParameterCollection parameterCollection)

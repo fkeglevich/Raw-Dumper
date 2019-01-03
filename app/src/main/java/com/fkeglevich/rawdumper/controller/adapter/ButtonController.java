@@ -126,8 +126,7 @@ public class ButtonController implements DisplayableFeatureUi, Dismissible
     {
         TransitionManager.beginDelayedTransition((ViewGroup) chooser.getRootView(), fadeTransition);
         chooser.setVisibility(View.INVISIBLE);
-        if (buttonDisabledStateController.isButtonEnabled())
-            changeButtonBackground(button, R.drawable.round_button_default);
+        changeButtonBackground(button, R.drawable.round_button_default);
     }
 
     private void showChooser()

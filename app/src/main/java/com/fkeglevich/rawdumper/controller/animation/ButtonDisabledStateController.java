@@ -106,7 +106,7 @@ public class ButtonDisabledStateController
         button.startAnimation(enableAnimation);
     }
 
-    public boolean isButtonEnabled()
+    private boolean isButtonEnabled()
     {
         return buttonEnabled;
     }

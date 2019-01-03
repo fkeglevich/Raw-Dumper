@@ -83,7 +83,7 @@ public class MandatoryPermissionManager
         onMissingPermissions.dispatchEvent(exception);
     }
 
-    void dispatchPermissionsGranted()
+    private void dispatchPermissionsGranted()
     {
         onAllPermissionsGranted.dispatchEvent(null);
     }

@@ -20,7 +20,7 @@ import com.fkeglevich.rawdumper.camera.data.PictureFormat;
 import com.fkeglevich.rawdumper.camera.data.mode.Mode;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import java.util.List;
 

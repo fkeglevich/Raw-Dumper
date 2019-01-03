@@ -21,10 +21,7 @@ import com.fkeglevich.rawdumper.debug.DebugFlag;
 import com.fkeglevich.rawdumper.dng.writer.DngWriter;
 import com.fkeglevich.rawdumper.io.async.IOUtil;
 import com.fkeglevich.rawdumper.io.async.exception.SaveFileException;
-import com.fkeglevich.rawdumper.raw.capture.CaptureInfo;
-import com.fkeglevich.rawdumper.raw.data.buffer.ArrayRawImageData;
-import com.fkeglevich.rawdumper.raw.data.buffer.FileRawImageData;
-import com.fkeglevich.rawdumper.raw.data.buffer.RawImageData;
+import com.fkeglevich.rawdumper.raw.capture.RawCaptureInfo;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
 
 import java.io.IOException;
@@ -34,53 +31,25 @@ import java.io.IOException;
  * TODO: Add a class header comment!
  */
 
-public class SaveDngFunction extends ThrowingAsyncFunction<CaptureInfo, Void, MessageException>
+public class SaveDngFunction extends ThrowingAsyncFunction<RawCaptureInfo, Void, MessageException>
 {
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
-    protected Void call(CaptureInfo captureInfo) throws MessageException
+    protected Void call(RawCaptureInfo captureInfo) throws MessageException
     {
         if (DebugFlag.dontSavePictures()) return null;
-        if (!captureInfo.isValid()) throw new IllegalArgumentException("Invalid capture info!");
 
         DngWriter writer = new DngWriter();
-        RawImageData rawImageData = null;
         try
         {
-            rawImageData = buildRawImageData(captureInfo);
-            writer.write(captureInfo, rawImageData);
-            IOUtil.scanFileWithMediaScanner(captureInfo.destinationRawFilename);
-            if (captureInfo.relatedI3av4File != null)
-                captureInfo.relatedI3av4File.delete();
+            writer.write(captureInfo);
+            IOUtil.scanFileWithMediaScanner(captureInfo.getDestinationFile().getAbsolutePath());
         }
         catch (IOException ioe)
         {
+            ioe.printStackTrace();
             throw new SaveFileException();
-        }
-        finally
-        {
-            if (rawImageData != null)
-                closeRawImageData(rawImageData);
         }
 
         return null;
-    }
-
-    private void closeRawImageData(RawImageData rawImageData)
-    {
-        try
-        {
-            rawImageData.close();
-        }
-        catch (IOException ignored)
-        {   }
-    }
-
-    private RawImageData buildRawImageData(CaptureInfo captureInfo) throws IOException
-    {
-        if (captureInfo.rawDataBytes != null)
-            return new ArrayRawImageData(captureInfo.imageSize, captureInfo.rawDataBytes);
-        else
-            return new FileRawImageData(captureInfo.imageSize, captureInfo.relatedI3av4File.getAbsolutePath(), captureInfo.extraBuffer);
     }
 }

@@ -16,6 +16,7 @@
 
 package com.fkeglevich.rawdumper.raw.data.image;
 
+import com.fkeglevich.rawdumper.io.async.BufferManager;
 import com.fkeglevich.rawdumper.raw.data.RawImageSize;
 import com.topjohnwu.superuser.io.SuFile;
 import com.topjohnwu.superuser.io.SuFileInputStream;
@@ -27,18 +28,17 @@ public class FileRawImage implements RawImage
 {
     private final SuFile file;
     private final RawImageSize size;
-    private final byte[] auxBuffer;
 
     private byte[] data;
     private byte[] mkn;
 
-    public FileRawImage(File file, RawImageSize size, byte[] auxBuffer)
+    public FileRawImage(File file, RawImageSize size) throws IOException
     {
         this.file = new SuFile(file);
         this.size = size;
-        this.auxBuffer = auxBuffer;
-        this.data = initData(size, auxBuffer);
+        this.data = initData(size.getBufferLength());
         this.mkn = new byte[0];
+        initialize();
     }
 
     @Override
@@ -47,9 +47,31 @@ public class FileRawImage implements RawImage
         return size;
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
-    public void prepareData() throws IOException
+    public byte[] getData()
+    {
+        return data;
+    }
+
+    @Override
+    public void dispose()
+    {
+        BufferManager.getInstance().sendBuffer(data);
+        data = null;
+    }
+
+    public byte[] getMakerNotes()
+    {
+        return mkn;
+    }
+
+    public SuFile getFile()
+    {
+        return file;
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void initialize() throws IOException
     {
         int fileSize = (int) file.length();
         mkn = new byte[fileSize - size.getBufferLength()];
@@ -63,23 +85,8 @@ public class FileRawImage implements RawImage
         file.delete();
     }
 
-    @Override
-    public byte[] getData()
+    private byte[] initData(int bufferLength)
     {
-        return data;
-    }
-
-    public byte[] getMakerNotes()
-    {
-        return mkn;
-    }
-
-    private byte[] initData(RawImageSize size, byte[] auxBuffer)
-    {
-        int length = size.getBufferLength();
-        if (this.auxBuffer != null && auxBuffer.length >= length)
-            return auxBuffer;
-        else
-            return new byte[length];
+        return BufferManager.getInstance().getBuffer(bufferLength);
     }
 }

@@ -45,7 +45,7 @@ class Zen2LLWorkaround implements DeviceWorkaround
         V1("601cffed1dd2c6129587fc7a21f0b4c4"),
         V2("de8e7213d408170cb606c026e06200d4");
 
-        public final String md5;
+        final String md5;
 
         LibPatch (String md5)
         {

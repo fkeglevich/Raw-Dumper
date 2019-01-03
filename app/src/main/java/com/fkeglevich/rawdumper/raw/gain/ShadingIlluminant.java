@@ -33,9 +33,9 @@ public enum ShadingIlluminant
     //U30 (-1, "U30",  CalibrationIlluminant.OTHER_LIGHT_SOURCE),
     //Cali(-1, "Cali", CalibrationIlluminant.UNKNOWN);
 
-    public final int mknIndex;
+    private final int mknIndex;
     public final String token;
-    public final CalibrationIlluminant illuminant;
+    private final CalibrationIlluminant illuminant;
 
     ShadingIlluminant(int mknIndex, String token, CalibrationIlluminant illuminant)
     {

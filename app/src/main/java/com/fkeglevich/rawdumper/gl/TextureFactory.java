@@ -35,4 +35,15 @@ public class TextureFactory
 
         return result;
     }
+
+    public static Texture create2DTexture()
+    {
+        Texture result = Texture.create(GLES20.GL_TEXTURE_2D);
+        result.setHorizontalWrapMode(GLES20.GL_CLAMP_TO_EDGE);
+        result.setVerticalWrapMode  (GLES20.GL_CLAMP_TO_EDGE);
+        result.setMinFilter(GLES20.GL_LINEAR);
+        result.setMagFilter(GLES20.GL_LINEAR);
+
+        return result;
+    }
 }

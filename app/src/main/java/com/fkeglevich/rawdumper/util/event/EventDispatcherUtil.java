@@ -22,7 +22,7 @@ package com.fkeglevich.rawdumper.util.event;
  * Created by Flávio Keglevich on 25/09/17.
  */
 
-public class EventDispatcherUtil
+class EventDispatcherUtil
 {
     public static <T> void propagate(EventDispatcher<T> source, final EventDispatcher<T> target)
     {

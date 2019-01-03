@@ -16,7 +16,9 @@
 
 package com.fkeglevich.rawdumper.raw.gain;
 
-import junit.framework.Assert;
+import org.junit.Assert;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by flavio on 24/03/18.
@@ -96,6 +98,7 @@ public class GainMap
     }
 
     @Override
+    @NonNull
     public String toString()
     {
         StringBuilder result = new StringBuilder("[numRows = " + numRows + "\nnumColumns:" + numColumns);

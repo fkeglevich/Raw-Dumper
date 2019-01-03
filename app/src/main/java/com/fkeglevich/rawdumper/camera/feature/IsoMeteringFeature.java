@@ -16,9 +16,11 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import com.asus.camera.extensions.AsusCameraExtension;
 import com.fkeglevich.rawdumper.camera.data.Iso;
 import com.fkeglevich.rawdumper.camera.parameter.ExposureParameterFactory;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
+import com.fkeglevich.rawdumper.camera.service.ProDataMeteringService;
 import com.fkeglevich.rawdumper.camera.service.available.SensorGainMeteringService;
 import com.fkeglevich.rawdumper.raw.info.SensorInfo;
 import com.fkeglevich.rawdumper.util.Nullable;
@@ -42,12 +44,18 @@ public class IsoMeteringFeature extends Feature<Nullable<Iso>>
     @Override
     public boolean isAvailable()
     {
-        return super.isAvailable() || SensorGainMeteringService.getInstance().isAvailable();
+        return ProDataMeteringService.getInstance().isAvailable()
+                || super.isAvailable()
+                || SensorGainMeteringService.getInstance().isAvailable();
     }
 
     @Override
     public Nullable<Iso> getValue()
     {
+        AsusCameraExtension.ProfessionalData data = ProDataMeteringService.getInstance().getLatestData();
+        if (data != null)
+            return Nullable.of(data.getIso());
+
         if (super.isAvailable())
             return super.getValue();
         else

@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
  * Created by Flávio Keglevich on 30/10/17.
  */
 
-public class NormalMode extends Mode
+class NormalMode extends Mode
 {
     NormalMode(ParameterCollection parameterCollection, ExtraCameraInfo cameraInfo)
     {

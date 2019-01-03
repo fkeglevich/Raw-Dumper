@@ -24,7 +24,7 @@ public class LogcatMatch
 
     public final String tag;
     public final LogPriority priority;
-    public final String fingerprintPrefix;
+    private final String fingerprintPrefix;
     public byte[] fingerprintPrefixBytes;
 
     public volatile boolean enabled = false;

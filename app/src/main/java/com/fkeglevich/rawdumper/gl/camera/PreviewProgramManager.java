@@ -27,7 +27,7 @@ import java.nio.ByteBuffer;
  * Created by flavio on 08/01/18.
  */
 
-public class PreviewProgramManager
+class PreviewProgramManager
 {
     private static final String TAG = "PreviewProgramList";
     private static final byte[] vertices = {

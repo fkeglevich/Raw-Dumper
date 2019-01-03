@@ -49,6 +49,7 @@ public class IOUtil
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static byte[] readBytes(String filePath) throws IOException
     {
         int length = (int) new File(filePath).length();

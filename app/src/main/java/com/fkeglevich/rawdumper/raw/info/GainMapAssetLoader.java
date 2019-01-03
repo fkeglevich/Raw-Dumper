@@ -25,8 +25,10 @@ import com.fkeglevich.rawdumper.raw.gain.BayerGainMap;
 import com.fkeglevich.rawdumper.raw.gain.BayerGainMapSerializer;
 import com.fkeglevich.rawdumper.raw.gain.ShadingIlluminant;
 
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -41,7 +43,7 @@ class GainMapAssetLoader
     {
         if (assetName == null) return null;
         Context context = ContextManager.getApplicationContext();
-        try (DataInputStream dis = new DataInputStream(context.getAssets().open(GAIN_MAPS_FOLDER + assetName, AssetManager.ACCESS_BUFFER)))
+        try (DataInputStream dis = getAssetInputStream(assetName, context))
         {
             BayerGainMapSerializer serializer = new BayerGainMapSerializer();
             PerfInfo.start("GainMapAssetLoader");
@@ -53,5 +55,11 @@ class GainMapAssetLoader
         {
             return null;
         }
+    }
+
+    private static DataInputStream getAssetInputStream(String assetName, Context context) throws IOException
+    {
+        InputStream assetStream = context.getAssets().open(GAIN_MAPS_FOLDER + assetName, AssetManager.ACCESS_BUFFER);
+        return new DataInputStream(new BufferedInputStream(assetStream));
     }
 }

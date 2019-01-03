@@ -28,6 +28,8 @@ public class Aperture implements Displayable
 {
     private static final DecimalFormat DEFAULT_FORMAT = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.US));
 
+    public static final Aperture AUTO = new Aperture(0);
+
     public static boolean isInvalidAperture(double fNumber)
     {
         return fNumber < 0.0 || Double.isNaN(fNumber) || Double.isInfinite(fNumber);
@@ -56,6 +58,9 @@ public class Aperture implements Displayable
     @Override
     public String displayValue()
     {
+        if (equals(AUTO))
+            return "";
+
         return "ƒ/" + DEFAULT_FORMAT.format(value);
     }
 
