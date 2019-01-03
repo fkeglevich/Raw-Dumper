@@ -45,6 +45,7 @@ class SwitchesController extends FeatureController
         setupSwitch(R.id.cmpSwitch,     rawSettings.compressRawFiles, rawSettings);
         setupSwitch(R.id.safSwitch,     rawSettings.shouldInvertFrontCameraRows, rawSettings);
         setupSwitch(R.id.digestSwitch,  rawSettings.calculateDigest, rawSettings);
+        setupSwitch(R.id.analogSwitch,  rawSettings.addAnalogFilter, rawSettings);
 
         enable();
     }
@@ -91,6 +92,10 @@ class SwitchesController extends FeatureController
 
                 case R.id.digestSwitch:
                     rawSettings.calculateDigest = isChecked;
+                    break;
+
+                case R.id.analogSwitch:
+                    rawSettings.addAnalogFilter = isChecked;
                     break;
             }
         });

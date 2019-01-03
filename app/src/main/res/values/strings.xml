@@ -130,5 +130,6 @@
     <string name="compress_raw_files">Compress RAW files</string>
     <string name="save_as_flipped">Flip front camera pictures</string>
     <string name="generate_raw_digest">Store image digest on RAW files</string>
+    <string name="add_analog_filter">Add analog-like filter</string>
 
 </resources>
