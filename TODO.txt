@@ -199,3 +199,4 @@ Done:
  - Fix minor button controller color bug
  - (DONE!) Added EV metering for ZenZoom
  - (DONE!) Add asus camera metering
+ - (DONE!) Add analog free-lens-like filter to raw pictures!
