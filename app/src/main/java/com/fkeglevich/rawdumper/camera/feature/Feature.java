@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import android.content.SharedPreferences;
+
 import com.fkeglevich.rawdumper.camera.exception.UnavailableFeatureException;
 import com.fkeglevich.rawdumper.camera.parameter.DeltaParameter;
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
@@ -78,4 +80,8 @@ public abstract class Feature<T> implements Available, DeltaParameter<T>
     {
         return parameter.getOnChanged();
     }
+
+    abstract void storeValue(SharedPreferences.Editor editor);
+
+    abstract void loadValue(SharedPreferences preferences);
 }
