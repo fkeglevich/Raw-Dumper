@@ -38,7 +38,7 @@ public class DataRange<T extends Comparable<T>>
     {
         if (value.equals(disabledValue)) return true;
 
-        return value.compareTo(getLower()) >= 0 && value.compareTo(getUpper())  <= 0;
+        return value.compareTo(getLower()) >= 0 && value.compareTo(getUpper()) <= 0;
     }
 
     public T getLower()
