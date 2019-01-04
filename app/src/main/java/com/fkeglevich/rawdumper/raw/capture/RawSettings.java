@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.raw.capture;
 
+import android.content.SharedPreferences;
+
 import com.fkeglevich.rawdumper.controller.orientation.OrientationManager;
 import com.fkeglevich.rawdumper.raw.data.ImageOrientation;
 import com.fkeglevich.rawdumper.raw.info.ExtraCameraInfo;
@@ -57,6 +59,26 @@ public class RawSettings
         useOrientationFromPhone     = rawSettings.useOrientationFromPhone;
         calculateDigest             = rawSettings.calculateDigest;
         addAnalogFilter             = rawSettings.addAnalogFilter;
+    }
+
+    public void storeValues(SharedPreferences.Editor editor)
+    {
+        editor.putBoolean("shouldInvertFrontCameraRows", shouldInvertFrontCameraRows)
+                .putBoolean("keepLensVignetting", keepLensVignetting)
+                .putBoolean("compressRawFiles", compressRawFiles)
+                .putBoolean("useOrientationFromPhone", useOrientationFromPhone)
+                .putBoolean("calculateDigest", calculateDigest)
+                .putBoolean("addAnalogFilter", addAnalogFilter);
+    }
+
+    public void loadValues(SharedPreferences preferences)
+    {
+        shouldInvertFrontCameraRows = preferences.getBoolean("shouldInvertFrontCameraRows", true);
+        keepLensVignetting          = preferences.getBoolean("keepLensVignetting", false);
+        compressRawFiles            = preferences.getBoolean("compressRawFiles", true);
+        useOrientationFromPhone     = preferences.getBoolean("useOrientationFromPhone", true);
+        calculateDigest             = preferences.getBoolean("calculateDigest", true);
+        addAnalogFilter             = preferences.getBoolean("addAnalogFilter", false);
     }
 
     @NonNull
