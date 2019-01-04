@@ -31,7 +31,7 @@ import com.fkeglevich.rawdumper.util.Nullable;
  * Created by Flávio Keglevich on 16/10/17.
  */
 
-public class SSMeteringFeature extends Feature<Nullable<ShutterSpeed>>
+public class SSMeteringFeature extends MeteringFeature<ShutterSpeed>
 {
     private final SensorInfo sensorInfo;
 

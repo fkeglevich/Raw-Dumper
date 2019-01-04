@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import android.content.SharedPreferences;
+
 import com.asus.camera.extensions.AsusCameraExtension;
 import com.fkeglevich.rawdumper.camera.data.Aperture;
 import com.fkeglevich.rawdumper.camera.extension.IntelParameters;
@@ -48,5 +50,17 @@ public class ApertureMeteringFeature extends ParameterlessFeature<Nullable<Apert
     {
         return ProDataMeteringService.getInstance().isAvailable()
                 || lensInfo.getAperture() != null;
+    }
+
+    @Override
+    void storeValue(SharedPreferences.Editor editor)
+    {
+        /*no op*/
+    }
+
+    @Override
+    void loadValue(SharedPreferences preferences)
+    {
+        /*no op*/
     }
 }

@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import android.content.SharedPreferences;
+
 import com.fkeglevich.rawdumper.camera.parameter.Parameter;
 import com.fkeglevich.rawdumper.camera.parameter.ParameterCollection;
 import com.fkeglevich.rawdumper.camera.parameter.value.ValueValidator;
@@ -32,5 +34,24 @@ public class ListFeature<T> extends WritableFeature<T, List<T>>
     ListFeature(Parameter<T> featureParameter, ParameterCollection parameterCollection, ValueValidator<T, List<T>> validator, boolean isMutable)
     {
         super(featureParameter, parameterCollection, validator, isMutable);
+    }
+
+    @Override
+    void storeValue(SharedPreferences.Editor editor)
+    {
+        if (!isAvailable()) return;
+
+        int index = getValidator().getAvailableValues().indexOf(getValue());
+        editor.putInt(parameter.getKey(), index);
+    }
+
+    @Override
+    void loadValue(SharedPreferences preferences)
+    {
+        if (!isAvailable()) return;
+
+        int index = preferences.getInt(parameter.getKey(), -1);
+        if (index >= 0 && index < getValidator().getAvailableValues().size())
+            setValue(getValidator().getAvailableValues().get(index));
     }
 }

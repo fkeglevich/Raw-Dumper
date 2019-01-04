@@ -31,7 +31,7 @@ import com.fkeglevich.rawdumper.util.Nullable;
  * Created by Flávio Keglevich on 13/10/17.
  */
 
-public class IsoMeteringFeature extends Feature<Nullable<Iso>>
+public class IsoMeteringFeature extends MeteringFeature<Iso>
 {
     private final SensorInfo sensorInfo;
 

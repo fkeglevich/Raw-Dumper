@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import android.content.SharedPreferences;
+
 import com.asus.camera.extensions.AsusCameraExtension;
 import com.fkeglevich.rawdumper.camera.data.Ev;
 import com.fkeglevich.rawdumper.camera.service.ProDataMeteringService;
@@ -44,5 +46,17 @@ public class EvMeteringFeature extends ParameterlessFeature<Nullable<Ev>>
     public boolean isAvailable()
     {
         return ProDataMeteringService.getInstance().isAvailable();
+    }
+
+    @Override
+    void storeValue(SharedPreferences.Editor editor)
+    {
+        /*no op*/
+    }
+
+    @Override
+    void loadValue(SharedPreferences preferences)
+    {
+        /*no op*/
     }
 }

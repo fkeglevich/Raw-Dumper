@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import android.content.SharedPreferences;
+
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
 import com.fkeglevich.rawdumper.camera.data.ManualFocus;
 import com.fkeglevich.rawdumper.camera.extension.AsusParameters;
@@ -46,5 +48,25 @@ public class ManualFocusFeature extends RangeFeature<ManualFocus>
 
         ManualFocus manualFocus = ManualFocus.create((int) Math.round(numericValue));
         setValueAsync(manualFocus);
+    }
+
+    @Override
+    void storeValue(SharedPreferences.Editor editor)
+    {
+        if (!isAvailable()) return;
+
+        ManualFocus value = getValue();
+        if (!ManualFocus.DISABLED.equals(value))
+            editor.putInt(parameter.getKey(), value.getNumericValue());
+    }
+
+    @Override
+    void loadValue(SharedPreferences preferences)
+    {
+        if (!isAvailable()) return;
+
+        int numValue = preferences.getInt(parameter.getKey(), 0);
+        if (numValue != 0)
+            setValue(ManualFocus.create(numValue));
     }
 }

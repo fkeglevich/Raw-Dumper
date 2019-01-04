@@ -16,6 +16,8 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
+import android.content.SharedPreferences;
+
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
 import com.fkeglevich.rawdumper.camera.data.DataRange;
 import com.fkeglevich.rawdumper.camera.data.ManualTemperature;
@@ -59,6 +61,26 @@ public class ManualTemperatureFeature extends RangeFeature<ManualTemperature>
 
         int finalValue = MathUtil.clamp((int) Math.round(numericValue), lower, upper);
         setValueAsync(ManualTemperature.create(finalValue));
+    }
+
+    @Override
+    void storeValue(SharedPreferences.Editor editor)
+    {
+        if (!isAvailable()) return;
+
+        ManualTemperature value = getValue();
+        if (!ManualTemperature.DISABLED.equals(value))
+            editor.putInt(parameter.getKey(), value.getNumericValue());
+    }
+
+    @Override
+    void loadValue(SharedPreferences preferences)
+    {
+        if (!isAvailable()) return;
+
+        int numValue = preferences.getInt(parameter.getKey(), 0);
+        if (numValue != 0)
+            setValue(ManualTemperature.create(numValue));
     }
 
     private double calculateTemp(double proportion, int lower, int upper)
