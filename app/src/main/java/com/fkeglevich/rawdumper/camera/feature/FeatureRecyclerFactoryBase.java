@@ -31,15 +31,16 @@ class FeatureRecyclerFactoryBase
 {
     private final List<Feature> registeredFeatures = new ArrayList<>();
 
-    void registerFeature(Feature feature)
+    <T extends Feature> T register(T feature)
     {
         registeredFeatures.add(feature);
+        return feature;
     }
 
     @SuppressWarnings("unchecked")
     public void storeAndCleanupFeatures(CameraContext cameraContext)
     {
-        FeatureStore.getInstance().storeFeaturesData(cameraContext, registeredFeatures);
+        FeatureStore.getInstance().storeData(cameraContext, registeredFeatures);
         for (Feature feature : registeredFeatures)
             Feature.clearEventDispatchers(feature);
 
@@ -48,6 +49,6 @@ class FeatureRecyclerFactoryBase
 
     public void loadFeaturesData(CameraContext cameraContext)
     {
-        FeatureStore.getInstance().loadFeaturesData(cameraContext, registeredFeatures);
+        FeatureStore.getInstance().loadData(cameraContext, registeredFeatures);
     }
 }

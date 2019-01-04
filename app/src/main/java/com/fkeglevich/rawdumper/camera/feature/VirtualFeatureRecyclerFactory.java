@@ -52,16 +52,12 @@ public class VirtualFeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 
     public PictureModeFeature createPictureModeFeature(List<Mode> valueList)
     {
-        final PictureModeFeature result = new PictureModeFeature(virtualParameterCollection, cameraActions, valueList);
-        registerFeature(result);
-        return result;
+        return register(new PictureModeFeature(virtualParameterCollection, cameraActions, valueList));
     }
 
     public PictureFormatFeature createPictureFormatFeature()
     {
-        PictureFormatFeature result = new PictureFormatFeature(virtualParameterCollection, cameraActions);
-        registerFeature(result);
-        return result;
+        return register(new PictureFormatFeature(virtualParameterCollection, cameraActions));
     }
 
     public PictureSizeFeature createPictureSizeFeature()
@@ -70,29 +66,21 @@ public class VirtualFeatureRecyclerFactory extends FeatureRecyclerFactoryBase
         List<CaptureSize> pictureSizes = new ArrayList<>(result.getAvailableValues());
         Collections.sort(pictureSizes);
         result.setValue(pictureSizes.get(pictureSizes.size() - 1));
-        registerFeature(result);
-        return result;
+        return register(result);
     }
 
     public ListFeature<Flash> createFlashFeature(ParameterCollection cameraParameterCollection, CameraContext cameraContext)
     {
-        FlashFeature result = new FlashFeature(virtualParameterCollection, cameraParameterCollection, cameraActions, cameraContext);
-        registerFeature(result);
-        return result;
+        return register(new FlashFeature(virtualParameterCollection, cameraParameterCollection, cameraActions, cameraContext));
     }
 
     public WritableFeature<ShutterSpeed, List<ShutterSpeed>> createShutterSpeedFeature(ParameterCollection cameraParameterCollection, CameraContext cameraContext)
     {
-        ShutterSpeedFeature result = ShutterSpeedFeature.create(cameraContext.getExposureInfo(), cameraParameterCollection, cameraActions);
-        registerFeature(result);
-        return result;
+        return register(ShutterSpeedFeature.create(cameraContext.getExposureInfo(), cameraParameterCollection, cameraActions));
     }
-
 
     public ListFeature<FocusMode> createFocusFeature(ParameterCollection cameraParameterCollection, ListFeature<Flash> flashFeature)
     {
-        FocusFeature result = new FocusFeature(virtualParameterCollection, cameraParameterCollection, flashFeature, cameraContext.getCameraInfo().getFocus(), cameraActions);
-        registerFeature(result);
-        return result;
+        return register(new FocusFeature(virtualParameterCollection, cameraParameterCollection, flashFeature, cameraContext.getCameraInfo().getFocus(), cameraActions));
     }
 }

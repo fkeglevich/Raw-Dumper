@@ -52,23 +52,17 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 
     public ListFeature<Iso> createIsoFeature()
     {
-        IsoFeature result = IsoFeature.create(cameraContext.getExposureInfo(), parameterCollection);
-        registerFeature(result);
-        return result;
+        return register(IsoFeature.create(cameraContext.getExposureInfo(), parameterCollection));
     }
 
     public ListFeature<Ev> createEVFeature()
     {
-        EvFeature result = EvFeature.create(parameterCollection);
-        registerFeature(result);
-        return result;
+        return register(EvFeature.create(parameterCollection));
     }
 
     public WhiteBalancePresetFeature createWhiteBalancePresetFeature()
     {
-        WhiteBalancePresetFeature result = new WhiteBalancePresetFeature(parameterCollection);
-        registerFeature(result);
-        return result;
+        return register(new WhiteBalancePresetFeature(parameterCollection));
     }
 
     /*
@@ -77,37 +71,27 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 
     public Feature<Nullable<Iso>> createIsoMeteringFeature()
     {
-        IsoMeteringFeature result = new IsoMeteringFeature(parameterCollection, cameraContext.getSensorInfo());
-        registerFeature(result);
-        return result;
+        return register(new IsoMeteringFeature(parameterCollection, cameraContext.getSensorInfo()));
     }
 
     public Feature<Nullable<ShutterSpeed>> createSSMeteringFeature()
     {
-        SSMeteringFeature result = new SSMeteringFeature(parameterCollection, cameraContext.getSensorInfo());
-        registerFeature(result);
-        return result;
+        return register(new SSMeteringFeature(parameterCollection, cameraContext.getSensorInfo()));
     }
 
     public Feature<Nullable<Aperture>> createApertureMeteringFeature()
     {
-        ApertureMeteringFeature result = new ApertureMeteringFeature(cameraContext.getLensInfo());
-        registerFeature(result);
-        return result;
+        return register(new ApertureMeteringFeature(cameraContext.getLensInfo()));
     }
 
     public Feature<Nullable<Ev>> createEvMeteringFeature()
     {
-        EvMeteringFeature result = new EvMeteringFeature();
-        registerFeature(result);
-        return result;
+        return register(new EvMeteringFeature());
     }
 
     public PreviewFeature createPreviewFeature()
     {
-        PreviewFeature result = new PreviewFeature(parameterCollection);
-        registerFeature(result);
-        return result;
+        return register(new PreviewFeature(parameterCollection));
     }
 
     /*
@@ -116,15 +100,12 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
 
     public ManualFocusFeature createManualFocusFeature()
     {
-        ManualFocusFeature result = new ManualFocusFeature(asyncParameterSender, parameterCollection);
-        registerFeature(result);
-        return result;
+        return register(new ManualFocusFeature(asyncParameterSender, parameterCollection));
     }
 
     public ManualTemperatureFeature createManualTemperatureFeature()
     {
-        ManualTemperatureFeature result = new ManualTemperatureFeature(cameraContext.getColorInfo(), asyncParameterSender, parameterCollection);
-        registerFeature(result);
-        return result;
+        return register(new ManualTemperatureFeature(cameraContext.getColorInfo(),
+                asyncParameterSender, parameterCollection));
     }
 }
