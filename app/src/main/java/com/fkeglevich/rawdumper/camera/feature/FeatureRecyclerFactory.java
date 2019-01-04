@@ -16,7 +16,6 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import com.fkeglevich.rawdumper.camera.action.CameraActions;
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
 import com.fkeglevich.rawdumper.camera.async.direct.AsyncParameterSender;
 import com.fkeglevich.rawdumper.camera.data.Aperture;
@@ -37,16 +36,13 @@ public class FeatureRecyclerFactory extends FeatureRecyclerFactoryBase
     private final CameraContext cameraContext;
     private final ParameterCollection parameterCollection;
     private final AsyncParameterSender asyncParameterSender;
-    private final CameraActions cameraActions;
 
     public FeatureRecyclerFactory(CameraContext cameraContext,
                                   ParameterCollection parameterCollection,
-                                  AsyncParameterSender asyncParameterSender,
-                                  CameraActions cameraActions)
+                                  AsyncParameterSender asyncParameterSender)
     {
         this.parameterCollection = parameterCollection;
         this.asyncParameterSender = asyncParameterSender;
-        this.cameraActions = cameraActions;
         this.cameraContext = cameraContext;
     }
 
