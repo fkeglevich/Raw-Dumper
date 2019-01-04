@@ -16,74 +16,71 @@
 
 package com.fkeglevich.rawdumper.camera.feature;
 
-import android.util.SparseArray;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.fkeglevich.rawdumper.camera.async.CameraContext;
-import com.fkeglevich.rawdumper.raw.capture.RawSettings;
+import com.fkeglevich.rawdumper.controller.context.ContextManager;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 class FeatureStore
 {
+    private static final String FEATURE_STORE_PREFIX = "feature-data-";
+    private static final String RAW_SETTINGS_STORE_PREFIX = "raw-settings-";
+
     private static final FeatureStore instance = new FeatureStore();
 
-    private SparseArray<Map<String, Object>> store = new SparseArray<>();
-    private SparseArray<RawSettings> rawSettingsStore = new SparseArray<>();
-    
     static FeatureStore getInstance()
     {
         return instance;
     }
 
-    public void storeFeaturesData(CameraContext cameraContext, List<Feature> features)
+    void storeData(CameraContext cameraContext, List<Feature> features)
     {
-        Map<String, Object> map = getMapForCamera(cameraContext);
+        storeFeaturesData(cameraContext, features);
+        storeRawSettingsData(cameraContext);
+    }
+
+    private void storeFeaturesData(CameraContext cameraContext, List<Feature> features)
+    {
+        SharedPreferences preferences = getSharedPreferences(FEATURE_STORE_PREFIX, cameraContext);
+        SharedPreferences.Editor editor = preferences.edit();
         for (Feature feature : features)
         {
             if (feature.isAvailable())
-                map.put(feature.parameter.getKey(), feature.getValue());
+                feature.storeValue(editor);
         }
+        editor.apply();
+    }
 
-        RawSettings rawSettings = getRawSettingsForCamera(cameraContext);
-        rawSettings.getDataFrom(cameraContext.getRawSettings());
+    private void storeRawSettingsData(CameraContext cameraContext)
+    {
+        SharedPreferences preferences = getSharedPreferences(RAW_SETTINGS_STORE_PREFIX, cameraContext);
+        SharedPreferences.Editor editor = preferences.edit();
+        cameraContext.getRawSettings().storeValues(editor);
+        editor.apply();
     }
 
     @SuppressWarnings("unchecked")
-    public void loadFeaturesData(CameraContext cameraContext, List<Feature> features)
+    void loadData(CameraContext cameraContext, List<Feature> features)
     {
-        Map<String, Object> map = getMapForCamera(cameraContext);
+        SharedPreferences featurePrefs = getSharedPreferences(FEATURE_STORE_PREFIX, cameraContext);
         for (Feature feature : features)
         {
-            Object value = map.get(feature.parameter.getKey());
-            if (value != null && feature.isAvailable() && feature instanceof WritableFeature)
-            {
-                WritableFeature writableFeature = (WritableFeature) feature;
-                if (writableFeature.getValidator().isValid(value))
-                    writableFeature.setValue(value);
-            }
+            if (feature.isAvailable() && feature instanceof WritableFeature)
+                feature.loadValue(featurePrefs);
         }
 
-        RawSettings rawSettings = getRawSettingsForCamera(cameraContext);
-        cameraContext.getRawSettings().getDataFrom(rawSettings);
+        SharedPreferences preferences = getSharedPreferences(RAW_SETTINGS_STORE_PREFIX, cameraContext);
+        cameraContext.getRawSettings().loadValues(preferences);
     }
 
-    private Map<String, Object> getMapForCamera(CameraContext cameraContext)
+    private SharedPreferences getSharedPreferences(String prefix, CameraContext cameraContext)
     {
         int cameraId = cameraContext.getCameraInfo().getId();
-        if (store.get(cameraId) == null)
-            store.put(cameraId, new HashMap<>());
+        String prefsName = prefix + cameraId;
 
-        return store.get(cameraId);
-    }
-
-    private RawSettings getRawSettingsForCamera(CameraContext cameraContext)
-    {
-        int cameraId = cameraContext.getCameraInfo().getId();
-        if (rawSettingsStore.get(cameraId) == null)
-            rawSettingsStore.put(cameraId, new RawSettings());
-
-        return rawSettingsStore.get(cameraId);
+        return ContextManager.getApplicationContext().getSharedPreferences(prefsName, Context.MODE_PRIVATE);
     }
 }
