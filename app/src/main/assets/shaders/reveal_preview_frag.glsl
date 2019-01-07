@@ -17,5 +17,5 @@ void main()
     float outerRadius = revealRadius/surfaceSize.x;
     float dist = distance(position, vec2(0.0, 1.0 - previewScale.y));
 
-    gl_FragColor = texture2D(texture, textureCoord) * max(sign(outerRadius - dist), 0.0);
+    gl_FragColor = texture2D(texture, textureCoord) * (1.0 - step(outerRadius, dist));
 }
