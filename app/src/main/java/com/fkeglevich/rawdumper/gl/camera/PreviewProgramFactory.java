@@ -29,23 +29,23 @@ import java.io.IOException;
 
 class PreviewProgramFactory
 {
-    private static final String VERTEX_SHADER_ASSET = "shaders/preview_vertex.glsl";
+    private static final String VERTEX_SHADER_ASSET = "shaders/preview.vsh";
 
     public static PreviewProgram createDefaultProgram() throws IOException, GLException
     {
-        Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/preview_frag.glsl");
+        Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/preview.fsh");
         return PreviewProgram.create(program, false);
     }
 
     public static PreviewProgram createRevealProgram() throws IOException, GLException
     {
-        Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/reveal_preview_frag.glsl");
+        Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/reveal_preview.fsh");
         return PreviewProgram.create(program, true);
     }
 
     public static PreviewProgram createTakePictureProgram() throws IOException, GLException
     {
-        Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/take_picture_frag.glsl");
+        Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/take_picture.fsh");
         return PreviewProgram.create(program, true);
     }
 
@@ -53,7 +53,7 @@ class PreviewProgramFactory
     {
         if (Extension.hasExtension(Extension.GL_OES_STANDARD_DERIVATIVES))
         {
-            Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/focus_peak_frag.glsl");
+            Program program = ProgramFactory.createFromAssets(VERTEX_SHADER_ASSET, "shaders/focus_peak.fsh");
             return PreviewProgram.create(program, false);
         }
         else
