@@ -26,8 +26,8 @@ public class WhiteBalanceServiceTest
     public void parseStringTest()
     {
         String example1 = "@setAicParameter: wb integer_bits=1 gr=32768 r=60811 b=50613 gb=32768";
-        float[] floats = WhiteBalanceService.getInstance().parseString(example1);
-        assertArrayEquals(new float[]{  32768f / 60811f,
+        double[] floats = WhiteBalanceService.getInstance().parseString(example1);
+        assertArrayEquals(new double[]{  32768f / 60811f,
                                         1f,
                                         32768f / 50613f}, floats, 0.001f);
 
@@ -35,7 +35,7 @@ public class WhiteBalanceServiceTest
                 "    @setAicParameter: wb integer_bits=1 gr=32768 r=61991 b=51904 gb=32768";
         floats = WhiteBalanceService.getInstance().parseString(example2);
 
-        assertArrayEquals(new float[]{32768f / 61991f,
+        assertArrayEquals(new double[]{32768f / 61991f,
                 1f,
                 32768f / 51904}, floats, 0.001f);
     }
