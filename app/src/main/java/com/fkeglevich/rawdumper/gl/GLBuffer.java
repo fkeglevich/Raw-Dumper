@@ -19,6 +19,8 @@ package com.fkeglevich.rawdumper.gl;
 import android.opengl.EGL14;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
+import android.opengl.GLUtils;
+import android.util.Log;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
@@ -69,11 +71,21 @@ public class GLBuffer
         GLES20.glBufferData(type.getBufferType(), size, data, usage.getBufferUsage());
     }
 
-    public void setData2(ByteBuffer data, int accessFlags)
+    public void setDataAsMapping(byte[] data, int accessFlags)
+    {
+        bind();
+        ByteBuffer buffer = (ByteBuffer) GLES30.glMapBufferRange(type.getBufferType(),
+                0, data.length, GL_MAP_WRITE_BIT | accessFlags);
+        buffer.put(data);
+        GLES30.glUnmapBuffer(type.getBufferType());
+    }
+
+    public void setDataAsMapping(ByteBuffer data, int accessFlags)
     {
         bind();
         ByteBuffer buffer = (ByteBuffer) GLES30.glMapBufferRange(type.getBufferType(),
                 0, data.remaining(), GL_MAP_WRITE_BIT | accessFlags);
+
         buffer.put(data);
         GLES30.glUnmapBuffer(type.getBufferType());
     }
@@ -81,5 +93,10 @@ public class GLBuffer
     public void bindBase(int index)
     {
         GLES30.glBindBufferBase(type.getBufferType(), index, handle);
+    }
+
+    private void delete()
+    {
+        GLES20.glDeleteBuffers(1, new int[] { handle }, 0);
     }
 }
