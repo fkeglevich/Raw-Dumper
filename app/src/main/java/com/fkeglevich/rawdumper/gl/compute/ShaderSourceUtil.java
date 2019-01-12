@@ -20,24 +20,9 @@ public class ShaderSourceUtil
 {
     public static String replaceLocalSize(String source, int localSizeX, int localSizeY, int localSizeZ)
     {
-        String[] split = source.split("[\\r\\n]+");
-        StringBuilder buffer = new StringBuilder(source.length());
-
-        boolean firstNonMacroLine = true;
-        for (String line : split)
-        {
-            if (!line.startsWith("#") && firstNonMacroLine)
-            {
-                firstNonMacroLine = false;
-                buffer.append("#define LOCAL_X ").append(localSizeX).append("\n")
-                        .append("#define LOCAL_Y ").append(localSizeY).append("\n")
-                        .append("#define LOCAL_Z ").append(localSizeZ).append("\n");
-            }
-
-            if (!line.startsWith("#define LOCAL_"))
-                buffer.append(line).append("\n");
-        }
-
-        return buffer.toString();
+        source = source.replaceAll("#define\\s+LOCAL_X\\s+\\d+", "#define LOCAL_X " + localSizeX);
+        source = source.replaceAll("#define\\s+LOCAL_Y\\s+\\d+", "#define LOCAL_Y " + localSizeY);
+        source = source.replaceAll("#define\\s+LOCAL_Z\\s+\\d+", "#define LOCAL_Z " + localSizeZ);
+        return source;
     }
 }
