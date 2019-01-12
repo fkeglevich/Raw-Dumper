@@ -41,7 +41,7 @@ public class ProgramFactory
 
     private static Program createComputeProgram(String computeShaderCode) throws GLException
     {
-        Shader computeShader = Shader.create(ShaderType.COMPUTE);
+        Shader computeShader = ComputeShader.create();
         computeShader.compile(computeShaderCode);
 
         Program program = Program.create();

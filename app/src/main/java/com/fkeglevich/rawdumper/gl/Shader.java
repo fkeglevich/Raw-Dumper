@@ -41,7 +41,7 @@ public class Shader
         throw new GLException("Error creating shader!");
     }
 
-    private Shader(int handle, ShaderType type)
+    Shader(int handle, ShaderType type)
     {
         this.handle = handle;
         this.type = type;
