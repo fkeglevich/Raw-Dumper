@@ -42,7 +42,7 @@ public class ShellFactoryTest
 
     private static void defaultCb()
     {
-        PerfInfo.end("ShellManager2Test");
+        PerfInfo.end();
         synchronized (lock) { lock.notify(); }
     }
 

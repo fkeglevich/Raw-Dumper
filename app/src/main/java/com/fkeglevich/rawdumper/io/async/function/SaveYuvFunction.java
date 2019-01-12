@@ -48,13 +48,13 @@ public class SaveYuvFunction extends ThrowingAsyncFunction<YuvCaptureInfo, Void,
         PerfInfo.start("SaveYuvFunction Total");
         PerfInfo.start("switchUVPlanes");
         YuvUtil.switchUVPlanes(captureInfo.yuvBuffer, captureInfo.width, captureInfo.height);
-        PerfInfo.end("switchUVPlanes");
+        PerfInfo.end();
         PerfInfo.start("YUVtoARBG");
         GPUImageNativeLibrary.YUVtoARBG(captureInfo.yuvBuffer, captureInfo.width, captureInfo.height, captureInfo.bitmapBuffer);
-        PerfInfo.end("YUVtoARBG");
+        PerfInfo.end();
         PerfInfo.start("createBitmap");
         Bitmap bitmap = Bitmap.createBitmap(captureInfo.bitmapBuffer, captureInfo.width, captureInfo.height, ARGB_4444);
-        PerfInfo.end("createBitmap");
+        PerfInfo.end();
         PerfInfo.start("compress");
         try (FileOutputStream fos = new FileOutputStream(captureInfo.filename))
         {
@@ -69,8 +69,8 @@ public class SaveYuvFunction extends ThrowingAsyncFunction<YuvCaptureInfo, Void,
         {
             bitmap.recycle();
         }
-        PerfInfo.end("compress");
-        PerfInfo.end("SaveYuvFunction Total");
+        PerfInfo.end();
+        PerfInfo.end();
         return null;
     }
 }

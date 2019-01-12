@@ -20,10 +20,8 @@ import android.util.Log;
 
 import com.fkeglevich.rawdumper.BuildConfig;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import androidx.annotation.Nullable;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 /**
  * PerfInfo contains useful methods for measuring time cost of certain operations
@@ -33,11 +31,23 @@ import androidx.annotation.Nullable;
 
 public class PerfInfo
 {
+    private static class PerfData
+    {
+        final String tag;
+        final long startTime;
+
+        PerfData(String tag, long startTime)
+        {
+            this.tag = tag;
+            this.startTime = startTime;
+        }
+    }
+
     private static final String TAG = "PerfInfo";
     private static final boolean FORCE_PERFORMANCE_TRACKING = false;
 
-    private static final Map<String, Long> tickingMap = new HashMap<>();
-    private static final double NANO_TIME_TO_MILLISECONDS = 1000000.0;
+    private static final Deque<PerfData> perfStack = new ArrayDeque<>();
+    private static final double NANO_TIME_TO_MILLISECONDS = 1e6;
 
     /**
      * Starts measuring performance
@@ -46,64 +56,27 @@ public class PerfInfo
     public synchronized static void start(String tag)
     {
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
-            tickingMap.put(tag, System.nanoTime());
+            perfStack.push(new PerfData(tag, System.nanoTime()));
     }
 
     /**
      * Ends measuring performance and logs the result
-     * @param tag   A tag for storing/querying the result
      */
-    public synchronized static void end(String tag)
-    {
-        end(tag, null);
-    }
-
-    /**
-     * Ends measuring performance and logs the result
-     * @param tag   A tag for storing/querying the result
-     * @param data  Extra data value for better documentation
-     */
-    private synchronized static void end(String tag, String data)
+    public synchronized static void end()
     {
         if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
         {
-            log(tag, data);
-            tickingMap.remove(tag);
-        }
-    }
+            if (perfStack.isEmpty()) return;
 
-    /**
-     * Logs the performance delta, measured in milliseconds
-     * @param tag   A tag for storing/querying the result
-     */
-    public synchronized static void log(String tag)
-    {
-        log(tag, null);
-    }
-
-    /**
-     * Logs the performance delta, measured in milliseconds
-     * @param tag   A tag for storing/querying the result
-     * @param data  Extra data value for better documentation
-     */
-    private synchronized static void log(String tag, @Nullable String data)
-    {
-        if (BuildConfig.DEBUG || FORCE_PERFORMANCE_TRACKING)
-        {
-            if (!tickingMap.containsKey(tag))
-            {
-                Log.i(TAG, "Error: " + tag + " doesn't exist!");
-                return;
-            }
-            double milliseconds = ((System.nanoTime() - tickingMap.get(tag)) / NANO_TIME_TO_MILLISECONDS);
-            String extraData = data == null ? "" : "(" + data + ")";
+            PerfData data = perfStack.pop();
+            double milliseconds = ((System.nanoTime() - data.startTime) / NANO_TIME_TO_MILLISECONDS);
             try
             {
-                Log.i(TAG, tag + extraData + " needed " + milliseconds + " ms");
+                Log.i(TAG, data.tag + " needed " + milliseconds + " ms");
             }
             catch (RuntimeException re)
             {
-                System.out.println(tag + extraData + " needed " + milliseconds + " ms");
+                System.out.println(data.tag + " needed " + milliseconds + " ms");
             }
         }
     }

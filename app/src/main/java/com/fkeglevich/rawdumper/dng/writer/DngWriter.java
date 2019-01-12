@@ -50,7 +50,7 @@ public class DngWriter
                     imageSize.getBytesPerLine(), captureInfo.shouldInvertRows(),
                     captureInfo.getImageData(), !rawSettings.compressRawFiles,
                     rawSettings.calculateDigest);
-            PerfInfo.end("SaveAndCompress");
+            PerfInfo.end();
         }
         catch (Exception e)
         {

@@ -48,7 +48,7 @@ class GainMapAssetLoader
             BayerGainMapSerializer serializer = new BayerGainMapSerializer();
             PerfInfo.start("GainMapAssetLoader");
             Map<ShadingIlluminant, BayerGainMap> map = serializer.readBayerGainMapCollection(dis);
-            PerfInfo.end("GainMapAssetLoader");
+            PerfInfo.end();
             return map;
         }
         catch (IOException ioe)
