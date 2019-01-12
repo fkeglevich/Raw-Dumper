@@ -25,6 +25,15 @@ public class ShaderSourceUtilTest
 {
     private static final String sampleSource = "#version 310 es\n" +
             "#extension GL_OES_EGL_image_external_essl3 : enable\n" +
+            "\n" +
+            "#define LOCAL_X 1\n" +
+            "#define LOCAL_Y 1\n" +
+            "#define LOCAL_Z 1\n" +
+            "\n" +
+            "#define LOCAL_X 1\n" +
+            "#define LOCAL_Y 1\n" +
+            "#define LOCAL_Z 1\n" +
+            "\n" +
             "#define LOCAL_X 1\n" +
             "#define LOCAL_Y 1\n" +
             "#define LOCAL_Z 1\n" +
@@ -51,6 +60,6 @@ public class ShaderSourceUtilTest
     @Test
     public void replaceLocalSizeTest()
     {
-        System.out.println(replaceLocalSize(sampleSource, 8, 8, 8));
+        System.out.println(replaceLocalSize(sampleSource, 2, 4, 8));
     }
 }
