@@ -128,7 +128,6 @@ class PreviewRenderer implements GLSurfaceView.Renderer
         if (rendering)
         {
             clearFrame();
-            //stopRender();
             if (updatingPreview)
                 surfaceTextureManager.updateTexImage();
 
@@ -136,6 +135,7 @@ class PreviewRenderer implements GLSurfaceView.Renderer
             programData.updatePreviewScale();
             synchronized (programLock)
             {
+                surfaceTextureManager.activateSurfaceTexture();
                 previewProgramManager.useCurrentProgram();
                 programData.writeData(previewProgramManager.getCurrentProgram());
                 previewProgramManager.getCurrentProgram().setRevealRadius(revealRadius);
