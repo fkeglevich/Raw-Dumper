@@ -128,7 +128,7 @@ class PreviewRenderer implements GLSurfaceView.Renderer
         if (rendering)
         {
             clearFrame();
-            stopRender();
+            //stopRender();
             if (updatingPreview)
                 surfaceTextureManager.updateTexImage();
 
