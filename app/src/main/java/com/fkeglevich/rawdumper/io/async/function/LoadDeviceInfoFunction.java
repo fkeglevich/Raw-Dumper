@@ -22,6 +22,7 @@ import com.fkeglevich.rawdumper.async.function.ThrowingAsyncFunction;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfo;
 import com.fkeglevich.rawdumper.raw.info.DeviceInfoLoader;
 import com.fkeglevich.rawdumper.util.exception.MessageException;
+import com.fkeglevich.rawdumper.util.exception.UnknownMessageException;
 
 /**
  * Created by Flávio Keglevich on 03/09/2017.
@@ -41,7 +42,7 @@ public class LoadDeviceInfoFunction extends ThrowingAsyncFunction<Void, DeviceIn
         {
             re.printStackTrace();
             Log.e("LoadDeviceInfoFunction", "RuntimeException: " + re.getMessage());
-            throw re;
+            throw new UnknownMessageException(re);
         }
     }
 }

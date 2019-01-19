@@ -25,5 +25,15 @@ import android.content.Context;
 
 public abstract class MessageException extends Exception
 {
+    public MessageException()
+    {
+        super();
+    }
+
+    public MessageException(Throwable cause)
+    {
+        super(cause);
+    }
+
     public abstract String getMessageResource(Context context);
 }

@@ -20,6 +20,7 @@
     <string name="about_title">Sobre</string>
     <string name="app_name_with_version">Raw Dumper v<xliff:g id="app_version">%s</xliff:g></string>
     <string name="error_opening_camera">A câmera não pode ser iniciada. Reinicie seu dispositivo e tente novamente.</string>
+    <string name="unknown_error">Um erro inesperado aconteceu: <xliff:g id="error">%s</xliff:g></string>
     <string name="permission_error">Este aplicativo necessita de todas as permissões para funcionar.</string>
     <string name="root_access_error">Este aplicativo somente funciona em dispositivos com root.</string>
     <string name="terminating_dialog_button">Sair</string>

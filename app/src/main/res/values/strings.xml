@@ -27,6 +27,7 @@
         \nDevice model: <xliff:g id="model_name">%s</xliff:g>
     </string>
 
+    <string name="unknown_error">An unexpected error occurred: <xliff:g id="error">%s</xliff:g></string>
     <string name="permission_error">This app needs all requested permissions.</string>
     <string name="root_access_error">This app only works with root access.</string>
 
