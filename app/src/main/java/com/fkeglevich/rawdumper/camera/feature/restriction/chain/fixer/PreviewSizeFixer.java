@@ -44,7 +44,31 @@ public class PreviewSizeFixer implements FeatureValueFixer<CaptureSize, CaptureS
             if (preview.hasSameAspectRatio(pictureSize))
                 previewCandidates.add(preview);
 
+        if (previewCandidates.isEmpty())
+            return getAtLeastOnePreviewSize(pictureSize, newValidator.getAvailableValues());
+
         Collections.sort(previewCandidates);
         return previewCandidates.get(previewCandidates.size() - 1);
+    }
+
+    private CaptureSize getAtLeastOnePreviewSize(CaptureSize pictureSize, List<CaptureSize> available)
+    {
+        double ratio = ((double) pictureSize.getAspectRatioX()) /  ((double) pictureSize.getAspectRatioY());
+        double minDiff = Double.POSITIVE_INFINITY;
+        CaptureSize result = available.get(0);
+
+        for (CaptureSize preview : available)
+        {
+            double previewRatio = ((double) preview.getAspectRatioX()) /  ((double) preview.getAspectRatioY());
+            double diff = Math.abs(ratio - previewRatio);
+
+            if (diff < minDiff)
+            {
+                minDiff = diff;
+                result = preview;
+            }
+        }
+
+        return result;
     }
 }
