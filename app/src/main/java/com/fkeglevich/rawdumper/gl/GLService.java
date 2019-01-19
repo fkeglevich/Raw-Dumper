@@ -19,4 +19,5 @@ package com.fkeglevich.rawdumper.gl;
 public interface GLService
 {
     void postGLRunnable(Runnable runnable);
+    int getEGLContextVersion();
 }

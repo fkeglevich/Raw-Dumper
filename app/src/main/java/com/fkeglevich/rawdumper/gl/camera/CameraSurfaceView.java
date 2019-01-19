@@ -19,7 +19,9 @@ package com.fkeglevich.rawdumper.gl.camera;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ConfigurationInfo;
 import android.graphics.SurfaceTexture;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
@@ -39,23 +41,27 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
     private PreviewRenderer previewRenderer = new PreviewRenderer();
     private ValueAnimator openingAnimation = null;
     private ValueAnimator takePictureAnimation = null;
+    private int contextVersion;
 
     public CameraSurfaceView(Context context)
     {
         super(context);
-        init();
+        init(context);
     }
 
     public CameraSurfaceView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        init();
+        init(context);
     }
 
-    private void init()
+    private void init(Context context)
     {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
+        contextVersion = configurationInfo.reqGlEsVersion >= 0x30000 ? 3 : 2;
         setPreserveEGLContextOnPause(true);
-        setEGLContextClientVersion(2);
+        setEGLContextClientVersion(contextVersion);
         setRenderer(previewRenderer);
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
@@ -188,5 +194,11 @@ public class CameraSurfaceView extends GLSurfaceView implements CameraPreview
     public void postGLRunnable(Runnable runnable)
     {
         queueEvent(runnable);
+    }
+
+    @Override
+    public int getEGLContextVersion()
+    {
+        return contextVersion;
     }
 }
