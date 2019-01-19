@@ -1,14 +1,7 @@
 {
     "cameras": [
         {
-            "binningSizes": [
-                {
-                    "aspectRatioX": 4,
-                    "aspectRatioY": 3,
-                    "height": 1536,
-                    "width": 2048
-                }
-            ],
+            "binningSizes": [],
             "canBePatched": false,
             "color": {
                 "calibrationIlluminant1": "STANDARD_LIGHT_A",
