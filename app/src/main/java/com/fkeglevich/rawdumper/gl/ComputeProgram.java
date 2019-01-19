@@ -18,7 +18,6 @@ package com.fkeglevich.rawdumper.gl;
 
 import android.opengl.GLES31;
 import android.os.Build;
-import android.util.Log;
 
 import com.fkeglevich.rawdumper.gl.compute.ShaderSourceUtil;
 import com.fkeglevich.rawdumper.gl.exception.GLException;

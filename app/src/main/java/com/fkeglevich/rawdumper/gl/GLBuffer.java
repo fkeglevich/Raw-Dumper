@@ -16,11 +16,8 @@
 
 package com.fkeglevich.rawdumper.gl;
 
-import android.opengl.EGL14;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
-import android.opengl.GLUtils;
-import android.util.Log;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;

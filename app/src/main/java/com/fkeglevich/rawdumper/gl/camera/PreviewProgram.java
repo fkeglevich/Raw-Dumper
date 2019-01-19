@@ -23,7 +23,6 @@ import com.fkeglevich.rawdumper.gl.exception.GLException;
 import com.fkeglevich.rawdumper.gl.exception.GLUncheckedException;
 
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 
 /**
  * Created by flavio on 26/11/17.
