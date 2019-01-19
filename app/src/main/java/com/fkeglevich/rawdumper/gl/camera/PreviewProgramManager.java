@@ -46,7 +46,6 @@ class PreviewProgramManager
     PreviewProgram focusPeakProgram = null;
 
     private PreviewProgram currentProgram = null;
-    private volatile boolean currentProgramIsBeingUsed = false;
 
     PreviewProgramManager(Object programLock)
     {
@@ -97,20 +96,15 @@ class PreviewProgramManager
         synchronized (programLock)
         {
             this.currentProgram = program;
-            currentProgramIsBeingUsed = false;
         }
     }
 
     void useCurrentProgram()
     {
-        if (!currentProgramIsBeingUsed)
+        synchronized (programLock)
         {
-            synchronized (programLock)
-            {
-                this.currentProgram.use();
-                this.currentProgram.setupVertices(vertexBuffer);
-                currentProgramIsBeingUsed = true;
-            }
+            this.currentProgram.use();
+            this.currentProgram.setupVertices(vertexBuffer);
         }
     }
 
