@@ -62,7 +62,7 @@ public class CameraLifetimeController
         this.fullscreenManager          = new FullscreenManager(reference);
         this.featureControllerManager   = new FeatureControllerManager();
         featureControllerManager.createControllers(reference);
-        this.cameraPreview = getTextureView(reference);
+        this.cameraPreview              = getTextureView(reference);
         this.cameraManager              = new CameraManager(reference, cameraPreview);
         setupCameraManager();
         this.switchButtonController     = createSwitchButtonController();
