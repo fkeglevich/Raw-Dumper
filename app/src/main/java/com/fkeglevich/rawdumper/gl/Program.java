@@ -94,8 +94,33 @@ public class Program
         return handle;
     }
 
+    public void setUniformFloat(String name, float data)
+    {
+        GLES20.glUniform1f(getUniformHandle(name), data);
+    }
+
+    public void setUniformVec2(String name, float x, float y)
+    {
+        GLES20.glUniform2f(getUniformHandle(name), x, y);
+    }
+
+    public void setUniformVec2(String name, float[] data)
+    {
+        GLES20.glUniform2fv(getUniformHandle(name), 1, data, 0);
+    }
+
+    public void setUniformMat4(String name, float[] data)
+    {
+        setUniformMat4(name, data, false);
+    }
+
+    public void setUniformMat4(String name, float[] data, boolean transpose)
+    {
+        GLES20.glUniformMatrix4fv(getUniformHandle(name), 1, transpose, data, 0);
+    }
+
     @SuppressWarnings("ConstantConditions")
-    public int getUniformHandle(String name)
+    protected int getUniformHandle(String name)
     {
         if (uniformCache.containsKey(name))
             return uniformCache.get(name);

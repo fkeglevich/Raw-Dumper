@@ -31,10 +31,6 @@ import java.util.Arrays;
 
 public class PreviewProgram extends Program
 {
-    private float[] surfaceMatrixCache = new float[16];
-    private float[] surfaceSizeCache   = new float[2];
-    private float[] previewScaleCache  = new float[2];
-    private float revealRadiusCache;
     private final boolean hasRevealFeature;
 
     public static PreviewProgram create(boolean hasRevealFeature) throws GLException
@@ -55,38 +51,17 @@ public class PreviewProgram extends Program
 
     void setSurfaceMatrix(float[] surfaceMatrix)
     {
-        if (Arrays.equals(surfaceMatrix, surfaceMatrixCache)) return;
-
-        int handle = getUniformHandle("surfaceMatrix");
-        if (handle != -1)
-        {
-            GLES20.glUniformMatrix4fv(handle, 1, false, surfaceMatrix, 0);
-            System.arraycopy(surfaceMatrix, 0, surfaceMatrixCache, 0, surfaceMatrix.length);
-        }
+        setUniformMat4("surfaceMatrix", surfaceMatrix);
     }
 
     void setSurfaceSize(float[] surfaceSize)
     {
-        if (Arrays.equals(surfaceSize, surfaceSizeCache)) return;
-
-        int handle = getUniformHandle("surfaceSize");
-        if (handle != -1)
-        {
-            GLES20.glUniform2fv(handle, 1, surfaceSize, 0);
-            System.arraycopy(surfaceSize, 0, surfaceSizeCache, 0, surfaceSize.length);
-        }
+        setUniformVec2("surfaceSize", surfaceSize);
     }
 
     void setPreviewScale(float[] previewScale)
     {
-        if (Arrays.equals(previewScale, previewScaleCache)) return;
-
-        int handle = getUniformHandle("previewScale");
-        if (handle != -1)
-        {
-            GLES20.glUniform2fv(handle, 1, previewScale, 0);
-            System.arraycopy(previewScale, 0, previewScaleCache, 0, previewScale.length);
-        }
+        setUniformVec2("previewScale", previewScale);
     }
 
     void setRevealRadius(float revealRadius)
@@ -94,14 +69,7 @@ public class PreviewProgram extends Program
         if (!hasRevealFeature)
             return; //silently fails
 
-        if (Float.compare(revealRadius, revealRadiusCache) == 0) return;
-
-        int handle = getUniformHandle("revealRadius");
-        if (handle != -1)
-        {
-            GLES20.glUniform1f(handle, revealRadius);
-            revealRadiusCache = revealRadius;
-        }
+        setUniformFloat("revealRadius", revealRadius);
     }
 
     void setupVertices(ByteBuffer vertexBuffer)
