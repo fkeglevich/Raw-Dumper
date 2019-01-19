@@ -34,7 +34,7 @@ public class ComputeProgram extends Program
     public static ComputeProgram create(String computeShaderCode, int localSizeX, int localSizeY, int localSizeZ) throws GLException
     {
         String source = ShaderSourceUtil.replaceLocalSize(computeShaderCode, localSizeX, localSizeY, localSizeZ);
-        Log.i("ASD", source);
+        //Log.i("ASD", source);
 
         Shader computeShader = Shader.create(ShaderType.COMPUTE);
         computeShader.compile(source);
@@ -55,23 +55,47 @@ public class ComputeProgram extends Program
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void dispatch(int numGroupsX, int numGroupsY, int numGroupsZ)
+    public void dispatch1D(int dataSizeX)
     {
-        GLES31.glDispatchCompute(numGroupsX, numGroupsY, numGroupsZ);
+        GLES31.glDispatchCompute(
+                (int) Math.ceil(((double) dataSizeX) / ((double) localSizeX)), 1, 1);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void dispatchDataSize(int dataSizeX, int dataSizeY, int dataSizeZ)
+    public void dispatch2D(int dataSizeX, int dataSizeY)
     {
         GLES31.glDispatchCompute(
-                dataSizeX / localSizeX,
-                dataSizeY / localSizeY,
-                dataSizeZ / localSizeZ);
+                (int) Math.ceil(((double) dataSizeX) / ((double) localSizeX)),
+                (int) Math.ceil(((double) dataSizeY) / ((double) localSizeY)), 1);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void dispatch3D(int dataSizeX, int dataSizeY, int dataSizeZ)
+    {
+        GLES31.glDispatchCompute(
+                (int) Math.ceil(((double) dataSizeX) / ((double) localSizeX)),
+                (int) Math.ceil(((double) dataSizeY) / ((double) localSizeY)),
+                (int) Math.ceil(((double) dataSizeZ) / ((double) localSizeZ)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void memoryBarrier(int barriers)
     {
         GLES31.glMemoryBarrier(barriers);
+    }
+
+    public int getLocalSizeX()
+    {
+        return localSizeX;
+    }
+
+    public int getLocalSizeY()
+    {
+        return localSizeY;
+    }
+
+    public int getLocalSizeZ()
+    {
+        return localSizeZ;
     }
 }
