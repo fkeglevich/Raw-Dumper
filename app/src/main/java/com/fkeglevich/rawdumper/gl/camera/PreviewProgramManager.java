@@ -18,6 +18,7 @@ package com.fkeglevich.rawdumper.gl.camera;
 
 import android.util.Log;
 
+import com.fkeglevich.rawdumper.debug.PerfInfo;
 import com.fkeglevich.rawdumper.gl.exception.GLException;
 
 import java.io.IOException;
@@ -59,10 +60,12 @@ class PreviewProgramManager
         {
             try
             {
-                defaultProgram = PreviewProgramFactory.createDefaultProgram();
-                revealProgram = PreviewProgramFactory.createRevealProgram();
-                takePictureProgram = PreviewProgramFactory.createTakePictureProgram();
-                focusPeakProgram = PreviewProgramFactory.createFocusPeakingProgram();
+                PerfInfo.start("Compiling GL programs");
+                defaultProgram      = PreviewProgramFactory.createDefaultProgram();
+                revealProgram       = PreviewProgramFactory.createRevealProgram();
+                takePictureProgram  = PreviewProgramFactory.createTakePictureProgram();
+                focusPeakProgram    = PreviewProgramFactory.createFocusPeakingProgram();
+                PerfInfo.end();
             }
             catch (IOException | GLException e)
             {
