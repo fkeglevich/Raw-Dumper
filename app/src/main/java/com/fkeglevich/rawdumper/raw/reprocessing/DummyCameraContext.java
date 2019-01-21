@@ -60,6 +60,17 @@ public class DummyCameraContext extends CameraContext
     @Override
     public GLService getGlService()
     {
-        return runnable -> { /*no op*/ };
+        return new GLService()
+        {
+            @Override
+            public void postGLRunnable(Runnable runnable)
+            {   }
+
+            @Override
+            public int getEGLContextVersion()
+            {
+                return 2;
+            }
+        };
     }
 }
