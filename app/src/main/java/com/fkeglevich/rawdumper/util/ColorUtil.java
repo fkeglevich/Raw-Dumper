@@ -20,6 +20,9 @@ import com.fkeglevich.rawdumper.raw.color.ColorTemperature;
 import com.fkeglevich.rawdumper.raw.color.XYCoords;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 
+import static com.fkeglevich.rawdumper.util.MathUtil.scalarMultiply;
+import static com.fkeglevich.rawdumper.util.MathUtil.sum;
+
 /**
  * Created by Flávio Keglevich on 08/06/2017.
  * TODO: Add a class header comment!
@@ -39,5 +42,36 @@ public class ColorUtil
         double a = colorInfo.getTintTemperatureFunction()[0];
         double b = colorInfo.getTintTemperatureFunction()[1];
         return temperature * a + b;
+    }
+    
+    public static double[] interpolatedColorMatrix(double temperatureTarget,
+                                                   double[] colorMatrix1, double[] colorMatrix2,
+                                                   double temperature1, double temperature2)
+    {
+        if (temperature2 > temperature1)
+        {
+            double aux1 = temperature1;
+            temperature1 = temperature2;
+            temperature2 = aux1;
+
+            double[] aux2 = colorMatrix1;
+            colorMatrix1 = colorMatrix2;
+            colorMatrix2 = aux2;
+        }
+
+        if (temperatureTarget <= temperature1)
+            return colorMatrix1;
+        if (temperatureTarget >= temperature2)
+            return colorMatrix2;
+
+        double invertedTarget = 1.0 / temperatureTarget;
+        double inverted1      = 1.0 / temperature1;
+        double inverted2      = 1.0 / temperature2;
+
+        double linear = (invertedTarget - inverted2) / (inverted1 - inverted2);
+
+        return sum(
+                                scalarMultiply(colorMatrix1, linear),
+                                scalarMultiply(colorMatrix2, 1.0 - linear));
     }
 }
