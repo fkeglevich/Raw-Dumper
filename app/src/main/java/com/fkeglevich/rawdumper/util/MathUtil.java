@@ -49,6 +49,24 @@ public class MathUtil
                                 v[0]*m[6] + v[1]*m[7] + v[2]*m[8]};
     }
 
+    public static double[] scalarMultiply(double[] m, double s)
+    {
+        double[] result = m.clone();
+        for (int i = 0; i < result.length; i++)
+            result[i] *= s;
+
+        return result;
+    }
+
+    public static double[] sum(double[] m, double[] m2)
+    {
+        double[] result = m.clone();
+        for (int i = 0; i < result.length; i++)
+            result[i] += m2[i];
+
+        return result;
+    }
+
     @NonNull
     public static float[] multiply3x3Matrices(@NonNull float[] a, @NonNull float[] b)
     {
