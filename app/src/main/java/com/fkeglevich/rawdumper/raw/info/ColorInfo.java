@@ -24,6 +24,8 @@ import com.fkeglevich.rawdumper.util.MathUtil;
 import androidx.annotation.Keep;
 
 import static com.fkeglevich.rawdumper.util.MathUtil.multiply3x3Matrices;
+import static com.fkeglevich.rawdumper.util.MathUtil.scalarMultiply;
+import static com.fkeglevich.rawdumper.util.MathUtil.sum;
 
 /**
  * Represents a collection of color matrices and calibration
@@ -122,5 +124,52 @@ public class ColorInfo
     public int[] getTemperatureRange()
     {
         return temperatureRange;
+    }
+
+    private double[] interpolatedColorMatrix(double temperatureTarget, double[] matrix1, double[] matrix2)
+    {
+        double temperature1 = calibrationIlluminant1.getTemperature();
+        double temperature2 = calibrationIlluminant2.getTemperature();
+
+        if (temperature2 > temperature1)
+        {
+            double aux1 = temperature1;
+            temperature1 = temperature2;
+            temperature2 = aux1;
+
+            double[] aux2 = matrix1;
+            matrix1 = matrix2;
+            matrix2 = aux2;
+        }
+
+        if (temperatureTarget <= temperature1)
+            return matrix1;
+        if (temperatureTarget >= temperature2)
+            return matrix2;
+
+        double invertedTarget = 1.0 / temperatureTarget;
+        double inverted1      = 1.0 / temperature1;
+        double inverted2      = 1.0 / temperature2;
+
+        double linear = (invertedTarget - inverted2) / (inverted1 - inverted2);
+
+        System.out.println("L: " + linear);
+
+        return sum(scalarMultiply(matrix1,          linear),
+                   scalarMultiply(matrix2, 1.0 - linear));
+    }
+
+    public double[] interpolatedColorMatrix(double temperatureTarget)
+    {
+        return interpolatedColorMatrix(temperatureTarget,
+                MathUtil.floatArrayToDouble(colorMatrix1),
+                MathUtil.floatArrayToDouble(colorMatrix2));
+    }
+
+    public double[] interpolatedCalibrationMatrix(double temperatureTarget)
+    {
+        return interpolatedColorMatrix(temperatureTarget,
+                MathUtil.floatArrayToDouble(cameraCalibration1),
+                MathUtil.floatArrayToDouble(cameraCalibration2));
     }
 }
