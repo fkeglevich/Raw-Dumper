@@ -29,35 +29,37 @@ import androidx.annotation.Keep;
 @Keep
 public enum CalibrationIlluminant
 {
-    UNKNOWN(0,                  "Unknown"),
-    DAYLIGHT(1,                 "Daylight"),
-    FLUORESCENT(2,              "Fluorescent"),
-    TUNGSTEN(3,                 "Tungsten"),
-    FLASH(4,                    "Flash"),
-    FINE_WEATHER(9,             "Fine Weather"),
-    CLOUDY_WEATHER(10,          "Cloudy Weather"),
-    SHADE(11,                   "Shade"),
-    DAYLIGHT_FLUORESCENT(12,    "Daylight Fluorescent"),
-    DAY_WHITE_FLUORESCENT(13,   "Day White Fluorescent"),
-    COOL_WHITE_FLUORESCENT(14,  "Cool White Fluorescent"),
-    WHITE_FLUORESCENT(15,       "White Fluorescent"),
-    STANDARD_LIGHT_A(17,        "Standard light A"),
-    STANDARD_LIGHT_B(18,        "Standard light B"),
-    STANDARD_LIGHT_C(19,        "Standard light C"),
-    D55(20,                     "D55"),
-    D65(21,                     "D65"),
-    D75(22,                     "D75"),
-    D50(23,                     "D50"),
-    ISO_STUDIO_TUNGSTEN(24,     "Iso Studio Tungsten"),
-    OTHER_LIGHT_SOURCE(255,     "Other Light Source");
+    UNKNOWN(0,                  "Unknown",                  0),
+    DAYLIGHT(1,                 "Daylight",                 5500),
+    FLUORESCENT(2,              "Fluorescent",              4150),
+    TUNGSTEN(3,                 "Tungsten",                 2850),
+    FLASH(4,                    "Flash",                    5500),
+    FINE_WEATHER(9,             "Fine Weather",             5500),
+    CLOUDY_WEATHER(10,          "Cloudy Weather",           6500),
+    SHADE(11,                   "Shade",                    7500),
+    DAYLIGHT_FLUORESCENT(12,    "Daylight Fluorescent",     6400),
+    DAY_WHITE_FLUORESCENT(13,   "Day White Fluorescent",    5050),
+    COOL_WHITE_FLUORESCENT(14,  "Cool White Fluorescent",   4150),
+    WHITE_FLUORESCENT(15,       "White Fluorescent",        3525),
+    STANDARD_LIGHT_A(17,        "Standard light A",         2850),
+    STANDARD_LIGHT_B(18,        "Standard light B",         5500),
+    STANDARD_LIGHT_C(19,        "Standard light C",         6500),
+    D55(20,                     "D55",                      5500),
+    D65(21,                     "D65",                      6500),
+    D75(22,                     "D75",                      7500),
+    D50(23,                     "D50",                      5000),
+    ISO_STUDIO_TUNGSTEN(24,     "Iso Studio Tungsten",      3200),
+    OTHER_LIGHT_SOURCE(255,     "Other Light Source",       0);
 
     private final int exifCode;
     private final String name;
+    private final double temperature;
 
-    CalibrationIlluminant(int exifCode, String name)
+    CalibrationIlluminant(int exifCode, String name, double temperature)
     {
         this.exifCode = exifCode;
         this.name = name;
+        this.temperature = temperature;
     }
 
     public int getExifCode()
@@ -68,6 +70,11 @@ public enum CalibrationIlluminant
     private String getName()
     {
         return name;
+    }
+
+    public double getTemperature()
+    {
+        return temperature;
     }
 
     public String toString()
