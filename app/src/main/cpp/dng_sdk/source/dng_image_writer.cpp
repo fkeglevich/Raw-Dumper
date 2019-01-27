@@ -6461,34 +6461,29 @@ void dng_image_writer::WriteDNG (dng_host &host,
 				}
 
 			}
-		}
 
-	tag_uint8_ptr tagRawImageDigest (useNewDigest ? tcNewRawImageDigest : tcRawImageDigest,
-									 compression == ccLossyJPEG ?
-									 negative.RawJPEGImageDigest ().data :
-									 (useNewDigest ? negative.NewRawImageDigest ().data
-												   : negative.RawImageDigest    ().data),
-							   		 16);
-							   		  
-	mainIFD.Add (&tagRawImageDigest);
 
-	if (calculateDigest)
-		{
+			tag_uint8_ptr tagRawImageDigest (useNewDigest ? tcNewRawImageDigest : tcRawImageDigest,
+											 compression == ccLossyJPEG ?
+											 negative.RawJPEGImageDigest ().data :
+											 (useNewDigest ? negative.NewRawImageDigest ().data
+														   : negative.RawImageDigest    ().data),
+											 16);
 
-		negative.FindRawDataUniqueID (host);
+			mainIFD.Add (&tagRawImageDigest);
 
-		}
+			negative.FindRawDataUniqueID (host);
 
-	
-	tag_uint8_ptr tagRawDataUniqueID (tcRawDataUniqueID,
-							   		  negative.RawDataUniqueID ().data,
-							   		  16);
-							   		  
-	if (negative.RawDataUniqueID ().IsValid ())
-		{
-							   
-		mainIFD.Add (&tagRawDataUniqueID);
-		
+			tag_uint8_ptr tagRawDataUniqueID (tcRawDataUniqueID,
+											  negative.RawDataUniqueID ().data,
+											  16);
+
+			if (negative.RawDataUniqueID ().IsValid ())
+				{
+
+				mainIFD.Add (&tagRawDataUniqueID);
+
+				}
 		}
 	
 	tag_string tagOriginalRawFileName (tcOriginalRawFileName,
