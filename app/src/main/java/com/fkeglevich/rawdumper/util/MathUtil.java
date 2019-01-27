@@ -81,6 +81,69 @@ public class MathUtil
         return result;
     }
 
+    @NonNull
+    public static double[] multiply3x3Matrices(@NonNull double[] a, @NonNull double[] b)
+    {
+        double[] result = new double[9];
+        int i, j, k;
+
+        for(i = 0; i < 3; i++)
+            for (j = 0; j < 3; j++)
+                for (k = 0; k < 3; k++)
+                    result[3*i + j] += a[3*i + k] * b[3*k + j];
+
+        return result;
+    }
+
+    public static double[] invert3x3Matrix(double[] matrix)
+    {
+        double a00 = matrix[0];
+        double a01 = matrix[1];
+        double a02 = matrix[2];
+        double a10 = matrix[3];
+        double a11 = matrix[4];
+        double a12 = matrix[5];
+        double a20 = matrix[6];
+        double a21 = matrix[7];
+        double a22 = matrix[8];
+
+        double[] temp = new double[9];
+
+        temp[0] = a11 * a22 - a21 * a12;
+        temp[1] = a21 * a02 - a01 * a22;
+        temp[2] = a01 * a12 - a11 * a02;
+        temp[3] = a20 * a12 - a10 * a22;
+        temp[4] = a00 * a22 - a20 * a02;
+        temp[5] = a10 * a02 - a00 * a12;
+        temp[6] = a10 * a21 - a20 * a11;
+        temp[7] = a20 * a01 - a00 * a21;
+        temp[8] = a00 * a11 - a10 * a01;
+
+        double det = (a00 * temp [0] +
+                      a01 * temp [3] +
+                      a02 * temp [6]);
+
+        if (Math.abs(det) < 1.0E-10)
+            throw new ArithmeticException("Matrix cannot be inverted!");
+
+        double[] result = new double[9];
+        for (int i = 0; i < temp.length; i++)
+            result[i] = temp[i] / det;
+
+        return result;
+    }
+
+    public static double[] normalizeRows(double[] m)
+    {
+        double sum0 = m[0] + m[1] + m[2];
+        double sum1 = m[3] + m[4] + m[5];
+        double sum2 = m[6] + m[7] + m[8];
+
+        return new double[] { m[0] / sum0, m[1] / sum0, m[2] / sum0,
+                              m[3] / sum1, m[4] / sum1, m[5] / sum1,
+                              m[6] / sum2, m[7] / sum2, m[8] / sum2 };
+    }
+
     public static double[] floatArrayToDouble(float[] array)
     {
         double[] result = new double[array.length];
