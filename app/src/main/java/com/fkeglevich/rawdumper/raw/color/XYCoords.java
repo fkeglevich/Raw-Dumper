@@ -29,6 +29,17 @@ public class XYCoords
     private final double x;
     private final double y;
 
+    public static final XYCoords D50 = new XYCoords(0.3457, 0.3585);
+    public static final XYCoords StA = new XYCoords(0.4476, 0.4074);
+
+    public static XYCoords fromXYZ(double[] xyz)
+    {
+        double total = xyz[0] + xyz[1] + xyz[2];
+        if (total > 0)
+            return new XYCoords(xyz[0] / total, xyz[1] / total);
+        return D50;
+    }
+
     public XYCoords(double x, double y)
     {
         this.x = x;
@@ -48,5 +59,11 @@ public class XYCoords
     public ColorTemperature toColorTemperature()
     {
         return Temperature.getColorTemperatureFromXYCoords(this);
+    }
+
+    public double[] toXYZ()
+    {
+        double Y = 1;
+        return new double[] {(x*Y)/y, Y, ((1-x-y)*Y)/y};
     }
 }
