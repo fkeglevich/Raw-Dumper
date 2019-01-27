@@ -109,6 +109,16 @@ dng_matrix_3by3 get3x3Matrix(JNIEnv *env, jfloatArray matrix3x3)
     return dngMatrix;
 }
 
+dng_matrix_3by3 get3x3Matrix(JNIEnv *env, jdoubleArray matrix3x3)
+{
+    jdouble *raw = env->GetDoubleArrayElements(matrix3x3, NULL);
+    dng_matrix_3by3 dngMatrix(raw[0], raw[1], raw[2],
+                              raw[3], raw[4], raw[5],
+                              raw[6], raw[7], raw[8]);
+    env->ReleaseDoubleArrayElements(matrix3x3, raw, 0);
+    return dngMatrix;
+}
+
 dng_tone_curve getToneCurve(JNIEnv *env, jfloatArray toneCurve)
 {
     dng_tone_curve result; result.SetInvalid();
