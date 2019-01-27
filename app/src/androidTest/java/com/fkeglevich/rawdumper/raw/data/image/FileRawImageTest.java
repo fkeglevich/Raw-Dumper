@@ -66,12 +66,11 @@ public class FileRawImageTest
         System.out.println("aaaaaaaaaaaaa");
         Log.i("ASD", "aaaaa");
         FileRawImage test = new FileRawImage(new File("/data/misc/media/IMG_20181129_011748006.i3av4")
-                , RawImageSize.createSimple(2688, 1944), new byte[26087424]);
+                , RawImageSize.createSimple(2688, 1944));
         try
         {
             //byte[] data = new byte[10456018];
             long nanos2 = System.nanoTime();
-            test.prepareData();
             byte[] data = test.getData();
 
             Log.i("ASD", "all time: " + (System.nanoTime() - nanos2)/1e6);
