@@ -20,8 +20,8 @@ import com.fkeglevich.rawdumper.raw.color.ColorTemperature;
 import com.fkeglevich.rawdumper.raw.color.XYCoords;
 import com.fkeglevich.rawdumper.raw.info.ColorInfo;
 
-import static com.fkeglevich.rawdumper.util.MathUtil.scalarMultiply;
-import static com.fkeglevich.rawdumper.util.MathUtil.sum;
+import static com.fkeglevich.rawdumper.util.MathUtil.invert3x3Matrix;
+import static com.fkeglevich.rawdumper.util.MathUtil.multiply3x3MatrixToVector3;
 
 /**
  * Created by Flávio Keglevich on 08/06/2017.
@@ -30,6 +30,8 @@ import static com.fkeglevich.rawdumper.util.MathUtil.sum;
 
 public class ColorUtil
 {
+    private static final int MAX_PASSES = 30;
+
     public static float[] getXYFromCCT(double temperature, ColorInfo colorInfo)
     {
         XYCoords xyCoords = Temperature.getXYFromColorTemperature(new ColorTemperature(temperature, getTintForTemperature(temperature, colorInfo)));
@@ -43,35 +45,32 @@ public class ColorUtil
         double b = colorInfo.getTintTemperatureFunction()[1];
         return temperature * a + b;
     }
-    
-    public static double[] interpolatedColorMatrix(double temperatureTarget,
-                                                   double[] colorMatrix1, double[] colorMatrix2,
-                                                   double temperature1, double temperature2)
+
+    public static XYCoords neutralToXY(double[] neutral, ColorInfo colorInfo)
     {
-        if (temperature2 > temperature1)
+        XYCoords last = XYCoords.D50;
+
+        for (int pass = 0; pass < MAX_PASSES; pass++)
         {
-            double aux1 = temperature1;
-            temperature1 = temperature2;
-            temperature2 = aux1;
+            double[] xyzToCamera = colorInfo.interpolatedColorMatrix(last.toColorTemperature().getTemperature());
+            double[] CC = colorInfo.interpolatedCalibrationMatrix(last.toColorTemperature().getTemperature());
 
-            double[] aux2 = colorMatrix1;
-            colorMatrix1 = colorMatrix2;
-            colorMatrix2 = aux2;
+            xyzToCamera = MathUtil.multiply3x3Matrices(CC, xyzToCamera);
+
+            XYCoords next = XYCoords.fromXYZ(multiply3x3MatrixToVector3(invert3x3Matrix(xyzToCamera), neutral));
+
+            if ((Math.abs(next.getX() - last.getX()) + Math.abs(next.getY() - last.getY())) < 0.0000001)
+                return next;
+
+            if (pass == (MAX_PASSES - 1))
+                return new XYCoords((last.getX() + next.getX()) * 0.5,
+                                    (last.getY() + next.getY()) * 0.5);
         }
+        return last;
+    }
 
-        if (temperatureTarget <= temperature1)
-            return colorMatrix1;
-        if (temperatureTarget >= temperature2)
-            return colorMatrix2;
-
-        double invertedTarget = 1.0 / temperatureTarget;
-        double inverted1      = 1.0 / temperature1;
-        double inverted2      = 1.0 / temperature2;
-
-        double linear = (invertedTarget - inverted2) / (inverted1 - inverted2);
-
-        return sum(
-                                scalarMultiply(colorMatrix1, linear),
-                                scalarMultiply(colorMatrix2, 1.0 - linear));
+    public static ColorTemperature neutralToColorTemperature(double[] neutral, ColorInfo colorInfo)
+    {
+        return neutralToXY(neutral, colorInfo).toColorTemperature();
     }
 }
