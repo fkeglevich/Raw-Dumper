@@ -59,6 +59,11 @@ public abstract class RawCaptureInfo
         return cameraContext.getDeviceInfo();
     }
 
+    public CameraContext getCameraContext()
+    {
+        return cameraContext;
+    }
+
     public ExtraCameraInfo getCameraInfo()
     {
         return cameraContext.getCameraInfo();
