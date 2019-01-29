@@ -201,3 +201,4 @@ Done:
  - (DONE!) Add asus camera metering
  - (DONE!) Add analog free-lens-like filter to raw pictures!
  - (DONE!) Save the user configurations between app close/opening cycles
+ - Disable digest generation by default so Snapseed doesn't crash

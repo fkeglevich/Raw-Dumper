@@ -32,7 +32,7 @@ public class RawSettings
     public volatile boolean keepLensVignetting          = false;
     public volatile boolean compressRawFiles            = true;
     public volatile boolean useOrientationFromPhone     = true;
-    public volatile boolean calculateDigest             = true;
+    public volatile boolean calculateDigest             = false;
     public volatile boolean addAnalogFilter             = false;
 
     public int getOrientationCode(ExtraCameraInfo cameraInfo)
