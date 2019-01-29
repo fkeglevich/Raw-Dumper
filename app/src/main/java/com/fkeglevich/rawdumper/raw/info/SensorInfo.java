@@ -95,4 +95,19 @@ public class SensorInfo
         binningRawImageSizes = new RawImageSize[0];
     }
 
+    public double[] getSimpleLinFactors()
+    {
+        // (x - black) / (white - black)
+        double delta = ((double) whiteLevel) - blackLevelInfo.defaultValues[0];
+
+        double aFactor = 1.0 / delta;
+        double bFactor = (-blackLevelInfo.defaultValues[0]) / delta;
+
+        return new double[] {aFactor, bFactor};
+    }
+
+    public int[] getRedPosition()
+    {
+        return bayerPattern.getRedPosition();
+    }
 }

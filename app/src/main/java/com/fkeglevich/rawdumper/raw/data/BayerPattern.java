@@ -88,6 +88,11 @@ public enum BayerPattern
         return phase;
     }
 
+    public int[] getRedPosition()
+    {
+        return new int[]{ getR() % 2, getR() / 2 };
+    }
+
     public BayerPattern invertVertically()
     {
         switch (this)
