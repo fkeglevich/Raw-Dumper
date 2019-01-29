@@ -122,6 +122,11 @@ public class GainMapOpcode extends Opcode
                 .putDouble(mapOriginH)
                 .putInt(mapPlanes);
 
+        writeGainMapData(buffer);
+    }
+
+    public void writeGainMapData(ByteBuffer buffer)
+    {
         if (DebugFlag.useDebugGainMap())
         {
             for (int y = 0; y < mapPointsV; y++)
@@ -162,5 +167,15 @@ public class GainMapOpcode extends Opcode
             }
 
         }
+    }
+
+    public int getMapPointsV()
+    {
+        return mapPointsV;
+    }
+
+    public int getMapPointsH()
+    {
+        return mapPointsH;
     }
 }
