@@ -99,6 +99,21 @@ public class Program
         GLES20.glUniform1f(getUniformHandle(name), data);
     }
 
+    public void setUniformInt(String name, int data)
+    {
+        GLES20.glUniform1i(getUniformHandle(name), data);
+    }
+
+    public void setUniformIVec2(String name, int x, int y)
+    {
+        GLES20.glUniform2i(getUniformHandle(name), x, y);
+    }
+
+    public void setUniformIVec2(String name, int[] data)
+    {
+        GLES20.glUniform2iv(getUniformHandle(name), 1, data, 0);
+    }
+
     public void setUniformVec2(String name, float x, float y)
     {
         GLES20.glUniform2f(getUniformHandle(name), x, y);
@@ -109,6 +124,16 @@ public class Program
         GLES20.glUniform2fv(getUniformHandle(name), 1, data, 0);
     }
 
+    public void setUniformVec3(String name, float x, float y, float z)
+    {
+        GLES20.glUniform3f(getUniformHandle(name), x, y, z);
+    }
+
+    public void setUniformVec3(String name, float[] data)
+    {
+        GLES20.glUniform3fv(getUniformHandle(name), 1, data, 0);
+    }
+
     public void setUniformMat4(String name, float[] data)
     {
         setUniformMat4(name, data, false);
@@ -117,6 +142,16 @@ public class Program
     public void setUniformMat4(String name, float[] data, boolean transpose)
     {
         GLES20.glUniformMatrix4fv(getUniformHandle(name), 1, transpose, data, 0);
+    }
+
+    public void setUniformMat3(String name, float[] data)
+    {
+        setUniformMat3(name, data, false);
+    }
+
+    public void setUniformMat3(String name, float[] data, boolean transpose)
+    {
+        GLES20.glUniformMatrix3fv(getUniformHandle(name), 1, transpose, data, 0);
     }
 
     @SuppressWarnings("ConstantConditions")
