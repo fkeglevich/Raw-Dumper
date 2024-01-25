@@ -56,6 +56,7 @@ freeline/
 freeline_project_description.json
 
 app/release/
+app/debug/
 
 \.idea/caches/build_file_checksums\.ser
 
