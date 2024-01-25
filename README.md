@@ -5,6 +5,6 @@ Raw Dumper is a simple camera app for taking raw pictures on android devices wit
 
 Screenshot:
 
-<img src="https://github.com/fkeglevich/Raw-Dumper/raw/master/screenshots/Screenshot1.jpg" width="450" height="800"/>
+<img src="https://github.com/fkeglevich/Raw-Dumper/raw/master/screenshots/Screenshot1.jpg" width="450" height="800" alt="A screenshot of the app depicting manual focus and focus peaking features."/>
 
 Logo Design By Md Nazmul Hasan
