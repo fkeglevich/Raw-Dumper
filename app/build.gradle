@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    namespace "com.fkeglevich.rawdumper"
     defaultConfig {
         applicationId "com.fkeglevich.rawdumper"
         testApplicationId "com.fkeglevich.rawdumper.tests"
+        compileSdk 33
         minSdkVersion 18
-        targetSdkVersion 28
+        targetSdkVersion 33
         versionCode 10
         versionName "3.5.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -17,20 +17,19 @@ android {
                 cppFlags "-std=c++11 -fexceptions -fpermissive -fopenmp -DAVOID_TABLES -O3 -fstrict-aliasing"
             }
             ndk {
-                abiFilters 'x86'
+                abiFilters 'x86', 'x86_64'
             }
         }
     }
     buildTypes {
         debug {
-            minifyEnabled false
-            useProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //minifyEnabled false
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
-            shrinkResources true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //shrinkResources true
+            //minifyEnabled true
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     externalNativeBuild {
@@ -42,6 +41,9 @@ android {
         main {
             jniLibs.srcDir file('jni/')
         }
+    }
+    buildFeatures {
+        buildConfig true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
