@@ -8,8 +8,8 @@ android {
         compileSdk 33
         minSdkVersion 18
         targetSdkVersion 33
-        versionCode 10
-        versionName "3.5.0"
+        versionCode 11
+        versionName "3.5.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -23,13 +23,13 @@ android {
     }
     buildTypes {
         debug {
-            //minifyEnabled false
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
-            //shrinkResources true
-            //minifyEnabled true
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     externalNativeBuild {
