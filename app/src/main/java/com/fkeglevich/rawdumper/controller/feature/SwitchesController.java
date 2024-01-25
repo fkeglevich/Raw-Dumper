@@ -76,27 +76,21 @@ class SwitchesController extends FeatureController
         widget.setChecked(initValue);
         widget.setOnCheckedChangeListener((buttonView, isChecked) ->
         {
-            switch (id)
+            if (id == R.id.klvSwitch)
             {
-                case R.id.klvSwitch:
-                    rawSettings.keepLensVignetting = isChecked;
-                    break;
-
-                case R.id.cmpSwitch:
-                    rawSettings.compressRawFiles = isChecked;
-                    break;
-
-                case R.id.safSwitch:
-                    rawSettings.shouldInvertFrontCameraRows = isChecked;
-                    break;
-
-                case R.id.digestSwitch:
-                    rawSettings.calculateDigest = isChecked;
-                    break;
-
-                case R.id.analogSwitch:
-                    rawSettings.addAnalogFilter = isChecked;
-                    break;
+                rawSettings.keepLensVignetting = isChecked;
+            } else if (id == R.id.cmpSwitch)
+            {
+                rawSettings.compressRawFiles = isChecked;
+            } else if (id == R.id.safSwitch)
+            {
+                rawSettings.shouldInvertFrontCameraRows = isChecked;
+            } else if (id == R.id.digestSwitch)
+            {
+                rawSettings.calculateDigest = isChecked;
+            } else if (id == R.id.analogSwitch)
+            {
+                rawSettings.addAnalogFilter = isChecked;
             }
         });
     }
