@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Raw-Dumper.iml" filepath="$PROJECT_DIR$/Raw-Dumper.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Raw-Dumper.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Raw-Dumper.app.main.iml" />
     </modules>
   </component>
 </project>
